@@ -66,17 +66,17 @@ The first time you attempt to send a push notification to a device that has unin
 
 ```ruby
 # find all device tokens deactivated in the past 24 hours
-Urbanairship.feedback 24.hours.ago
-[
-  {
-    "marked_inactive_on"=>"2011-06-03 22:53:23",
-    "alias"=>nil,
-    "device_token"=>"DEVICE-TOKEN-ONE"
-  },
-  {
-    "marked_inactive_on"=>"2011-06-03 22:53:23",
-    "alias"=>nil,
-    "device_token"=>"DEVICE-TOKEN-TWO"
-  }
-]
+Urbanairship.feedback 24.hours.ago # =>
+# [
+#   {
+#     "marked_inactive_on"=>"2011-06-03 22:53:23",
+#     "alias"=>nil,
+#     "device_token"=>"DEVICE-TOKEN-ONE"
+#   },
+#   {
+#     "marked_inactive_on"=>"2011-06-03 22:53:23",
+#     "alias"=>nil,
+#     "device_token"=>"DEVICE-TOKEN-TWO"
+#   }
+# ]
 ```
