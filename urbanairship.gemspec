@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
   s.homepage = 'http://github.com/groupon/urbanairship'
   s.authors = ['Groupon, Inc.']
   s.email = ['rubygems@groupon.com']
-  s.files = FileList['README', 'LICENSE', 'Rakefile', 'lib/**/*.rb'].to_a
+  s.files = FileList['README.markdown', 'LICENSE', 'Rakefile', 'lib/**/*.rb'].to_a
   s.test_files = FileList['spec/**/*.rb'].to_a
 
   s.add_dependency 'system_timer'
