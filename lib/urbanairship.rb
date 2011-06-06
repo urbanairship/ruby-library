@@ -66,8 +66,7 @@ module Urbanairship
     end
 
     def verify_configuration_values(*symbols)
-      absent_values = []
-      symbols.each{|symbol| absent_values << symbol.to_s if instance_variable_get("@#{symbol}").nil? }
+      absent_values = symbols.select{|symbol| instance_variable_get("@#{symbol}").nil? }
       raise("Must configure #{absent_values.join(", ")} before making this request.") unless absent_values.empty?
     end
 
