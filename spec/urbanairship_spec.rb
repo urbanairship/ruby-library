@@ -418,14 +418,14 @@ describe Urbanairship do
     end
 
     it "uses a default request_timeout value of five seconds" do
-      SystemTimer.should_receive(:timeout_after).with(5.0).and_raise(Timeout::Error)
+      Urbanairship::Timer.should_receive(:timeout).with(5.0).and_raise(Timeout::Error)
       @logger.should_receive(:error).with(/Urbanairship request timed out/)
 
       Urbanairship.register_device('new_device_token')
     end
 
     it "accepts a configured request_timeout value" do
-      SystemTimer.should_receive(:timeout_after).with(1.23).and_raise(Timeout::Error)
+      Urbanairship::Timer.should_receive(:timeout).with(1.23).and_raise(Timeout::Error)
       @logger.should_receive(:error).with(/Urbanairship request timed out/)
 
       Urbanairship.request_timeout = 1.23

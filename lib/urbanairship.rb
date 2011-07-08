@@ -1,9 +1,16 @@
 require 'json'
 require 'net/https'
 require 'time'
-require 'system_timer'
 
 module Urbanairship
+  begin
+    require 'system_timer'
+    Timer = SystemTimer
+  rescue LoadError
+    require 'timeout'
+    Timer = Timeout
+  end
+
   VALID_PUSH_PARAMS = %w(device_tokens aliases tags schedule_for exclude_tokens aps)
 
   class << self
@@ -54,7 +61,7 @@ module Urbanairship
 
       yield(request) if block_given?
 
-      SystemTimer.timeout_after(request_timeout) do
+      Timer.timeout(request_timeout) do
         start_time = Time.now
         response = http_client.request(request)
         log_request_and_response(request, response, Time.now - start_time)

@@ -12,7 +12,6 @@ Gem::Specification.new do |s|
   s.files = FileList['README.markdown', 'LICENSE', 'Rakefile', 'lib/**/*.rb'].to_a
   s.test_files = FileList['spec/**/*.rb'].to_a
 
-  s.add_dependency 'system_timer'
   s.add_dependency 'json'
 
   s.add_development_dependency 'rspec'
