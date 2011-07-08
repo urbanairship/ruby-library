@@ -17,5 +17,5 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'rspec'
   s.add_development_dependency 'fakeweb'
 
-  s.required_ruby_version = '~> 1.8.6'
+  s.required_ruby_version = '>= 1.8.6'
 end
