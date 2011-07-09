@@ -4,6 +4,8 @@ Installation
 ============
     gem install urbanairship
 
+Note: if you are using Ruby 1.8, you should also install the ```system_timer``` gem for more reliable timeout behaviour. See http://ph7spot.com/musings/system-timer for more information.
+
 Configuration
 =============
 ```ruby
