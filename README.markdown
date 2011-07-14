@@ -62,6 +62,19 @@ notifications = [
 Urbanairship.batch_push notifications # => true
 ```
 
+Sending broadcoast notifications
+--------------------------------
+Urbanairship allows you to send a broadcast notification to all active registered device tokens for your app.
+
+```ruby
+notification = {
+  :schedule_for => 1.hour.from_now,
+  :aps => {:alert => 'Important announcement!', :badge => 1}
+}
+
+Urbanairship.broadcast_push notification # => true
+```
+
 Polling the feedback API
 ------------------------
 The first time you attempt to send a push notification to a device that has uninstalled your app (or has opted-out of notifications), both Apple and Urbanairship will register that token in their feedback API. Urbanairship will prevent further attempted notification sends to that device, but it's a good practice to periodically poll Urbanairship's feedback API and mark those tokens as inactive in your own system as well.
