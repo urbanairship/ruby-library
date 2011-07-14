@@ -21,6 +21,10 @@ describe Urbanairship do
     FakeWeb.register_uri(:post, "https://my_app_key:my_master_secret@go.urbanairship.com/api/push/batch/", :status => ["200", "OK"])
     FakeWeb.register_uri(:post, "https://my_app_key2:my_master_secret2@go.urbanairship.com/api/push/batch/", :status => ["400", "Bad Request"])
 
+    # broadcast push
+    FakeWeb.register_uri(:post, "https://my_app_key:my_master_secret@go.urbanairship.com/api/push/broadcast/", :status => ["200", "OK"])
+    FakeWeb.register_uri(:post, "https://my_app_key2:my_master_secret2@go.urbanairship.com/api/push/broadcast/", :status => ["400", "Bad Request"])
+
     # feedback
     FakeWeb.register_uri(:get, /my_app_key\:my_master_secret\@go\.urbanairship.com\/api\/device_tokens\/feedback/, :status => ["200", "OK"], :body => "[{\"device_token\":\"token\",\"marked_inactive_on\":\"2010-10-14T19:15:13Z\",\"alias\":\"my_alias\"}]")
     FakeWeb.register_uri(:get, /my_app_key2\:my_master_secret2\@go\.urbanairship.com\/api\/device_tokens\/feedback/, :status => ["500", "Internal Server Error"])
@@ -316,6 +320,93 @@ describe Urbanairship do
       Urbanairship.application_key = "my_app_key2"
       Urbanairship.master_secret = "my_master_secret2"
       Urbanairship.batch_push.should == false
+    end
+
+  end
+
+  describe "sending broadcast push notifications" do
+
+    before(:each) do
+      @valid_params = {:aps => {:alert => 'foo'}}
+      Urbanairship.application_key = "my_app_key"
+      Urbanairship.master_secret = "my_master_secret"
+    end
+
+    it "raises an error if call is made without an app key and master secret configured" do
+      Urbanairship.application_key = nil
+      Urbanairship.master_secret = nil
+
+      lambda {
+        Urbanairship.broadcast_push(@valid_params)
+      }.should raise_error(RuntimeError, "Must configure application_key, master_secret before making this request.")
+    end
+
+    it "uses app key and secret to sign the request" do
+      Urbanairship.broadcast_push(@valid_params)
+      FakeWeb.last_request['authorization'].should == "Basic #{Base64::encode64('my_app_key:my_master_secret').chomp}"
+    end
+
+    it "returns true when it successfully pushes a notification" do
+      Urbanairship.broadcast_push(@valid_params).should == true
+    end
+
+    it "returns false when the authorization is invalid" do
+      Urbanairship.application_key = "bad_key"
+      Urbanairship.broadcast_push(@valid_params).should == false
+    end
+
+    it "sets the content-type header to application/json" do
+      Urbanairship.broadcast_push(@valid_params)
+      FakeWeb.last_request['content-type'].should == 'application/json'
+    end
+
+    it "adds aliases to the JSON payload" do
+      @valid_params[:aliases] = ["one", "two"]
+      Urbanairship.broadcast_push(@valid_params)
+      request_json['aliases'].should == ["one", "two"]
+    end
+
+    it "adds tags to the JSON payload" do
+      @valid_params[:tags] = ["one", "two"]
+      Urbanairship.broadcast_push(@valid_params)
+      request_json['tags'].should == ["one", "two"]
+    end
+
+    it "adds schedule_for to the JSON payload" do
+      time = Time.parse("Oct 17th, 2010, 8:00 PM UTC")
+      @valid_params[:schedule_for] = [time]
+      Urbanairship.broadcast_push(@valid_params)
+      request_json['schedule_for'].should == ['2010-10-17T20:00:00Z']
+    end
+
+    it "accepts strings as schedule_for values" do
+      @valid_params[:schedule_for] = ["2010-10-10 09:09:09 UTC"]
+      Urbanairship.broadcast_push(@valid_params)
+      request_json['schedule_for'].should == ['2010-10-10T09:09:09Z']
+    end
+
+    it "adds exclude_tokens to the JSON payload" do
+      @valid_params[:exclude_tokens] = ["one", "two"]
+      Urbanairship.broadcast_push(@valid_params)
+      request_json['exclude_tokens'].should == ["one", "two"]
+    end
+
+    it "adds aps parameters to the JSON payload" do
+      @valid_params[:aps] = {:badge => 10, :alert => "Hi!", :sound => "cat.caf"}
+      Urbanairship.broadcast_push(@valid_params)
+      request_json['aps'].should == {'badge' => 10, 'alert' => 'Hi!', 'sound' => 'cat.caf'}
+    end
+
+    it "excludes invalid parameters from the JSON payload" do
+      @valid_params[:foo] = 'bar'
+      Urbanairship.broadcast_push(@valid_params)
+      request_json['foo'].should be_nil
+    end
+
+    it "returns false if urbanairship responds with a non-200 response" do
+      Urbanairship.application_key = "my_app_key2"
+      Urbanairship.master_secret = "my_master_secret2"
+      Urbanairship.broadcast_push.should == false
     end
 
   end

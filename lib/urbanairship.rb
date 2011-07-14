@@ -44,6 +44,15 @@ module Urbanairship
       response && response.code == "200"
     end
 
+    def broadcast_push(options = {})
+      response = do_request(:post, "/api/push/broadcast/", :authenticate_with => :master_secret) do |request|
+        request.body = parse_push_options(options).to_json
+        request.add_field "Content-Type", "application/json"
+      end
+
+      response && response.code == "200"
+    end
+
     def feedback(time)
       response = do_request(:get, "/api/device_tokens/feedback/?since=#{format_time(time)}", :authenticate_with => :master_secret)
       response && response.code == "200" ? JSON.parse(response.body) : false
