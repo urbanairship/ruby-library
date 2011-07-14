@@ -62,7 +62,7 @@ notifications = [
 Urbanairship.batch_push notifications # => true
 ```
 
-Sending broadcoast notifications
+Sending broadcast notifications
 --------------------------------
 Urbanairship allows you to send a broadcast notification to all active registered device tokens for your app.
 
