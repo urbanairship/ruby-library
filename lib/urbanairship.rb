@@ -12,12 +12,17 @@ module Urbanairship
   end
 
   VALID_PUSH_PARAMS = %w(device_tokens aliases tags schedule_for exclude_tokens aps)
+  VALID_REGISTER_PARAMS = %w(alias)
 
   class << self
     attr_accessor :application_key, :application_secret, :master_secret, :logger, :request_timeout
 
-    def register_device(device_token)
-      response = do_request(:put, "/api/device_tokens/#{device_token}", :authenticate_with => :application_secret)
+    def register_device(device_token, options = {})
+      response = do_request(:put, "/api/device_tokens/#{device_token}", :authenticate_with => :application_secret) do |request|
+        request.body = parse_register_options(options).to_json
+        request.add_field "Content-Type", "application/json" unless options.empty?
+      end
+      
       response && %w(200 201).include?(response.code)
     end
 
@@ -88,6 +93,10 @@ module Urbanairship
 
     def http_client
       Net::HTTP.new("go.urbanairship.com", 443).tap{|http| http.use_ssl = true}
+    end
+
+    def parse_register_options(hash = {})
+      hash.delete_if{|key, value| !VALID_REGISTER_PARAMS.include?(key.to_s)}
     end
 
     def parse_push_options(hash = {})

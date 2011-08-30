@@ -6,6 +6,7 @@ describe Urbanairship do
     # register_device
     FakeWeb.register_uri(:put, "https://my_app_key:my_app_secret@go.urbanairship.com/api/device_tokens/new_device_token", :status => ["201", "Created"])
     FakeWeb.register_uri(:put, "https://my_app_key:my_app_secret@go.urbanairship.com/api/device_tokens/existing_device_token", :status => ["200", "OK"])
+    FakeWeb.register_uri(:put, "https://my_app_key:my_app_secret@go.urbanairship.com/api/device_tokens/device_token_one", :status => ["201", "Created"])
     FakeWeb.register_uri(:put, /bad_key\:my_app_secret\@go\.urbanairship\.com/, :status => ["401", "Unauthorized"])
 
     # unregister_device
@@ -65,6 +66,7 @@ describe Urbanairship do
   describe "registering a device" do
 
     before(:each) do
+      @valid_params = {:alias => 'one'}
       Urbanairship.application_key = "my_app_key"
       Urbanairship.application_secret = "my_app_secret"
     end
@@ -100,9 +102,31 @@ describe Urbanairship do
       Urbanairship.application_key = "bad_key"
       Urbanairship.register_device("new_device_token").should == false
     end
+    
+    it "doesn't set the content-type header to application/json if options are empty" do
+      Urbanairship.register_device("device_token_one")
+      FakeWeb.last_request['content-type'].should_not == 'application/json'
+    end
 
-    # TODO:
-    # it "accepts additional parameters (EXPAND THIS)"
+    it "accepts an alias" do
+      Urbanairship.register_device("device_token_one", @valid_params).should == true
+    end
+    
+    it "sets the content-type header to application/json when options are added" do
+      Urbanairship.register_device("device_token_one", @valid_params)
+      FakeWeb.last_request['content-type'].should == 'application/json'
+    end
+    
+    it "adds alias to the JSON payload" do
+      Urbanairship.register_device("device_token_one", @valid_params)
+      request_json['alias'].should == "one"
+    end
+
+    it "excludes invalid parameters from the JSON payload" do
+      @valid_params.merge!(:foo => 'bar')
+      Urbanairship.register_device("device_token_one", @valid_params)
+      request_json['foo'].should be_nil
+    end
 
   end
 
