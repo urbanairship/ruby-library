@@ -96,6 +96,7 @@ module Urbanairship
     end
 
     def parse_register_options(hash = {})
+      hash[:alias] = hash[:alias].to_s unless hash[:alias].nil?
       hash.delete_if{|key, value| !VALID_REGISTER_PARAMS.include?(key.to_s)}
     end
 

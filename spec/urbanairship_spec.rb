@@ -121,6 +121,11 @@ describe Urbanairship do
       Urbanairship.register_device("device_token_one", @valid_params)
       request_json['alias'].should == "one"
     end
+    
+    it "converts alias param to string" do
+      Urbanairship.register_device("device_token_one", :alias => 11)
+      request_json['alias'].should be_a_kind_of String
+    end
 
     it "excludes invalid parameters from the JSON payload" do
       @valid_params.merge!(:foo => 'bar')
