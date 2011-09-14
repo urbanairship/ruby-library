@@ -35,7 +35,7 @@ Sending a push notification
 ---------------------------
 ```ruby
 notification = {
-  :schedule_for => 1.hour.from_now,
+  :schedule_for => [1.hour.from_now],
   :device_tokens => ['DEVICE-TOKEN-ONE', 'DEVICE-TOKEN-TWO'],
   :aps => {:alert => 'You have a new message!', :badge => 1}
 }
@@ -48,12 +48,12 @@ Batching push notification sends
 ```ruby
 notifications = [
   {
-    :schedule_for => 1.hour.from_now,
+    :schedule_for => [1.hour.from_now],
     :device_tokens => ['DEVICE-TOKEN-ONE', 'DEVICE-TOKEN-TWO'],
     :aps => {:alert => 'You have a new message!', :badge => 1}
   },
   {
-    :schedule_for => 3.hours.from_now,
+    :schedule_for => [3.hours.from_now],
     :device_tokens => ['DEVICE-TOKEN-THREE'],
     :aps => {:alert => 'You have a new message!', :badge => 1}
   }
@@ -68,7 +68,7 @@ Urbanairship allows you to send a broadcast notification to all active registere
 
 ```ruby
 notification = {
-  :schedule_for => 1.hour.from_now,
+  :schedule_for => [1.hour.from_now],
   :aps => {:alert => 'Important announcement!', :badge => 1}
 }
 
