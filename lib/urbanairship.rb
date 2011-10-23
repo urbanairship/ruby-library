@@ -11,7 +11,7 @@ module Urbanairship
     Timer = Timeout
   end
 
-  VALID_PUSH_PARAMS = %w(device_tokens aliases tags schedule_for exclude_tokens aps)
+  VALID_PUSH_PARAMS = %w(device_tokens aliases tags schedule_for exclude_tokens aps custom)
   VALID_REGISTER_PARAMS = %w(alias)
 
   class << self
