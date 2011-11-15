@@ -30,6 +30,12 @@ module Urbanairship
       response = do_request(:delete, "/api/device_tokens/#{device_token}", :authenticate_with => :application_secret)
       response && response.code == "204"
     end
+    
+    def delete_scheduled_push(param)
+      path = (param.is_a? Hash) ? "/api/push/scheduled/alias/#{param[:alias].to_s}" : "/api/push/scheduled/#{param.to_s}"
+      response = do_request(:delete, path, :authenticate_with => :master_secret)
+      response && response.code == "204"
+    end
 
     def push(options = {})
       response = do_request(:post, "/api/push/", :authenticate_with => :master_secret) do |request|
@@ -101,7 +107,7 @@ module Urbanairship
     end
 
     def parse_push_options(hash = {})
-      hash[:schedule_for] = hash[:schedule_for].map{|time| format_time(time)} unless hash[:schedule_for].nil?
+      hash[:schedule_for] = hash[:schedule_for].map{|elem| process_scheduled_elem(elem)} unless hash[:schedule_for].nil?
       hash.delete_if{|key, value| !VALID_PUSH_PARAMS.include?(key.to_s)}
     end
 
@@ -117,6 +123,14 @@ module Urbanairship
     def format_time(time)
       time = Time.parse(time) if time.is_a?(String)
       time.utc.strftime("%Y-%m-%dT%H:%M:%SZ")
+    end
+    
+    def process_scheduled_elem(elem)
+      if elem.class == Hash
+        elem.merge!(:scheduled_time => format_time(elem[:scheduled_time]))
+      else
+        format_time(elem)
+      end
     end
 
     def request_timeout

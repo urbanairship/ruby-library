@@ -48,7 +48,7 @@ Batching push notification sends
 ```ruby
 notifications = [
   {
-    :schedule_for => [1.hour.from_now],
+    :schedule_for => [{ :alias => 'deadbeef', :scheduled_time => 1.hour.from_now }],   # assigning an alias to a scheduled push
     :device_tokens => ['DEVICE-TOKEN-ONE', 'DEVICE-TOKEN-TWO'],
     :aps => {:alert => 'You have a new message!', :badge => 1}
   },
@@ -62,8 +62,9 @@ notifications = [
 Urbanairship.batch_push notifications # => true
 ```
 
+
 Sending broadcast notifications
---------------------------------
+-------------------------------
 Urbanairship allows you to send a broadcast notification to all active registered device tokens for your app.
 
 ```ruby
@@ -94,4 +95,15 @@ Urbanairship.feedback 24.hours.ago # =>
 #     "device_token"=>"DEVICE-TOKEN-TWO"
 #   }
 # ]
+```
+
+Deleting scheduled notifications
+--------------------------------
+
+If you know the alias or id of a scheduled push notification then you can delete it from Urbanairship's queue and it will not be delivered.
+
+```ruby
+Urbanairship.delete_scheduled_push("123456789") # => true
+Urbanairship.delete_scheduled_push(123456789) # => true
+Urbanairship.delete_scheduled_push(:alias => "deadbeef") # => true
 ```

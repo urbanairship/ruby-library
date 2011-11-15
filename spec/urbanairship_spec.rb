@@ -26,6 +26,11 @@ describe Urbanairship do
     FakeWeb.register_uri(:post, "https://my_app_key:my_master_secret@go.urbanairship.com/api/push/broadcast/", :status => ["200", "OK"])
     FakeWeb.register_uri(:post, "https://my_app_key2:my_master_secret2@go.urbanairship.com/api/push/broadcast/", :status => ["400", "Bad Request"])
 
+    # delete_scheduled_push
+    FakeWeb.register_uri(:delete, /my_app_key\:my_master_secret\@go\.urbanairship.com\/api\/push\/scheduled\/[0-9]+/, :status => ["204", "No Content"])
+    FakeWeb.register_uri(:delete, /my_app_key\:my_master_secret\@go\.urbanairship.com\/api\/push\/scheduled\/alias\/.+/, :status => ["204", "No Content"])
+    FakeWeb.register_uri(:delete, /bad_key\:my_master_secret\@go\.urbanairship.com\/api\/push\/scheduled\/[0-9]+/, :status => ["401", "Unauthorized"])
+
     # feedback
     FakeWeb.register_uri(:get, /my_app_key\:my_master_secret\@go\.urbanairship.com\/api\/device_tokens\/feedback/, :status => ["200", "OK"], :body => "[{\"device_token\":\"token\",\"marked_inactive_on\":\"2010-10-14T19:15:13Z\",\"alias\":\"my_alias\"}]")
     FakeWeb.register_uri(:get, /my_app_key2\:my_master_secret2\@go\.urbanairship.com\/api\/device_tokens\/feedback/, :status => ["500", "Internal Server Error"])
@@ -171,6 +176,53 @@ describe Urbanairship do
     end
 
   end
+  
+  describe "deleting a scheduled push notification" do
+    before(:each) do
+      Urbanairship.application_key = "my_app_key"
+      Urbanairship.master_secret = "my_master_secret"
+    end
+
+    it "raises an error if call is made without an app key and master secret configured" do
+      Urbanairship.application_key = nil
+      Urbanairship.master_secret = nil
+
+      lambda {
+        Urbanairship.delete_scheduled_push("123456789")
+      }.should raise_error(RuntimeError, "Must configure application_key, master_secret before making this request.")
+    end
+
+    it "uses app key and secret to sign the request" do
+      Urbanairship.delete_scheduled_push("123456789")
+      FakeWeb.last_request['authorization'].should == "Basic #{Base64::encode64('my_app_key:my_master_secret').chomp}"
+    end
+
+    it "sends the key that needs to be deleted" do
+      Urbanairship.delete_scheduled_push("123456789")
+      FakeWeb.last_request.path.should == "/api/push/scheduled/123456789"
+    end
+
+    it "sends the key that needs to be deleted" do
+      Urbanairship.delete_scheduled_push(123456789)
+      FakeWeb.last_request.path.should == "/api/push/scheduled/123456789"
+    end
+
+    it "sends the alias that needs to be deleted" do
+      Urbanairship.delete_scheduled_push(:alias => "alias_to_delete")
+      FakeWeb.last_request.path.should == "/api/push/scheduled/alias/alias_to_delete"
+    end
+
+    it "returns true when the push notification is successfully deleted" do
+      Urbanairship.delete_scheduled_push("123456789").should == true
+      FakeWeb.last_request.body.should be_nil
+    end
+
+    it "returns false when the authorization is invalid" do
+      Urbanairship.application_key = "bad_key"
+      Urbanairship.delete_scheduled_push("123456789").should == false
+    end
+
+  end
 
   describe "sending multiple push notifications" do
 
@@ -232,6 +284,13 @@ describe Urbanairship do
     it "only attempts to format schedule_for if it is a time object" do
       Urbanairship.push(@valid_params.merge(:schedule_for => ["2010-10-10 09:09:09 UTC"]))
       request_json['schedule_for'].should == ['2010-10-10T09:09:09Z']
+    end
+    
+    it "adds an aliased schedule_for to the JSON payload" do
+      time = Time.parse("Oct 17th, 2010, 8:00 PM UTC")
+      alias_str = 'cafebabe'
+      Urbanairship.push(@valid_params.merge(:schedule_for => [{ :alias => alias_str, :scheduled_time => time }]))
+      request_json['schedule_for'].should == [{ 'alias' => alias_str, 'scheduled_time' => '2010-10-17T20:00:00Z' }]
     end
 
     it "adds exclude_tokens to the JSON payload" do

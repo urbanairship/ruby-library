@@ -2,8 +2,8 @@ require 'rake'
 
 Gem::Specification.new do |s|
   s.name = 'urbanairship'
-  s.version = '1.0.2'
-  s.date = '2011-07-14'
+  s.version = '1.0.3'
+  s.date = '2011-11-14'
   s.summary = 'A Ruby wrapper for the Urbanairship API'
   s.description = 'Urbanairship is a Ruby library for interacting with the Urbanairship (http://urbanairship.com) API.'
   s.homepage = 'http://github.com/groupon/urbanairship'
