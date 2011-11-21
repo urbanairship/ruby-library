@@ -107,7 +107,7 @@ describe Urbanairship do
       Urbanairship.application_key = "bad_key"
       Urbanairship.register_device("new_device_token").should == false
     end
-    
+
     it "doesn't set the content-type header to application/json if options are empty" do
       Urbanairship.register_device("device_token_one")
       FakeWeb.last_request['content-type'].should_not == 'application/json'
@@ -116,17 +116,17 @@ describe Urbanairship do
     it "accepts an alias" do
       Urbanairship.register_device("device_token_one", @valid_params).should == true
     end
-    
+
     it "sets the content-type header to application/json when options are added" do
       Urbanairship.register_device("device_token_one", @valid_params)
       FakeWeb.last_request['content-type'].should == 'application/json'
     end
-    
+
     it "adds alias to the JSON payload" do
       Urbanairship.register_device("device_token_one", @valid_params)
       request_json['alias'].should == "one"
     end
-    
+
     it "converts alias param to string" do
       Urbanairship.register_device("device_token_one", :alias => 11)
       request_json['alias'].should be_a_kind_of String
@@ -176,7 +176,7 @@ describe Urbanairship do
     end
 
   end
-  
+
   describe "deleting a scheduled push notification" do
     before(:each) do
       Urbanairship.application_key = "my_app_key"
@@ -285,7 +285,7 @@ describe Urbanairship do
       Urbanairship.push(@valid_params.merge(:schedule_for => ["2010-10-10 09:09:09 UTC"]))
       request_json['schedule_for'].should == ['2010-10-10T09:09:09Z']
     end
-    
+
     it "adds an aliased schedule_for to the JSON payload" do
       time = Time.parse("Oct 17th, 2010, 8:00 PM UTC")
       alias_str = 'cafebabe'

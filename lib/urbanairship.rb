@@ -22,7 +22,7 @@ module Urbanairship
         request.body = parse_register_options(options).to_json
         request.add_field "Content-Type", "application/json" unless options.empty?
       end
-      
+
       response && %w(200 201).include?(response.code)
     end
 
@@ -30,7 +30,7 @@ module Urbanairship
       response = do_request(:delete, "/api/device_tokens/#{device_token}", :authenticate_with => :application_secret)
       response && response.code == "204"
     end
-    
+
     def delete_scheduled_push(param)
       path = (param.is_a? Hash) ? "/api/push/scheduled/alias/#{param[:alias].to_s}" : "/api/push/scheduled/#{param.to_s}"
       response = do_request(:delete, path, :authenticate_with => :master_secret)
@@ -124,7 +124,7 @@ module Urbanairship
       time = Time.parse(time) if time.is_a?(String)
       time.utc.strftime("%Y-%m-%dT%H:%M:%SZ")
     end
-    
+
     def process_scheduled_elem(elem)
       if elem.class == Hash
         elem.merge!(:scheduled_time => format_time(elem[:scheduled_time]))
