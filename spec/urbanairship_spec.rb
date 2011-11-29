@@ -303,9 +303,9 @@ describe Urbanairship do
       request_json['aps'].should == {'badge' => 10, 'alert' => 'Hi!', 'sound' => 'cat.caf'}
     end
 
-    it "excludes invalid parameters from the JSON payload" do
+    it "includes arbitrary parameters from the JSON payload" do
       Urbanairship.push(@valid_params.merge(:foo => 'bar'))
-      request_json['foo'].should be_nil
+      request_json['foo'].should == 'bar'
     end
 
     it "returns false if urbanairship responds with a non-200 response" do
@@ -398,10 +398,10 @@ describe Urbanairship do
       request_json[0]['aps'].should == {'badge' => 10, 'alert' => 'Hi!', 'sound' => 'cat.caf'}
     end
 
-    it "excludes invalid parameters from the JSON payload" do
+    it "include arbitrary parameters from the JSON payload" do
       @valid_params[0].merge!(:foo => 'bar')
       Urbanairship.batch_push(@valid_params)
-      request_json[0]['foo'].should be_nil
+      request_json[0]['foo'].should == 'bar'
     end
 
     it "returns false if urbanairship responds with a non-200 response" do
@@ -485,10 +485,10 @@ describe Urbanairship do
       request_json['aps'].should == {'badge' => 10, 'alert' => 'Hi!', 'sound' => 'cat.caf'}
     end
 
-    it "excludes invalid parameters from the JSON payload" do
+    it "includes arbitrary parameters from the JSON payload" do
       @valid_params[:foo] = 'bar'
       Urbanairship.broadcast_push(@valid_params)
-      request_json['foo'].should be_nil
+      request_json['foo'].should == 'bar'
     end
 
     it "returns false if urbanairship responds with a non-200 response" do
