@@ -11,7 +11,6 @@ module Urbanairship
     Timer = Timeout
   end
 
-  VALID_PUSH_PARAMS = %w(device_tokens aliases tags schedule_for exclude_tokens aps)
   VALID_REGISTER_PARAMS = %w(alias)
 
   class << self
@@ -108,7 +107,7 @@ module Urbanairship
 
     def parse_push_options(hash = {})
       hash[:schedule_for] = hash[:schedule_for].map{|elem| process_scheduled_elem(elem)} unless hash[:schedule_for].nil?
-      hash.delete_if{|key, value| !VALID_PUSH_PARAMS.include?(key.to_s)}
+      hash
     end
 
     def log_request_and_response(request, response, time)
