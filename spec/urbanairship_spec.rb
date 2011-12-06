@@ -1,5 +1,4 @@
 describe Urbanairship do
-
   before(:all) do
     FakeWeb.allow_net_connect = false
 
@@ -47,7 +46,6 @@ describe Urbanairship do
   end
 
   describe "configuration" do
-
     it "enables you to configure the application key" do
       Urbanairship.application_key.should be_nil
       Urbanairship.application_key = "asdf1234"
@@ -65,11 +63,9 @@ describe Urbanairship do
       Urbanairship.master_secret = "asdf1234"
       Urbanairship.master_secret.should == "asdf1234"
     end
-
   end
 
-  describe "registering a device" do
-
+  describe "::register_device" do
     before(:each) do
       @valid_params = {:alias => 'one'}
       Urbanairship.application_key = "my_app_key"
@@ -137,10 +133,9 @@ describe Urbanairship do
       Urbanairship.register_device("device_token_one", @valid_params)
       request_json['foo'].should be_nil
     end
-
   end
 
-  describe "unregistering a device" do
+  describe "::unregister_device" do
     before(:each) do
       Urbanairship.application_key = "my_app_key"
       Urbanairship.application_secret = "my_app_secret"
@@ -174,10 +169,9 @@ describe Urbanairship do
       Urbanairship.application_key = "bad_key"
       Urbanairship.unregister_device("key_to_delete").should == false
     end
-
   end
 
-  describe "deleting a scheduled push notification" do
+  describe "::delete_scheduled_push" do
     before(:each) do
       Urbanairship.application_key = "my_app_key"
       Urbanairship.master_secret = "my_master_secret"
@@ -221,11 +215,9 @@ describe Urbanairship do
       Urbanairship.application_key = "bad_key"
       Urbanairship.delete_scheduled_push("123456789").should == false
     end
-
   end
 
-  describe "sending multiple push notifications" do
-
+  describe "::push" do
     before(:each) do
       @valid_params = {:device_tokens => ['device_token_one', 'device_token_two'], :aps => {:alert => 'foo'}}
       Urbanairship.application_key = "my_app_key"
@@ -260,21 +252,6 @@ describe Urbanairship do
       FakeWeb.last_request['content-type'].should == 'application/json'
     end
 
-    it "adds device_tokens to the JSON payload" do
-      Urbanairship.push(@valid_params.merge(:device_tokens => ["one", "two"]))
-      request_json['device_tokens'].should == ["one", "two"]
-    end
-
-    it "adds aliases to the JSON payload" do
-      Urbanairship.push(@valid_params.merge(:aliases => ["one", "two"]))
-      request_json['aliases'].should == ["one", "two"]
-    end
-
-    it "adds tags to the JSON payload" do
-      Urbanairship.push(@valid_params.merge(:tags => ["one", "two"]))
-      request_json['tags'].should == ["one", "two"]
-    end
-
     it "adds schedule_for to the JSON payload" do
       time = Time.parse("Oct 17th, 2010, 8:00 PM UTC")
       Urbanairship.push(@valid_params.merge(:schedule_for => [time]))
@@ -286,38 +263,14 @@ describe Urbanairship do
       request_json['schedule_for'].should == ['2010-10-10T09:09:09Z']
     end
 
-    it "adds an aliased schedule_for to the JSON payload" do
-      time = Time.parse("Oct 17th, 2010, 8:00 PM UTC")
-      alias_str = 'cafebabe'
-      Urbanairship.push(@valid_params.merge(:schedule_for => [{ :alias => alias_str, :scheduled_time => time }]))
-      request_json['schedule_for'].should == [{ 'alias' => alias_str, 'scheduled_time' => '2010-10-17T20:00:00Z' }]
-    end
-
-    it "adds exclude_tokens to the JSON payload" do
-      Urbanairship.push(@valid_params.merge(:exclude_tokens => ["one", "two"]))
-      request_json['exclude_tokens'].should == ["one", "two"]
-    end
-
-    it "adds aps parameters to the JSON payload" do
-      Urbanairship.push(@valid_params.merge(:aps => {:badge => 10, :alert => "Hi!", :sound => "cat.caf"}))
-      request_json['aps'].should == {'badge' => 10, 'alert' => 'Hi!', 'sound' => 'cat.caf'}
-    end
-
-    it "includes arbitrary parameters from the JSON payload" do
-      Urbanairship.push(@valid_params.merge(:foo => 'bar'))
-      request_json['foo'].should == 'bar'
-    end
-
     it "returns false if urbanairship responds with a non-200 response" do
       Urbanairship.application_key = "my_app_key2"
       Urbanairship.master_secret = "my_master_secret2"
       Urbanairship.push.should == false
     end
-
   end
 
-  describe "sending batch push notifications" do
-
+  describe "::batch_push" do
     before(:each) do
       @valid_params = [
         {:device_tokens => ['device_token_one', 'device_token_two'], :aps => {:alert => 'foo'}},
@@ -355,24 +308,6 @@ describe Urbanairship do
       FakeWeb.last_request['content-type'].should == 'application/json'
     end
 
-    it "adds device_tokens to the JSON payload" do
-      @valid_params[0].merge!(:device_tokens => ["one", "two"])
-      Urbanairship.batch_push(@valid_params)
-      request_json[0]['device_tokens'].should == ["one", "two"]
-    end
-
-    it "adds aliases to the JSON payload" do
-      @valid_params[0].merge!(:aliases => ["one", "two"])
-      Urbanairship.batch_push(@valid_params)
-      request_json[0]['aliases'].should == ["one", "two"]
-    end
-
-    it "adds tags to the JSON payload" do
-      @valid_params[0].merge!(:tags => ["one", "two"])
-      Urbanairship.batch_push(@valid_params)
-      request_json[0]['tags'].should == ["one", "two"]
-    end
-
     it "adds schedule_for to the JSON payload" do
       time = Time.parse("Oct 17th, 2010, 8:00 PM UTC")
       @valid_params[0].merge!(:schedule_for => [time])
@@ -386,34 +321,14 @@ describe Urbanairship do
       request_json[0]['schedule_for'].should == ['2010-10-10T09:09:09Z']
     end
 
-    it "adds exclude_tokens to the JSON payload" do
-      @valid_params[0].merge!(:exclude_tokens => ["one", "two"])
-      Urbanairship.batch_push(@valid_params)
-      request_json[0]['exclude_tokens'].should == ["one", "two"]
-    end
-
-    it "adds aps parameters to the JSON payload" do
-      @valid_params[0].merge!(:aps => {:badge => 10, :alert => "Hi!", :sound => "cat.caf"})
-      Urbanairship.batch_push(@valid_params)
-      request_json[0]['aps'].should == {'badge' => 10, 'alert' => 'Hi!', 'sound' => 'cat.caf'}
-    end
-
-    it "include arbitrary parameters from the JSON payload" do
-      @valid_params[0].merge!(:foo => 'bar')
-      Urbanairship.batch_push(@valid_params)
-      request_json[0]['foo'].should == 'bar'
-    end
-
     it "returns false if urbanairship responds with a non-200 response" do
       Urbanairship.application_key = "my_app_key2"
       Urbanairship.master_secret = "my_master_secret2"
       Urbanairship.batch_push.should == false
     end
-
   end
 
-  describe "sending broadcast push notifications" do
-
+  describe "::broadcast_push" do
     before(:each) do
       @valid_params = {:aps => {:alert => 'foo'}}
       Urbanairship.application_key = "my_app_key"
@@ -448,18 +363,6 @@ describe Urbanairship do
       FakeWeb.last_request['content-type'].should == 'application/json'
     end
 
-    it "adds aliases to the JSON payload" do
-      @valid_params[:aliases] = ["one", "two"]
-      Urbanairship.broadcast_push(@valid_params)
-      request_json['aliases'].should == ["one", "two"]
-    end
-
-    it "adds tags to the JSON payload" do
-      @valid_params[:tags] = ["one", "two"]
-      Urbanairship.broadcast_push(@valid_params)
-      request_json['tags'].should == ["one", "two"]
-    end
-
     it "adds schedule_for to the JSON payload" do
       time = Time.parse("Oct 17th, 2010, 8:00 PM UTC")
       @valid_params[:schedule_for] = [time]
@@ -473,34 +376,14 @@ describe Urbanairship do
       request_json['schedule_for'].should == ['2010-10-10T09:09:09Z']
     end
 
-    it "adds exclude_tokens to the JSON payload" do
-      @valid_params[:exclude_tokens] = ["one", "two"]
-      Urbanairship.broadcast_push(@valid_params)
-      request_json['exclude_tokens'].should == ["one", "two"]
-    end
-
-    it "adds aps parameters to the JSON payload" do
-      @valid_params[:aps] = {:badge => 10, :alert => "Hi!", :sound => "cat.caf"}
-      Urbanairship.broadcast_push(@valid_params)
-      request_json['aps'].should == {'badge' => 10, 'alert' => 'Hi!', 'sound' => 'cat.caf'}
-    end
-
-    it "includes arbitrary parameters from the JSON payload" do
-      @valid_params[:foo] = 'bar'
-      Urbanairship.broadcast_push(@valid_params)
-      request_json['foo'].should == 'bar'
-    end
-
     it "returns false if urbanairship responds with a non-200 response" do
       Urbanairship.application_key = "my_app_key2"
       Urbanairship.master_secret = "my_master_secret2"
       Urbanairship.broadcast_push.should == false
     end
-
   end
 
-  describe "feedback service" do
-
+  describe "::feedback" do
     before(:each) do
       Urbanairship.application_key = "my_app_key"
       Urbanairship.master_secret = "my_master_secret"
@@ -546,7 +429,6 @@ describe Urbanairship do
       JSON.should_not_receive(:parse)
       Urbanairship.feedback(Time.now).should == false
     end
-
   end
 
   describe "logging" do
@@ -584,7 +466,6 @@ describe Urbanairship do
       @logger.should_receive(:flush)
       Urbanairship.feedback(Time.now)
     end
-
   end
 
   describe "request timeout" do
@@ -611,7 +492,6 @@ describe Urbanairship do
       Urbanairship.register_device('new_device_token')
     end
   end
-
 end
 
 def request_json
