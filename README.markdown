@@ -1,4 +1,4 @@
-Urbanairship is a Ruby library for interacting with the [Urbanairship API](http://urbanairship.com).
+Urbanairship is a Ruby library for interacting with the [Urban Airship API](http://urbanairship.com).
 
 Installation
 ============
@@ -65,7 +65,7 @@ Urbanairship.batch_push notifications # => true
 
 Sending broadcast notifications
 -------------------------------
-Urbanairship allows you to send a broadcast notification to all active registered device tokens for your app.
+Urban Airship allows you to send a broadcast notification to all active registered device tokens for your app.
 
 ```ruby
 notification = {
@@ -78,7 +78,7 @@ Urbanairship.broadcast_push notification # => true
 
 Polling the feedback API
 ------------------------
-The first time you attempt to send a push notification to a device that has uninstalled your app (or has opted-out of notifications), both Apple and Urbanairship will register that token in their feedback API. Urbanairship will prevent further attempted notification sends to that device, but it's a good practice to periodically poll Urbanairship's feedback API and mark those tokens as inactive in your own system as well.
+The first time you attempt to send a push notification to a device that has uninstalled your app (or has opted-out of notifications), both Apple and Urban Airship will register that token in their feedback API. Urban Airship will prevent further attempted notification sends to that device, but it's a good practice to periodically poll Urban Airship's feedback API and mark those tokens as inactive in your own system as well.
 
 ```ruby
 # find all device tokens deactivated in the past 24 hours
@@ -100,7 +100,7 @@ Urbanairship.feedback 24.hours.ago # =>
 Deleting scheduled notifications
 --------------------------------
 
-If you know the alias or id of a scheduled push notification then you can delete it from Urbanairship's queue and it will not be delivered.
+If you know the alias or id of a scheduled push notification then you can delete it from Urban Airship's queue and it will not be delivered.
 
 ```ruby
 Urbanairship.delete_scheduled_push("123456789") # => true

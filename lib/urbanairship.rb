@@ -11,8 +11,6 @@ module Urbanairship
     Timer = Timeout
   end
 
-  VALID_REGISTER_PARAMS = %w(alias)
-
   class << self
     attr_accessor :application_key, :application_secret, :master_secret, :logger, :request_timeout
 
@@ -102,7 +100,7 @@ module Urbanairship
 
     def parse_register_options(hash = {})
       hash[:alias] = hash[:alias].to_s unless hash[:alias].nil?
-      hash.delete_if{|key, value| !VALID_REGISTER_PARAMS.include?(key.to_s)}
+      hash
     end
 
     def parse_push_options(hash = {})

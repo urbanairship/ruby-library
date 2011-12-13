@@ -127,12 +127,6 @@ describe Urbanairship do
       Urbanairship.register_device("device_token_one", :alias => 11)
       request_json['alias'].should be_a_kind_of String
     end
-
-    it "excludes invalid parameters from the JSON payload" do
-      @valid_params.merge!(:foo => 'bar')
-      Urbanairship.register_device("device_token_one", @valid_params)
-      request_json['foo'].should be_nil
-    end
   end
 
   describe "::unregister_device" do
