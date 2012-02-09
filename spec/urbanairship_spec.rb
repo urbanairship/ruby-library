@@ -251,7 +251,7 @@ describe Urbanairship do
 
     it "raises an error when a push is done when authorization is invalid" do 
       Urbanairship.application_key = "bad_key"
-      lambda { 
+      lambda {
         Urbanairship.push(@valid_params) 
       }.should raise_error(Urbanairship::Error::Unauthorized)
     end
@@ -309,7 +309,7 @@ describe Urbanairship do
 
     it "returns false when the authorization is invalid" do
       Urbanairship.application_key = "bad_key"
-      lambda {       
+      lambda {
         Urbanairship.batch_push(@valid_params)
       }.should raise_error(Urbanairship::Error::Unauthorized)
     end
