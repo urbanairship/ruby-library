@@ -101,7 +101,9 @@ describe Urbanairship do
 
     it "returns false when the authorization is invalid" do
       Urbanairship.application_key = "bad_key"
-      Urbanairship.register_device("new_device_token").should == false
+      lambda {
+        Urbanairship.register_device("new_device_token")
+      }.should raise_error(Urbanairship::Error::Unauthorized)
     end
 
     it "doesn't set the content-type header to application/json if options are empty" do
@@ -161,7 +163,9 @@ describe Urbanairship do
 
     it "returns false when the authorization is invalid" do
       Urbanairship.application_key = "bad_key"
-      Urbanairship.unregister_device("key_to_delete").should == false
+      lambda {
+        Urbanairship.unregister_device("key_to_delete")
+      }.should raise_error(Urbanairship::Error::Unauthorized)
     end
   end
 
@@ -207,7 +211,9 @@ describe Urbanairship do
 
     it "returns false when the authorization is invalid" do
       Urbanairship.application_key = "bad_key"
-      Urbanairship.delete_scheduled_push("123456789").should == false
+      lambda {
+        Urbanairship.delete_scheduled_push("123456789")
+      }.should raise_error(Urbanairship::Error::Unauthorized)
     end
   end
 
@@ -238,7 +244,16 @@ describe Urbanairship do
 
     it "returns false when the authorization is invalid" do
       Urbanairship.application_key = "bad_key"
-      Urbanairship.push(@valid_params).should == false
+      lambda {
+        Urbanairship.push(@valid_params)
+      }.should raise_error(Urbanairship::Error::Unauthorized)
+    end
+
+    it "raises an error when a push is done when authorization is invalid" do 
+      Urbanairship.application_key = "bad_key"
+      lambda {
+        Urbanairship.push(@valid_params) 
+      }.should raise_error(Urbanairship::Error::Unauthorized)
     end
 
     it "sets the content-type header to application/json" do
@@ -294,7 +309,9 @@ describe Urbanairship do
 
     it "returns false when the authorization is invalid" do
       Urbanairship.application_key = "bad_key"
-      Urbanairship.batch_push(@valid_params).should == false
+      lambda {
+        Urbanairship.batch_push(@valid_params)
+      }.should raise_error(Urbanairship::Error::Unauthorized)
     end
 
     it "sets the content-type header to application/json" do
@@ -349,7 +366,9 @@ describe Urbanairship do
 
     it "returns false when the authorization is invalid" do
       Urbanairship.application_key = "bad_key"
-      Urbanairship.broadcast_push(@valid_params).should == false
+      lambda {
+        Urbanairship.broadcast_push(@valid_params)
+      }.should raise_error(Urbanairship::Error::Unauthorized)
     end
 
     it "sets the content-type header to application/json" do

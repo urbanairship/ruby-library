@@ -82,11 +82,24 @@ module Urbanairship
         start_time = Time.now
         response = http_client.request(request)
         log_request_and_response(request, response, Time.now - start_time)
+        verifiy_response(response)
         response
       end
-    rescue Timeout::Error
-      logger.error "Urbanairship request timed out after #{request_timeout} seconds: [#{http_method} #{request.path} #{request.body}]"
-      return false
+    rescue Timeout::Error, Errno::EINVAL, Errno::ECONNRESET, EOFError, Net::HTTPBadResponse, Net::HTTPHeaderSyntaxError, Net::ProtocolError => e
+      if e.class == Timeout::Error
+        logger.error "Urbanairship request timed out after #{request_timeout} seconds: [#{http_method} #{request.path} #{request.body}]"
+        return false
+      end
+
+      urban_airship_error = Error::Network.new
+      urban_airship_error.http_error = e
+      raise urban_airship_error
+    end
+
+    def verifiy_response(response)
+      if response.code == "401"
+        raise Error::Unauthorized
+      end
     end
 
     def verify_configuration_values(*symbols)
@@ -133,5 +146,13 @@ module Urbanairship
     def request_timeout
       @request_timeout || 5.0
     end
+  end
+
+  module Error
+    class Network < StandardError 
+      attr_accessor :http_error
+    end
+
+    class Unauthorized < StandardError; end;
   end
 end
