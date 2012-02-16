@@ -115,6 +115,7 @@ Each public method in Urbanairship returns an object with a base class of ```Urb
 about the previous operation that was performed.
 
 To find out if an operation was successful use the ```success?``` method. 
+
 ```ruby
 response = Urbanairship.push(payload)
 if response.success?
@@ -125,6 +126,7 @@ end
 ```
 
 To find the exact code of your last request use ```code```
+
 ```ruby
 response = Urbanairship.push(payload)
 response.code # "200"
