@@ -4,8 +4,7 @@ class Urbanairship::Response < Hash
     @response = response
     if @response
       if success? && !body.empty?
-        json = JSON.parse(body).first
-        json.keys.each{|k| self[k] = json[k]}
+        parse_body(body)
       end
     else
       @timeout = true
@@ -28,4 +27,16 @@ class Urbanairship::Response < Hash
     @timeout
   end
 
+  private
+
+  def parse_body(body)
+    json = JSON.parse(body)
+    if json.class == Array
+      json.each_with_index do |item, index| 
+        self[index] = item
+      end
+    else
+      json.keys.each{|k| self[k] = json[k]}
+    end
+  end
 end

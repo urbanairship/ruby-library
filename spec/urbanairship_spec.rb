@@ -402,9 +402,9 @@ describe Urbanairship do
     it "returns an array of responses from the feedback API" do
       response = Urbanairship.feedback(Time.now)
       response.class.should == Urbanairship::Response
-      response.should include("device_token")
-      response.should include("marked_inactive_on")
-      response.should include("alias")
+      response[0].should include("device_token")
+      response[0].should include("marked_inactive_on")
+      response[0].should include("alias")
     end
 
     it "returns false and doesn't parse JSON when the call doesn't return 200" do
