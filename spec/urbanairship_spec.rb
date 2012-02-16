@@ -35,16 +35,6 @@ describe Urbanairship do
     FakeWeb.register_uri(:get, /my_app_key2\:my_master_secret2\@go\.urbanairship.com\/api\/device_tokens\/feedback/, :status => ["500", "Internal Server Error"])
   end
 
-  after(:each) do
-    # reset configuration
-    Urbanairship.application_key = nil
-    Urbanairship.application_secret = nil
-    Urbanairship.master_secret = nil
-    Urbanairship.logger = nil
-
-    FakeWeb.instance_variable_set("@last_request", nil)
-  end
-
   describe "configuration" do
     it "enables you to configure the application key" do
       Urbanairship.application_key.should be_nil
@@ -92,16 +82,16 @@ describe Urbanairship do
     end
 
     it "returns true when the device is registered for the first time" do
-      Urbanairship.register_device("new_device_token").should == true
+      Urbanairship.register_device("new_device_token").success?.should == true
     end
 
     it "returns true when the device is registered again" do
-      Urbanairship.register_device("existing_device_token").should == true
+      Urbanairship.register_device("existing_device_token").success?.should == true
     end
 
     it "returns false when the authorization is invalid" do
       Urbanairship.application_key = "bad_key"
-      Urbanairship.register_device("new_device_token").should == false
+      Urbanairship.register_device("new_device_token").success?.should == false
     end
 
     it "doesn't set the content-type header to application/json if options are empty" do
@@ -110,7 +100,7 @@ describe Urbanairship do
     end
 
     it "accepts an alias" do
-      Urbanairship.register_device("device_token_one", @valid_params).should == true
+      Urbanairship.register_device("device_token_one", @valid_params).success?.should == true
     end
 
     it "sets the content-type header to application/json when options are added" do
@@ -155,13 +145,13 @@ describe Urbanairship do
     end
 
     it "returns true when the device is successfully unregistered" do
-      Urbanairship.unregister_device("key_to_delete").should == true
+      Urbanairship.unregister_device("key_to_delete").success?.should == true
       FakeWeb.last_request.body.should be_nil
     end
 
     it "returns false when the authorization is invalid" do
       Urbanairship.application_key = "bad_key"
-      Urbanairship.unregister_device("key_to_delete").should == false
+      Urbanairship.unregister_device("key_to_delete").success?.should == false
     end
   end
 
@@ -201,13 +191,13 @@ describe Urbanairship do
     end
 
     it "returns true when the push notification is successfully deleted" do
-      Urbanairship.delete_scheduled_push("123456789").should == true
+      Urbanairship.delete_scheduled_push("123456789").success?.should == true
       FakeWeb.last_request.body.should be_nil
     end
 
     it "returns false when the authorization is invalid" do
       Urbanairship.application_key = "bad_key"
-      Urbanairship.delete_scheduled_push("123456789").should == false
+      Urbanairship.delete_scheduled_push("123456789").success?.should == false
     end
   end
 
@@ -233,12 +223,12 @@ describe Urbanairship do
     end
 
     it "returns true when it successfully pushes a notification" do
-      Urbanairship.push(@valid_params).should == true
+      Urbanairship.push(@valid_params).success?.should == true
     end
 
     it "returns false when the authorization is invalid" do
       Urbanairship.application_key = "bad_key"
-      Urbanairship.push(@valid_params).should == false
+      Urbanairship.push(@valid_params).success?.should == false
     end
 
     it "sets the content-type header to application/json" do
@@ -260,7 +250,7 @@ describe Urbanairship do
     it "returns false if urbanairship responds with a non-200 response" do
       Urbanairship.application_key = "my_app_key2"
       Urbanairship.master_secret = "my_master_secret2"
-      Urbanairship.push.should == false
+      Urbanairship.push.success?.should == false
     end
   end
 
@@ -289,12 +279,12 @@ describe Urbanairship do
     end
 
     it "returns true when it successfully pushes a notification" do
-      Urbanairship.batch_push(@valid_params).should == true
+      Urbanairship.batch_push(@valid_params).success?.should == true
     end
 
     it "returns false when the authorization is invalid" do
       Urbanairship.application_key = "bad_key"
-      Urbanairship.batch_push(@valid_params).should == false
+      Urbanairship.batch_push(@valid_params).success?.should == false
     end
 
     it "sets the content-type header to application/json" do
@@ -318,7 +308,7 @@ describe Urbanairship do
     it "returns false if urbanairship responds with a non-200 response" do
       Urbanairship.application_key = "my_app_key2"
       Urbanairship.master_secret = "my_master_secret2"
-      Urbanairship.batch_push.should == false
+      Urbanairship.batch_push.success?.should == false
     end
   end
 
@@ -344,12 +334,12 @@ describe Urbanairship do
     end
 
     it "returns true when it successfully pushes a notification" do
-      Urbanairship.broadcast_push(@valid_params).should == true
+      Urbanairship.broadcast_push(@valid_params).success?.should == true
     end
 
     it "returns false when the authorization is invalid" do
       Urbanairship.application_key = "bad_key"
-      Urbanairship.broadcast_push(@valid_params).should == false
+      Urbanairship.broadcast_push(@valid_params).success?.should == false
     end
 
     it "sets the content-type header to application/json" do
@@ -373,7 +363,7 @@ describe Urbanairship do
     it "returns false if urbanairship responds with a non-200 response" do
       Urbanairship.application_key = "my_app_key2"
       Urbanairship.master_secret = "my_master_secret2"
-      Urbanairship.broadcast_push.should == false
+      Urbanairship.broadcast_push.success?.should == false
     end
   end
 
@@ -411,17 +401,17 @@ describe Urbanairship do
 
     it "returns an array of responses from the feedback API" do
       response = Urbanairship.feedback(Time.now)
-      response.class.should == Array
-      response[0].keys.should include("device_token")
-      response[0].keys.should include("marked_inactive_on")
-      response[0].keys.should include("alias")
+      response.class.should == Urbanairship::Response
+      response[0].should include("device_token")
+      response[0].should include("marked_inactive_on")
+      response[0].should include("alias")
     end
 
     it "returns false and doesn't parse JSON when the call doesn't return 200" do
       Urbanairship.application_key = "my_app_key2"
       Urbanairship.master_secret = "my_master_secret2"
       JSON.should_not_receive(:parse)
-      Urbanairship.feedback(Time.now).should == false
+      Urbanairship.feedback(Time.now).success?.should == false
     end
   end
 
