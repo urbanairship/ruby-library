@@ -17,9 +17,8 @@ module Urbanairship
     attr_accessor :application_key, :application_secret, :master_secret, :logger, :request_timeout
 
     def register_device(device_token, options = {})
-      do_request(:put, "/api/device_tokens/#{device_token}", :authenticate_with => :application_secret) do |request|
-        request.body = parse_register_options(options).to_json
-      end
+      body = parse_register_options(options).to_json
+      do_request(:put, "/api/device_tokens/#{device_token}", :body => body, :authenticate_with => :application_secret)
     end
 
     def unregister_device(device_token)
@@ -27,26 +26,23 @@ module Urbanairship
     end
 
     def delete_scheduled_push(param)
-      path = (param.is_a? Hash) ? "/api/push/scheduled/alias/#{param[:alias].to_s}" : "/api/push/scheduled/#{param.to_s}"
+      path = param.is_a?(Hash) ? "/api/push/scheduled/alias/#{param[:alias].to_s}" : "/api/push/scheduled/#{param.to_s}"
       do_request(:delete, path, :authenticate_with => :master_secret)
     end
 
     def push(options = {})
-      do_request(:post, "/api/push/", :authenticate_with => :master_secret) do |request|
-        request.body = parse_push_options(options).to_json
-      end
+      body = parse_push_options(options).to_json
+      do_request(:post, "/api/push/", :body => body, :authenticate_with => :master_secret)
     end
 
     def batch_push(notifications = [])
-      do_request(:post, "/api/push/batch/", :authenticate_with => :master_secret) do |request|
-        request.body = notifications.map{|notification| parse_push_options(notification)}.to_json
-      end
+      body = notifications.map{|notification| parse_push_options(notification)}.to_json
+      do_request(:post, "/api/push/batch/", :body => body, :authenticate_with => :master_secret)
     end
 
     def broadcast_push(options = {})
-      do_request(:post, "/api/push/broadcast/", :authenticate_with => :master_secret) do |request|
-        request.body = parse_push_options(options).to_json
-      end
+      body = parse_push_options(options).to_json
+      do_request(:post, "/api/push/broadcast/", :body => body, :authenticate_with => :master_secret)
     end
 
     def feedback(time)
@@ -63,8 +59,7 @@ module Urbanairship
       request = klass.new(path)
       request.basic_auth @application_key, instance_variable_get("@#{options[:authenticate_with]}")
       request.add_field "Content-Type", "application/json"
-
-      yield(request) if block_given?
+      request.body = options[:body] if options[:body]
 
       Timer.timeout(request_timeout) do
         start_time = Time.now
