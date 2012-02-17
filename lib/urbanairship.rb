@@ -17,44 +17,44 @@ module Urbanairship
     attr_accessor :application_key, :application_secret, :master_secret, :logger, :request_timeout
 
     def register_device(device_token, options = {})
-      response = do_request(:put, "/api/device_tokens/#{device_token}", :authenticate_with => :application_secret) do |request|
+      do_request(:put, "/api/device_tokens/#{device_token}", :authenticate_with => :application_secret) do |request|
         request.body = parse_register_options(options).to_json
         request.add_field "Content-Type", "application/json" unless options.empty?
       end
     end
 
     def unregister_device(device_token)
-      response = do_request(:delete, "/api/device_tokens/#{device_token}", :authenticate_with => :application_secret)
+      do_request(:delete, "/api/device_tokens/#{device_token}", :authenticate_with => :application_secret)
     end
 
     def delete_scheduled_push(param)
       path = (param.is_a? Hash) ? "/api/push/scheduled/alias/#{param[:alias].to_s}" : "/api/push/scheduled/#{param.to_s}"
-      response = do_request(:delete, path, :authenticate_with => :master_secret)
+      do_request(:delete, path, :authenticate_with => :master_secret)
     end
 
     def push(options = {})
-      response = do_request(:post, "/api/push/", :authenticate_with => :master_secret) do |request|
+      do_request(:post, "/api/push/", :authenticate_with => :master_secret) do |request|
         request.body = parse_push_options(options).to_json
         request.add_field "Content-Type", "application/json"
       end
     end
 
     def batch_push(notifications = [])
-      response = do_request(:post, "/api/push/batch/", :authenticate_with => :master_secret) do |request|
+      do_request(:post, "/api/push/batch/", :authenticate_with => :master_secret) do |request|
         request.body = notifications.map{|notification| parse_push_options(notification)}.to_json
         request.add_field "Content-Type", "application/json"
       end
     end
 
     def broadcast_push(options = {})
-      response = do_request(:post, "/api/push/broadcast/", :authenticate_with => :master_secret) do |request|
+      do_request(:post, "/api/push/broadcast/", :authenticate_with => :master_secret) do |request|
         request.body = parse_push_options(options).to_json
         request.add_field "Content-Type", "application/json"
       end
     end
 
     def feedback(time)
-      response = do_request(:get, "/api/device_tokens/feedback/?since=#{format_time(time)}", :authenticate_with => :master_secret)
+      do_request(:get, "/api/device_tokens/feedback/?since=#{format_time(time)}", :authenticate_with => :master_secret)
     end
 
     private
