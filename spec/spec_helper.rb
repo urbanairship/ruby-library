@@ -1,8 +1,7 @@
 require 'base64'
 require 'fakeweb'
 
-require File.expand_path(File.dirname(__FILE__) + '/../lib/urbanairship')
-require File.expand_path(File.dirname(__FILE__) + '/../lib/urbanairship/response')
+require File.join(File.dirname(__FILE__), '/../lib/urbanairship')
 
 
 RSpec.configure do |config|

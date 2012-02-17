@@ -4,8 +4,8 @@ describe Urbanairship::Response do
     FakeWeb.allow_net_connect = false
   end
 
-  context "::code" do
-    subject { Urbanairship.register_device("new_device_token") } 
+  context "#code" do
+    subject { Urbanairship.register_device("new_device_token") }
 
     before do
       FakeWeb.register_uri(:put, "https://my_app_key:my_app_secret@go.urbanairship.com/api/device_tokens/new_device_token", :status => ["201", "Created"])
@@ -24,8 +24,8 @@ describe Urbanairship::Response do
     end
  end
 
-  context "::success?" do
-    subject { Urbanairship.register_device("new_device_token") } 
+  context "#success?" do
+    subject { Urbanairship.register_device("new_device_token") }
 
     before do
       FakeWeb.register_uri(:put, "https://my_app_key:my_app_secret@go.urbanairship.com/api/device_tokens/new_device_token", :status => ["201", "Created"])
@@ -44,29 +44,8 @@ describe Urbanairship::Response do
     end
   end
 
-  context "::body" do
-    before do
-      FakeWeb.register_uri(:get, /my_app_key\:my_master_secret\@go\.urbanairship.com\/api\/device_tokens\/feedback/, :status => ["200", "OK"], :body => "[{\"device_token\":\"token\",\"marked_inactive_on\":\"2010-10-14T19:15:13Z\",\"alias\":\"my_alias\"}]")
-      Urbanairship.application_secret = "my_app_secret"
-      Urbanairship.application_key = "my_app_key"
-      Urbanairship.master_secret = "my_master_secret"
-    end
-
-    subject { Urbanairship.feedback(Time.now) } 
-    
-    it "should be set" do
-      subject.body.should eql "[{\"device_token\":\"token\",\"marked_inactive_on\":\"2010-10-14T19:15:13Z\",\"alias\":\"my_alias\"}]"
-    end
-  end
-
-  context "::request_timeout?" do
-    it "should report a timeout" do
-      # TODO : Test this... 
-    end
-  end
-
   context "body array accessor" do
-    subject { Urbanairship.feedback(Time.now) } 
+    subject { Urbanairship.feedback(Time.now) }
 
     before do
       FakeWeb.register_uri(:get, /my_app_key\:my_master_secret\@go\.urbanairship.com\/api\/device_tokens\/feedback/, :status => ["200", "OK"], :body => "[{\"device_token\":\"token\",\"marked_inactive_on\":\"2010-10-14T19:15:13Z\",\"alias\":\"my_alias\"},{\"device_token\":\"token2\",\"marked_inactive_on\":\"2010-10-14T19:15:13Z\",\"alias\":\"my_alias\"}]")
@@ -82,7 +61,7 @@ describe Urbanairship::Response do
   end
 
   context "non array response" do
-    subject { Urbanairship.feedback(Time.now) } 
+    subject { Urbanairship.feedback(Time.now) }
 
     before do
       FakeWeb.register_uri(:get, /my_app_key\:my_master_secret\@go\.urbanairship.com\/api\/device_tokens\/feedback/, :status => ["200", "OK"], :body => "{\"device_token\":\"token\",\"marked_inactive_on\":\"2010-10-14T19:15:13Z\",\"alias\":\"my_alias\"}")

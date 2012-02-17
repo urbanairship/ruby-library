@@ -2,6 +2,8 @@ require 'json'
 require 'net/https'
 require 'time'
 
+require File.join(File.dirname(__FILE__), 'urbanairship/response')
+
 module Urbanairship
   begin
     require 'system_timer'
@@ -55,7 +57,7 @@ module Urbanairship
       response = do_request(:get, "/api/device_tokens/feedback/?since=#{format_time(time)}", :authenticate_with => :master_secret)
     end
 
-  private
+    private
 
     def do_request(http_method, path, options = {})
       verify_configuration_values(:application_key, options[:authenticate_with])
@@ -71,12 +73,11 @@ module Urbanairship
         start_time = Time.now
         response = http_client.request(request)
         log_request_and_response(request, response, Time.now - start_time)
-        Response.new(response)
+        Urbanairship::Response.wrap(response)
       end
     rescue Timeout::Error
       logger.error "Urbanairship request timed out after #{request_timeout} seconds: [#{http_method} #{request.path} #{request.body}]"
-      timeout_response = Response.new(false)
-      timeout_response 
+      Urbanairship::Response.wrap(nil, :body => {:error => 'Request timeout'}, :code => '503')
     end
 
     def verify_configuration_values(*symbols)

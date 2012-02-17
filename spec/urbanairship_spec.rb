@@ -401,7 +401,6 @@ describe Urbanairship do
 
     it "returns an array of responses from the feedback API" do
       response = Urbanairship.feedback(Time.now)
-      response.class.should == Urbanairship::Response
       response[0].should include("device_token")
       response[0].should include("marked_inactive_on")
       response[0].should include("alias")
