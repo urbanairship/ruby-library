@@ -19,19 +19,15 @@ module Urbanairship
         request.body = parse_register_options(options).to_json
         request.add_field "Content-Type", "application/json" unless options.empty?
       end
-
-      response && %w(200 201).include?(response.code)
     end
 
     def unregister_device(device_token)
       response = do_request(:delete, "/api/device_tokens/#{device_token}", :authenticate_with => :application_secret)
-      response && response.code == "204"
     end
 
     def delete_scheduled_push(param)
       path = (param.is_a? Hash) ? "/api/push/scheduled/alias/#{param[:alias].to_s}" : "/api/push/scheduled/#{param.to_s}"
       response = do_request(:delete, path, :authenticate_with => :master_secret)
-      response && response.code == "204"
     end
 
     def push(options = {})
@@ -39,8 +35,6 @@ module Urbanairship
         request.body = parse_push_options(options).to_json
         request.add_field "Content-Type", "application/json"
       end
-
-      response && response.code == "200"
     end
 
     def batch_push(notifications = [])
@@ -48,8 +42,6 @@ module Urbanairship
         request.body = notifications.map{|notification| parse_push_options(notification)}.to_json
         request.add_field "Content-Type", "application/json"
       end
-
-      response && response.code == "200"
     end
 
     def broadcast_push(options = {})
@@ -57,13 +49,10 @@ module Urbanairship
         request.body = parse_push_options(options).to_json
         request.add_field "Content-Type", "application/json"
       end
-
-      response && response.code == "200"
     end
 
     def feedback(time)
       response = do_request(:get, "/api/device_tokens/feedback/?since=#{format_time(time)}", :authenticate_with => :master_secret)
-      response && response.code == "200" ? JSON.parse(response.body) : false
     end
 
   private
@@ -82,11 +71,12 @@ module Urbanairship
         start_time = Time.now
         response = http_client.request(request)
         log_request_and_response(request, response, Time.now - start_time)
-        response
+        Response.new(response)
       end
     rescue Timeout::Error
       logger.error "Urbanairship request timed out after #{request_timeout} seconds: [#{http_method} #{request.path} #{request.body}]"
-      return false
+      timeout_response = Response.new(false)
+      timeout_response 
     end
 
     def verify_configuration_values(*symbols)

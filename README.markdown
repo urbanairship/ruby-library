@@ -107,3 +107,38 @@ Urbanairship.delete_scheduled_push("123456789") # => true
 Urbanairship.delete_scheduled_push(123456789) # => true
 Urbanairship.delete_scheduled_push(:alias => "deadbeef") # => true
 ```
+
+Error checking with responses
+-----------------------------
+
+Each public method in Urbanairship returns an object with a base class of ```Urbanairship::Response```. This base class contains debugging information
+about the previous operation that was performed.
+
+To find out if an operation was successful use the ```success?``` method. 
+
+```ruby
+response = Urbanairship.push(payload)
+if response.success?
+  # yay done!
+else
+  # give up
+end
+```
+
+To find the exact code of your last request use ```code```
+
+```ruby
+response = Urbanairship.push(payload)
+response.code # "200"
+```
+
+Expecting a JSON body back? We have you covered. It just so happens that ```Urbanairship::Response``` inherits ```Hash``` and binds the JSON body to its self.
+So if your working with the feedback you can iterate over each item returned.
+
+```ruby
+response = Urbanairship.feedback(Time.now)
+
+response.each do |device_token|
+  # do stuff
+end
+```
