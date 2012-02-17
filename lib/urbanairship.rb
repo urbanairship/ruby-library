@@ -19,7 +19,6 @@ module Urbanairship
     def register_device(device_token, options = {})
       do_request(:put, "/api/device_tokens/#{device_token}", :authenticate_with => :application_secret) do |request|
         request.body = parse_register_options(options).to_json
-        request.add_field "Content-Type", "application/json" unless options.empty?
       end
     end
 
@@ -35,21 +34,18 @@ module Urbanairship
     def push(options = {})
       do_request(:post, "/api/push/", :authenticate_with => :master_secret) do |request|
         request.body = parse_push_options(options).to_json
-        request.add_field "Content-Type", "application/json"
       end
     end
 
     def batch_push(notifications = [])
       do_request(:post, "/api/push/batch/", :authenticate_with => :master_secret) do |request|
         request.body = notifications.map{|notification| parse_push_options(notification)}.to_json
-        request.add_field "Content-Type", "application/json"
       end
     end
 
     def broadcast_push(options = {})
       do_request(:post, "/api/push/broadcast/", :authenticate_with => :master_secret) do |request|
         request.body = parse_push_options(options).to_json
-        request.add_field "Content-Type", "application/json"
       end
     end
 
@@ -66,6 +62,7 @@ module Urbanairship
 
       request = klass.new(path)
       request.basic_auth @application_key, instance_variable_get("@#{options[:authenticate_with]}")
+      request.add_field "Content-Type", "application/json"
 
       yield(request) if block_given?
 

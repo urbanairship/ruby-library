@@ -15,10 +15,12 @@ module Urbanairship
     def self.wrap(response, options = {})
       if options[:body]
         output = options[:body]
-      elsif response.body.nil? || response.body.empty?
-        output = {}
       else
-        output = JSON.parse(response.body)
+        begin
+          output = JSON.parse(response.body)
+        rescue JSON::ParserError
+          output = {}
+        end
       end
 
       output.extend(Urbanairship::Response::InstanceMethods)

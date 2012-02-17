@@ -94,18 +94,8 @@ describe Urbanairship do
       Urbanairship.register_device("new_device_token").success?.should == false
     end
 
-    it "doesn't set the content-type header to application/json if options are empty" do
-      Urbanairship.register_device("device_token_one")
-      FakeWeb.last_request['content-type'].should_not == 'application/json'
-    end
-
     it "accepts an alias" do
       Urbanairship.register_device("device_token_one", @valid_params).success?.should == true
-    end
-
-    it "sets the content-type header to application/json when options are added" do
-      Urbanairship.register_device("device_token_one", @valid_params)
-      FakeWeb.last_request['content-type'].should == 'application/json'
     end
 
     it "adds alias to the JSON payload" do
@@ -231,11 +221,6 @@ describe Urbanairship do
       Urbanairship.push(@valid_params).success?.should == false
     end
 
-    it "sets the content-type header to application/json" do
-      Urbanairship.push(@valid_params)
-      FakeWeb.last_request['content-type'].should == 'application/json'
-    end
-
     it "adds schedule_for to the JSON payload" do
       time = Time.parse("Oct 17th, 2010, 8:00 PM UTC")
       Urbanairship.push(@valid_params.merge(:schedule_for => [time]))
@@ -287,11 +272,6 @@ describe Urbanairship do
       Urbanairship.batch_push(@valid_params).success?.should == false
     end
 
-    it "sets the content-type header to application/json" do
-      Urbanairship.batch_push(@valid_params)
-      FakeWeb.last_request['content-type'].should == 'application/json'
-    end
-
     it "adds schedule_for to the JSON payload" do
       time = Time.parse("Oct 17th, 2010, 8:00 PM UTC")
       @valid_params[0].merge!(:schedule_for => [time])
@@ -340,11 +320,6 @@ describe Urbanairship do
     it "returns false when the authorization is invalid" do
       Urbanairship.application_key = "bad_key"
       Urbanairship.broadcast_push(@valid_params).success?.should == false
-    end
-
-    it "sets the content-type header to application/json" do
-      Urbanairship.broadcast_push(@valid_params)
-      FakeWeb.last_request['content-type'].should == 'application/json'
     end
 
     it "adds schedule_for to the JSON payload" do
@@ -406,10 +381,9 @@ describe Urbanairship do
       response[0].should include("alias")
     end
 
-    it "returns false and doesn't parse JSON when the call doesn't return 200" do
+    it "success? is false when the call doesn't return 200" do
       Urbanairship.application_key = "my_app_key2"
       Urbanairship.master_secret = "my_master_secret2"
-      JSON.should_not_receive(:parse)
       Urbanairship.feedback(Time.now).success?.should == false
     end
   end
