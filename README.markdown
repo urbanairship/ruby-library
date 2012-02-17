@@ -22,13 +22,13 @@ Usage
 Registering a device token
 --------------------------
 ```ruby
-Urbanairship.register_device 'DEVICE-TOKEN' # => true
+Urbanairship.register_device('DEVICE-TOKEN')
 ```
 
 Unregistering a device token
 ----------------------------
 ```ruby
-Urbanairship.unregister_device 'DEVICE-TOKEN' # => true
+Urbanairship.unregister_device('DEVICE-TOKEN')
 ```
 
 Sending a push notification
@@ -40,7 +40,10 @@ notification = {
   :aps => {:alert => 'You have a new message!', :badge => 1}
 }
 
-Urbanairship.push notification # => true
+Urbanairship.push(notification) # =>
+# {
+#   "scheduled_notifications" => ["https://go.urbanairship.com/api/push/scheduled/123456"]
+# }
 ```
 
 Batching push notification sends
@@ -48,7 +51,7 @@ Batching push notification sends
 ```ruby
 notifications = [
   {
-    :schedule_for => [{ :alias => 'deadbeef', :scheduled_time => 1.hour.from_now }],   # assigning an alias to a scheduled push
+    :schedule_for => [{ :alias => 'deadbeef', :scheduled_time => 1.hour.from_now }],
     :device_tokens => ['DEVICE-TOKEN-ONE', 'DEVICE-TOKEN-TWO'],
     :aps => {:alert => 'You have a new message!', :badge => 1}
   },
@@ -59,7 +62,7 @@ notifications = [
   }
 ]
 
-Urbanairship.batch_push notifications # => true
+Urbanairship.batch_push(notifications)
 ```
 
 
@@ -73,7 +76,7 @@ notification = {
   :aps => {:alert => 'Important announcement!', :badge => 1}
 }
 
-Urbanairship.broadcast_push notification # => true
+Urbanairship.broadcast_push(notification)
 ```
 
 Polling the feedback API
@@ -82,7 +85,7 @@ The first time you attempt to send a push notification to a device that has unin
 
 ```ruby
 # find all device tokens deactivated in the past 24 hours
-Urbanairship.feedback 24.hours.ago # =>
+Urbanairship.feedback(24.hours.ago) # =>
 # [
 #   {
 #     "marked_inactive_on"=>"2011-06-03 22:53:23",
@@ -103,42 +106,27 @@ Deleting scheduled notifications
 If you know the alias or id of a scheduled push notification then you can delete it from Urban Airship's queue and it will not be delivered.
 
 ```ruby
-Urbanairship.delete_scheduled_push("123456789") # => true
-Urbanairship.delete_scheduled_push(123456789) # => true
-Urbanairship.delete_scheduled_push(:alias => "deadbeef") # => true
+Urbanairship.delete_scheduled_push("123456789")
+Urbanairship.delete_scheduled_push(123456789)
+Urbanairship.delete_scheduled_push(:alias => "deadbeef")
 ```
 
-Error checking with responses
 -----------------------------
 
-Each public method in Urbanairship returns an object with a base class of ```Urbanairship::Response```. This base class contains debugging information
-about the previous operation that was performed.
-
-To find out if an operation was successful use the ```success?``` method. 
+Note: all public library methods will return either an array or a hash, depending on the response from the Urban Airship API. In addition, you can inspect these objects to find out if they were successful or not, and what the http response code from Urban Airship was.
 
 ```ruby
 response = Urbanairship.push(payload)
-if response.success?
-  # yay done!
-else
-  # give up
-end
+response.success? # => true
+response.code # => '200'
+response.inspect # => "{\"scheduled_notifications\"=>[\"https://go.urbanairship.com/api/push/scheduled/123456\"]}"
 ```
 
-To find the exact code of your last request use ```code```
+If the call to Urban Airship times out, you'll get a response object with a '503' code.
 
 ```ruby
-response = Urbanairship.push(payload)
-response.code # "200"
-```
-
-Expecting a JSON body back? We have you covered. It just so happens that ```Urbanairship::Response``` inherits ```Hash``` and binds the JSON body to its self.
-So if your working with the feedback you can iterate over each item returned.
-
-```ruby
-response = Urbanairship.feedback(Time.now)
-
-response.each do |device_token|
-  # do stuff
-end
+response = Urbanairship.feedback(1.year.ago)
+response.success? # => false
+response.code # => '503'
+response.inspect # => "{\"error\"=>\"Request timeout\"}"
 ```
