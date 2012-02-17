@@ -4,7 +4,7 @@ module Urbanairship
       attr_accessor :ua_response, :ua_options
 
       def code
-        ua_options[:code] || ua_response.code
+        (ua_options[:code] || ua_response.code).to_s
       end
 
       def success?
