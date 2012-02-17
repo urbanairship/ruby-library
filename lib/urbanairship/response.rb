@@ -17,7 +17,7 @@ module Urbanairship
         output = options[:body]
       else
         begin
-          output = JSON.parse(response.body)
+          output = JSON.parse(response.body || '{}')
         rescue JSON::ParserError
           output = {}
         end
