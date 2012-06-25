@@ -111,6 +111,37 @@ Urbanairship.delete_scheduled_push(123456789)
 Urbanairship.delete_scheduled_push(:alias => "deadbeef")
 ```
 
+Using Urbanairship with Android
+-------------------------------
+
+The Urban Airship API extends a subset of their push API to Android devices. You can read more about what is currently supported [here](https://docs.urbanairship.com/display/DOCS/Server%3A+Android+Push+API), but as of this writing, only registration, aliases, tags, broadcast, individual push, and batch push are supported.
+
+To use this library with Android devices, you can set the `provider` configuration option to `:android`:
+
+```ruby
+Urbanairship.provider = :android
+```
+
+Alternatively, you can pass the `:provider => :android` option to device registration calls if your app uses Urbanairship to send notifications to both Android and iOS devices.
+
+```ruby
+Urbanairship.register_device("DEVICE-TOKEN", :provider => :android)
+```
+
+Note: all other supported actions use the same API endpoints as iOS, so it is not necessary to specify the provider as `:android` when calling them.
+
+When sending notifications to Android devices, the Urban Airship API expects the following basic structure:
+
+```ruby
+notification = {
+  :schedule_for => [1.hour.from_now],
+  :apids => ['DEVICE-TOKEN-ONE', 'DEVICE-TOKEN-TWO'],
+  :android => {:alert => 'You have a new message!', :extra => {:foo => 'bar'}}
+}
+
+Urbanairship.push(notification)
+```
+
 -----------------------------
 
 Note: all public library methods will return either an array or a hash, depending on the response from the Urban Airship API. In addition, you can inspect these objects to find out if they were successful or not, and what the http response code from Urban Airship was.

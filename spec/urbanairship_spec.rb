@@ -3,12 +3,14 @@ describe Urbanairship do
     FakeWeb.allow_net_connect = false
 
     # register_device
+    FakeWeb.register_uri(:put, "https://my_app_key:my_app_secret@go.urbanairship.com/api/apids/new_device_token", :status => ["201", "Created"])
     FakeWeb.register_uri(:put, "https://my_app_key:my_app_secret@go.urbanairship.com/api/device_tokens/new_device_token", :status => ["201", "Created"])
     FakeWeb.register_uri(:put, "https://my_app_key:my_app_secret@go.urbanairship.com/api/device_tokens/existing_device_token", :status => ["200", "OK"])
     FakeWeb.register_uri(:put, "https://my_app_key:my_app_secret@go.urbanairship.com/api/device_tokens/device_token_one", :status => ["201", "Created"])
     FakeWeb.register_uri(:put, /bad_key\:my_app_secret\@go\.urbanairship\.com/, :status => ["401", "Unauthorized"])
 
     # unregister_device
+    FakeWeb.register_uri(:delete, /my_app_key\:my_app_secret\@go\.urbanairship.com\/api\/apids\/.+/, :status => ["204", "No Content"])
     FakeWeb.register_uri(:delete, /my_app_key\:my_app_secret\@go\.urbanairship.com\/api\/device_tokens\/.+/, :status => ["204", "No Content"])
     FakeWeb.register_uri(:delete, /bad_key\:my_app_secret\@go\.urbanairship.com\/api\/device_tokens\/.+/, :status => ["401", "Unauthorized"])
 
@@ -106,6 +108,23 @@ describe Urbanairship do
     it "converts alias param to string" do
       Urbanairship.register_device("device_token_one", :alias => 11)
       request_json['alias'].should be_a_kind_of String
+    end
+
+    it "uses the iOS interface by default" do
+      Urbanairship.register_device("new_device_token")
+      FakeWeb.last_request.path.should == "/api/device_tokens/new_device_token"
+    end
+
+    it "uses the android interface if 'provider' configuration option is set to :android" do
+      Urbanairship.provider = :android
+      Urbanairship.register_device("new_device_token")
+      FakeWeb.last_request.path.should == "/api/apids/new_device_token"
+      Urbanairship.provider = nil
+    end
+
+    it "uses the android interface if 'provider' option is passed as :android" do
+      Urbanairship.register_device("new_device_token", :provider => :android)
+      FakeWeb.last_request.path.should == "/api/apids/new_device_token"
     end
   end
 

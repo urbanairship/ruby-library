@@ -14,11 +14,16 @@ module Urbanairship
   end
 
   class << self
-    attr_accessor :application_key, :application_secret, :master_secret, :logger, :request_timeout
+    attr_accessor :application_key, :application_secret, :master_secret, :logger, :request_timeout, :provider
 
     def register_device(device_token, options = {})
       body = parse_register_options(options).to_json
-      do_request(:put, "/api/device_tokens/#{device_token}", :body => body, :authenticate_with => :application_secret)
+
+      if (options[:provider] || @provider) == :android
+        do_request(:put, "/api/apids/#{device_token}", :body => body, :authenticate_with => :application_secret)
+      else
+        do_request(:put, "/api/device_tokens/#{device_token}", :body => body, :authenticate_with => :application_secret)
+      end
     end
 
     def unregister_device(device_token)
