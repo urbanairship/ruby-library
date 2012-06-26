@@ -54,6 +54,22 @@ module Urbanairship
       do_request(:get, "/api/device_tokens/feedback/?since=#{format_time(time)}", :authenticate_with => :master_secret)
     end
 
+    def device_tokens(options_or_previous_page = {})
+      opts = options_or_previous_page.with_indifferent_access
+      limit = opts[:limit] || 5000
+      path = if opts[:next_page]
+          uri = URI.parse(opts[:next_page])
+          "#{uri.path}?#{uri.query}"
+        else
+          "/api/device_tokens/?limit=#{limit}"
+        end
+      do_request(:get, path, :authenticate_with => :master_secret)
+    end
+
+    def device_tokens_count
+      do_request(:get, "/api/device_tokens/count/", :authenticate_with => :master_secret)
+    end
+
     private
 
     def do_request(http_method, path, options = {})
