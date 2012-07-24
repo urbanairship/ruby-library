@@ -454,9 +454,12 @@ describe Urbanairship do
     end
 
     it "does not attempt to log if logger is not set" do
+      Urbanairship::Timer.should_receive(:timeout).with(5.0).and_raise(Timeout::Error)
       Urbanairship.logger = nil
-      @logger.should_not_receive(:error).with(/Urbanairship request timed out/)
-      Urbanairship.register_device('new_device_token')
+
+      lambda {
+        Urbanairship.register_device('new_device_token')
+      }.should_not raise_exception(NoMethodError)
     end
 
     it "uses a default request_timeout value of five seconds" do
