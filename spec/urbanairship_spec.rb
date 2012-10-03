@@ -162,6 +162,19 @@ describe Urbanairship do
       Urbanairship.application_key = "bad_key"
       Urbanairship.unregister_device("key_to_delete").success?.should == false
     end
+
+    it "uses the android interface if 'provider' configuration option is set to :android" do
+      Urbanairship.provider = :android
+      Urbanairship.unregister_device("new_device_token")
+      FakeWeb.last_request.path.should == "/api/apids/new_device_token"
+      Urbanairship.provider = nil
+    end
+
+    it "uses the android interface if 'provider' option is passed as :android" do
+      Urbanairship.unregister_device("new_device_token", :provider => :android)
+      FakeWeb.last_request.path.should == "/api/apids/new_device_token"
+    end
+
   end
 
   describe "::delete_scheduled_push" do
