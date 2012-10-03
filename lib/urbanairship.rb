@@ -26,8 +26,12 @@ module Urbanairship
       end
     end
 
-    def unregister_device(device_token)
-      do_request(:delete, "/api/device_tokens/#{device_token}", :authenticate_with => :application_secret)
+    def unregister_device(device_token, options = {})
+      if (options[:provider] || @provider) == :android
+        do_request(:delete, "/api/apids/#{device_token}", :authenticate_with => :application_secret)
+      else
+        do_request(:delete, "/api/device_tokens/#{device_token}", :authenticate_with => :application_secret)
+      end
     end
 
     def delete_scheduled_push(param)
