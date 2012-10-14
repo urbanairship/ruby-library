@@ -490,6 +490,44 @@ describe Urbanairship do
       Urbanairship.register_device('new_device_token')
     end
   end
+
+  describe "test delivery method" do
+    before(:each) do
+      @params1 = {:device_tokens => ['device_token_one', 'device_token_two'], :aps => {:alert => 'foo'}}
+      @params2 = {:aliases => ['alias_one', 'alias_two'], :aps => {:alert => 'bar'}}
+      Urbanairship.delivery_method = :test
+    end
+
+    it "does not make HTTP requests" do
+      Urbanairship.register_device('new_device_token')
+      FakeWeb.last_request.should == nil
+
+      Urbanairship.push(@params1)
+      FakeWeb.last_request.should == nil
+
+      Urbanairship.batch_push([@params1, @params2])
+      FakeWeb.last_request.should == nil
+
+      Urbanairship.broadcast_push(@params1)
+      FakeWeb.last_request.should == nil
+    end
+
+    it "tracks registered devices" do
+      expect{Urbanairship.register_device('new_device_token')}.to change{Urbanairship.registered_devices.size}.by(1)
+    end
+
+    it "tracks individual push notifications" do
+      expect{Urbanairship.push(@params1)}.to change{Urbanairship.delivered_notifications.size}.by(1)
+    end
+
+    it "tracks batch push notifications" do
+      expect{Urbanairship.batch_push([@params1, @params2])}.to change{Urbanairship.delivered_notifications.size}.by(2)
+    end
+
+    it "tracks broadcast notifications" do
+      expect{Urbanairship.broadcast_push(@params1)}.to change{Urbanairship.delivered_notifications.size}.by(1)
+    end
+  end
 end
 
 def request_json
