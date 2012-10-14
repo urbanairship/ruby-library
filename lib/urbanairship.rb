@@ -15,8 +15,11 @@ module Urbanairship
 
   class << self
     attr_accessor :application_key, :application_secret, :master_secret, :logger, :request_timeout, :provider
+    attr_accessor :delivery_method, :delivered_notifications, :registered_devices
 
     def register_device(device_token, options = {})
+      @registered_devices << options.merge(:device_token => device_token) if @delivery_method == :test
+
       body = parse_register_options(options).to_json
 
       if (options[:provider] || @provider) == :android
@@ -40,16 +43,22 @@ module Urbanairship
     end
 
     def push(options = {})
+      @delivered_notifications << options if @delivery_method == :test
+
       body = parse_push_options(options).to_json
       do_request(:post, "/api/push/", :body => body, :authenticate_with => :master_secret)
     end
 
     def batch_push(notifications = [])
+      @delivered_notifications += notifications if @delivery_method == :test
+
       body = notifications.map{|notification| parse_push_options(notification)}.to_json
       do_request(:post, "/api/push/batch/", :body => body, :authenticate_with => :master_secret)
     end
 
     def broadcast_push(options = {})
+      @delivered_notifications << options if @delivery_method == :test
+
       body = parse_push_options(options).to_json
       do_request(:post, "/api/push/broadcast/", :body => body, :authenticate_with => :master_secret)
     end
@@ -58,9 +67,19 @@ module Urbanairship
       do_request(:get, "/api/device_tokens/feedback/?since=#{format_time(time)}", :authenticate_with => :master_secret)
     end
 
+    def delivery_method=(delivery_method)
+      @delivery_method = delivery_method
+      if delivery_method == :test
+        @delivered_notifications = []
+        @registered_devices = []
+      end
+    end
+
     private
 
     def do_request(http_method, path, options = {})
+      return if @delivery_method == :test
+
       verify_configuration_values(:application_key, options[:authenticate_with])
 
       klass = Net::HTTP.const_get(http_method.to_s.capitalize)
