@@ -132,4 +132,8 @@ module Urbanairship
   class << self
     include ClassMethods
   end
+
+  class Client
+    include ClassMethods
+  end
 end

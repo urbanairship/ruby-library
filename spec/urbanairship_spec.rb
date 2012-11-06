@@ -1,4 +1,4 @@
-describe Urbanairship do
+shared_examples_for "an Urbanairship client" do
   before(:all) do
     FakeWeb.allow_net_connect = false
 
@@ -490,6 +490,14 @@ describe Urbanairship do
       subject.register_device('new_device_token')
     end
   end
+end
+
+describe Urbanairship do
+  it_should_behave_like "an Urbanairship client"
+end
+
+describe Urbanairship::Client do
+  it_should_behave_like "an Urbanairship client"
 end
 
 def request_json
