@@ -161,3 +161,27 @@ response.success? # => false
 response.code # => '503'
 response.inspect # => "{\"error\"=>\"Request timeout\"}"
 ```
+
+Instantiating an Urbanairship::Client
+-------------------------------------
+
+Anything you can do directly with the Urbanairship module, you can also do with a Client.
+
+```ruby
+client = Urbanairship::Client.new
+client.application_key = 'application-key'
+client.application_secret = 'application-secret'
+client.register_device('DEVICE-TOKEN')
+notification = {
+  :schedule_for => [1.hour.from_now],
+  :device_tokens => ['DEVICE-TOKEN'],
+  :aps => {:alert => 'You have a new message!', :badge => 1}
+}
+
+client.push(notification) # =>
+# {
+#   "scheduled_notifications" => ["https://go.urbanairship.com/api/push/scheduled/123456"]
+# }
+```
+
+This can be used to use clients for different Urbanairship applications in a thread-safe manner.
