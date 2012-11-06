@@ -13,7 +13,7 @@ module Urbanairship
     Timer = Timeout
   end
 
-  class << self
+  module ClassMethods
     attr_accessor :application_key, :application_secret, :master_secret, :logger, :request_timeout, :provider
 
     def register_device(device_token, options = {})
@@ -127,5 +127,9 @@ module Urbanairship
     def request_timeout
       @request_timeout || 5.0
     end
+  end
+
+  class << self
+    include ClassMethods
   end
 end
