@@ -198,7 +198,7 @@ shared_examples_for "an Urbanairship client" do
    end
   end
    
-  describe "::tags_for_device_token" do
+  describe "::tags_for_device" do
     before(:each) do
       subject.application_key = "my_app_key"
       subject.master_secret = "my_master_secret"
@@ -209,17 +209,17 @@ shared_examples_for "an Urbanairship client" do
        subject.master_secret = nil
 
        lambda {
-         subject.tags_for_device_token('a_device_token')
+         subject.tags_for_device('a_device_token')
        }.should raise_error(RuntimeError, "Must configure application_key, master_secret before making this request.")
     end
     
     it "uses app key and secret to sign the request" do
-      subject.tags_for_device_token('valid_device_token')
+      subject.tags_for_device('valid_device_token')
       FakeWeb.last_request['authorization'].should == "Basic #{Base64::encode64('my_app_key:my_master_secret').chomp}"
     end
     
     it "returns valid tags for a device" do
-      response = subject.tags_for_device_token('valid_device_token')
+      response = subject.tags_for_device('valid_device_token')
       response.first.should include("tags")
       response.first["tags"].should include("tag1")
       response.first["tags"].should include("tag2")
@@ -227,14 +227,14 @@ shared_examples_for "an Urbanairship client" do
     end
     
     it "returns invalid response for device token that is not found or registered" do
-      response = subject.tags_for_device_token('invalid_device_token')
+      response = subject.tags_for_device('invalid_device_token')
       response.code.should == "404"
     end
     
     it "success? is false when the call doesn't return 200" do
       subject.application_key = "my_app_key2"
       subject.master_secret = "my_master_secret2"
-      subject.tags_for_device_token('a_device_token').success?.should == false
+      subject.tags_for_device('a_device_token').success?.should == false
     end
   end
   
@@ -249,23 +249,23 @@ shared_examples_for "an Urbanairship client" do
        subject.master_secret = nil
 
        lambda {
-         subject.add_device_token_to_tag({:device_token => 'a_device_token', :tag => 'a_tag'})
+         subject.add_device_to_tag({:device_token => 'a_device_token', :tag => 'a_tag'})
        }.should raise_error(RuntimeError, "Must configure application_key, master_secret before making this request.")
     end
     
     it "uses app key and secret to sign the request" do
-      subject.add_device_token_to_tag({:device_token => 'valid_device_token', :tag => 'new_tag'})
+      subject.add_device_to_tag({:device_token => 'valid_device_token', :tag => 'new_tag'})
       FakeWeb.last_request['authorization'].should == "Basic #{Base64::encode64('my_app_key:my_master_secret').chomp}"
     end
     
     it "adds a valid device token to tag" do
-      response = subject.add_device_token_to_tag({:device_token => 'valid_device_token', :tag => 'new_tag'})
+      response = subject.add_device_to_tag({:device_token => 'valid_device_token', :tag => 'new_tag'})
       response.code.should == "201"
       response.success?.should == true
     end
     
     it "adds a valid device token to an existing tag" do
-      response = subject.add_device_token_to_tag({:device_token => 'valid_device_token', :tag => 'existing_tag'})
+      response = subject.add_device_to_tag({:device_token => 'valid_device_token', :tag => 'existing_tag'})
       response.code.should == "200"
       response.success?.should == true
     end
@@ -282,23 +282,23 @@ shared_examples_for "an Urbanairship client" do
          subject.master_secret = nil
 
          lambda {
-           subject.remove_device_token_from_tag({:device_token => 'a_device_token', :tag => 'a_tag'})
+           subject.remove_device_from_tag({:device_token => 'a_device_token', :tag => 'a_tag'})
          }.should raise_error(RuntimeError, "Must configure application_key, master_secret before making this request.")
       end
 
       it "uses app key and secret to sign the request" do
-        subject.remove_device_token_from_tag({:device_token => 'valid_device_token', :tag => 'existing_tag'})
+        subject.remove_device_from_tag({:device_token => 'valid_device_token', :tag => 'existing_tag'})
         FakeWeb.last_request['authorization'].should == "Basic #{Base64::encode64('my_app_key:my_master_secret').chomp}"
       end
 
       it "removes a valid device token from a tag" do
-        response = subject.remove_device_token_from_tag({:device_token => 'valid_device_token', :tag => 'existing_tag'})
+        response = subject.remove_device_from_tag({:device_token => 'valid_device_token', :tag => 'existing_tag'})
         response.code.should == "204"
         response.success?.should == true
       end
 
       it "removes a device token from a tag that it is not associated with" do
-        response = subject.remove_device_token_from_tag({:device_token => 'valid_device_token', :tag => 'non_existant_tag'})
+        response = subject.remove_device_from_tag({:device_token => 'valid_device_token', :tag => 'non_existant_tag'})
         response.code.should == "404"
         response.success?.should == false
       end
