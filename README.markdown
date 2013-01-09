@@ -111,6 +111,63 @@ Urbanairship.delete_scheduled_push(123456789)
 Urbanairship.delete_scheduled_push(:alias => "deadbeef")
 ```
 
+Viewing your tags
+--------------------------------
+
+```ruby
+Urbanairship.tags
+```
+
+Adding a tag
+--------------------------------
+Creates a tag. 
+
+```ruby
+Urbanairship.add_tag(TAG)
+```
+
+Removing a tag
+--------------------------------
+Removes a tag from tag collection. Note that this will also remove the tag from any device that is already associated with it.
+
+```ruby
+Urbanairship.remove_tag('TAG')
+```
+
+View tags associated with device
+--------------------------------
+
+```ruby
+Urbanairship.tags_for_device('DEVICE-TOKEN')
+```
+
+Add device token to tag.
+--------------------------------
+Associates a device to a tag.
+
+```ruby
+params = {
+  :device_token => 'DEVICE-TOKEN',
+  :tag => 'TAG'
+}
+
+Urbanairship.add_device_to_tag(params)
+```
+
+Remove device token from tag.
+--------------------------------
+Disassociate a device from a tag.
+
+```ruby
+params = {
+  :device_token => 'DEVICE-TOKEN',
+  :tag => 'TAG'
+}
+
+Urbanairship.remove_device_from_tag(params)
+```
+
+
 Using Urbanairship with Android
 -------------------------------
 
