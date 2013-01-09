@@ -35,6 +35,37 @@ shared_examples_for "an Urbanairship client" do
     # feedback
     FakeWeb.register_uri(:get, /my_app_key\:my_master_secret\@go\.urbanairship.com\/api\/device_tokens\/feedback/, :status => ["200", "OK"], :body => "[{\"device_token\":\"token\",\"marked_inactive_on\":\"2010-10-14T19:15:13Z\",\"alias\":\"my_alias\"}]")
     FakeWeb.register_uri(:get, /my_app_key2\:my_master_secret2\@go\.urbanairship.com\/api\/device_tokens\/feedback/, :status => ["500", "Internal Server Error"])
+    
+    #tags
+    FakeWeb.register_uri(:get, /my_app_key\:my_master_secret\@go\.urbanairship.com\/api\/tags/, :status => ["200", "OK"], :body => "[{\"tags\":[\"tag1\",\"tag2\"]}]")
+    FakeWeb.register_uri(:get, /my_app_key2\:my_master_secret2\@go\.urbanairship.com\/api\/tags/, :status => ["500", "Internal Server Error"])
+    
+    #add_tag
+    FakeWeb.register_uri(:put, /my_app_key\:my_master_secret\@go\.urbanairship.com\/api\/tags\/new_tag/, :status => ["200", "OK"])
+    FakeWeb.register_uri(:put, /my_app_key\:my_master_secret\@go\.urbanairship.com\/api\/tags\/existing_tag/, :status => ["201", "OK"])
+    FakeWeb.register_uri(:put, /my_app_key2\:my_master_secret2\@go\.urbanairship.com\/api\/tags\/a_tag/, :status => ["500", "Internal Server Error"])
+    
+    #remove_tag
+    FakeWeb.register_uri(:delete, /my_app_key\:my_master_secret\@go\.urbanairship.com\/api\/tags\/non_deleted_tag/, :status => ["204", "OK"])
+    FakeWeb.register_uri(:delete, /my_app_key\:my_master_secret\@go\.urbanairship.com\/api\/tags\/deleted_tag/, :status => ["404", "OK"])
+    FakeWeb.register_uri(:delete, /my_app_key2\:my_master_secret2\@go\.urbanairship.com\/api\/tags\/a_tag/, :status => ["500", "Internal Server Error"])
+    
+    #tags_for_device_tokens
+    FakeWeb.register_uri(:get, /my_app_key\:my_master_secret\@go\.urbanairship.com\/api\/device_tokens\/valid_device_token\/tags/, :status => ["200", "OK"], :body => "[{\"tags\":[\"tag1\",\"tag2\"]}]")
+    FakeWeb.register_uri(:get, /my_app_key\:my_master_secret\@go\.urbanairship.com\/api\/device_tokens\/invalid_device_token\/tags/, :status => ["404", "OK"])
+    FakeWeb.register_uri(:get, /my_app_key2\:my_master_secret2\@go\.urbanairship.com\/api\/device_tokens\/a_device_token\/tags/, :status => ["500", "Internal Server Error"])
+    
+    #add_device_token_to_tag
+    FakeWeb.register_uri(:put, /my_app_key\:my_master_secret\@go\.urbanairship.com\/api\/device_tokens\/valid_device_token\/tags\/new_tag/, :status => ["201", "OK"])
+    FakeWeb.register_uri(:put, /my_app_key\:my_master_secret\@go\.urbanairship.com\/api\/device_tokens\/valid_device_token\/tags\/existing_tag/, :status => ["200", "OK"])
+    FakeWeb.register_uri(:put, /my_app_key2\:my_master_secret2\@go\.urbanairship.com\/api\/device_tokens\/a_device_token\/tags\/a_tag/, :status => ["500", "Internal Server Error"])
+    
+    #remove_device_token_to_tag
+    FakeWeb.register_uri(:delete, /my_app_key\:my_master_secret\@go\.urbanairship.com\/api\/device_tokens\/valid_device_token\/tags\/existing_tag/, :status => ["204", "OK"])
+    FakeWeb.register_uri(:delete, /my_app_key\:my_master_secret\@go\.urbanairship.com\/api\/device_tokens\/valid_device_token\/tags\/non_existant_tag/, :status => ["404", "OK"])
+    FakeWeb.register_uri(:delete, /my_app_key2\:my_master_secret2\@go\.urbanairship.com\/api\/device_tokens\/a_device_token\/tags\/a_tag/, :status => ["500", "Internal Server Error"])
+    
+    
   end
 
   describe "configuration" do
@@ -56,6 +87,223 @@ shared_examples_for "an Urbanairship client" do
       subject.master_secret.should == "asdf1234"
     end
   end
+  
+  describe "::tags" do
+    before(:each) do
+      subject.application_key = "my_app_key"
+      subject.master_secret = "my_master_secret"
+    end
+
+    it "raises an error if call is made without an app key and master secret configured" do
+      subject.application_key = nil
+      subject.master_secret = nil
+
+      lambda {
+        subject.tags
+      }.should raise_error(RuntimeError, "Must configure application_key, master_secret before making this request.")
+    end
+    
+    it "uses app key and secret to sign the request" do
+      subject.tags
+      FakeWeb.last_request['authorization'].should == "Basic #{Base64::encode64('my_app_key:my_master_secret').chomp}"
+    end
+    
+    it "returns valid tags" do
+      response = subject.tags
+      response.first.should include("tags")
+      response.first["tags"].should include("tag1")
+      response.first["tags"].should include("tag2")
+    end
+    
+    it "success? is false when the call doesn't return 200" do
+      subject.application_key = "my_app_key2"
+      subject.master_secret = "my_master_secret2"
+      subject.tags.success?.should == false
+    end
+   
+  end
+  
+  describe "::add_tag" do
+    before(:each) do
+      subject.application_key = "my_app_key"
+      subject.master_secret = "my_master_secret"
+    end
+
+    it "raises an error if call is made without an app key and master secret configured" do
+      subject.application_key = nil
+      subject.master_secret = nil
+
+      lambda {
+        subject.add_tag('a_tag')
+      }.should raise_error(RuntimeError, "Must configure application_key, master_secret before making this request.")
+    end
+    
+    it "uses app key and secret to sign the request" do
+      subject.add_tag('new_tag')
+      FakeWeb.last_request['authorization'].should == "Basic #{Base64::encode64('my_app_key:my_master_secret').chomp}"
+    end
+    
+    it "adds a new tag" do
+      subject.add_tag('new_tag').success?.should == true
+      subject.add_tag('new_tag').code.should == "200"
+    end
+    
+    it "adds an exisiting tag" do
+      subject.add_tag('existing_tag').success?.should == true
+      subject.add_tag('existing_tag').code.should == "201"
+    end
+    
+    it "success? is false when the call doesn't return 200 or 201" do
+      subject.application_key = "my_app_key2"
+      subject.master_secret = "my_master_secret2"
+      subject.add_tag('a_tag').success?.should == false
+    end
+   
+  end
+  
+  describe "::remove_tag" do
+    before(:each) do
+      subject.application_key = "my_app_key"
+      subject.master_secret = "my_master_secret"
+    end
+
+   it "raises an error if call is made without an app key and master secret configured" do
+     subject.application_key = nil
+     subject.master_secret = nil
+
+     lambda {
+       subject.remove_tag('a_tag')
+     }.should raise_error(RuntimeError, "Must configure application_key, master_secret before making this request.")
+   end
+
+   it "uses app key and secret to sign the request" do
+     subject.remove_tag('non_deleted_tag')
+     FakeWeb.last_request['authorization'].should == "Basic #{Base64::encode64('my_app_key:my_master_secret').chomp}"
+   end
+
+   it "removes a tag that has not been removed yet" do
+     subject.remove_tag('non_deleted_tag').success?.should == true
+     subject.remove_tag('non_deleted_tag').code.should == "204"
+   end
+
+   it "attempts to remove an already deleted tag" do
+     subject.remove_tag('deleted_tag').success?.should == false
+     subject.remove_tag('deleted_tag').code.should == "404"
+   end
+   
+   it "success? is false when the call doesn't return 204" do
+     subject.application_key = "my_app_key2"
+     subject.master_secret = "my_master_secret2"
+     subject.add_tag('a_tag').success?.should == false
+   end
+  end
+   
+  describe "::tags_for_device_token" do
+    before(:each) do
+      subject.application_key = "my_app_key"
+      subject.master_secret = "my_master_secret"
+    end
+    
+    it "raises an error if call is made without an app key and master secret configured" do
+       subject.application_key = nil
+       subject.master_secret = nil
+
+       lambda {
+         subject.tags_for_device_token('a_device_token')
+       }.should raise_error(RuntimeError, "Must configure application_key, master_secret before making this request.")
+    end
+    
+    it "uses app key and secret to sign the request" do
+      subject.tags_for_device_token('valid_device_token')
+      FakeWeb.last_request['authorization'].should == "Basic #{Base64::encode64('my_app_key:my_master_secret').chomp}"
+    end
+    
+    it "returns valid tags for a device" do
+      response = subject.tags_for_device_token('valid_device_token')
+      response.first.should include("tags")
+      response.first["tags"].should include("tag1")
+      response.first["tags"].should include("tag2")
+      response.code.should == "200"
+    end
+    
+    it "returns invalid response for device token that is not found or registered" do
+      response = subject.tags_for_device_token('invalid_device_token')
+      response.code.should == "404"
+    end
+    
+    it "success? is false when the call doesn't return 200" do
+      subject.application_key = "my_app_key2"
+      subject.master_secret = "my_master_secret2"
+      subject.tags_for_device_token('a_device_token').success?.should == false
+    end
+  end
+  
+  describe "::add_device_token_to_tag" do
+    before(:each) do
+      subject.application_key = "my_app_key"
+      subject.master_secret = "my_master_secret"
+    end
+    
+    it "raises an error if call is made without an app key and master secret configured" do
+       subject.application_key = nil
+       subject.master_secret = nil
+
+       lambda {
+         subject.add_device_token_to_tag({:device_token => 'a_device_token', :tag => 'a_tag'})
+       }.should raise_error(RuntimeError, "Must configure application_key, master_secret before making this request.")
+    end
+    
+    it "uses app key and secret to sign the request" do
+      subject.add_device_token_to_tag({:device_token => 'valid_device_token', :tag => 'new_tag'})
+      FakeWeb.last_request['authorization'].should == "Basic #{Base64::encode64('my_app_key:my_master_secret').chomp}"
+    end
+    
+    it "adds a valid device token to tag" do
+      response = subject.add_device_token_to_tag({:device_token => 'valid_device_token', :tag => 'new_tag'})
+      response.code.should == "201"
+      response.success?.should == true
+    end
+    
+    it "adds a valid device token to an existing tag" do
+      response = subject.add_device_token_to_tag({:device_token => 'valid_device_token', :tag => 'existing_tag'})
+      response.code.should == "200"
+      response.success?.should == true
+    end
+  end
+    
+    describe "::remove_device_token_from_tag" do
+      before(:each) do
+        subject.application_key = "my_app_key"
+        subject.master_secret = "my_master_secret"
+      end
+
+      it "raises an error if call is made without an app key and master secret configured" do
+         subject.application_key = nil
+         subject.master_secret = nil
+
+         lambda {
+           subject.remove_device_token_from_tag({:device_token => 'a_device_token', :tag => 'a_tag'})
+         }.should raise_error(RuntimeError, "Must configure application_key, master_secret before making this request.")
+      end
+
+      it "uses app key and secret to sign the request" do
+        subject.remove_device_token_from_tag({:device_token => 'valid_device_token', :tag => 'existing_tag'})
+        FakeWeb.last_request['authorization'].should == "Basic #{Base64::encode64('my_app_key:my_master_secret').chomp}"
+      end
+
+      it "removes a valid device token from a tag" do
+        response = subject.remove_device_token_from_tag({:device_token => 'valid_device_token', :tag => 'existing_tag'})
+        response.code.should == "204"
+        response.success?.should == true
+      end
+
+      it "removes a device token from a tag that it is not associated with" do
+        response = subject.remove_device_token_from_tag({:device_token => 'valid_device_token', :tag => 'non_existant_tag'})
+        response.code.should == "404"
+        response.success?.should == false
+      end
+  end
+  
 
   describe "::register_device" do
     before(:each) do
