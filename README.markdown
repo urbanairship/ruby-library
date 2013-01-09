@@ -24,6 +24,15 @@ Registering a device token
 ```ruby
 Urbanairship.register_device('DEVICE-TOKEN')
 ```
+You can also pass an alias, and a set of tags to device registration.
+```ruby
+Urbanairship.register_device('DEVICE-TOKEN',
+	:alias => 'user-123',
+	:tags => ['san-francisco-users']
+)
+```
+
+
 
 Unregistering a device token
 ----------------------------
@@ -40,10 +49,21 @@ notification = {
   :aps => {:alert => 'You have a new message!', :badge => 1}
 }
 
+
 Urbanairship.push(notification) # =>
 # {
 #   "scheduled_notifications" => ["https://go.urbanairship.com/api/push/scheduled/123456"]
 # }
+```
+You can also send push to a all devices associated with a tag. 
+```ruby
+notification = {
+  :schedule_for => [1.hour.from_now],
+  :tags => ['TAG1', 'TAG2'],
+  :aps => {:alert => 'You have a new message!', :badge => 1}
+}
+
+Urbanairship.push(notification) 
 ```
 
 Batching push notification sends
