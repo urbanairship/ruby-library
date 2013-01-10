@@ -66,6 +66,52 @@ notification = {
 Urbanairship.push(notification) 
 ```
 
+Sending a push notification to a segment
+---------------------------
+
+Sample iOS payload:
+
+```ruby
+notification = {
+  :schedule_for => [1.hour.from_now],
+  :segments => ['SEGMENT-ID'],
+	:ios => {
+		:aps => {
+			:alert => 'You have a new message!', :badge => 1
+		}
+	}
+}
+
+Sample Android payload::
+
+```ruby
+notification = {
+  :schedule_for => [1.hour.from_now],
+  :segments => ['SEGMENT-ID'],
+	:android => {
+			:alert => 'You have a new message!', :badge => 1
+		}
+}
+
+
+
+
+Urbanairship.push(notification) # =>
+# {
+#   "scheduled_notifications" => ["https://go.urbanairship.com/api/push/scheduled/123456"]
+# }
+```
+You can also send push to a all devices associated with a tag. 
+```ruby
+notification = {
+  :schedule_for => [1.hour.from_now],
+  :tags => ['TAG1', 'TAG2'],
+  :aps => {:alert => 'You have a new message!', :badge => 1}
+}
+
+Urbanairship.push(notification) 
+```
+
 Batching push notification sends
 --------------------------------
 ```ruby
