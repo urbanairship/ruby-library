@@ -81,8 +81,9 @@ notification = {
 		}
 	}
 }
+```
 
-Sample Android payload::
+Sample Android payload:
 
 ```ruby
 notification = {
@@ -92,24 +93,10 @@ notification = {
 			:alert => 'You have a new message!', :badge => 1
 		}
 }
-
-
-
-
-Urbanairship.push(notification) # =>
-# {
-#   "scheduled_notifications" => ["https://go.urbanairship.com/api/push/scheduled/123456"]
-# }
 ```
-You can also send push to a all devices associated with a tag. 
-```ruby
-notification = {
-  :schedule_for => [1.hour.from_now],
-  :tags => ['TAG1', 'TAG2'],
-  :aps => {:alert => 'You have a new message!', :badge => 1}
-}
 
-Urbanairship.push(notification) 
+```ruby
+Urbanairship.push_to_segment(notification) 
 ```
 
 Batching push notification sends
@@ -207,7 +194,7 @@ View tags associated with device
 Urbanairship.tags_for_device('DEVICE-TOKEN')
 ```
 
-Add device token to tag.
+Tag a device.
 --------------------------------
 Associates a device to a tag.
 
@@ -217,10 +204,10 @@ params = {
   :tag => 'TAG'
 }
 
-Urbanairship.add_device_to_tag(params)
+Urbanairship.tag_device(params)
 ```
 
-Remove device token from tag.
+Untag a device.
 --------------------------------
 Disassociate a device from a tag.
 
@@ -230,7 +217,7 @@ params = {
   :tag => 'TAG'
 }
 
-Urbanairship.remove_device_from_tag(params)
+Urbanairship.untag_device(params)
 ```
 
 

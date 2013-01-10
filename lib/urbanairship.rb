@@ -79,11 +79,11 @@ module Urbanairship
       do_request(:get, "/api/device_tokens/#{device_token}/tags", :authenticate_with => :master_secret)
     end
     
-    def add_device_to_tag(params)
+    def tag_device(params)
       do_request(:put, "/api/device_tokens/#{params[:device_token]}/tags/#{params[:tag]}", :authenticate_with => :master_secret)
     end
     
-    def remove_device_from_tag(params)
+    def untag_device(params)
       do_request(:delete, "/api/device_tokens/#{params[:device_token]}/tags/#{params[:tag]}", :authenticate_with => :master_secret)
     end
 
