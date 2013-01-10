@@ -43,6 +43,11 @@ module Urbanairship
       body = parse_push_options(options).to_json
       do_request(:post, "/api/push/", :body => body, :authenticate_with => :master_secret)
     end
+    
+    def push_to_segment(options = {})
+      body = parse_push_options(options).to_json
+      do_request(:post, "/api/push/segments", :body => body, :authenticate_with => :master_secret)
+    end
 
     def batch_push(notifications = [])
       body = notifications.map{|notification| parse_push_options(notification)}.to_json
