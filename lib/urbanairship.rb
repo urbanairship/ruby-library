@@ -43,7 +43,7 @@ module Urbanairship
       body = parse_push_options(options).to_json
       do_request(:post, "/api/push/", :body => body, :authenticate_with => :master_secret)
     end
-    
+
     def push_to_segment(options = {})
       body = parse_push_options(options).to_json
       do_request(:post, "/api/push/segments", :body => body, :authenticate_with => :master_secret)
@@ -62,27 +62,27 @@ module Urbanairship
     def feedback(time)
       do_request(:get, "/api/device_tokens/feedback/?since=#{format_time(time)}", :authenticate_with => :master_secret)
     end
-    
+
     def tags
       do_request(:get, "/api/tags/", :authenticate_with => :master_secret)
     end
-    
+
     def add_tag(tag)
       do_request(:put, "/api/tags/#{tag}", :authenticate_with => :master_secret)
     end
-    
+
     def remove_tag(tag)
       do_request(:delete, "/api/tags/#{tag}", :authenticate_with => :master_secret)
     end
-    
+
     def tags_for_device(device_token)
       do_request(:get, "/api/device_tokens/#{device_token}/tags", :authenticate_with => :master_secret)
     end
-    
+
     def tag_device(params)
       do_request(:put, "/api/device_tokens/#{params[:device_token]}/tags/#{params[:tag]}", :authenticate_with => :master_secret)
     end
-    
+
     def untag_device(params)
       do_request(:delete, "/api/device_tokens/#{params[:device_token]}/tags/#{params[:tag]}", :authenticate_with => :master_secret)
     end
