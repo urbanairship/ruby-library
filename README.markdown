@@ -24,6 +24,15 @@ Registering a device token
 ```ruby
 Urbanairship.register_device('DEVICE-TOKEN')
 ```
+You can also pass an alias, and a set of tags to device registration.
+```ruby
+Urbanairship.register_device('DEVICE-TOKEN',
+	:alias => 'user-123',
+	:tags => ['san-francisco-users']
+)
+```
+
+
 
 Unregistering a device token
 ----------------------------
@@ -40,10 +49,54 @@ notification = {
   :aps => {:alert => 'You have a new message!', :badge => 1}
 }
 
+
 Urbanairship.push(notification) # =>
 # {
 #   "scheduled_notifications" => ["https://go.urbanairship.com/api/push/scheduled/123456"]
 # }
+```
+You can also send push to a all devices associated with a tag. 
+```ruby
+notification = {
+  :schedule_for => [1.hour.from_now],
+  :tags => ['TAG1', 'TAG2'],
+  :aps => {:alert => 'You have a new message!', :badge => 1}
+}
+
+Urbanairship.push(notification) 
+```
+
+Sending a push notification to a segment
+---------------------------
+
+Sample iOS payload:
+
+```ruby
+notification = {
+  :schedule_for => [1.hour.from_now],
+  :segments => ['SEGMENT-ID'],
+	:ios => {
+		:aps => {
+			:alert => 'You have a new message!', :badge => 1
+		}
+	}
+}
+```
+
+Sample Android payload:
+
+```ruby
+notification = {
+  :schedule_for => [1.hour.from_now],
+  :segments => ['SEGMENT-ID'],
+	:android => {
+			:alert => 'You have a new message!', :badge => 1
+		}
+}
+```
+
+```ruby
+Urbanairship.push_to_segment(notification) 
 ```
 
 Batching push notification sends
@@ -110,6 +163,63 @@ Urbanairship.delete_scheduled_push("123456789")
 Urbanairship.delete_scheduled_push(123456789)
 Urbanairship.delete_scheduled_push(:alias => "deadbeef")
 ```
+
+Viewing your tags
+--------------------------------
+
+```ruby
+Urbanairship.tags
+```
+
+Adding a tag
+--------------------------------
+Creates a tag. 
+
+```ruby
+Urbanairship.add_tag(TAG)
+```
+
+Removing a tag
+--------------------------------
+Removes a tag from tag collection. Note that this will also remove the tag from any device that is already associated with it.
+
+```ruby
+Urbanairship.remove_tag('TAG')
+```
+
+View tags associated with device
+--------------------------------
+
+```ruby
+Urbanairship.tags_for_device('DEVICE-TOKEN')
+```
+
+Tag a device.
+--------------------------------
+Associates a device to a tag.
+
+```ruby
+params = {
+  :device_token => 'DEVICE-TOKEN',
+  :tag => 'TAG'
+}
+
+Urbanairship.tag_device(params)
+```
+
+Untag a device.
+--------------------------------
+Disassociate a device from a tag.
+
+```ruby
+params = {
+  :device_token => 'DEVICE-TOKEN',
+  :tag => 'TAG'
+}
+
+Urbanairship.untag_device(params)
+```
+
 
 Using Urbanairship with Android
 -------------------------------
