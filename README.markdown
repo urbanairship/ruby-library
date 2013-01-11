@@ -32,8 +32,6 @@ Urbanairship.register_device('DEVICE-TOKEN',
 )
 ```
 
-
-
 Unregistering a device token
 ----------------------------
 ```ruby
@@ -49,54 +47,10 @@ notification = {
   :aps => {:alert => 'You have a new message!', :badge => 1}
 }
 
-
 Urbanairship.push(notification) # =>
 # {
 #   "scheduled_notifications" => ["https://go.urbanairship.com/api/push/scheduled/123456"]
 # }
-```
-You can also send push to a all devices associated with a tag. 
-```ruby
-notification = {
-  :schedule_for => [1.hour.from_now],
-  :tags => ['TAG1', 'TAG2'],
-  :aps => {:alert => 'You have a new message!', :badge => 1}
-}
-
-Urbanairship.push(notification) 
-```
-
-Sending a push notification to a segment
----------------------------
-
-Sample iOS payload:
-
-```ruby
-notification = {
-  :schedule_for => [1.hour.from_now],
-  :segments => ['SEGMENT-ID'],
-	:ios => {
-		:aps => {
-			:alert => 'You have a new message!', :badge => 1
-		}
-	}
-}
-```
-
-Sample Android payload:
-
-```ruby
-notification = {
-  :schedule_for => [1.hour.from_now],
-  :segments => ['SEGMENT-ID'],
-	:android => {
-			:alert => 'You have a new message!', :badge => 1
-		}
-}
-```
-
-```ruby
-Urbanairship.push_to_segment(notification) 
 ```
 
 Batching push notification sends
@@ -118,6 +72,26 @@ notifications = [
 Urbanairship.batch_push(notifications)
 ```
 
+Sending notifications to a segment
+---------------------------
+Urban Airship segments let you send a push notification to a subset of relevant users based on location, time, preferences, and behavior. You can read more about segments in the [Urban Airship docs](https://docs.urbanairship.com/display/DOCS/Server%3A+Segments+API).
+
+```ruby
+notification = {
+  :schedule_for => [1.hour.from_now],
+  :segments => ['SEGMENT-ID'],
+  :ios => {
+    :aps => {
+      :alert => 'You have a new message!', :badge => 1
+    }
+  },
+  :android => {
+    :alert => 'You have a new message!', :badge => 1
+  }
+}
+
+Urbanairship.push_to_segment(notification)
+```
 
 Sending broadcast notifications
 -------------------------------
@@ -164,62 +138,67 @@ Urbanairship.delete_scheduled_push(123456789)
 Urbanairship.delete_scheduled_push(:alias => "deadbeef")
 ```
 
-Viewing your tags
---------------------------------
+Tags
+----
+
+Urban Airship allows you to create tags and associate them with devices. Then you can easily send a notification to every device matching a certain tag with a single call to the push API.
+
+### Creating a tag ###
+
+Tags must be registered before you can use them.
+
+```ruby
+Urbanairship.add_tag('TAG')
+```
+
+### Listing your tags ###
 
 ```ruby
 Urbanairship.tags
 ```
 
-Adding a tag
---------------------------------
-Creates a tag. 
+### Removing a tag ##
 
-```ruby
-Urbanairship.add_tag(TAG)
-```
-
-Removing a tag
---------------------------------
-Removes a tag from tag collection. Note that this will also remove the tag from any device that is already associated with it.
+This will remove a tag from your set of registered tags, as well as removing that tag from any devices that are currently using it.
 
 ```ruby
 Urbanairship.remove_tag('TAG')
 ```
 
-View tags associated with device
---------------------------------
+### View tags associated with device ###
 
 ```ruby
 Urbanairship.tags_for_device('DEVICE-TOKEN')
 ```
 
-Tag a device.
---------------------------------
-Associates a device to a tag.
+### Tag a device ###
 
 ```ruby
-params = {
-  :device_token => 'DEVICE-TOKEN',
-  :tag => 'TAG'
-}
-
-Urbanairship.tag_device(params)
+Urbanairship.tag_device(:device_token => 'DEVICE-TOKEN', :tag => 'TAG')
 ```
 
-Untag a device.
---------------------------------
-Disassociate a device from a tag.
+You can also tag a device during device registration.
 
 ```ruby
-params = {
-  :device_token => 'DEVICE-TOKEN',
-  :tag => 'TAG'
-}
-
-Urbanairship.untag_device(params)
+Urbanairship.register_device('DEVICE-TOKEN', :tags => ['san-francisco-users'])
 ```
 
+### Untag a device ###
+
+```ruby
+Urbanairship.untag_device(:device_token => 'DEVICE-TOKEN', :tag => 'TAG')
+```
+
+### Sending a notification to all devices with a given tag ###
+
+```ruby
+notification = {
+  :tags => ['san-francisco-users'],
+  :aps => {:alert => 'Good morning San Francisco!', :badge => 1}
+}
+
+Urbanairship.push(notification)
+```
 
 Using Urbanairship with Android
 -------------------------------
