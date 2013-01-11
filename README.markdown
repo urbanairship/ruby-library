@@ -27,8 +27,8 @@ Urbanairship.register_device('DEVICE-TOKEN')
 You can also pass an alias, and a set of tags to device registration.
 ```ruby
 Urbanairship.register_device('DEVICE-TOKEN',
-	:alias => 'user-123',
-	:tags => ['san-francisco-users']
+  :alias => 'user-123',
+  :tags => ['san-francisco-users']
 )
 ```
 
