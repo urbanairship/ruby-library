@@ -1,3 +1,5 @@
+require 'spec_helper'
+
 describe Urbanairship::Response do
 
   before do

@@ -1,3 +1,5 @@
+require 'spec_helper'
+
 shared_examples_for "an Urbanairship client" do
   before(:all) do
     FakeWeb.allow_net_connect = false
