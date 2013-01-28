@@ -164,6 +164,10 @@ shared_examples_for "an Urbanairship client" do
       subject.add_tag('a_tag').success?.should == false
     end
 
+    it "sets the content-type to text/plain" do
+      subject.add_tag('new_tag')
+      FakeWeb.last_request['content-type'].should == "text/plain"
+    end
   end
 
   describe "::remove_tag" do

@@ -68,7 +68,7 @@ module Urbanairship
     end
 
     def add_tag(tag)
-      do_request(:put, "/api/tags/#{tag}", :authenticate_with => :master_secret)
+      do_request(:put, "/api/tags/#{tag}", :authenticate_with => :master_secret, :content_type => 'text/plain')
     end
 
     def remove_tag(tag)
@@ -96,7 +96,7 @@ module Urbanairship
 
       request = klass.new(path)
       request.basic_auth @application_key, instance_variable_get("@#{options[:authenticate_with]}")
-      request.add_field "Content-Type", "application/json"
+      request.add_field "Content-Type", options[:content_type] || "application/json"
       request.body = options[:body] if options[:body]
 
       Timer.timeout(request_timeout) do
