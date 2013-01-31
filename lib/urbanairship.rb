@@ -76,7 +76,7 @@ module Urbanairship
     end
 
     def tags_for_device(device_token)
-      do_request(:get, "/api/device_tokens/#{device_token}/tags", :authenticate_with => :master_secret)
+      do_request(:get, "/api/device_tokens/#{device_token}/tags/", :authenticate_with => :master_secret)
     end
 
     def tag_device(params)
