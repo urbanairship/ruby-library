@@ -146,6 +146,7 @@ Urbanairship.device_tokens_count # =>
 #   "device_tokens_count" => 3,
 #   "active_device_tokens_count" => 1
 # }
+```
 
 Tags
 ----
