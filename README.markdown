@@ -138,6 +138,15 @@ Urbanairship.delete_scheduled_push(123456789)
 Urbanairship.delete_scheduled_push(:alias => "deadbeef")
 ```
 
+Getting a count of your device tokens
+-------------------------------------
+```ruby
+Urbanairship.device_tokens_count # =>
+# {
+#   "device_tokens_count" => 3,
+#   "active_device_tokens_count" => 1
+# }
+
 Tags
 ----
 
