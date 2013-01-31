@@ -73,8 +73,8 @@ shared_examples_for "an Urbanairship client" do
     FakeWeb.register_uri(:post, /bad_key\:my_master_secret\@go\.urbanairship\.com/, :status => ["401", "Unauthorized"])
 
     #device_tokens_count
-    FakeWeb.register_uri(:get, /my_app_key\:my_master_secret\@go\.urbanairship.com\/api\/device_tokens\/count/, :status => ["200", "OK"], :body => "{\"device_tokens_count\":50, \"active_device_tokens_count\":55}")
-    FakeWeb.register_uri(:get, /my_app_key2\:my_master_secret2\@go\.urbanairship.com\/api\/device_tokens\/count/, :status => ["500", "Internal Server Error"])
+    FakeWeb.register_uri(:get, /my_app_key\:my_master_secret\@go\.urbanairship.com\/api\/device_tokens\/count\//, :status => ["200", "OK"], :body => "{\"device_tokens_count\":50, \"active_device_tokens_count\":55}")
+    FakeWeb.register_uri(:get, /my_app_key2\:my_master_secret2\@go\.urbanairship.com\/api\/device_tokens\/count\//, :status => ["500", "Internal Server Error"])
   end
 
   describe "configuration" do
