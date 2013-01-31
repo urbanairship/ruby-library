@@ -71,6 +71,10 @@ shared_examples_for "an Urbanairship client" do
     FakeWeb.register_uri(:post, "https://my_app_key:my_master_secret@go.urbanairship.com/api/push/segments", :status => ["200", "OK"])
     FakeWeb.register_uri(:post, "https://my_app_key2:my_master_secret2@go.urbanairship.com/api/push/segments", :status => ["400", "Bad Request"])
     FakeWeb.register_uri(:post, /bad_key\:my_master_secret\@go\.urbanairship\.com/, :status => ["401", "Unauthorized"])
+
+    #device_tokens_count
+    FakeWeb.register_uri(:get, /my_app_key\:my_master_secret\@go\.urbanairship.com\/api\/device_tokens\/count/, :status => ["200", "OK"], :body => "{\"device_tokens_count\":50, \"active_device_tokens_count\":55}")
+    FakeWeb.register_uri(:get, /my_app_key2\:my_master_secret2\@go\.urbanairship.com\/api\/device_tokens\/count/, :status => ["500", "Internal Server Error"])
   end
 
   describe "configuration" do
@@ -722,6 +726,41 @@ shared_examples_for "an Urbanairship client" do
       subject.master_secret = "my_master_secret2"
       subject.feedback(Time.now).success?.should == false
     end
+  end
+
+  describe "::device_tokens_count" do
+
+    before(:each) do
+      subject.application_key = "my_app_key"
+      subject.master_secret = "my_master_secret"
+    end
+
+    it "raises an error if call is made without an app key and master secret configured" do
+      subject.application_key = nil
+      subject.master_secret = nil
+
+      lambda {
+        subject.device_tokens_count
+      }.should raise_error(RuntimeError, "Must configure application_key, master_secret before making this request.")
+    end
+
+    it "uses app key and secret to sign the request" do
+      subject.device_tokens_count
+      FakeWeb.last_request['authorization'].should == "Basic #{Base64::encode64('my_app_key:my_master_secret').chomp}"
+    end
+
+    it "returns an array of responses from the Device Token List API" do
+      response = subject.device_tokens_count
+      response["device_tokens_count"].should == 50
+      response["active_device_tokens_count"].should == 55
+    end
+
+    it "success? is false when the call doesn't return 200" do
+      subject.application_key = "my_app_key2"
+      subject.master_secret = "my_master_secret2"
+      subject.device_tokens_count.success?.should == false
+    end
+
   end
 
   describe "logging" do
