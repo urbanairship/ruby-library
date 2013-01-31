@@ -749,7 +749,7 @@ shared_examples_for "an Urbanairship client" do
       FakeWeb.last_request['authorization'].should == "Basic #{Base64::encode64('my_app_key:my_master_secret').chomp}"
     end
 
-    it "returns an array of responses from the Device Token List API" do
+    it "returns a hash as response from the Device Token List API" do
       response = subject.device_tokens_count
       response["device_tokens_count"].should == 50
       response["active_device_tokens_count"].should == 55
