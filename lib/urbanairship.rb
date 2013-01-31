@@ -87,6 +87,10 @@ module Urbanairship
       do_request(:delete, "/api/device_tokens/#{params[:device_token]}/tags/#{params[:tag]}", :authenticate_with => :master_secret)
     end
 
+    def device_tokens_count
+      do_request(:get, "/api/device_tokens/count", :authenticate_with => :master_secret)
+    end
+
     private
 
     def do_request(http_method, path, options = {})
