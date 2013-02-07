@@ -52,6 +52,20 @@ Urbanairship.push(notification) # =>
 #   "scheduled_notifications" => ["https://go.urbanairship.com/api/push/scheduled/123456"]
 # }
 ```
+### Using aliases instead of device tokens ###
+
+```ruby
+notification = {
+  :schedule_for => [1.hour.from_now],
+  :aliases => ['ALIAS-ONE', 'ALIAS-TWO'],
+  :aps => {:alert => 'You have a new message!', :badge => 1}
+}
+
+Urbanairship.push(notification) # =>
+# {
+#   "scheduled_notifications" => ["https://go.urbanairship.com/api/push/scheduled/123456"]
+# }
+```
 
 Batching push notification sends
 --------------------------------
