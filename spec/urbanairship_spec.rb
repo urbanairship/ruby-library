@@ -67,6 +67,10 @@ shared_examples_for "an Urbanairship client" do
     FakeWeb.register_uri(:delete, /my_app_key\:my_master_secret\@go\.urbanairship.com\/api\/device_tokens\/valid_device_token\/tags\/non_existant_tag/, :status => ["404", "OK"])
     FakeWeb.register_uri(:delete, /my_app_key2\:my_master_secret2\@go\.urbanairship.com\/api\/device_tokens\/a_device_token\/tags\/a_tag/, :status => ["500", "Internal Server Error"])
 
+		#Segments
+		FakeWeb.register_uri(:get, /my_app_key\:my_master_secret\@go\.urbanairship.com\/api\/segments/, :status => ["200", "OK"], :body => '{"segments":[{"id":"abcd-efgh-ijkl", "display_name":"test1", "creation_date":1360950614201, "modification_date":1360950614201}, {"id": "mnop-qrst-uvwx", "display_name": "test2", "creation_date":1360950614202, "modification_date":1360950614202}]}')
+    FakeWeb.register_uri(:get, /my_app_key2\:my_master_secret2\@go\.urbanairship.com\/api\/segments/, :status => ["500", "Internal Server Error"])
+
     # push to segment
     FakeWeb.register_uri(:post, "https://my_app_key:my_master_secret@go.urbanairship.com/api/push/segments", :status => ["200", "OK"])
     FakeWeb.register_uri(:post, "https://my_app_key2:my_master_secret2@go.urbanairship.com/api/push/segments", :status => ["400", "Bad Request"])
@@ -762,6 +766,45 @@ shared_examples_for "an Urbanairship client" do
     end
 
   end
+
+  describe "::segments" do
+    before(:each) do
+      subject.application_key = "my_app_key"
+      subject.master_secret = "my_master_secret"
+    end
+
+    it "raises an error if call is made without an app key and master secret configured" do
+      subject.application_key = nil
+      subject.master_secret = nil
+
+      lambda {
+        subject.segments
+      }.should raise_error(RuntimeError, "Must configure application_key, master_secret before making this request.")
+    end
+
+    it "uses app key and secret to sign the request" do
+      subject.segments
+      FakeWeb.last_request['authorization'].should == "Basic #{Base64::encode64('my_app_key:my_master_secret').chomp}"
+    end
+
+    it "returns valid segments" do
+      response = subject.segments
+      response.first.should include("segments")
+      response["segments"].each do |s| 
+        ["id", "display_name", "creation_date", "modification_date"].each do |k|
+          s.should include(k)
+        end
+      end	
+    end
+
+    it "success? is false when the call doesn't return 200" do
+      subject.application_key = "my_app_key2"
+      subject.master_secret = "my_master_secret2"
+      subject.segments.success?.should == false
+    end
+
+  end
+
 
   describe "logging" do
 
