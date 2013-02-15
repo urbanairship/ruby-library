@@ -86,27 +86,6 @@ notifications = [
 Urbanairship.batch_push(notifications)
 ```
 
-Sending notifications to a segment
----------------------------
-Urban Airship segments let you send a push notification to a subset of relevant users based on location, time, preferences, and behavior. You can read more about segments in the [Urban Airship docs](https://docs.urbanairship.com/display/DOCS/Server%3A+Segments+API).
-
-```ruby
-notification = {
-  :schedule_for => [1.hour.from_now],
-  :segments => ['SEGMENT-ID'],
-  :ios => {
-    :aps => {
-      :alert => 'You have a new message!', :badge => 1
-    }
-  },
-  :android => {
-    :alert => 'You have a new message!', :badge => 1
-  }
-}
-
-Urbanairship.push_to_segment(notification)
-```
-
 Sending broadcast notifications
 -------------------------------
 Urban Airship allows you to send a broadcast notification to all active registered device tokens for your app.
@@ -150,6 +129,43 @@ If you know the alias or id of a scheduled push notification then you can delete
 Urbanairship.delete_scheduled_push("123456789")
 Urbanairship.delete_scheduled_push(123456789)
 Urbanairship.delete_scheduled_push(:alias => "deadbeef")
+```
+
+Segments
+---------------------------
+Urban Airship segments let you send a push notification to a subset of relevant users based on location, time, preferences, and behavior. You can read more about segments in the [Urban Airship docs](https://docs.urbanairship.com/display/DOCS/Server%3A+Segments+API).
+
+```ruby
+notification = {
+  :schedule_for => [1.hour.from_now],
+  :segments => ['SEGMENT-ID'],
+  :ios => {
+    :aps => {
+      :alert => 'You have a new message!', :badge => 1
+    }
+  },
+  :android => {
+    :alert => 'You have a new message!', :badge => 1
+  }
+}
+
+Urbanairship.push_to_segment(notification)
+```
+
+### Listing your segments ###
+
+```ruby
+Urbanairship.segments # =>
+# {
+#   "segments" => [
+#     {
+#      "id" => "abcd-efgh-ijkl",
+#      "display_name" => "segment1",
+#      "creation_date" => 1360950614201,
+#      "modification_date" => 1360950614201
+#     }
+#   ]
+# }
 ```
 
 Getting a count of your device tokens
