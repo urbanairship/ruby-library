@@ -67,6 +67,10 @@ module Urbanairship
       do_request(:get, "/api/tags/", :authenticate_with => :master_secret)
     end
 
+    def segments
+      do_request(:get, "/api/segments", :authenticate_with => :master_secret)
+    end
+
     def add_tag(tag)
       do_request(:put, "/api/tags/#{tag}", :authenticate_with => :master_secret, :content_type => 'text/plain')
     end
