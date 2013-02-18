@@ -99,7 +99,7 @@ module Urbanairship
       do_request(:post, "/api/segments", :body => segment.to_json, :authenticate_with => :master_secret)
     end
 
-    def get_segment(id)
+    def segment(id)
       do_request(:get, "/api/segments/#{id}", :authenticate_with => :master_secret)
     end
 

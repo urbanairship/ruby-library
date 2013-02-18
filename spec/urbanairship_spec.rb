@@ -810,11 +810,11 @@ shared_examples_for "an Urbanairship client" do
     it "returns valid segments" do
       response = subject.segments
       response.first.should include("segments")
-      response["segments"].each do |s| 
+      response["segments"].each do |s|
         ["id", "display_name", "creation_date", "modification_date"].each do |k|
           s.should include(k)
         end
-      end	
+      end
     end
 
     it "can create a valid segment" do
@@ -823,14 +823,14 @@ shared_examples_for "an Urbanairship client" do
     end
 
     it "can get a segment given its id" do
-      response = subject.get_segment("valid_id")
+      response = subject.segment("valid_id")
       response.code.should == "200"
       response.should include("display_name")
       response.should include("criteria")
     end
 
     it "returns not found if invalid segment id is given" do
-      response = subject.get_segment("not_found")
+      response = subject.segment("not_found")
       response.code.should == "404"
     end
 
