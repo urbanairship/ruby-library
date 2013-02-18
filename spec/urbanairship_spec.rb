@@ -67,9 +67,28 @@ shared_examples_for "an Urbanairship client" do
     FakeWeb.register_uri(:delete, /my_app_key\:my_master_secret\@go\.urbanairship.com\/api\/device_tokens\/valid_device_token\/tags\/non_existant_tag/, :status => ["404", "OK"])
     FakeWeb.register_uri(:delete, /my_app_key2\:my_master_secret2\@go\.urbanairship.com\/api\/device_tokens\/a_device_token\/tags\/a_tag/, :status => ["500", "Internal Server Error"])
 
-		#Segments
-		FakeWeb.register_uri(:get, /my_app_key\:my_master_secret\@go\.urbanairship.com\/api\/segments/, :status => ["200", "OK"], :body => '{"segments":[{"id":"abcd-efgh-ijkl", "display_name":"test1", "creation_date":1360950614201, "modification_date":1360950614201}, {"id": "mnop-qrst-uvwx", "display_name": "test2", "creation_date":1360950614202, "modification_date":1360950614202}]}')
-    FakeWeb.register_uri(:get, /my_app_key2\:my_master_secret2\@go\.urbanairship.com\/api\/segments/, :status => ["500", "Internal Server Error"])
+    #Get Segment
+    FakeWeb.register_uri(:get, /my_app_key\:my_master_secret\@go\.urbanairship.com\/api\/segments\/valid_id/, :status => ["200", "OK"], :body => '{"display_name":"Male in NY", "criteria":{"and":[{"tag":"male"}, {"tag":"in NY"}]}}')
+    FakeWeb.register_uri(:get, /my_app_key\:my_master_secret\@go\.urbanairship.com\/api\/segments\/not_found/, :status => ["404", "OK"])
+    FakeWeb.register_uri(:get, /my_app_key2\:my_master_secret2\@go\.urbanairship.com\/api\/segments\/invalid_segment/, :status => ["500", "Internal Server Error"])
+
+    #Get List of Segments
+    FakeWeb.register_uri(:get, /my_app_key\:my_master_secret\@go\.urbanairship.com\/api\/segments$/, :status => ["200", "OK"], :body => '{"segments":[{"id":"abcd-efgh-ijkl", "display_name":"test1", "creation_date":1360950614201, "modification_date":1360950614201}, {"id": "mnop-qrst-uvwx", "display_name": "test2", "creation_date":1360950614202, "modification_date":1360950614202}]}')
+    FakeWeb.register_uri(:get, /my_app_key2\:my_master_secret2\@go\.urbanairship.com\/api\/segments$/, :status => ["500", "Internal Server Error"])
+
+    #Create Segment
+    FakeWeb.register_uri(:post, /my_app_key\:my_master_secret\@go\.urbanairship.com\/api\/segments/, :status => ["201", "OK"])
+    FakeWeb.register_uri(:post, /my_app_key2\:my_master_secret2\@go\.urbanairship.com\/api\/segments/, :status => ["500", "Internal Server Error"])
+
+    #Update Segment
+    FakeWeb.register_uri(:put, /my_app_key\:my_master_secret\@go\.urbanairship.com\/api\/segments\/valid_segment/, :status => ["200", "OK"])
+    FakeWeb.register_uri(:put, /my_app_key\:my_master_secret\@go\.urbanairship.com\/api\/segments\/invalid_segment/, :status => ["404", "OK"])
+    FakeWeb.register_uri(:put, /my_app_key2\:my_master_secret2\@go\.urbanairship.com\/api\/segments\/a_segment/, :status => ["500", "Internal Server Error"])
+
+    #Delete Segment
+    FakeWeb.register_uri(:delete, /my_app_key\:my_master_secret\@go\.urbanairship.com\/api\/segments\/valid_segment/, :status => ["204", "OK"])
+    FakeWeb.register_uri(:delete, /my_app_key\:my_master_secret\@go\.urbanairship.com\/api\/segments\/invalid_segment/, :status => ["404", "OK"])
+    FakeWeb.register_uri(:delete, /my_app_key2\:my_master_secret2\@go\.urbanairship.com\/api\/segments\/a_segment/, :status => ["500", "Internal Server Error"])
 
     # push to segment
     FakeWeb.register_uri(:post, "https://my_app_key:my_master_secret@go.urbanairship.com/api/push/segments", :status => ["200", "OK"])
@@ -771,6 +790,7 @@ shared_examples_for "an Urbanairship client" do
     before(:each) do
       subject.application_key = "my_app_key"
       subject.master_secret = "my_master_secret"
+      @valid_segment = {:display_name => "Test Male NY", :criteria => {:and => [ {:tag => "male"}, {:tag => "NY"}]} }
     end
 
     it "raises an error if call is made without an app key and master secret configured" do
@@ -795,6 +815,43 @@ shared_examples_for "an Urbanairship client" do
           s.should include(k)
         end
       end	
+    end
+
+    it "can create a valid segment" do
+      response = subject.create_segment(@valid_segment)
+      response.code.should == "201"
+    end
+
+    it "can get a segment given its id" do
+      response = subject.get_segment("valid_id")
+      response.code.should == "200"
+      response.should include("display_name")
+      response.should include("criteria")
+    end
+
+    it "returns not found if invalid segment id is given" do
+      response = subject.get_segment("not_found")
+      response.code.should == "404"
+    end
+
+    it "can update a segment given a valid id" do
+      response = subject.update_segment("valid_segment", @valid_segment)
+      response.code.should == "200"
+    end
+
+    it "cant update a segment when given an invalid id" do
+      response = subject.update_segment("invalid_segment", @valid_segment)
+      response.code.should == "404"
+    end
+
+    it "can delete a segment given a valid id" do
+      response = subject.delete_segment("valid_segment")
+      response.code.should == "204"
+    end
+
+    it "cant delete a segment given an invalid id" do
+      response = subject.delete_segment("invalid_segment")
+      response.code.should == "404"
     end
 
     it "success? is false when the call doesn't return 200" do
