@@ -187,7 +187,7 @@ Urbanairship.segment("abcd-efgh-ijkl") # =>
 ### Modifying a segment ###
 Note that you must provide both the display name and criteria when updating a segment, even if you are only changing one or the other.
 ``` ruby
-Urbanairship.update_segment({
+Urbanairship.update_segment('abcd-efgh-ijkl', {
   :display_name => 'segment1',
   :criteria => {:and => [{:tag => 'asdf'}]}
 }) # => {}
