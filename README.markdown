@@ -152,6 +152,14 @@ notification = {
 Urbanairship.push_to_segment(notification)
 ```
 
+### Creating a segment ###
+``` ruby
+Urbanairship.create_segment({
+  :display_name => 'segment1',
+  :criteria => {:and => [{:tag => 'one'}, {:tag => 'two'}]}
+}) # => {}
+```
+
 ### Listing your segments ###
 
 ```ruby
@@ -166,6 +174,28 @@ Urbanairship.segments # =>
 #     }
 #   ]
 # }
+
+Urbanairship.segment("abcd-efgh-ijkl") # =>
+# {
+#  "id" => "abcd-efgh-ijkl",
+#  "display_name" => "segment1",
+#  "creation_date" => 1360950614201,
+#  "modification_date" => 1360950614201
+# }
+```
+
+### Modifying a segment ###
+Note that you must provide both the display name and criteria when updating a segment, even if you are only changing one or the other.
+``` ruby
+Urbanairship.update_segment({
+  :display_name => 'segment1',
+  :criteria => {:and => [{:tag => 'asdf'}]}
+}) # => {}
+```
+
+### Deleting a segment ###
+```ruby
+Urbanairship.delete_segment("abcd-efgh-ijkl") # => {}
 ```
 
 Getting a count of your device tokens
