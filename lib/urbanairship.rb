@@ -67,10 +67,6 @@ module Urbanairship
       do_request(:get, "/api/tags/", :authenticate_with => :master_secret)
     end
 
-    def segments
-      do_request(:get, "/api/segments", :authenticate_with => :master_secret)
-    end
-
     def add_tag(tag)
       do_request(:put, "/api/tags/#{tag}", :authenticate_with => :master_secret, :content_type => 'text/plain')
     end
@@ -93,6 +89,26 @@ module Urbanairship
 
     def device_tokens_count
       do_request(:get, "/api/device_tokens/count/", :authenticate_with => :master_secret)
+    end
+
+    def segments
+      do_request(:get, "/api/segments", :authenticate_with => :master_secret)
+    end
+
+    def create_segment(segment)
+      do_request(:post, "/api/segments", :body => segment.to_json, :authenticate_with => :master_secret)
+    end
+
+    def get_segment(id)
+      do_request(:get, "/api/segments/#{id}", :authenticate_with => :master_secret)
+    end
+
+    def update_segment(id, segment)
+      do_request(:put, "/api/segments/#{id}", :body => segment.to_json, :authenticate_with => :master_secret)
+    end
+
+    def delete_segment(id)
+      do_request(:delete, "/api/segments/#{id}", :authenticate_with => :master_secret)
     end
 
     private
