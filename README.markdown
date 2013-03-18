@@ -57,7 +57,7 @@ Urbanairship.push(notification) # =>
 ```ruby
 notification = {
   :schedule_for => [1.hour.from_now],
-  :aliases => ['ALIAS-ONE', 'ALIAS-TWO'],
+  :aliases => ["ALIAS-ONE, ALIAS-TWO, ALIAS-THREE"],
   :aps => {:alert => 'You have a new message!', :badge => 1}
 }
 
