@@ -553,7 +553,7 @@ shared_examples_for "an Urbanairship client" do
       subject.push.success?.should == false
     end
 
-    it "converts aliases to strints" do
+    it "converts aliases to strings" do
       subject.push(@valid_params.merge(:aliases => [:one, 2]))
       request_json['aliases'].should == ['one', '2']
     end
