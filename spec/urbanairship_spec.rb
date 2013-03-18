@@ -552,6 +552,11 @@ shared_examples_for "an Urbanairship client" do
       subject.master_secret = "my_master_secret2"
       subject.push.success?.should == false
     end
+
+    it "converts aliases to strints" do
+      subject.push(@valid_params.merge(:aliases => [:one, 2]))
+      request_json['aliases'].should == ['one', '2']
+    end
   end
 
   describe "::push_to_segment" do

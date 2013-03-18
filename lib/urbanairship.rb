@@ -151,6 +151,7 @@ module Urbanairship
     end
 
     def parse_push_options(hash = {})
+      hash[:aliases] = hash[:aliases].map{|a| a.to_s} unless hash[:aliases].nil?
       hash[:schedule_for] = hash[:schedule_for].map{|elem| process_scheduled_elem(elem)} unless hash[:schedule_for].nil?
       hash
     end
