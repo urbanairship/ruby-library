@@ -19,7 +19,7 @@ module Urbanairship
     def register_device(device_token, options = {})
       body = parse_register_options(options).to_json
 
-      if (options[:provider] || @provider) == :android
+      if ( (options[:provider] || @provider) == :android ) || ( (options[:provider] || @provider) == 'android' )
         do_request(:put, "/api/apids/#{device_token}", :body => body, :authenticate_with => :application_secret)
       else
         do_request(:put, "/api/device_tokens/#{device_token}", :body => body, :authenticate_with => :application_secret)
@@ -27,7 +27,7 @@ module Urbanairship
     end
 
     def unregister_device(device_token, options = {})
-      if (options[:provider] || @provider) == :android
+      if ( (options[:provider] || @provider) == :android ) || ( (options[:provider] || @provider) == 'android' )
         do_request(:delete, "/api/apids/#{device_token}", :authenticate_with => :application_secret)
       else
         do_request(:delete, "/api/device_tokens/#{device_token}", :authenticate_with => :application_secret)
