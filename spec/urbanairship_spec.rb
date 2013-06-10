@@ -398,17 +398,30 @@ shared_examples_for "an Urbanairship client" do
       FakeWeb.last_request.path.should == "/api/device_tokens/new_device_token"
     end
 
-    it "uses the android interface if 'provider' configuration option is set to :android" do
+    it "uses the android interface if 'provider' configuration option is set to :android Symbol" do
       subject.provider = :android
       subject.register_device("new_device_token")
       FakeWeb.last_request.path.should == "/api/apids/new_device_token"
       subject.provider = nil
     end
 
-    it "uses the android interface if 'provider' option is passed as :android" do
+    it "uses the android interface if 'provider' configuration option is set to 'android' String" do
+      subject.provider = 'android'
+      subject.register_device("new_device_token")
+      FakeWeb.last_request.path.should == "/api/apids/new_device_token"
+      subject.provider = nil
+    end
+
+    it "uses the android interface if :provider Symbol key is passed an :android Symbol value" do
       subject.register_device("new_device_token", :provider => :android)
       FakeWeb.last_request.path.should == "/api/apids/new_device_token"
     end
+
+    it "uses the android interface if 'provider' Symbol key is passed an 'android' String value" do
+      subject.register_device("new_device_token", :provider => "android")
+      FakeWeb.last_request.path.should == "/api/apids/new_device_token"
+    end
+
   end
 
   describe "::unregister_device" do
@@ -446,15 +459,27 @@ shared_examples_for "an Urbanairship client" do
       subject.unregister_device("key_to_delete").success?.should == false
     end
 
-    it "uses the android interface if 'provider' configuration option is set to :android" do
+    it "uses the android interface if 'provider' configuration option is set to :android Symbol" do
       subject.provider = :android
       subject.unregister_device("new_device_token")
       FakeWeb.last_request.path.should == "/api/apids/new_device_token"
       subject.provider = nil
     end
 
-    it "uses the android interface if 'provider' option is passed as :android" do
+    it "uses the android interface if 'provider' configuration option is set to 'android' String" do
+      subject.provider = 'android'
+      subject.unregister_device("new_device_token")
+      FakeWeb.last_request.path.should == "/api/apids/new_device_token"
+      subject.provider = nil
+    end
+
+    it "uses the android interface if :provider Symbol key is passed with an :android Symbol value" do
       subject.unregister_device("new_device_token", :provider => :android)
+      FakeWeb.last_request.path.should == "/api/apids/new_device_token"
+    end
+
+    it "uses the android interface if :provider Symbol key is passed with an 'android' String value" do
+      subject.unregister_device("new_device_token", :provider => "android")
       FakeWeb.last_request.path.should == "/api/apids/new_device_token"
     end
 
