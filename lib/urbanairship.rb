@@ -80,11 +80,13 @@ module Urbanairship
     end
 
     def tag_device(params)
-      do_request(:post, "/api/tags/#{params[:tag]}", :body => {:device_tokens => {:add => [params[:device_token]]}}.to_json, :authenticate_with => :master_secret)
+      provider_field = ( (params[:provider] || @provider) == :android ) || ( (params[:provider] || @provider) == 'android' ) ? :apids : :device_tokens
+      do_request(:post, "/api/tags/#{params[:tag]}", :body => {provider_field => {:add => [params[:device_token]]}}.to_json, :authenticate_with => :master_secret)
     end
 
     def untag_device(params)
-      do_request(:post, "/api/tags/#{params[:tag]}", :body => {:device_tokens => {:remove => [params[:device_token]]}}.to_json, :authenticate_with => :master_secret)
+      provider_field = ( (params[:provider] || @provider) == :android ) || ( (params[:provider] || @provider) == 'android' ) ? :apids : :device_tokens
+      do_request(:post, "/api/tags/#{params[:tag]}", :body => {provider_field => {:remove => [params[:device_token]]}}.to_json, :authenticate_with => :master_secret)
     end
 
     def device_tokens_count
