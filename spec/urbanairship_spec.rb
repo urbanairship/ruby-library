@@ -58,14 +58,14 @@ shared_examples_for "an Urbanairship client" do
     FakeWeb.register_uri(:get, /my_app_key2\:my_master_secret2\@go\.urbanairship.com\/api\/device_tokens\/a_device_token\/tags/, :status => ["500", "Internal Server Error"])
 
     ##tag_device
-    FakeWeb.register_uri(:put, /my_app_key\:my_master_secret\@go\.urbanairship.com\/api\/device_tokens\/valid_device_token\/tags\/new_tag/, :status => ["201", "OK"])
-    FakeWeb.register_uri(:put, /my_app_key\:my_master_secret\@go\.urbanairship.com\/api\/device_tokens\/valid_device_token\/tags\/existing_tag/, :status => ["200", "OK"])
-    FakeWeb.register_uri(:put, /my_app_key2\:my_master_secret2\@go\.urbanairship.com\/api\/device_tokens\/a_device_token\/tags\/a_tag/, :status => ["500", "Internal Server Error"])
+    FakeWeb.register_uri(:post, /my_app_key\:my_master_secret\@go\.urbanairship.com\/api\/tags\/new_tag/, :status => ["201", "OK"], :body => '{"device_tokens":{"add":["valid_device_token"]}')
+    FakeWeb.register_uri(:post, /my_app_key\:my_master_secret\@go\.urbanairship.com\/api\/tags\/existing_tag/, :status => ["200", "OK"], :body => '{"device_tokens":{"add":["valid_device_token"]}')
+    FakeWeb.register_uri(:post, /my_app_key2\:my_master_secret2\@go\.urbanairship.com\/api\/tags\/a_tag/, :status => ["500", "Internal Server Error"], :body => '{"device_tokens":{"add":["a_device_token"]}')
 
     #untag_device
-    FakeWeb.register_uri(:delete, /my_app_key\:my_master_secret\@go\.urbanairship.com\/api\/device_tokens\/valid_device_token\/tags\/existing_tag/, :status => ["204", "OK"])
-    FakeWeb.register_uri(:delete, /my_app_key\:my_master_secret\@go\.urbanairship.com\/api\/device_tokens\/valid_device_token\/tags\/non_existant_tag/, :status => ["404", "OK"])
-    FakeWeb.register_uri(:delete, /my_app_key2\:my_master_secret2\@go\.urbanairship.com\/api\/device_tokens\/a_device_token\/tags\/a_tag/, :status => ["500", "Internal Server Error"])
+    FakeWeb.register_uri(:post, /my_app_key\:my_master_secret\@go\.urbanairship.com\/api\/tags\/existing_tag/, :status => ["204", "OK"],  :body => '{"device_tokens":{"remove":["valid_device_token"]}')
+    FakeWeb.register_uri(:post, /my_app_key\:my_master_secret\@go\.urbanairship.com\/api\/tags\/non_existant_tag/, :status => ["404", "OK"], :body => '{"device_tokens":{"remove":["valid_device_token"]}')
+    FakeWeb.register_uri(:post, /my_app_key2\:my_master_secret2\@go\.urbanairship.com\/api\/tags\/a_tag/, :status => ["500", "Internal Server Error"], :body => '{"device_tokens":{"remove":["a_device_token"]}')
 
     #Get Segment
     FakeWeb.register_uri(:get, /my_app_key\:my_master_secret\@go\.urbanairship.com\/api\/segments\/valid_id/, :status => ["200", "OK"], :body => '{"display_name":"Male in NY", "criteria":{"and":[{"tag":"male"}, {"tag":"in NY"}]}}')
@@ -302,7 +302,7 @@ shared_examples_for "an Urbanairship client" do
 
     it "adds a valid device token to an existing tag" do
       response = subject.tag_device({:device_token => 'valid_device_token', :tag => 'existing_tag'})
-      response.code.should == "200"
+      response.code.should == "204"
       response.success?.should == true
     end
   end
