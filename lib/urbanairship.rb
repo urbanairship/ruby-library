@@ -59,8 +59,8 @@ module Urbanairship
       do_request(:post, "/api/push/broadcast/", :body => body, :authenticate_with => :master_secret)
     end
 
-    def feedback(time)
-      do_request(:get, "/api/device_tokens/feedback/?since=#{format_time(time)}", :authenticate_with => :master_secret)
+    def feedback(time, options = {})
+      do_request(:get, "/api/#{provider_url_prefix(options)}/feedback/?since=#{format_time(time)}", :authenticate_with => :master_secret)
     end
 
     def tags
