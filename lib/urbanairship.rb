@@ -19,19 +19,11 @@ module Urbanairship
     def register_device(device_token, options = {})
       body = parse_register_options(options).to_json
 
-      if ( (options[:provider] || @provider) == :android ) || ( (options[:provider] || @provider) == 'android' )
-        do_request(:put, "/api/apids/#{device_token}", :body => body, :authenticate_with => :application_secret)
-      else
-        do_request(:put, "/api/device_tokens/#{device_token}", :body => body, :authenticate_with => :application_secret)
-      end
+      do_request(:put, "/api/#{provider_url_prefix(options)}/#{device_token}", :body => body, :authenticate_with => :application_secret)
     end
 
     def unregister_device(device_token, options = {})
-      if ( (options[:provider] || @provider) == :android ) || ( (options[:provider] || @provider) == 'android' )
-        do_request(:delete, "/api/apids/#{device_token}", :authenticate_with => :application_secret)
-      else
-        do_request(:delete, "/api/device_tokens/#{device_token}", :authenticate_with => :application_secret)
-      end
+      do_request(:delete, "/api/#{provider_url_prefix(options)}/#{device_token}", :authenticate_with => :application_secret)
     end
 
     def delete_scheduled_push(param)
@@ -76,20 +68,16 @@ module Urbanairship
     end
 
     def tags_for_device(device_token, options = {})
-      if ( (options[:provider] || @provider) == :android ) || ( (options[:provider] || @provider) == 'android' )
-        do_request(:get, "/api/apids/#{device_token}/tags/", :authenticate_with => :master_secret)
-      else
-        do_request(:get, "/api/device_tokens/#{device_token}/tags/", :authenticate_with => :master_secret)
-      end
+      do_request(:get, "/api/#{provider_url_prefix(options)}/#{device_token}/tags/", :authenticate_with => :master_secret)
     end
 
     def tag_device(params)
-      provider_field = ( (params[:provider] || @provider) == :android ) || ( (params[:provider] || @provider) == 'android' ) ? :apids : :device_tokens
+      provider_field = provider_url_prefix(params)
       do_request(:post, "/api/tags/#{params[:tag]}", :body => {provider_field => {:add => [params[:device_token]]}}.to_json, :authenticate_with => :master_secret)
     end
 
     def untag_device(params)
-      provider_field = ( (params[:provider] || @provider) == :android ) || ( (params[:provider] || @provider) == 'android' ) ? :apids : :device_tokens
+      provider_field = provider_url_prefix(params)
       do_request(:post, "/api/tags/#{params[:tag]}", :body => {provider_field => {:remove => [params[:device_token]]}}.to_json, :authenticate_with => :master_secret)
     end
 
@@ -118,6 +106,14 @@ module Urbanairship
     end
 
     private
+
+    def is_android?(options = {})
+      ( (options[:provider] || @provider) == :android ) || ( (options[:provider] || @provider) == 'android' )
+    end
+
+    def provider_url_prefix(options = {})
+      is_android?(options) ? "apids" : "device_tokens"
+    end
 
     def do_request(http_method, path, options = {})
       verify_configuration_values(:application_key, options[:authenticate_with])
