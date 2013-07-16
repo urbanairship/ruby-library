@@ -75,8 +75,12 @@ module Urbanairship
       do_request(:delete, "/api/tags/#{tag}", :authenticate_with => :master_secret)
     end
 
-    def tags_for_device(device_token)
-      do_request(:get, "/api/device_tokens/#{device_token}/tags/", :authenticate_with => :master_secret)
+    def tags_for_device(device_token, options = {})
+      if ( (options[:provider] || @provider) == :android ) || ( (options[:provider] || @provider) == 'android' )
+        do_request(:get, "/api/apids/#{device_token}/tags/", :authenticate_with => :master_secret)
+      else
+        do_request(:get, "/api/device_tokens/#{device_token}/tags/", :authenticate_with => :master_secret)
+      end
     end
 
     def tag_device(params)

@@ -57,6 +57,8 @@ shared_examples_for "an Urbanairship client" do
     FakeWeb.register_uri(:get, /my_app_key\:my_master_secret\@go\.urbanairship.com\/api\/device_tokens\/invalid_device_token\/tags/, :status => ["404", "OK"])
     FakeWeb.register_uri(:get, /my_app_key2\:my_master_secret2\@go\.urbanairship.com\/api\/device_tokens\/a_device_token\/tags/, :status => ["500", "Internal Server Error"])
 
+    FakeWeb.register_uri(:get, /my_app_key\:my_master_secret\@go\.urbanairship.com\/api\/apids\/valid_device_token\/tags/, :status => ["200", "OK"], :body => "[{\"tags\":[\"tag1\",\"tag2\"]}]")
+
     ##tag_device
     FakeWeb.register_uri(:post, /my_app_key\:my_master_secret\@go\.urbanairship.com\/api\/tags\/new_tag/, :status => ["201", "OK"], :body => '{"device_tokens":{"add":["valid_device_token"]}')
     FakeWeb.register_uri(:post, /my_app_key\:my_master_secret\@go\.urbanairship.com\/api\/tags\/existing_tag/, :status => ["200", "OK"], :body => '{"device_tokens":{"add":["valid_device_token"]}')
@@ -271,6 +273,17 @@ shared_examples_for "an Urbanairship client" do
       subject.application_key = "my_app_key2"
       subject.master_secret = "my_master_secret2"
       subject.tags_for_device('a_device_token').success?.should == false
+    end
+
+    context "android provider" do
+      it "uses the android interface if 'provider' configuration option is set to :android Symbol" do
+        subject.application_key = "my_app_key"
+        subject.master_secret = "my_master_secret"
+        subject.provider = :android
+        response = subject.tags_for_device('valid_device_token', provider: :android)
+        FakeWeb.last_request.path.should == "/api/apids/valid_device_token/tags/"
+        subject.provider = nil
+      end
     end
   end
 
