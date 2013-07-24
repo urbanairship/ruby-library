@@ -135,7 +135,7 @@ module Urbanairship
       unless logger.nil?
         logger.error "Urbanairship request timed out after #{request_timeout} seconds: [#{http_method} #{request.path} #{request.body}]"
       end
-      Urbanairship::Response.wrap(nil, :body => {:error => 'Request timeout'}, :code => '503')
+      Urbanairship::Response.wrap(nil, :body => {'error' => 'Request timeout'}, :code => '503')
     end
 
     def verify_configuration_values(*symbols)
