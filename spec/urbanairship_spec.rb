@@ -16,6 +16,11 @@ shared_examples_for "an Urbanairship client" do
     FakeWeb.register_uri(:delete, /my_app_key\:my_app_secret\@go\.urbanairship.com\/api\/device_tokens\/.+/, :status => ["204", "No Content"])
     FakeWeb.register_uri(:delete, /bad_key\:my_app_secret\@go\.urbanairship.com\/api\/device_tokens\/.+/, :status => ["401", "Unauthorized"])
 
+    # device_info
+    FakeWeb.register_uri(:get, /my_app_key\:my_app_secret\@go\.urbanairship.com\/api\/apids\/.+/, :status => ["200", "OK"], :body => "{\"active\":true,\"alias\":null}")
+    FakeWeb.register_uri(:get, /my_app_key\:my_app_secret\@go\.urbanairship.com\/api\/device_tokens\/.+/, :status => ["200", "OK"], :body => "{\"active\":true,\"alias\":null}")
+    FakeWeb.register_uri(:get, /bad_key\:my_app_secret\@go\.urbanairship.com\/api\/device_tokens\/.+/, :status => ["401", "Unauthorized"])
+
     # push
     FakeWeb.register_uri(:post, "https://my_app_key:my_master_secret@go.urbanairship.com/api/push/", :status => ["200", "OK"])
     FakeWeb.register_uri(:post, "https://my_app_key2:my_master_secret2@go.urbanairship.com/api/push/", :status => ["400", "Bad Request"])
@@ -485,6 +490,68 @@ shared_examples_for "an Urbanairship client" do
 
   end
 
+  describe "::device_info" do
+    before(:each) do
+      @valid_params = {:alias => 'one'}
+      subject.application_key = "my_app_key"
+      subject.application_secret = "my_app_secret"
+    end
+
+    it "raises an error if call is made without an app key and secret configured" do
+      subject.application_key = nil
+      subject.application_secret = nil
+
+      lambda {
+        subject.device_info("asdf1234")
+      }.should raise_error(RuntimeError, "Must configure application_key, application_secret before making this request.")
+    end
+
+    it "uses app key and secret to sign the request" do
+      subject.device_info("device_token")
+      FakeWeb.last_request['authorization'].should == "Basic #{Base64::encode64('my_app_key:my_app_secret').chomp}"
+    end
+
+    it "takes and sends a device token" do
+      subject.device_info("device_token")
+      FakeWeb.last_request.path.should == "/api/device_tokens/device_token"
+    end
+
+    it "returns false when the authorization is invalid" do
+      subject.application_key = "bad_key"
+      subject.device_info("device_token").success?.should == false
+    end
+
+    it "uses the iOS interface by default" do
+      subject.device_info("device_token")
+      FakeWeb.last_request.path.should == "/api/device_tokens/device_token"
+    end
+
+    it "uses the android interface if 'provider' configuration option is set to :android Symbol" do
+      subject.provider = :android
+      subject.device_info("device_token")
+      FakeWeb.last_request.path.should == "/api/apids/device_token"
+      subject.provider = nil
+    end
+
+    it "uses the android interface if 'provider' configuration option is set to 'android' String" do
+      subject.provider = 'android'
+      subject.device_info("device_token")
+      FakeWeb.last_request.path.should == "/api/apids/device_token"
+      subject.provider = nil
+    end
+
+    it "uses the android interface if :provider Symbol key is passed an :android Symbol value" do
+      subject.device_info("device_token", :provider => :android)
+      FakeWeb.last_request.path.should == "/api/apids/device_token"
+    end
+
+    it "uses the android interface if 'provider' Symbol key is passed an 'android' String value" do
+      subject.device_info("device_token", :provider => "android")
+      FakeWeb.last_request.path.should == "/api/apids/device_token"
+    end
+
+  end
+
   describe "::delete_scheduled_push" do
     before(:each) do
       subject.application_key = "my_app_key"
@@ -559,6 +626,11 @@ shared_examples_for "an Urbanairship client" do
     it "returns false when the authorization is invalid" do
       subject.application_key = "bad_key"
       subject.push(@valid_params).success?.should == false
+    end
+
+    it "uses v3 of the API when requested" do
+      subject.push(@valid_params.merge(:version => 3)).success?.should == true
+      FakeWeb.last_request["Accept"].should == "application/vnd.urbanairship+json; version=3;"
     end
 
     it "adds schedule_for to the JSON payload" do
