@@ -49,7 +49,7 @@ module Urbanairship
     end
 
     def push(options = {})
-      body = parse_push_options(options).to_json
+      body = parse_push_options(options.dup).to_json
       do_request(:post, "/api/push/", :body => body, :authenticate_with => :master_secret, :version => options[:version])
     end
 
@@ -168,6 +168,7 @@ module Urbanairship
     def parse_push_options(hash = {})
       hash[:aliases] = hash[:aliases].map{|a| a.to_s} unless hash[:aliases].nil?
       hash[:schedule_for] = hash[:schedule_for].map{|elem| process_scheduled_elem(elem)} unless hash[:schedule_for].nil?
+      hash.delete(:version)
       hash
     end
 
