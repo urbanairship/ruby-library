@@ -781,6 +781,42 @@ shared_examples_for "an Urbanairship client" do
     end
   end
 
+  describe "::device_tokens" do
+
+    before(:each) do
+      subject.application_key = "my_app_key"
+      subject.master_secret = "my_master_secret"
+    end
+
+    it "raises an error if call is made without an app key and master secret configured" do
+      subject.application_key = nil
+      subject.master_secret = nil
+
+      lambda {
+        subject.device_tokens_count
+      }.should raise_error(RuntimeError, "Must configure application_key, master_secret before making this request.")
+    end
+
+    it "uses app key and secret to sign the request" do
+      subject.device_tokens_count
+      FakeWeb.last_request['authorization'].should == "Basic #{Base64::encode64('my_app_key:my_master_secret').chomp}"
+    end
+
+    it "returns a hash as response from the Device Token List API with an array of device tokens" do
+      response = subject.device_tokens
+      response["device_tokens"].class.should == Array
+      response["device_tokens_count"].should == 50
+      response["active_device_tokens_count"].should == 55
+    end
+
+    it "success? is false when the call doesn't return 200" do
+      subject.application_key = "my_app_key2"
+      subject.master_secret = "my_master_secret2"
+      subject.device_tokens.success?.should == false
+    end
+
+  end
+
   describe "::device_tokens_count" do
 
     before(:each) do
