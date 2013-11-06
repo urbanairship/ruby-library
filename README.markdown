@@ -198,6 +198,17 @@ Urbanairship.update_segment('abcd-efgh-ijkl', {
 Urbanairship.delete_segment("abcd-efgh-ijkl") # => {}
 ```
 
+Getting your device tokens
+-------------------------------------
+```ruby
+Urbanairship.device_tokens # =>
+# {
+#   "device_tokens" => {"device_token"=>"<token>", "active"=>true, "alias"=>"<alias>", "tags"=>[]},
+#   "device_tokens_count" => 3,
+#   "active_device_tokens_count" => 1
+# }
+```
+
 Getting a count of your device tokens
 -------------------------------------
 ```ruby

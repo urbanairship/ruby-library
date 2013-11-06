@@ -89,6 +89,10 @@ module Urbanairship
       do_request(:post, "/api/tags/#{params[:tag]}", :body => {provider_field => {:remove => [params[:device_token]]}}.to_json, :authenticate_with => :master_secret)
     end
 
+    def device_tokens
+      do_request(:get, "/api/device_tokens/", :authenticate_with => :master_secret)
+    end
+
     def device_tokens_count
       do_request(:get, "/api/device_tokens/count/", :authenticate_with => :master_secret)
     end
