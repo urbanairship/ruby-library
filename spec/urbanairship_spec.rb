@@ -98,6 +98,11 @@ shared_examples_for "an Urbanairship client" do
     #device_tokens_count
     FakeWeb.register_uri(:get, /my_app_key\:my_master_secret\@go\.urbanairship.com\/api\/device_tokens\/count/, :status => ["200", "OK"], :body => "{\"device_tokens_count\":50, \"active_device_tokens_count\":55}")
     FakeWeb.register_uri(:get, /my_app_key2\:my_master_secret2\@go\.urbanairship.com\/api\/device_tokens\/count/, :status => ["500", "Internal Server Error"])
+
+    #device_tokens
+    FakeWeb.register_uri(:get, /my_app_key\:my_master_secret\@go\.urbanairship.com\/api\/device_tokens\/$/, :status => ["200", "OK"], :body => '{"device_tokens":[{"device_token":"some_token_1", "active":true,"alias":"", "tags":["some_tag"]}, {"device_token":"some_token_2", "active":false, "alias":"", "tags":["some_tag","some_tag2"]}], "device_tokens_count":2, "active_device_tokens_count":1}')
+    FakeWeb.register_uri(:get, /my_app_key2\:my_master_secret2\@go\.urbanairship.com\/api\/device_tokens\/$/, :status => ["400", "Bad Requst"])
+
   end
 
   describe "configuration" do
@@ -805,8 +810,8 @@ shared_examples_for "an Urbanairship client" do
     it "returns a hash as response from the Device Token List API with an array of device tokens" do
       response = subject.device_tokens
       response["device_tokens"].class.should == Array
-      response["device_tokens_count"].should == 50
-      response["active_device_tokens_count"].should == 55
+      response["device_tokens_count"].should == 2
+      response["active_device_tokens_count"].should == 1
     end
 
     it "success? is false when the call doesn't return 200" do
