@@ -103,6 +103,16 @@ shared_examples_for "an Urbanairship client" do
     #device_tokens_count
     FakeWeb.register_uri(:get, /my_app_key\:my_master_secret\@go\.urbanairship.com\/api\/device_tokens\/count/, :status => ["200", "OK"], :body => "{\"device_tokens_count\":50, \"active_device_tokens_count\":55}")
     FakeWeb.register_uri(:get, /my_app_key2\:my_master_secret2\@go\.urbanairship.com\/api\/device_tokens\/count/, :status => ["500", "Internal Server Error"])
+
+    #device_tokens
+    FakeWeb.register_uri(:get, /my_app_key\:my_master_secret\@go\.urbanairship.com\/api\/device_tokens\/$/, :status => ["200", "OK"], :body => '{"device_tokens":[{"device_token":"some_token_1", "active":true,"alias":"", "tags":["some_tag"]}, {"device_token":"some_token_2", "active":false, "alias":"", "tags":["some_tag","some_tag2"]}], "device_tokens_count":2, "active_device_tokens_count":1}')
+    FakeWeb.register_uri(:get, /my_app_key2\:my_master_secret2\@go\.urbanairship.com\/api\/device_tokens\/$/, :status => ["400", "Bad Requst"])
+
+    #device_info
+    FakeWeb.register_uri(:get, /my_app_key\:my_app_secret\@go\.urbanairship.com\/api\/device_tokens\/valid_device_token/, :status => ["200", "OK"], :body => '{"device_token":"valid_device_token","last_registration":null,"tz":null,"tags":[],"alias":null,"quiettime":{"start":null,"end":null},"active":true,"badge":0}')
+    FakeWeb.register_uri(:get, /my_app_key\:my_app_secret\@go\.urbanairship.com\/api\/device_tokens\/invalid_device_token/, :status => ["404", "OK"])
+    FakeWeb.register_uri(:get, /bad_key\:my_app_secret\@go\.urbanairship.com\/api\/device_tokens\/valid_device_token/, :status => ["401", "Unauthorized"])
+
   end
 
   describe "configuration" do
@@ -853,6 +863,40 @@ shared_examples_for "an Urbanairship client" do
     end
   end
 
+  describe "::device_token" do
+    before(:each) do
+      subject.application_key = "my_app_key"
+      subject.application_secret = "my_app_secret"
+    end
+
+    it "raises an error if call is made without an app key and master secret configured" do
+      subject.application_key = nil
+      subject.application_secret = nil
+
+      lambda {
+        subject.device_token("asdf1234")
+      }.should raise_error(RuntimeError, "Must configure application_key, application_secret before making this request.")
+    end
+
+    it "uses app key and secret to sign the request" do
+      subject.device_token("valid_device_token")
+      FakeWeb.last_request['authorization'].should == "Basic #{Base64::encode64('my_app_key:my_app_secret').chomp}"
+    end
+
+    it "returns a hash as response from the Device Token List API with a device token" do
+      response = subject.device_token('valid_device_token')
+      response.code.should == "200"
+      response.success?.should == true
+      response.class.should == Hash
+    end
+
+    it "success? is false when the call doesn't return 200" do
+      subject.application_key = "bad_key"
+      subject.application_secret = "my_app_secret"
+      subject.device_token('valid_device_token').success?.should == false
+    end
+  end
+
   describe "::device_tokens" do
 
     before(:each) do
@@ -877,8 +921,8 @@ shared_examples_for "an Urbanairship client" do
     it "returns a hash as response from the Device Token List API with an array of device tokens" do
       response = subject.device_tokens
       response["device_tokens"].class.should == Array
-      response["device_tokens_count"].should == 50
-      response["active_device_tokens_count"].should == 55
+      response["device_tokens_count"].should == 2
+      response["active_device_tokens_count"].should == 1
     end
 
     it "success? is false when the call doesn't return 200" do
