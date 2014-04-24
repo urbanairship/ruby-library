@@ -38,6 +38,12 @@ Unregistering a device token
 Urbanairship.unregister_device('DEVICE-TOKEN')
 ```
 
+Retrieving Device Info
+----------------------------
+```ruby
+Urbanairship.device_info('DEVICE-TOKEN')
+```
+
 Sending a push notification
 ---------------------------
 ```ruby
@@ -51,6 +57,12 @@ Urbanairship.push(notification) # =>
 # {
 #   "scheduled_notifications" => ["https://go.urbanairship.com/api/push/scheduled/123456"]
 # }
+```
+
+If you wish to use v3 of the Urbanairship API, just add `version: 3` as an option:
+
+```ruby
+Urbanairship.push(notification, version: 3)
 ```
 ### Using aliases instead of device tokens ###
 
