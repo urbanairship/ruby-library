@@ -62,7 +62,7 @@ Urbanairship.push(notification) # =>
 If you wish to use v3 of the Urbanairship API, just add `version: 3` as an option:
 
 ```ruby
-Urbanairship.push(notification, version: 3)
+Urbanairship.push notification.merge(version: 3)
 ```
 ### Using aliases instead of device tokens ###
 
