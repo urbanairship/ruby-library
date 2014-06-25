@@ -14,7 +14,7 @@ module Urbanairship
   end
 
   module ClassMethods
-    attr_accessor :application_key, :application_secret, :master_secret, :logger, :request_timeout, :provider
+    attr_accessor :application_key, :application_secret, :master_secret, :logger, :request_timeout, :provider, :truncate_aps
 
     def register_device(device_token, options = {})
       body = parse_register_options(options).to_json
@@ -169,10 +169,21 @@ module Urbanairship
       hash
     end
 
+    MAX_APS_BYTES = 256
+
     def parse_push_options(hash = {})
       hash[:aliases] = hash[:aliases].map{|a| a.to_s} unless hash[:aliases].nil?
       hash[:schedule_for] = hash[:schedule_for].map{|elem| process_scheduled_elem(elem)} unless hash[:schedule_for].nil?
       hash.delete(:version)
+
+      if @truncate_aps && hash[:aps]
+        logger.info "Urbanairship: truncated APS message" if !logger.nil?
+        num_bytes = hash.to_json.bytesize
+        if num_bytes > MAX_APS_BYTES
+          hash[:aps][:alert] = hash[:aps][:alert].byteslice(0, MAX_APS_BYTES - (num_bytes - hash[:aps][:alert].bytesize))
+        end
+      end
+
       hash
     end
 
