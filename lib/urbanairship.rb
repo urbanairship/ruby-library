@@ -159,6 +159,7 @@ module Urbanairship
       hash[:schedule_for] = hash[:schedule_for].map{|elem| process_scheduled_elem(elem)} unless hash[:schedule_for].nil?
 
       if @truncate_aps && hash[:aps]
+        logger.info "Urbanairship: truncated APS message" if !logger.nil?
         num_bytes = hash.to_json.bytesize
         if num_bytes > MAX_APS_BYTES
           hash[:aps][:alert] = hash[:aps][:alert].byteslice(0, MAX_APS_BYTES - (num_bytes - hash[:aps][:alert].bytesize))
