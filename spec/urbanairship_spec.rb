@@ -42,6 +42,7 @@ shared_examples_for "an Urbanairship client" do
     # feedback
     FakeWeb.register_uri(:get, /my_app_key\:my_master_secret\@go\.urbanairship.com\/api\/device_tokens\/feedback/, :status => ["200", "OK"], :body => "[{\"device_token\":\"token\",\"marked_inactive_on\":\"2010-10-14T19:15:13Z\",\"alias\":\"my_alias\"}]")
     FakeWeb.register_uri(:get, /my_app_key2\:my_master_secret2\@go\.urbanairship.com\/api\/device_tokens\/feedback/, :status => ["500", "Internal Server Error"])
+    FakeWeb.register_uri(:get, /my_app_key\:my_master_secret\@go\.urbanairship.com\/api\/apids\/feedback/, :status => ["200", "OK"], :body => "[{\"apid\":\"token\",\"gcm_registration_id\":null,\"marked_inactive_on\":\"2010-10-14T19:15:13Z\",\"alias\":\"my_alias\"}]")
 
     #tags
     FakeWeb.register_uri(:get, /my_app_key\:my_master_secret\@go\.urbanairship.com\/api\/tags/, :status => ["200", "OK"], :body => "[{\"tags\":[\"tag1\",\"tag2\"]}]")
@@ -549,7 +550,6 @@ shared_examples_for "an Urbanairship client" do
       subject.device_info("device_token", :provider => "android")
       FakeWeb.last_request.path.should == "/api/apids/device_token"
     end
-
   end
 
   describe "::delete_scheduled_push" do
@@ -813,43 +813,73 @@ shared_examples_for "an Urbanairship client" do
       subject.master_secret = "my_master_secret"
     end
 
-    it "raises an error if call is made without an app key and master secret configured" do
-      subject.application_key = nil
-      subject.master_secret = nil
+    context "ios provider" do
+      it "raises an error if call is made without an app key and master secret configured" do
+        subject.application_key = nil
+        subject.master_secret = nil
 
-      lambda {
+        lambda {
+          subject.feedback(Time.now)
+        }.should raise_error(RuntimeError, "Must configure application_key, master_secret before making this request.")
+      end
+
+      it "uses app key and secret to sign the request" do
         subject.feedback(Time.now)
-      }.should raise_error(RuntimeError, "Must configure application_key, master_secret before making this request.")
+        FakeWeb.last_request['authorization'].should == "Basic #{Base64::encode64('my_app_key:my_master_secret').chomp}"
+      end
+
+      it "encodes the time argument in UTC, ISO 8601 format" do
+        time = Time.parse("October 10, 2010, 8:00pm")
+        formatted_time = time.utc.strftime("%Y-%m-%dT%H:%M:%SZ")
+        subject.feedback(time)
+        FakeWeb.last_request.path.should include(formatted_time)
+      end
+
+      it "accepts a string as the time argument" do
+        subject.feedback("Oct 07, 2010 8:00AM UTC")
+        FakeWeb.last_request.path.should include("2010-10-07T08:00:00Z")
+      end
+
+      it "success? is false when the call doesn't return 200" do
+        subject.application_key = "my_app_key2"
+        subject.master_secret = "my_master_secret2"
+        subject.feedback(Time.now).success?.should == false
+      end
+
+      it "uses the ios interface if 'provider' configuration option is not specified or set to :ios Symbol" do
+        subject.feedback(Time.now)
+        FakeWeb.last_request.path.should include("device_tokens")
+      end
+
+      it "returns an array of responses from the feedback API" do
+        response = subject.feedback(Time.now)
+        response[0].should include("device_token")
+        response[0].should include("marked_inactive_on")
+        response[0].should include("alias")
+      end
+
+      it "uses the ios interface if 'provider' configuration option is not specified of set to :ios Symbol" do
+        subject.feedback(Time.now)
+        FakeWeb.last_request.path.should include("device_tokens")
+      end
     end
 
-    it "uses app key and secret to sign the request" do
-      subject.feedback(Time.now)
-      FakeWeb.last_request['authorization'].should == "Basic #{Base64::encode64('my_app_key:my_master_secret').chomp}"
-    end
+    context 'android provider' do
+      def get_feedback(since_time)
+        subject.feedback(since_time, provider: :android)
+      end
 
-    it "encodes the time argument in UTC, ISO 8601 format" do
-      time = Time.parse("October 10, 2010, 8:00pm")
-      formatted_time = time.utc.strftime("%Y-%m-%dT%H:%M:%SZ")
-      subject.feedback(time)
-      FakeWeb.last_request.path.should include(formatted_time)
-    end
+      it "uses the android interface if 'provider' configuration option is set to :android Symbol" do
+        get_feedback(Time.now)
+        FakeWeb.last_request.path.should include("apids")
+      end
 
-    it "accepts a string as the time argument" do
-      subject.feedback("Oct 07, 2010 8:00AM UTC")
-      FakeWeb.last_request.path.should include("2010-10-07T08:00:00Z")
-    end
-
-    it "returns an array of responses from the feedback API" do
-      response = subject.feedback(Time.now)
-      response[0].should include("device_token")
-      response[0].should include("marked_inactive_on")
-      response[0].should include("alias")
-    end
-
-    it "success? is false when the call doesn't return 200" do
-      subject.application_key = "my_app_key2"
-      subject.master_secret = "my_master_secret2"
-      subject.feedback(Time.now).success?.should == false
+      it "returns an array of responses from the feedback API" do
+        response = get_feedback(Time.now)
+        response[0].should include("apid")
+        response[0].should include("marked_inactive_on")
+        response[0].should include("alias")
+      end
     end
   end
 
