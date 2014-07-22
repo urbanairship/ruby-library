@@ -132,6 +132,26 @@ Urbanairship.feedback(24.hours.ago) # =>
 # ]
 ```
 
+Alternatively, you can pass the `:provider => :android` option to feedback calls if your need to get feedback for android APIDS:
+
+```ruby
+Urbanairship.feedback(24.hours.ago, :provider => :android) # =>
+# [
+#   {
+#     "apid"=>"APID-ONE",
+#     "marked_inactive_on"=>"2011-06-03 22:53:23",
+#     "alias"=>nil,
+#     "gcm_registration_id":nil
+#   },
+#   {
+#     "apid"=>"APID-TWO",
+#     "marked_inactive_on"=>"2011-06-03 22:53:23",
+#     "alias"=>"bob",
+#     "gcm_registration_id":nil
+#   }
+# ]
+```
+
 Deleting scheduled notifications
 --------------------------------
 
