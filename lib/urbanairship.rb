@@ -71,8 +71,12 @@ module Urbanairship
       do_request(:post, "/api/push/broadcast/", :body => body, :authenticate_with => :master_secret)
     end
 
-    def feedback(time)
-      do_request(:get, "/api/device_tokens/feedback/?since=#{format_time(time)}", :authenticate_with => :master_secret)
+    def feedback(time, options = {})
+      if ( (options[:provider] || @provider) == :android ) || ( (options[:provider] || @provider) == 'android' )
+        do_request(:get, "/api/apids/feedback/?since=#{format_time(time)}", :authenticate_with => :master_secret)
+      else
+        do_request(:get, "/api/device_tokens/feedback/?since=#{format_time(time)}", :authenticate_with => :master_secret)
+      end
     end
 
     def tags
