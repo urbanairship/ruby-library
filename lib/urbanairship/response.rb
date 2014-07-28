@@ -18,7 +18,7 @@ module Urbanairship
       else
         begin
           output = JSON.parse(response.body || '{}')
-        rescue JSON::ParserError
+        rescue JSON::ParserError => e
           output = {}
         end
       end
