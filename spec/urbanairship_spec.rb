@@ -658,6 +658,22 @@ shared_examples_for "an Urbanairship client" do
       subject.push(@valid_params.merge(:aliases => [:one, 2]))
       request_json['aliases'].should == ['one', '2']
     end
+
+    it "automatically truncates aps payloads to max aps bytes when configured" do
+      subject.truncate_aps = true
+      large_params = @valid_params
+      large_params[:aps][:alert] = "this will be a long alert" * 500
+      subject.push(large_params).success?.should == true
+      request_json.to_json.bytesize.should == Urbanairship::Client::MAX_APS_BYTES
+      subject.truncate_aps = false
+    end
+
+    it "does not automatically truncate aps payloads to max aps bytes when not configured" do
+      large_params = @valid_params
+      large_params[:aps][:alert] = "this will be a long alert" * 500
+      subject.push(large_params).success?.should == true
+      request_json.to_json.bytesize.should_not == Urbanairship::Client::MAX_APS_BYTES
+    end
   end
 
   describe "::push_to_segment" do
