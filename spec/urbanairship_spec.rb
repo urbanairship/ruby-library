@@ -76,6 +76,10 @@ shared_examples_for "an Urbanairship client" do
     FakeWeb.register_uri(:post, /my_app_key\:my_master_secret\@go\.urbanairship.com\/api\/tags\/non_existant_tag/, :status => ["404", "OK"], :body => '{"device_tokens":{"remove":["valid_device_token"]}')
     FakeWeb.register_uri(:post, /my_app_key2\:my_master_secret2\@go\.urbanairship.com\/api\/tags\/a_tag/, :status => ["500", "Internal Server Error"], :body => '{"device_tokens":{"remove":["a_device_token"]}')
 
+    #batch_tag_devices
+    FakeWeb.register_uri(:post, /my_app_key\:my_master_secret\@go\.urbanairship.com\/api\/tags\/batch/, :status => ["200", "OK"])
+    FakeWeb.register_uri(:post, /my_app_key2\:my_master_secret2\@go\.urbanairship.com\/api\/tags\/batch/, :status => ["500", "Internal Server Error"])
+
     #Get Segment
     FakeWeb.register_uri(:get, /my_app_key\:my_master_secret\@go\.urbanairship.com\/api\/segments\/valid_id/, :status => ["200", "OK"], :body => '{"display_name":"Male in NY", "criteria":{"and":[{"tag":"male"}, {"tag":"in NY"}]}}')
     FakeWeb.register_uri(:get, /my_app_key\:my_master_secret\@go\.urbanairship.com\/api\/segments\/not_found/, :status => ["404", "OK"])
@@ -347,6 +351,46 @@ shared_examples_for "an Urbanairship client" do
         response.code.should == "404"
         response.success?.should == false
       end
+  end
+
+  describe "::batch_tag_devices" do
+    before(:each) do
+      @valid_params = [
+        {:device_token => 'device_token_one', :tags => ['a_tag','b_tag']},
+        {:apid => 'device_token_two', :tags => ['a_tag','b_tag']}
+      ]
+      subject.application_key = "my_app_key"
+      subject.master_secret = "my_master_secret"
+    end
+
+    it "raises an error if call is made without an app key and master secret configured" do
+      subject.application_key = nil
+      subject.master_secret = nil
+
+      lambda {
+        subject.batch_tag_devices(@valid_params)
+      }.should raise_error(RuntimeError, "Must configure application_key, master_secret before making this request.")
+    end
+
+    it "uses app key and secret to sign the request" do
+      subject.batch_tag_devices(@valid_params)
+      FakeWeb.last_request['authorization'].should == "Basic #{Base64::encode64('my_app_key:my_master_secret').chomp}"
+    end
+
+    it "returns true when it successfully tags devices" do
+      subject.batch_tag_devices(@valid_params).success?.should == true
+    end
+
+    it "returns false when the authorization is invalid" do
+      subject.application_key = "bad_key"
+      subject.batch_push(@valid_params).success?.should == false
+    end
+
+    it "returns false if urbanairship responds with a non-200 response" do
+      subject.application_key = "my_app_key2"
+      subject.master_secret = "my_master_secret2"
+      subject.batch_push.success?.should == false
+    end
   end
 
   describe "::register_device" do
