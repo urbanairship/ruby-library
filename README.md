@@ -108,8 +108,25 @@ notification = {
   :aps => {:alert => 'Important announcement!', :badge => 1}
 }
 
-Urbanairship.broadcast_push(notification)
+Urbanairship.broadcast_pushpnotification())```
+
+Per push infomation
+-------------------------------
+Urban Airship will return a push_id every time you send a push notification. Using this push_id you can retrieve per push reports.
+
+```ruby
+options = {
+  :push_id = > '20a91d8a-4124-4e4d-810e-0337ab9ebda9'
+}
+
+Urbanairship.push_info options.merge(version: 3) # =>
+
+#{
+#"app_key":"vDt0ksKoS7CrKNyg1NpdHQ","push_id":"01a91d8a-4124-4e4d-810e-0337ab9ebda9","created":"2015-03-01 22:35:45","push_body":"eyJhdWRpZW5jZSI6eyJhbmQiOlt7InRhZyI6WyJnYW1lcy1uYmEtcXVhcnRlci0xMCIsImdhbWVzLW5iYS1xdWFydGVyLTUiLCJnYW1lcy1uYmEtcXVhcnRlci0xNDU5OTIwIiwiZ2FtZXMtbmJhLXF1YXJ0ZXIiXX1dfSwiZGV2aWNlX3R5cGVzIjpbImlvcyIsImFuZHJvaWQiXSwibm90aWZpY2F0aW9uIjp7ImFsZXJ0IjoiRW5kIG9mIDNyZDogQ2F2YWxpZXJzIDc0LCBSb2NrZXRzIDgyLiIsImlvcyI6eyJzb3VuZCI6ImRlZmF1bHQiLCJleHRyYSI6eyJvdCI6ZmFsc2UsImhvbWVfc2NvcmUiOjgyLCJjbG9jayI6IjA6MDAiLCJpc19hY3RpdmUiOmZhbHNlLCJsZWFndWUiOiJuYmEiLCJnYW1lX3N0YXR1cyI6IkluLVByb2dyZXNzIiwiaWQiOjE0NTk5MjAsImhvbWVfY2l0eSI6IkhvdXN0b24iLCJob21lX3RlYW1fbmFtZSI6IlJvY2tldHMiLCJ2aXNpdGluZ19jaXR5IjoiQ2xldmVsYW5kIiwidmlzaXRpbmdfc2NvcmUiOjc0LCJzdGFydGVkX2F0IjoxNDI1MjQxODAwLCJob21lX3RlYW1faWQiOjEwLCJ2aXNpdGluZ190ZWFtX2lkIjo1LCJ2aXNpdGluZ190ZWFtX25hbWUiOiJDYXZhbGllcnMiLCJxdWFydGVyIjozfX0sImFuZHJvaWQiOnsiZXh0cmEiOnsiaWQiOiIxNDU5OTIwIiwiZ2FtZV9zdGF0dXMiOiJJbi1Qcm9ncmVzcyIsImlzX2FjdGl2ZSI6ImZhbHNlIiwicXVhcnRlciI6IjMiLCJsZWFndWUiOiJuYmEiLCJjbG9jayI6IjA6MDAiLCJob21lX3Njb3JlIjoiODIiLCJ2aXNpdGluZ19zY29yZSI6Ijc0IiwiaG9tZV9jaXR5IjoiSG91c3RvbiIsInZpc2l0aW5nX2NpdHkiOiJDbGV2ZWxhbmQiLCJob21lX3RlYW1fbmFtZSI6IlJvY2tldHMiLCJ2aXNpdGluZ190ZWFtX25hbWUiOiJDYXZhbGllcnMiLCJob21lX3RlYW1faWQiOiIxMCIsInZpc2l0aW5nX3RlYW1faWQiOiI1Iiwic3RhcnRlZF9hdCI6IjE0MjUyNDE4MDAiLCJvdCI6ImZhbHNlIn19fX0=","sends":0,"direct_responses":0,"influenced_responses":0,"rich_sends":0,"rich_responses":0,"rich_deletions":0,"platforms":{"ios":{"sends":0,"direct_responses":0,"influenced_responses":0},"android":{"sends":0,"direct_responses":0,"influenced_responses":0},"amazon":{"sends":0,"direct_responses":0,"influenced_responses":0}}
+#}
+
 ```
+
 
 Polling the feedback API
 ------------------------
