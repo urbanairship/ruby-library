@@ -22,7 +22,8 @@ shared_examples_for "an Urbanairship client" do
     FakeWeb.register_uri(:get, /bad_key\:my_app_secret\@go\.urbanairship.com\/api\/device_tokens\/.+/, :status => ["401", "Unauthorized"])
 
     # device_tokens
-    FakeWeb.register_uri(:get, "https://my_app_key:my_master_secret@go.urbanairship.com/api/device_tokens/", :status => ["200", "OK"], :body => '{"device_tokens":[{"device_token": "0101F9929660BAD9FFF31A0B5FA32620FA988507DFFA52BD6C1C1F4783EDA2DB","active": false,"alias": null, "tags": []}], "device_tokens_count":50, "active_device_tokens_count":55}')
+    FakeWeb.register_uri(:get, "https://my_app_key:my_master_secret@go.urbanairship.com/api/device_tokens/", :status => ["200", "OK"], :body => '{"device_tokens":[{"device_token": "0101F9929660BAD9FFF31A0B5FA32620FA988507DFFA52BD6C1C1F4783EDA2DB","active": false,"alias": null, "tags": []}], "device_tokens_count":50, "active_device_tokens_count":55, "next_page":"https://go.urbanairship.com/api/device_tokens/?limit=1000&start=00xxxyzw-aa88-55dd-b8a7-x1y050888xxy"}')
+    FakeWeb.register_uri(:get, "https://my_app_key:my_master_secret@go.urbanairship.com/api/device_tokens/?limit=1000&start=00xxxyzw-aa88-55dd-b8a7-x1y050888xxy", :status => ["200", "OK"], :body => '{"device_tokens":[{"device_token":"AAAAAAAAAAAAA0000000000AAAAAAAAA","active":true,"tags":["some_tag"]}],"device_tokens_count":88,"active_device_tokens_count":77}')
     FakeWeb.register_uri(:get, "https://my_app_key2:my_master_secret2@go.urbanairship.com/api/device_tokens/", :status => ["401", "OK"])
 
     # push
@@ -82,7 +83,8 @@ shared_examples_for "an Urbanairship client" do
     FakeWeb.register_uri(:get, /my_app_key2\:my_master_secret2\@go\.urbanairship.com\/api\/segments\/invalid_segment/, :status => ["500", "Internal Server Error"])
 
     #Get List of Segments
-    FakeWeb.register_uri(:get, /my_app_key\:my_master_secret\@go\.urbanairship.com\/api\/segments$/, :status => ["200", "OK"], :body => '{"segments":[{"id":"abcd-efgh-ijkl", "display_name":"test1", "creation_date":1360950614201, "modification_date":1360950614201}, {"id": "mnop-qrst-uvwx", "display_name": "test2", "creation_date":1360950614202, "modification_date":1360950614202}]}')
+    FakeWeb.register_uri(:get, /my_app_key\:my_master_secret\@go\.urbanairship.com\/api\/segments$/, :status => ["200", "OK"], :body => '{"segments":[{"id":"abcd-efgh-ijkl", "display_name":"test1", "creation_date":1360950614201, "modification_date":1360950614201}, {"id": "mnop-qrst-uvwx", "display_name": "test2", "creation_date":1360950614202, "modification_date":1360950614202}], "next_page":"https://go.urbanairship.com/api/segments?limit=1&sort=id&order=asc&start=3832cf72-cb44-4132-a11f-eafb41b82f64"}')
+    FakeWeb.register_uri(:get, "https://my_app_key:my_master_secret@go.urbanairship.com/api/segments?limit=1&sort=id&order=asc&start=3832cf72-cb44-4132-a11f-eafb41b82f64", :status => ["200", "OK"], :body => '{"segments":[{"id":"abcd-efgh-ijkl", "display_name":"test1", "creation_date":1360950614201, "modification_date":1360950614201}, {"id": "mnop-qrst-uvwx", "display_name": "test2", "creation_date":1360950614202, "modification_date":1360950614202}]}')
     FakeWeb.register_uri(:get, /my_app_key2\:my_master_secret2\@go\.urbanairship.com\/api\/segments$/, :status => ["500", "Internal Server Error"])
 
     #Create Segment
@@ -891,6 +893,10 @@ shared_examples_for "an Urbanairship client" do
       subject.device_tokens.success?.should == false
     end
 
+    it "should have a response with next_page" do
+      response = subject.device_tokens.next_page
+      response.success?.should be_true
+    end
   end
 
   describe "::device_tokens_count" do
@@ -957,6 +963,11 @@ shared_examples_for "an Urbanairship client" do
           s.should include(k)
         end
       end
+    end
+
+    it "should have a response with next_page" do
+      response = subject.segments.next_page
+      response.success?.should be_true
     end
 
     it "can create a valid segment" do
