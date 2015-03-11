@@ -99,7 +99,7 @@ describe Urbanairship::Response do
         end
 
         it "should return nil if 'ua_client' is not Urbanairship or Urbanairship::Client" do
-          subject.stub(:original_request).and_return({ ua_client: Object.new })
+          subject.stub(:original_request).and_return({ :ua_client => Object.new })
           subject.next_page.should be_nil                        
         end
       end
