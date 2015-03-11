@@ -47,7 +47,7 @@ describe Urbanairship::Response do
   end
 
   context "#next_page" do
-    before :all do
+    before :each do
       Urbanairship.application_secret = "my_app_secret"
       Urbanairship.application_key = "my_app_key"
       Urbanairship.master_secret = "my_master_secret"
@@ -80,7 +80,7 @@ describe Urbanairship::Response do
     end
 
     context "api request that does paginate (have a 'next_page')" do
-      before :all do
+      before :each do
         FakeWeb.register_uri(:get, "https://my_app_key:my_master_secret@go.urbanairship.com/api/device_tokens/", :status => ["200", "OK"], :body => '{"device_tokens":[{"device_token": "0101F9929660BAD9FFF31A0B5FA32620FA988507DFFA52BD6C1C1F4783EDA2DB","active": false,"alias": null, "tags": []}], "device_tokens_count":50, "active_device_tokens_count":55, "next_page":"https://go.urbanairship.com/api/device_tokens/?limit=1000&start=00xxxyzw-aa88-55dd-b8a7-x1y050888xxy"}')
       end
 

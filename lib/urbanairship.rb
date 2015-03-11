@@ -129,6 +129,18 @@ module Urbanairship
       do_request(:delete, "/api/segments/#{id}", :authenticate_with => :master_secret)
     end
 
+    def channels
+      do_request(:get, '/api/channels', :authenticate_with => :master_secret)
+    end
+
+    def channel_info(channel_id)
+      do_request(:get, "/api/channels/#{channel_id}", :authenticate_with => :master_secret)
+    end
+
+    def uninstall_channels(channels_array)
+      do_request(:post, '/api/channels/uninstall/', :body => channels.to_json, :authenticate_with => :master_secret)
+    end
+
     private
     def do_request(http_method, path, options = {})
       verify_configuration_values(:application_key, options[:authenticate_with])
