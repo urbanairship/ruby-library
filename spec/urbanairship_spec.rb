@@ -970,7 +970,7 @@ shared_examples_for "an Urbanairship client" do
 
     it "returns valid segments" do
       response = subject.segments
-      response.first.should include("segments")
+      response.keys.should include("segments")
       response["segments"].each do |s|
         ["id", "display_name", "creation_date", "modification_date"].each do |k|
           s.should include(k)
