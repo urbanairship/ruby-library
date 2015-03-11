@@ -138,7 +138,7 @@ module Urbanairship
     end
 
     def uninstall_channels(channels_array)
-      do_request(:post, '/api/channels/uninstall/', :body => channels.to_json, :authenticate_with => :master_secret)
+      do_request(:post, '/api/channels/uninstall', :body => channels_array.to_json, :authenticate_with => :master_secret)
     end
 
     private

@@ -1092,9 +1092,14 @@ shared_examples_for "an Urbanairship client" do
     end
 
     describe "uninstall_channels" do
+      before do
+        @channel = {"channel_id"=>"01234567-890a-bcde-f012-3456789abc0", "device_type"=>"ios", "installed"=>true, "opt_in"=>false, "push_address"=>"FE66489F304DC75B8D6E8200DFF8A456E8DAEACEC428B427E9518741C92C6660", "created"=>"2013-08-08T20:41:06", "last_registration"=>"2014-05-01T18:00:27", "alias"=>"your_user_id", "tags"=>["tag1", "tag2"]}
+        FakeWeb.register_uri(:post, "https://my_app_key:my_master_secret@go.urbanairship.com/api/channels/uninstall", :status => ["200", "OK"], :body => [@channel].to_json)
+      end
+
       it "should return success when given valid channels data" do
-        channels_data = [{ 'channel_id' => '01234567-890a-bcde-f012-3456789abc0', 'device_type' => 'ios' }, { 'channel_id' => '9c36e8c7-5a73-47c0-9716-99fd3d4197d5', 'device_type' => 'android' }]
-        subject.uninstall_channels(channels_data).success?.should be_true
+        subject.uninstall_channels([@channel]).success?.should be_true
+        FakeWeb.last_request.body.should == [@channel].to_json
       end
     end
   end
