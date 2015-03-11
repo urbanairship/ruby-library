@@ -633,7 +633,7 @@ shared_examples_for "an Urbanairship client" do
     end
 
     it "takes and sends a push id" do
-      subject.push_info(push_id: "push_id")
+      subject.push_info(:push_id => "push_id")
       FakeWeb.last_request.path.should == "/api/reports/perpush/detail/push_id"
     end
 
