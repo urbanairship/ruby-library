@@ -1093,7 +1093,7 @@ shared_examples_for "an Urbanairship client" do
 
     describe "uninstall_channels" do
       it "should return success when given valid channels data" do
-        channels_data = [{ channel_id: '01234567-890a-bcde-f012-3456789abc0', device_type: 'ios' }, { channel_id: '9c36e8c7-5a73-47c0-9716-99fd3d4197d5', device_type: 'android' }]
+        channels_data = [{ 'channel_id' => '01234567-890a-bcde-f012-3456789abc0', 'device_type' => 'ios' }, { 'channel_id' => '9c36e8c7-5a73-47c0-9716-99fd3d4197d5', 'device_type' => 'android' }]
         subject.uninstall_channels(channels_data).success?.should be_true
       end
     end
