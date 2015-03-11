@@ -157,7 +157,7 @@ module Urbanairship
         start_time = Time.now
         response = http_client.request(request)
         log_request_and_response(request, response, Time.now - start_time)
-        Urbanairship::Response.wrap(response, original_request: { ua_client: self, options: options})
+        Urbanairship::Response.wrap(response, :original_request => { :ua_client => self, :options => options})
       end
     rescue Timeout::Error
       unless logger.nil?
