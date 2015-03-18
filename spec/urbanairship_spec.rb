@@ -22,7 +22,8 @@ shared_examples_for "an Urbanairship client" do
     FakeWeb.register_uri(:get, /bad_key\:my_app_secret\@go\.urbanairship.com\/api\/device_tokens\/.+/, :status => ["401", "Unauthorized"])
 
     # device_tokens
-    FakeWeb.register_uri(:get, "https://my_app_key:my_master_secret@go.urbanairship.com/api/device_tokens/", :status => ["200", "OK"], :body => '{"device_tokens":[{"device_token": "0101F9929660BAD9FFF31A0B5FA32620FA988507DFFA52BD6C1C1F4783EDA2DB","active": false,"alias": null, "tags": []}], "device_tokens_count":50, "active_device_tokens_count":55}')
+    FakeWeb.register_uri(:get, "https://my_app_key:my_master_secret@go.urbanairship.com/api/device_tokens/", :status => ["200", "OK"], :body => '{"device_tokens":[{"device_token": "0101F9929660BAD9FFF31A0B5FA32620FA988507DFFA52BD6C1C1F4783EDA2DB","active": false,"alias": null, "tags": []}], "device_tokens_count":50, "active_device_tokens_count":55, "next_page":"https://go.urbanairship.com/api/device_tokens/?limit=1000&start=00xxxyzw-aa88-55dd-b8a7-x1y050888xxy"}')
+    FakeWeb.register_uri(:get, "https://my_app_key:my_master_secret@go.urbanairship.com/api/device_tokens/?limit=1000&start=00xxxyzw-aa88-55dd-b8a7-x1y050888xxy", :status => ["200", "OK"], :body => '{"device_tokens":[{"device_token":"AAAAAAAAAAAAA0000000000AAAAAAAAA","active":true,"tags":["some_tag"]}],"device_tokens_count":88,"active_device_tokens_count":77}')
     FakeWeb.register_uri(:get, "https://my_app_key2:my_master_secret2@go.urbanairship.com/api/device_tokens/", :status => ["401", "OK"])
 
     # push
@@ -82,7 +83,8 @@ shared_examples_for "an Urbanairship client" do
     FakeWeb.register_uri(:get, /my_app_key2\:my_master_secret2\@go\.urbanairship.com\/api\/segments\/invalid_segment/, :status => ["500", "Internal Server Error"])
 
     #Get List of Segments
-    FakeWeb.register_uri(:get, /my_app_key\:my_master_secret\@go\.urbanairship.com\/api\/segments$/, :status => ["200", "OK"], :body => '{"segments":[{"id":"abcd-efgh-ijkl", "display_name":"test1", "creation_date":1360950614201, "modification_date":1360950614201}, {"id": "mnop-qrst-uvwx", "display_name": "test2", "creation_date":1360950614202, "modification_date":1360950614202}]}')
+    FakeWeb.register_uri(:get, /my_app_key\:my_master_secret\@go\.urbanairship.com\/api\/segments$/, :status => ["200", "OK"], :body => '{"segments":[{"id":"abcd-efgh-ijkl", "display_name":"test1", "creation_date":1360950614201, "modification_date":1360950614201}, {"id": "mnop-qrst-uvwx", "display_name": "test2", "creation_date":1360950614202, "modification_date":1360950614202}], "next_page":"https://go.urbanairship.com/api/segments?limit=1&sort=id&order=asc&start=3832cf72-cb44-4132-a11f-eafb41b82f64"}')
+    FakeWeb.register_uri(:get, "https://my_app_key:my_master_secret@go.urbanairship.com/api/segments?limit=1&sort=id&order=asc&start=3832cf72-cb44-4132-a11f-eafb41b82f64", :status => ["200", "OK"], :body => '{"segments":[{"id":"abcd-efgh-ijkl", "display_name":"test1", "creation_date":1360950614201, "modification_date":1360950614201}, {"id": "mnop-qrst-uvwx", "display_name": "test2", "creation_date":1360950614202, "modification_date":1360950614202}]}')
     FakeWeb.register_uri(:get, /my_app_key2\:my_master_secret2\@go\.urbanairship.com\/api\/segments$/, :status => ["500", "Internal Server Error"])
 
     #Create Segment
@@ -107,7 +109,20 @@ shared_examples_for "an Urbanairship client" do
     #device_tokens_count
     FakeWeb.register_uri(:get, /my_app_key\:my_master_secret\@go\.urbanairship.com\/api\/device_tokens\/count/, :status => ["200", "OK"], :body => "{\"device_tokens_count\":50, \"active_device_tokens_count\":55}")
     FakeWeb.register_uri(:get, /my_app_key2\:my_master_secret2\@go\.urbanairship.com\/api\/device_tokens\/count/, :status => ["500", "Internal Server Error"])
+
+    # channels list
+    FakeWeb.register_uri(:get, "https://my_app_key:my_master_secret@go.urbanairship.com/api/channels", :status => ["200", "OK"], :body => '{"next_page":"https://go.urbanairship.com/api/channels?start=07AAFE44CD82C2F4E3FBAB8962A95B95F90A54857FB8532A155DE3510B481C13&limit=2","channels":[{"channel_id":"9c36e8c7-5a73-47c0-9716-99fd3d4197d5","device_type":"ios","push_address":"FE66489F304DC75B8D6E8200DFF8A456E8DAEACEC428B427E9518741C92C6660","opt_in":true,"installed":true,"created":"2014-03-06T18:52:59","last_registration":"2014-10-07T21:28:35","alias":"your_user_id","tags":["tag1","tag2"],"ios":{"badge":2,"quiettime":{"start":"22:00","end":"8:00"},"tz":"America/Los_Angeles"}}]}')
+    FakeWeb.register_uri(:get, "https://my_app_key:my_master_secret@go.urbanairship.com/api/channels?start=07AAFE44CD82C2F4E3FBAB8962A95B95F90A54857FB8532A155DE3510B481C13&limit=2", :status => ["200", "OK"], :body => '{}')
+    FakeWeb.register_uri(:get, "https://my_app_key2:my_master_secret2@go.urbanairship.com/api/channels", :status => ["401", "OK"])
+    
+    #channel_info
+    FakeWeb.register_uri(:get, /my_app_key\:my_master_secret\@go\.urbanairship.com\/api\/channels\/.+/, :status => ["200", "OK"], :body => '{"ok":true,"channel":{"channel_id":"01234567-890a-bcde-f012-3456789abc0","device_type":"ios","installed":true,"opt_in":false,"push_address":"FE66489F304DC75B8D6E8200DFF8A456E8DAEACEC428B427E9518741C92C6660","created":"2013-08-08T20:41:06","last_registration":"2014-05-01T18:00:27","alias":"your_user_id","tags":["tag1","tag2"]}}')
+    FakeWeb.register_uri(:get, /bad_key\:my_master_secret\@go\.urbanairship.com\/api\/channels\/.+/, :status => ["401", "Unauthorized"])
+
+    #uninstall_channels
+    FakeWeb.register_uri(:post, "https://my_app_key:my_master_secret@go.urbanairship.com/api/channels/uninstall/", :status => ["200", "OK"])
   end
+
 
   describe "configuration" do
     it "enables you to configure the application key" do
@@ -891,6 +906,10 @@ shared_examples_for "an Urbanairship client" do
       subject.device_tokens.success?.should == false
     end
 
+    it "should have a response with next_page" do
+      response = subject.device_tokens.next_page
+      response.success?.should be_true
+    end
   end
 
   describe "::device_tokens_count" do
@@ -951,12 +970,17 @@ shared_examples_for "an Urbanairship client" do
 
     it "returns valid segments" do
       response = subject.segments
-      response.first.should include("segments")
+      response.keys.should include("segments")
       response["segments"].each do |s|
         ["id", "display_name", "creation_date", "modification_date"].each do |k|
           s.should include(k)
         end
       end
+    end
+
+    it "should have a response with next_page" do
+      response = subject.segments.next_page
+      response.success?.should be_true
     end
 
     it "can create a valid segment" do
@@ -1004,6 +1028,81 @@ shared_examples_for "an Urbanairship client" do
 
   end
 
+  describe "::channels" do
+    before :each do
+      subject.application_key = "my_app_key"
+      subject.master_secret = "my_master_secret"
+    end
+
+    describe "channels list" do
+      it "raises an error if call is made without an app key and master secret configured" do
+        subject.application_key = nil
+        subject.master_secret = nil
+
+        expect { subject.channels }.to raise_error(RuntimeError, "Must configure application_key, master_secret before making this request.")
+      end
+
+      it "uses app key and secret to sign the request" do
+        subject.channels
+        FakeWeb.last_request['authorization'].should == "Basic #{Base64::encode64('my_app_key:my_master_secret').chomp}"
+      end
+
+      it "returns valid channels" do
+        response = subject.channels
+        response.should include("channels")
+        response["channels"].each do |channel|
+          channel.keys.should include("channel_id", "device_type", "push_address", "opt_in", "installed", "created", "last_registration", "alias", "tags")
+        end
+      end
+
+      it "should have a response with next_page" do
+        response = subject.channels.next_page
+        response.success?.should be_true
+      end
+    end
+
+    describe "channel_info" do
+      it "raises an error if call is made without an app key and master secret configured" do
+        subject.application_key = nil
+        subject.master_secret = nil
+
+        expect { subject.channel_info("channel_id") }.to raise_error(RuntimeError, "Must configure application_key, master_secret before making this request.")
+      end
+
+      it "uses app key and secret to sign the request" do
+        subject.channel_info("channel_id")
+        FakeWeb.last_request['authorization'].should == "Basic #{Base64::encode64('my_app_key:my_master_secret').chomp}"
+      end
+
+      it "takes and sends a channel_id" do
+        subject.channel_info("channel_id")
+        FakeWeb.last_request.path.should == "/api/channels/channel_id"
+      end
+
+      it "returns valid channel info" do
+        response = subject.channel_info("channel_id")
+        response.should include("channel")
+        response["channel"].should include("channel_id", "device_type", "push_address", "opt_in", "installed", "created", "last_registration", "alias", "tags")
+      end      
+
+      it "returns false when the authorization is invalid" do
+        subject.application_key = "bad_key"
+        subject.channel_info("channel_id").success?.should == false
+      end
+    end
+
+    describe "uninstall_channels" do
+      before do
+        @channel = {"channel_id"=>"01234567-890a-bcde-f012-3456789abc0", "device_type"=>"ios", "installed"=>true, "opt_in"=>false, "push_address"=>"FE66489F304DC75B8D6E8200DFF8A456E8DAEACEC428B427E9518741C92C6660", "created"=>"2013-08-08T20:41:06", "last_registration"=>"2014-05-01T18:00:27", "alias"=>"your_user_id", "tags"=>["tag1", "tag2"]}
+        FakeWeb.register_uri(:post, "https://my_app_key:my_master_secret@go.urbanairship.com/api/channels/uninstall", :status => ["200", "OK"], :body => [@channel].to_json)
+      end
+
+      it "should return success when given valid channels data" do
+        subject.uninstall_channels([@channel]).success?.should be_true
+        FakeWeb.last_request.body.should == [@channel].to_json
+      end
+    end
+  end
 
   describe "logging" do
 
