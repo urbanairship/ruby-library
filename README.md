@@ -1,4 +1,4 @@
-Urbanairship is a Ruby library for interacting with the [Urban Airship API](http://urbanairship.com).
+A Ruby library for interacting with the [Urban Airship API](http://urbanairship.com).
 
 Installation
 ============
