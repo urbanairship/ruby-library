@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/urbanairship/ruby-library.svg?branch=master)](https://travis-ci.org/urbanairship/ruby-library)
+
 A Ruby library for interacting with the [Urban Airship API](http://urbanairship.com).
 
 Installation
