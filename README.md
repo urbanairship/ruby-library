@@ -1,6 +1,7 @@
 [![Build Status](https://travis-ci.org/urbanairship/ruby-library.svg?branch=master)](https://travis-ci.org/urbanairship/ruby-library)
 
-A Ruby library for interacting with the [Urban Airship API](http://urbanairship.com).
+This is an open source Ruby library, generously contributed by Groupon, for the Urban Airship v1 API. We're beginning new development to support our current (v3) API, and will publish updates shortly. We wish to thank Groupon for their quality engineering work and stewardship of the project.
+
 
 Installation
 ============
