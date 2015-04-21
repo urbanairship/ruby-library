@@ -140,7 +140,7 @@ module Urbanairship
       request.basic_auth @application_key, instance_variable_get("@#{options[:authenticate_with]}")
       request.add_field "Content-Type", options[:content_type] || "application/json"
       request.body = options[:body] if options[:body]
-      request["Accept"] = "application/vnd.urbanairship+json; version=#{options[:version]};"  if options[:version]
+      request["Accept"] = "application/vnd.urbanairship+json; version=#{options[:version] || '3'};"
 
       Timer.timeout(request_timeout) do
         start_time = Time.now
