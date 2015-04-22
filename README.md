@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/urbanairship/ruby-library.svg?branch=api-v3)](https://travis-ci.org/urbanairship/ruby-library)
+
 # Urbanairship
 
 Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/urbanairship`. To experiment with that code, run `bin/console` for an interactive prompt.
