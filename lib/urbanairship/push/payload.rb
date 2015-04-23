@@ -26,7 +26,7 @@ module Urbanairship
           expiry: expiry,
           category: category,
           interactive: interactive,
-          'content-available': content_available
+          'content-available' => content_available
         }.keep_if { |_, value| !value.nil? }
       end
     end

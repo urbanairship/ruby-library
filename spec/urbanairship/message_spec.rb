@@ -84,7 +84,7 @@ describe Urbanairship do
 
       it 'handles the "content-available" attribute properly' do
         message = notification(ios: ios(content_available: true))
-        expect(message).to eq ios: { 'content-available': true }
+        expect(message).to eq ios: { 'content-available' => true }
       end
     end
   end
