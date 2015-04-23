@@ -224,5 +224,29 @@ describe Urbanairship do
       end
     end
 
+
+    context 'Rich Push' do
+      it 'can send UTF-8 HTML' do
+        payload = message(
+          title: 'My Title',
+          body: '<html>Körper des Dokumentes</html>',
+          content_type: 'text/html',
+          content_encoding: 'utf8',
+          extra: { more: 'stuff' },
+          expiry: 'time'
+        )
+        expect(payload).to eq(
+          title: 'My Title',
+          body: '<html>Körper des Dokumentes</html>',
+          content_type: 'text/html',
+          content_encoding: 'utf8',
+          extra: { more: 'stuff' },
+          expiry: 'time'
+        )
+      end
+
+      it 'can send plain text'
+    end
+
   end
 end
