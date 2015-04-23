@@ -73,8 +73,14 @@ module Urbanairship
         payload
       end
 
-      def mpns_payload(alert:)
-        { alert: alert }
+      def mpns_payload(alert: nil, toast: nil, tile: nil)
+        payload = {
+          alert: alert,
+          toast: toast,
+          tile: tile,
+        }.compact
+        raise ArgumentError, "Must specify one message type" if payload.size != 1
+        payload
       end
     end
   end
