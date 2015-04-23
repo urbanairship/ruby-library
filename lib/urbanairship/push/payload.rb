@@ -73,6 +73,9 @@ module Urbanairship
         payload
       end
 
+      def mpns_payload(alert:)
+        { alert: alert }
+      end
     end
   end
 end
