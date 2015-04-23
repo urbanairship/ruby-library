@@ -187,6 +187,11 @@ describe Urbanairship do
         payload = notification(wns: wns_payload(tile: { a_key: 'a_value' }))
         expect(payload).to eq wns: { tile: { a_key: 'a_value' } }
       end
+
+      it 'can send a key/value "badge"' do
+        payload = notification(wns: wns_payload(badge: { a_key: 'a_value' }))
+        expect(payload).to eq wns: { badge: { a_key: 'a_value' } }
+      end
     end
 
   end
