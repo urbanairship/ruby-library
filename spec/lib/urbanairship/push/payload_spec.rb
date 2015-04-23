@@ -173,7 +173,7 @@ describe Urbanairship do
 
 
     context 'WNS' do
-      it 'can send a simple "alert"' do
+      it 'can send a simple text "alert"' do
         payload = notification(wns: wns_payload(alert: 'Hello'))
         expect(payload).to eq wns: { alert: 'Hello' }
       end
