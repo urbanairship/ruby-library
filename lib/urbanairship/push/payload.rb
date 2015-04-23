@@ -1,6 +1,8 @@
 module Urbanairship
   module Push
     module Payload
+      require 'ext/hash'
+
       def notification(alert: nil, ios: nil, android: nil, amazon: nil, blackberry: nil, wns: nil, mpns: nil, actions: nil, interactive: nil)
         payload = {
           alert: alert,
@@ -12,7 +14,7 @@ module Urbanairship
           wns: wns,
           mpns: mpns,
           interactive: interactive
-        }.keep_if { |_, value| !value.nil? }
+        }.compact
         fail ArgumentError, 'Notification body may not be empty' if payload.empty?
         payload
       end
@@ -27,7 +29,8 @@ module Urbanairship
           category: category,
           interactive: interactive,
           'content-available' => content_available
-        }.keep_if { |_, value| !value.nil? }
+        }
+          .compact
       end
 
       def android(alert: nil, collapse_key: nil, time_to_live: nil, extra: nil, delay_while_idle: nil, interactive: nil)
@@ -38,7 +41,8 @@ module Urbanairship
           extra: extra,
           delay_while_idle: delay_while_idle,
           interactive: interactive
-        }.keep_if { |_, value| !value.nil? }
+        }
+          .compact
       end
 
     end
