@@ -216,6 +216,12 @@ describe Urbanairship do
         payload = notification(mpns: mpns_payload(tile: { a_key: 'a_value' }))
         expect(payload).to eq mpns: { tile: { a_key: 'a_value' } }
       end
+
+      it 'will only send one kind of notification at a time' do
+        expect {
+          mpns_payload(alert: 'Hello', tile: 'Foo')
+        }.to raise_error ArgumentError
+      end
     end
 
   end
