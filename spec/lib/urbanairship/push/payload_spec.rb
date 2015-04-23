@@ -245,7 +245,10 @@ describe Urbanairship do
         )
       end
 
-      it 'can send plain text'
+      it 'can send plain text' do
+        payload = message(title: 'My Title', body: 'My Body')
+        expect(payload).to eq title: 'My Title', body: 'My Body'
+      end
     end
 
   end
