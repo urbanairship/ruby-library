@@ -17,7 +17,7 @@ module Urbanairship
         payload
       end
 
-      def ios(alert: nil, badge: nil, sound: nil, extra: nil, expiry: nil, category: nil, interactive: nil)
+      def ios(alert: nil, badge: nil, sound: nil, extra: nil, expiry: nil, category: nil, interactive: nil, content_available: nil)
         {
           alert: alert,
           badge: badge,
@@ -25,7 +25,8 @@ module Urbanairship
           extra: extra,
           expiry: expiry,
           category: category,
-          interactive: interactive
+          interactive: interactive,
+          'content-available': content_available
         }.keep_if { |_, value| !value.nil? }
       end
     end

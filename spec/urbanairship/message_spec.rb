@@ -74,8 +74,7 @@ describe Urbanairship do
                                       no: { add_tag: 'clicked_no' }
                                     }
                                   }
-                                }
-        })
+                                }})
       end
 
       it 'can handle Unicode' do
@@ -83,9 +82,9 @@ describe Urbanairship do
         expect(message).to eq ios: { alert: 'Paß auf!' }
       end
 
-      it 'handles the content-available attribute properly' do
+      it 'handles the "content-available" attribute properly' do
         message = notification(ios: ios(content_available: true))
-        expect(message).to eq ios: { 'content-available' => true }
+        expect(message).to eq ios: { 'content-available': true }
       end
     end
   end
