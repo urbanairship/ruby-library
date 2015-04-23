@@ -29,6 +29,18 @@ module Urbanairship
           'content-available' => content_available
         }.keep_if { |_, value| !value.nil? }
       end
+
+      def android(alert: nil, collapse_key: nil, time_to_live: nil, extra: nil, delay_while_idle: nil, interactive: nil)
+        {
+          alert: alert,
+          collapse_key: collapse_key,
+          time_to_live: time_to_live,
+          extra: extra,
+          delay_while_idle: delay_while_idle,
+          interactive: interactive
+        }.keep_if { |_, value| !value.nil? }
+      end
+
     end
   end
 end
