@@ -67,7 +67,7 @@ describe Urbanairship do
         { segment: 'test' }
       ]
     ].each do |selector, value, expected_result|
-      it "generates a payload for ##{selector}" do
+      it "generates a filter for '#{selector}'" do
         actual_payload = send(selector, value)
         expect(actual_payload).to eq expected_result
       end
