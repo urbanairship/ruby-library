@@ -62,11 +62,12 @@ module Urbanairship
         { body: alert || body, content_type: content_type }
       end
 
-      def wns_payload(alert: nil, toast: nil, tile: nil)
+      def wns_payload(alert: nil, toast: nil, tile: nil, badge: nil)
         {
           alert: alert,
           toast: toast,
-          tile: tile
+          tile: tile,
+          badge: badge
         }
           .compact
       end
