@@ -6,7 +6,7 @@ include Urbanairship::Push::Payload
 describe Urbanairship do
   describe '#notification' do
     it 'builds a simple alert' do
-      expect(notification(alert: 'Hello')).to eq({ alert: 'Hello' })
+      expect(notification(alert: 'Hello')).to eq alert: 'Hello'
     end
 
     it 'builds an iOS notification' do
@@ -77,9 +77,11 @@ describe Urbanairship do
                             })
     end
 
-    it 'creates Unicode iOS messages' do
+    it 'can handle Unicode' do
       message = notification(ios: ios(alert: 'Paß auf!'))
       expect(message).to eq ios: { alert: 'Paß auf!' }
     end
+
+
   end
 end
