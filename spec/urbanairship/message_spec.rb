@@ -42,5 +42,39 @@ describe Urbanairship do
                               }
                             })
     end
+
+    it 'builds an iOS notification with a key/value alert' do
+      payload = notification(ios: ios(
+                                    alert: { foo: 'bar' },
+                                    badge: '+1',
+                                    sound: 'cat.caf',
+                                    extra: { more: 'stuff' },
+                                    expiry: 'time',
+                                    category: 'test',
+                                    interactive: {
+                                      type: 'a_type',
+                                      button_actions: {
+                                        yes: { add_tag: 'clicked_yes' },
+                                        no: { add_tag: 'clicked_no' }
+                                      }
+                                    }))
+      expect(payload).to eq({
+                              ios: {
+                                alert: { foo: 'bar' },
+                                badge: '+1',
+                                sound: 'cat.caf',
+                                extra: { more: 'stuff' },
+                                expiry: 'time',
+                                category: 'test',
+                                interactive: {
+                                  type: 'a_type',
+                                  button_actions: {
+                                    yes: { add_tag: 'clicked_yes' },
+                                    no: { add_tag: 'clicked_no' }
+                                  }
+                                }
+                              }
+                            })
+    end
   end
 end
