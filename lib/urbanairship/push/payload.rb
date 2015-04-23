@@ -62,6 +62,10 @@ module Urbanairship
         { body: alert || body, content_type: content_type }
       end
 
+      def wns_payload(alert: nil)
+        { alert: alert }
+      end
+
     end
   end
 end
