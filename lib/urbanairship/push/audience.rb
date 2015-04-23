@@ -125,9 +125,9 @@ module Urbanairship
       #   #=> {minutes: {end: '2012-01-01 12:45', start: '2012-01-01 12:00'}}
       def absolute_date(resolution:, start:, the_end:)
         unless DATE_TERMS.include?(resolution)
-          raise ArgumentError, "#{resolution} not in #{DATE_TERMS}"
+          fail ArgumentError, "#{resolution} not in #{DATE_TERMS}"
         end
-        { resolution => { start: start, end: the_end }}
+        { resolution => { start: start, end: the_end } }
       end
 
       # Select a location expression.
@@ -147,7 +147,9 @@ module Urbanairship
       #   #=> {location: {date: {days: {end: '2012-01-15',
       #       start: '2012-01-01'}}, us_zip: '94103'}}
       def location(date:, **params)
-        raise ArgumentError, 'One location specifier required' unless params.size == 1
+        unless params.size == 1
+          fail ArgumentError, 'One location specifier required'
+        end
         params[:date] = date
         { location: params }
       end
