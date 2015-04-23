@@ -82,6 +82,20 @@ module Urbanairship
         raise ArgumentError, "Must specify one message type" if payload.size != 1
         payload
       end
+
+      def message(title:, body:, content_type: nil, content_encoding: nil, extra: nil, expiry: nil, icons: nil, options: nil)
+        {
+          title: title,
+          body: body,
+          content_type: content_type,
+          content_encoding: content_encoding,
+          extra: extra,
+          expiry: expiry,
+          icons: icons,
+          options: options
+        }
+          .compact
+      end
     end
   end
 end
