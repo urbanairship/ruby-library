@@ -251,5 +251,11 @@ describe Urbanairship do
       end
     end
 
+    describe '#device_types' do
+      it 'supports the "all" option' do
+        expect(device_types(all_)).to eq 'all'
+      end
+    end
+
   end
 end
