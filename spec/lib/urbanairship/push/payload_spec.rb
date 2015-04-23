@@ -206,6 +206,16 @@ describe Urbanairship do
         payload = notification(mpns: mpns_payload(alert: 'Hello'))
         expect(payload).to eq mpns: { alert: 'Hello' }
       end
+
+      it 'can send a key/value "toast"' do
+        payload = notification(mpns: mpns_payload(toast: { a_key: 'a_value' }))
+        expect(payload).to eq mpns: { toast: { a_key: 'a_value' } }
+      end
+
+      it 'can send a key/value "tile"' do
+        payload = notification(mpns: mpns_payload(tile: { a_key: 'a_value' }))
+        expect(payload).to eq mpns: { tile: { a_key: 'a_value' } }
+      end
     end
 
   end
