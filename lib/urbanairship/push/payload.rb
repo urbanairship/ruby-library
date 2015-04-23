@@ -63,13 +63,14 @@ module Urbanairship
       end
 
       def wns_payload(alert: nil, toast: nil, tile: nil, badge: nil)
-        {
+        payload = {
           alert: alert,
           toast: toast,
           tile: tile,
           badge: badge
-        }
-          .compact
+        }.compact
+        raise ArgumentError, "Must specify one message type" if payload.size != 1
+        payload
       end
 
     end
