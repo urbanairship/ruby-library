@@ -4,7 +4,7 @@ require 'urbanairship/push/audience'
 include Urbanairship::Push::Audience
 
 describe Urbanairship do
-  context 'selectors' do
+  context 'audience selectors' do
     [
       [
         :ios_channel,
@@ -67,7 +67,7 @@ describe Urbanairship do
         { segment: 'test' }
       ]
     ].each do |selector, value, expected_result|
-      it "generates a filter for '#{selector}'" do
+      it "can filter for '#{selector}'" do
         actual_payload = send(selector, value)
         expect(actual_payload).to eq expected_result
       end
@@ -89,7 +89,7 @@ describe Urbanairship do
       [:wns, '074e84a2-9ed9-4eee-9ca4-cc597bfdbef'],
       [:mpns, '074e84a2-9ed9-4eee-9ca4-cc597bfdbef']
     ].each do |selector, value|
-      it "raises an error if ##{selector}'s parameter is invalid" do
+      it "raise an error if ##{selector}'s parameter is invalid" do
         expect { send(selector, value) }.to raise_error ArgumentError
       end
     end
