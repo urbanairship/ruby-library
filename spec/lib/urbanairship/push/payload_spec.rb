@@ -192,6 +192,12 @@ describe Urbanairship do
         payload = notification(wns: wns_payload(badge: { a_key: 'a_value' }))
         expect(payload).to eq wns: { badge: { a_key: 'a_value' } }
       end
+
+      it 'will only send one kind of notification' do
+        expect {
+          wns_payload(alert: 'Hello', tile: 'Foo')
+        }.to raise_error ArgumentError
+      end
     end
 
   end
