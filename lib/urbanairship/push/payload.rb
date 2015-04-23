@@ -58,6 +58,10 @@ module Urbanairship
           .compact
       end
 
+      def blackberry(alert: nil, body: nil, content_type: 'text/plain')
+        { body: alert || body, content_type: content_type }
+      end
+
     end
   end
 end

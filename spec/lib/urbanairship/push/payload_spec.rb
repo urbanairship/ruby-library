@@ -10,7 +10,7 @@ describe Urbanairship do
     end
 
 
-    context 'for Android' do
+    context 'Android' do
       it 'builds a notification' do
         payload = notification(android: android(
                                  alert: 'Hello',
@@ -43,7 +43,7 @@ describe Urbanairship do
     end
 
 
-    context 'for iOS' do
+    context 'iOS' do
       it 'builds a notification' do
         payload = notification(ios: ios(
                                  alert: 'Hello',
@@ -123,7 +123,7 @@ describe Urbanairship do
     end
 
 
-    context 'for Amazon' do
+    context 'Amazon' do
       it 'builds a notification' do
         payload = notification(amazon: amazon(
                                  alert: 'Hello',
@@ -152,6 +152,14 @@ describe Urbanairship do
                                       yes: { add_tag: 'clicked_yes' },
                                       no: { add_tag: 'clicked_no' }
                                 }}}})
+      end
+    end
+
+
+    context 'Blackberry' do
+      it 'sends a plain text alert' do
+        payload = notification(blackberry: blackberry(alert: 'Hello'))
+        expect(payload).to eq blackberry: { body: 'Hello', content_type: 'text/plain' }
       end
     end
 
