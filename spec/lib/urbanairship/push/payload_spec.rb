@@ -121,6 +121,39 @@ describe Urbanairship do
         expect(message).to eq ios: { 'content-available' => true }
       end
     end
-    
+
+
+    context 'for Amazon' do
+      it 'builds a notification' do
+        payload = notification(amazon: amazon(
+                                 alert: 'Hello',
+                                 title: 'My Title',
+                                 consolidation_key: '123456',
+                                 expires_after: 100,
+                                 summary: 'Summary of the message',
+                                 extra: { more: 'stuff' },
+                                 interactive: {
+                                   type: 'a_type',
+                                   button_actions: {
+                                     yes: { add_tag: 'clicked_yes' },
+                                     no: { add_tag: 'clicked_no' }
+                                 }}))
+        expect(payload).to eq({
+                                amazon: {
+                                  alert: 'Hello',
+                                  title: 'My Title',
+                                  consolidation_key: '123456',
+                                  expires_after: 100,
+                                  summary: 'Summary of the message',
+                                  extra: { more: 'stuff' },
+                                  interactive: {
+                                    type: 'a_type',
+                                    button_actions: {
+                                      yes: { add_tag: 'clicked_yes' },
+                                      no: { add_tag: 'clicked_no' }
+                                }}}})
+      end
+    end
+
   end
 end

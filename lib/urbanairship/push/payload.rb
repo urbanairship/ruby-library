@@ -33,6 +33,19 @@ module Urbanairship
           .compact
       end
 
+      def amazon(alert: nil, consolidation_key: nil, expires_after: nil, extra: nil, title: nil, summary: nil, interactive: nil)
+        {
+          alert: alert,
+          consolidation_key: consolidation_key,
+          expires_after: expires_after,
+          extra: extra,
+          title: title,
+          summary: summary,
+          interactive: interactive
+        }
+          .compact
+      end
+
       def android(alert: nil, collapse_key: nil, time_to_live: nil, extra: nil, delay_while_idle: nil, interactive: nil)
         {
           alert: alert,
