@@ -147,7 +147,9 @@ module Urbanairship
       #   #=> {location: {date: {days: {end: '2012-01-15',
       #       start: '2012-01-01'}}, us_zip: '94103'}}
       def location(date:, **params)
-        fail ArgumentError, 'One location specifier required' unless params.size == 1
+        unless params.size == 1
+          fail ArgumentError, 'One location specifier required'
+        end
         params[:date] = date
         { location: params }
       end
