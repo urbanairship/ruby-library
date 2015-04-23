@@ -76,5 +76,10 @@ describe Urbanairship do
                               }
                             })
     end
+
+    it 'creates Unicode iOS messages' do
+      message = notification(ios: ios(alert: 'Paß auf!'))
+      expect(message).to eq ios: { alert: 'Paß auf!' }
+    end
   end
 end
