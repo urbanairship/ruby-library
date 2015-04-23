@@ -177,6 +177,11 @@ describe Urbanairship do
         payload = notification(wns: wns_payload(alert: 'Hello'))
         expect(payload).to eq wns: { alert: 'Hello' }
       end
+
+      it 'can send a key/value "toast"' do
+        payload = notification(wns: wns_payload(toast: { a_key: 'a_value' }))
+        expect(payload).to eq wns: { toast: { a_key: 'a_value' } }
+      end
     end
 
   end
