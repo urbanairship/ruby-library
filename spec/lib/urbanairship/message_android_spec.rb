@@ -6,7 +6,6 @@ include Urbanairship::Push::Payload
 describe Urbanairship do
   describe '#notification' do
     context 'for Android' do
-
       it 'builds a notification' do
         payload = notification(android: android(
                                  alert: 'Hello',
@@ -19,7 +18,7 @@ describe Urbanairship do
                                    button_actions: {
                                      yes: { add_tag: 'clicked_yes' },
                                      no: { add_tag: 'clicked_no' }
-                                   }}))
+                                 }}))
         expect(payload).to eq({
                                 android: {
                                   alert: 'Hello',
