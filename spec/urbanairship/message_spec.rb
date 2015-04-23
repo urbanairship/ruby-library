@@ -9,7 +9,7 @@ describe Urbanairship do
       expect(notification(alert: 'Hello')).to eq alert: 'Hello'
     end
 
-    context 'iOS' do
+    context 'for iOS' do
       it 'builds a notification' do
         payload = notification(ios: ios(
                                  alert: 'Hello',
@@ -83,6 +83,10 @@ describe Urbanairship do
         expect(message).to eq ios: { alert: 'Paß auf!' }
       end
 
+      it 'handles the content-available attribute properly' do
+        message = notification(ios: ios(content_available: true))
+        expect(message).to eq ios: { 'content-available' => true }
+      end
     end
   end
 end
