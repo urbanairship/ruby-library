@@ -200,5 +200,13 @@ describe Urbanairship do
       end
     end
 
+
+    context 'MPNS' do
+      it 'can send a simple text "alert"' do
+        payload = notification(mpns: mpns_payload(alert: 'Hello'))
+        expect(payload).to eq mpns: { alert: 'Hello' }
+      end
+    end
+
   end
 end
