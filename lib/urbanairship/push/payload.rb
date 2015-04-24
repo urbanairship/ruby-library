@@ -99,6 +99,7 @@ module Urbanairship
 
       def interactive(type:)
         fail ArgumentError, "type must not be nil" if type.nil?
+        { type: type }
       end
 
       def all_

@@ -10,6 +10,10 @@ describe Urbanairship do
         interactive(type: nil)
       }.to raise_error ArgumentError
     end
+
+    it 'does not require button actions' do
+      expect(interactive(type: 't')).to eq type: 't'
+    end
   end
 
 
