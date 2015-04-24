@@ -4,6 +4,15 @@ require 'urbanairship/push/payload'
 include Urbanairship::Push::Payload
 
 describe Urbanairship do
+  describe '#interactive' do
+    it 'must be given a "type"' do
+      expect {
+        interactive(type: nil)
+      }.to raise_error ArgumentError
+    end
+  end
+
+
   describe '#notification' do
 
     it 'builds a simple text alert' do
