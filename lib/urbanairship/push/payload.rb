@@ -96,6 +96,14 @@ module Urbanairship
         }
           .compact
       end
+
+      def all_
+        'all'
+      end
+
+      def device_types(types)
+        types == all_ ? all_ : types
+      end
     end
   end
 end
