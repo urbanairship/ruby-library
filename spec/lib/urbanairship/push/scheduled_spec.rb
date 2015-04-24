@@ -11,14 +11,14 @@ describe Urbanairship do
   describe '#scheduled_time' do
     it 'creates a payload from a DateTime' do
       payload = scheduled_time(a_time)
-      expect(payload).to eq({ scheduled_time: a_time_in_text })
+      expect(payload).to eq(scheduled_time: a_time_in_text)
     end
   end
 
   describe '#local_scheduled_time' do
     it 'creates a payload from a DateTime' do
       payload = local_scheduled_time(a_time)
-      expect(payload).to eq({ local_scheduled_time: a_time_in_text })
+      expect(payload).to eq(local_scheduled_time: a_time_in_text)
     end
   end
 end

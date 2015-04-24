@@ -69,7 +69,7 @@ module Urbanairship
           tile: tile,
           badge: badge
         }.compact
-        raise ArgumentError, "Must specify one message type" if payload.size != 1
+        fail ArgumentError, 'Must specify one message type' if payload.size != 1
         payload
       end
 
@@ -77,9 +77,9 @@ module Urbanairship
         payload = {
           alert: alert,
           toast: toast,
-          tile: tile,
+          tile: tile
         }.compact
-        raise ArgumentError, "Must specify one message type" if payload.size != 1
+        fail ArgumentError, 'Must specify one message type' if payload.size != 1
         payload
       end
 
@@ -97,9 +97,9 @@ module Urbanairship
           .compact
       end
 
-      def interactive(type:)
-        fail ArgumentError, "type must not be nil" if type.nil?
-        { type: type }
+      def interactive(type:, button_actions: nil)
+        fail ArgumentError, 'type must not be nil' if type.nil?
+        { type: type, button_actions: button_actions }.compact
       end
 
       def all_
@@ -107,7 +107,21 @@ module Urbanairship
       end
 
       def device_types(types)
-        types == all_ ? all_ : types
+        types
+      end
+
+      def options(expiry:)
+        { expiry: expiry }
+      end
+
+      def actions(add_tag: nil, remove_tag: nil, open_: nil, share: nil, app_defined: nil)
+        {
+          add_tag: add_tag,
+          remove_tag: remove_tag,
+          open: open_,
+          share: share,
+          app_defined: app_defined
+        }.compact
       end
     end
   end

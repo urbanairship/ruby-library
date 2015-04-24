@@ -25,7 +25,7 @@ describe Urbanairship do
 
     it 'requires a parameter' do
       expect {
-        notification()
+        notification
       }.to raise_error
     end
 
@@ -33,32 +33,31 @@ describe Urbanairship do
     context 'Android' do
       it 'builds a notification' do
         payload = notification(android: android(
-                                 alert: 'Hello',
-                                 delay_while_idle: true,
-                                 collapse_key: '123456',
-                                 time_to_live: 100,
-                                 extra: { more: 'stuff' },
-                                 interactive: {
-                                   type: 'a_type',
-                                   button_actions: {
-                                     yes: { add_tag: 'clicked_yes' },
-                                     no: { add_tag: 'clicked_no' }
-                                 }}))
-        expect(payload).to eq({
-                                android: {
-                                  alert: 'Hello',
-                                  delay_while_idle: true,
-                                  collapse_key: '123456',
-                                  time_to_live: 100,
-                                  extra: { more: 'stuff' },
-                                  interactive: {
-                                    type: 'a_type',
-                                    button_actions: {
-                                      yes: { add_tag: 'clicked_yes' },
-                                      no: { add_tag: 'clicked_no' }
-                                    }
+          alert: 'Hello',
+          delay_while_idle: true,
+          collapse_key: '123456',
+          time_to_live: 100,
+          extra: { more: 'stuff' },
+          interactive: {
+            type: 'a_type',
+            button_actions: {
+              yes: { add_tag: 'clicked_yes' },
+              no: { add_tag: 'clicked_no' }
+            } }))
+        expect(payload).to eq(android: {
+                                alert: 'Hello',
+                                delay_while_idle: true,
+                                collapse_key: '123456',
+                                time_to_live: 100,
+                                extra: { more: 'stuff' },
+                                interactive: {
+                                  type: 'a_type',
+                                  button_actions: {
+                                    yes: { add_tag: 'clicked_yes' },
+                                    no: { add_tag: 'clicked_no' }
                                   }
-                                }})
+                                }
+                              })
       end
     end
 
@@ -66,69 +65,66 @@ describe Urbanairship do
     context 'iOS' do
       it 'builds a notification' do
         payload = notification(ios: ios(
-                                 alert: 'Hello',
-                                 badge: '+1',
-                                 sound: 'cat.caf',
-                                 extra: { more: 'stuff' },
-                                 expiry: 'time',
-                                 category: 'test',
-                                 interactive: {
-                                   type: 'a_type',
-                                   button_actions: {
-                                     yes: { add_tag: 'clicked_yes' },
-                                     no: { add_tag: 'clicked_no' }
-                                   }
-        }))
-        expect(payload).to eq({
-                                ios: {
-                                  alert: 'Hello',
-                                  badge: '+1',
-                                  sound: 'cat.caf',
-                                  extra: { more: 'stuff' },
-                                  expiry: 'time',
-                                  category: 'test',
-                                  interactive: {
-                                    type: 'a_type',
-                                    button_actions: {
-                                      yes: { add_tag: 'clicked_yes' },
-                                      no: { add_tag: 'clicked_no' }
-                                    }
+          alert: 'Hello',
+          badge: '+1',
+          sound: 'cat.caf',
+          extra: { more: 'stuff' },
+          expiry: 'time',
+          category: 'test',
+          interactive: {
+            type: 'a_type',
+            button_actions: {
+              yes: { add_tag: 'clicked_yes' },
+              no: { add_tag: 'clicked_no' }
+            }
+          }))
+        expect(payload).to eq(ios: {
+                                alert: 'Hello',
+                                badge: '+1',
+                                sound: 'cat.caf',
+                                extra: { more: 'stuff' },
+                                expiry: 'time',
+                                category: 'test',
+                                interactive: {
+                                  type: 'a_type',
+                                  button_actions: {
+                                    yes: { add_tag: 'clicked_yes' },
+                                    no: { add_tag: 'clicked_no' }
                                   }
                                 }
-        })
+                              })
       end
 
       it 'builds a notification with a key/value alert' do
         payload = notification(ios: ios(
-                                 alert: { foo: 'bar' },
-                                 badge: '+1',
-                                 sound: 'cat.caf',
-                                 extra: { more: 'stuff' },
-                                 expiry: 'time',
-                                 category: 'test',
-                                 interactive: {
-                                   type: 'a_type',
-                                   button_actions: {
-                                     yes: { add_tag: 'clicked_yes' },
-                                     no: { add_tag: 'clicked_no' }
-                                   }
-        }))
-        expect(payload).to eq({
-                                ios: {
-                                  alert: { foo: 'bar' },
-                                  badge: '+1',
-                                  sound: 'cat.caf',
-                                  extra: { more: 'stuff' },
-                                  expiry: 'time',
-                                  category: 'test',
-                                  interactive: {
-                                    type: 'a_type',
-                                    button_actions: {
-                                      yes: { add_tag: 'clicked_yes' },
-                                      no: { add_tag: 'clicked_no' }
-                                    }
+          alert: { foo: 'bar' },
+          badge: '+1',
+          sound: 'cat.caf',
+          extra: { more: 'stuff' },
+          expiry: 'time',
+          category: 'test',
+          interactive: {
+            type: 'a_type',
+            button_actions: {
+              yes: { add_tag: 'clicked_yes' },
+              no: { add_tag: 'clicked_no' }
+            }
+          }))
+        expect(payload).to eq(ios: {
+                                alert: { foo: 'bar' },
+                                badge: '+1',
+                                sound: 'cat.caf',
+                                extra: { more: 'stuff' },
+                                expiry: 'time',
+                                category: 'test',
+                                interactive: {
+                                  type: 'a_type',
+                                  button_actions: {
+                                    yes: { add_tag: 'clicked_yes' },
+                                    no: { add_tag: 'clicked_no' }
                                   }
-                                }})
+                                }
+                              })
       end
 
       it 'can handle Unicode' do
@@ -146,32 +142,31 @@ describe Urbanairship do
     context 'Amazon' do
       it 'builds a notification' do
         payload = notification(amazon: amazon(
-                                 alert: 'Hello',
-                                 title: 'My Title',
-                                 consolidation_key: '123456',
-                                 expires_after: 100,
-                                 summary: 'Summary of the message',
-                                 extra: { more: 'stuff' },
-                                 interactive: {
-                                   type: 'a_type',
-                                   button_actions: {
-                                     yes: { add_tag: 'clicked_yes' },
-                                     no: { add_tag: 'clicked_no' }
-                                 }}))
-        expect(payload).to eq({
-                                amazon: {
-                                  alert: 'Hello',
-                                  title: 'My Title',
-                                  consolidation_key: '123456',
-                                  expires_after: 100,
-                                  summary: 'Summary of the message',
-                                  extra: { more: 'stuff' },
-                                  interactive: {
-                                    type: 'a_type',
-                                    button_actions: {
-                                      yes: { add_tag: 'clicked_yes' },
-                                      no: { add_tag: 'clicked_no' }
-                                }}}})
+          alert: 'Hello',
+          title: 'My Title',
+          consolidation_key: '123456',
+          expires_after: 100,
+          summary: 'Summary of the message',
+          extra: { more: 'stuff' },
+          interactive: {
+            type: 'a_type',
+            button_actions: {
+              yes: { add_tag: 'clicked_yes' },
+              no: { add_tag: 'clicked_no' }
+            } }))
+        expect(payload).to eq(amazon: {
+                                alert: 'Hello',
+                                title: 'My Title',
+                                consolidation_key: '123456',
+                                expires_after: 100,
+                                summary: 'Summary of the message',
+                                extra: { more: 'stuff' },
+                                interactive: {
+                                  type: 'a_type',
+                                  button_actions: {
+                                    yes: { add_tag: 'clicked_yes' },
+                                    no: { add_tag: 'clicked_no' }
+                                  } } })
       end
     end
 
@@ -184,9 +179,9 @@ describe Urbanairship do
 
       it 'can send html' do
         payload = notification(blackberry: blackberry(
-                                              body: 'Hello',
-                                              content_type: 'text/html'
-                                              ))
+          body: 'Hello',
+          content_type: 'text/html'
+        ))
         expect(payload).to eq blackberry: { body: 'Hello', content_type: 'text/html' }
       end
     end
