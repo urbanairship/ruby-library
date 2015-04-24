@@ -1,7 +1,7 @@
 require 'spec_helper'
 
-require 'urbanairship/push/core'
-include Urbanairship::Push::Core
+require 'urbanairship/push/push'
+include Urbanairship::Push
 
 describe Push do
   it 'builds a payload structure' do
