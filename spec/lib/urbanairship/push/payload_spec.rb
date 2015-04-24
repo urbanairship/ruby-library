@@ -5,8 +5,15 @@ include Urbanairship::Push::Payload
 
 describe Urbanairship do
   describe '#notification' do
-    it 'builds a simple alert' do
+
+    it 'builds a simple text alert' do
       expect(notification(alert: 'Hello')).to eq alert: 'Hello'
+    end
+
+    it 'requires a parameter' do
+      expect {
+        notification()
+      }.to raise_error
     end
 
 
