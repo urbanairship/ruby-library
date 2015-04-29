@@ -5,6 +5,7 @@ include Urbanairship::Push
 
 describe Push do
   it 'builds a payload structure' do
+    pending "New spec"
     p = Push.new(nil)
     p.audience = all_
     p.notification = notification(alert: 'Hello')
