@@ -7,7 +7,7 @@ include Urbanairship::Push
 include Urbanairship::Push::Payload
 
 describe Push do
-  it 'builds a payload structure' do
+  it 'can build a full payload structure' do
     p = Push.new(nil)
     p.audience = all_
     p.notification = notification(alert: 'Hello')
