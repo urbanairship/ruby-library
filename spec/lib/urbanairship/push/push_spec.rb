@@ -14,12 +14,7 @@ describe Push do
       p.audience = all_
       p.options = options(expiry: 10080)
       p.device_types = all_
-      p
-    }
-
-    it 'can build a full payload structure' do
-      a_push.notification = notification(alert: 'Hello')
-      a_push.message = message(
+      p.message = message(
         title: 'Title',
         body: 'Body',
         content_type: 'text/html',
@@ -29,6 +24,11 @@ describe Push do
         icons: { list_icon: 'http://cdn.example.com/message.png' },
         options: { some_delivery_option: true }
       )
+      p
+    }
+
+    it 'can build a full payload structure' do
+      a_push.notification = notification(alert: 'Hello')
 
       expect(a_push.payload).to eq({
         audience: 'all',
@@ -61,16 +61,6 @@ describe Push do
           },
           app_defined: {some_app_defined_action: 'some_values'}
         )
-      )
-      a_push.message = message(
-        title: 'Title',
-        body: 'Body',
-        content_type: 'text/html',
-        content_encoding: 'utf8',
-        extra: { more: 'stuff' },
-        expiry: 10080,
-        icons: { list_icon: 'http://cdn.example.com/message.png' },
-        options: { some_delivery_option: true }
       )
 
       expect(a_push.payload).to eq({
