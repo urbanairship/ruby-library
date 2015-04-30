@@ -149,3 +149,9 @@ describe Push do
 
   end
 end
+
+describe ScheduledPush do
+  describe '#payload' do
+    it 'can build a scheduled payload'
+  end
+end
