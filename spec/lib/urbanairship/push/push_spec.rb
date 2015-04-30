@@ -40,15 +40,21 @@ describe Push do
       }
     }
 
-    it 'can build a full payload structure' do
-      a_push.notification = notification(alert: 'Hello')
-      expect(a_push.payload).to eq({
-        notification: {alert: 'Hello'},
+    let (:common_values) {
+      {
         audience: 'all',
         device_types: 'all',
         options: { expiry: 10080 },
         message: expected_message
-      })
+      }
+    }
+
+    it 'can build a full payload structure' do
+      a_push.notification = notification(alert: 'Hello')
+      expect(a_push.payload).to eq({
+        notification: {alert: 'Hello'}
+        }.merge(common_values)
+      )
     end
 
     it 'can build a payload with actions' do
@@ -77,12 +83,8 @@ describe Push do
               content: 'http://www.urbanairship.com'
             },
             app_defined: {some_app_defined_action: 'some_values'}
-          }},
-        audience: 'all',
-        device_types: 'all',
-        options: { expiry: 10080 },
-        message: expected_message
-      })
+          }}
+      }.merge(common_values))
     end
 
     it 'can build a payload with an interactive notification' do
@@ -122,12 +124,8 @@ describe Push do
               }
             }
           }
-        },
-        audience: 'all',
-        device_types: 'all',
-        options: { expiry: 10080 },
-        message: expected_message
-      })
+        }
+      }.merge(common_values))
     end
 
   end
