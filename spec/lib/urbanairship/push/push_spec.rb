@@ -40,7 +40,7 @@ describe Push do
       }
     }
 
-    let (:common_values) {
+    let(:common_values) {
       {
         audience: 'all',
         device_types: 'all',
@@ -126,6 +126,25 @@ describe Push do
           }
         }
       }.merge(common_values))
+    end
+
+    it 'can handle an iOS alert key/value' do
+      a_push.notification = notification(
+        ios: ios(alert: { foo: 'bar' })
+      )
+      a_push.device_types = 'ios'
+      expect(a_push.payload).to eq(
+        {
+          notification: {
+            ios: {
+              alert: {
+                foo: 'bar'
+              }
+            }
+          },
+          device_types: 'ios'
+        }.merge(common_values)
+      )
     end
 
   end
