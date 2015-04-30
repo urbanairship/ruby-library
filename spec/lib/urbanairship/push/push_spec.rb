@@ -49,6 +49,7 @@ describe Push do
       }
     }
 
+
     it 'can build a full payload structure' do
       a_push.notification = notification(alert: 'Hello')
       expect(a_push.payload).to eq({
