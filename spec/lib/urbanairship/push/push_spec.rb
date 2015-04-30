@@ -18,9 +18,8 @@ describe Push do
     }
 
     it 'can build a full payload structure' do
-      p = a_push
-      p.notification = notification(alert: 'Hello')
-      p.message = message(
+      a_push.notification = notification(alert: 'Hello')
+      a_push.message = message(
         title: 'Title',
         body: 'Body',
         content_type: 'text/html',
@@ -31,7 +30,7 @@ describe Push do
         options: { some_delivery_option: true }
       )
 
-      expect(p.payload).to eq({
+      expect(a_push.payload).to eq({
         audience: 'all',
         notification: {alert: 'Hello'},
         device_types: 'all',
@@ -50,8 +49,7 @@ describe Push do
     end
 
     it 'can build a payload with actions' do
-      p = a_push
-      p.notification = notification(
+      a_push.notification = notification(
         alert: 'Hello',
         actions: actions(
           add_tag: 'new_tag',
@@ -64,7 +62,7 @@ describe Push do
           app_defined: {some_app_defined_action: 'some_values'}
         )
       )
-      p.message = message(
+      a_push.message = message(
         title: 'Title',
         body: 'Body',
         content_type: 'text/html',
@@ -75,7 +73,7 @@ describe Push do
         options: { some_delivery_option: true }
       )
 
-      expect(p.payload).to eq({
+      expect(a_push.payload).to eq({
         audience: 'all',
         notification: {
           alert: 'Hello',
