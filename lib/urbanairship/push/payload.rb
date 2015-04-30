@@ -113,6 +113,16 @@ module Urbanairship
       def options(expiry:)
         { expiry: expiry }
       end
+
+      def actions(add_tag: nil, remove_tag: nil, open_: nil, share: nil, app_defined: nil)
+        {
+          add_tag: add_tag,
+          remove_tag: remove_tag,
+          open: open_,
+          share: share,
+          app_defined: app_defined
+        }.compact
+      end
     end
   end
 end

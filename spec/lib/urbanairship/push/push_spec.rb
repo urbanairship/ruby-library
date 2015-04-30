@@ -57,7 +57,8 @@ describe Push do
               content: 'http://www.urbanairship.com'
           },
           app_defined: {some_app_defined_action: 'some_values'}
-        )),
+        )
+      )
       p.options = options(expiry: 10080)
       p.device_types = all_
       p.message = message(
@@ -79,7 +80,7 @@ describe Push do
             add_tag: 'new_tag',
             remove_tag: 'old_tag',
             share: 'Check out Urban Airship!',
-            open_: {
+            open: {
               type: 'url',
               content: 'http://www.urbanairship.com'
             },
