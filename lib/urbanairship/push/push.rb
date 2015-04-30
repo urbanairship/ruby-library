@@ -6,7 +6,9 @@ module Urbanairship
 
     # A push notification.
     class Push
-      def self.initialize(airship)
+      attr_writer :audience, :notification, :options
+
+      def initialize(airship)
         @airship = airship
       end
     end

@@ -107,7 +107,12 @@ module Urbanairship
       end
 
       def device_types(types)
+        # TODO: Refactor
         types == all_ ? all_ : types
+      end
+
+      def options(expiry:)
+        { expiry: expiry }
       end
     end
   end
