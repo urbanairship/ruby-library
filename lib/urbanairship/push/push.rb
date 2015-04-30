@@ -11,6 +11,16 @@ module Urbanairship
       def initialize(airship)
         @airship = airship
       end
+
+      def payload
+        {
+          audience: @audience,
+          notification: @notification,
+          options: @options,
+          device_types: @device_types,
+          message: @message
+        }.compact
+      end
     end
 
   end

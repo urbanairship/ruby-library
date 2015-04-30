@@ -25,19 +25,19 @@ describe Push do
     )
 
     expect(p.payload).to eq({
-      'audience' => 'all',
-      'notification' => {'alert' => 'Hello'},
-      'device_types' => 'all',
-      'options' => { 'expiry' => 10080 },
-      'message' => {
-        'title' => 'Title',
-        'body' => 'Body',
-        'content_type' => 'text/html',
-        'content_encoding' => 'utf8',
-        'extra' => {'more' => 'stuff'},
-        'expiry' => 10080,
-        'icons' => { 'list_icon' => 'http://cdn.example.com/message.png' },
-        'options' => {'some_delivery_option' => 'true'},
+      audience: 'all',
+      notification: {alert: 'Hello'},
+      device_types: 'all',
+      options: { expiry: 10080 },
+      message: {
+        title: 'Title',
+        body: 'Body',
+        content_type: 'text/html',
+        content_encoding: 'utf8',
+        extra: {more: 'stuff'},
+        expiry: 10080,
+        icons: { list_icon: 'http://cdn.example.com/message.png' },
+        options: { some_delivery_option: true },
       }}
     )
   end
