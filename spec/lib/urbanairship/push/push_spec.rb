@@ -141,9 +141,8 @@ describe Push do
                 foo: 'bar'
               }
             }
-          },
-          device_types: 'ios'
-        }.merge(common_values)
+          }
+        }.merge(common_values).merge({device_types: 'ios'})
       )
     end
 
