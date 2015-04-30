@@ -52,10 +52,9 @@ describe Push do
 
     it 'can build a full payload structure' do
       a_push.notification = notification(alert: 'Hello')
-      expect(a_push.payload).to eq({
+      expect(a_push.payload).to eq(common_values.merge({
         notification: {alert: 'Hello'}
-        }.merge(common_values)
-      )
+      }))
     end
 
     it 'can build a payload with actions' do
@@ -72,7 +71,7 @@ describe Push do
           app_defined: {some_app_defined_action: 'some_values'}
         )
       )
-      expect(a_push.payload).to eq({
+      expect(a_push.payload).to eq(common_values.merge({
         notification: {
           alert: 'Hello',
           actions: {
@@ -85,7 +84,7 @@ describe Push do
             },
             app_defined: {some_app_defined_action: 'some_values'}
           }}
-      }.merge(common_values))
+      }))
     end
 
     it 'can build a payload with an interactive notification' do
@@ -107,7 +106,7 @@ describe Push do
           }
         )
       )
-      expect(a_push.payload).to eq({
+      expect(a_push.payload).to eq(common_values.merge({
         notification: {
           interactive: {
             type: 'some_type',
@@ -126,7 +125,7 @@ describe Push do
             }
           }
         }
-      }.merge(common_values))
+      }))
     end
 
     it 'can handle an iOS alert key/value' do
@@ -134,7 +133,7 @@ describe Push do
         ios: ios(alert: { foo: 'bar' })
       )
       a_push.device_types = 'ios'
-      expect(a_push.payload).to eq(
+      expect(a_push.payload).to eq(common_values.merge(
         {
           notification: {
             ios: {
@@ -142,9 +141,10 @@ describe Push do
                 foo: 'bar'
               }
             }
-          }
-        }.merge(common_values).merge({device_types: 'ios'})
-      )
+          },
+          device_types: 'ios'
+        }
+      ))
     end
 
   end
