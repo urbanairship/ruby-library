@@ -40,7 +40,7 @@ describe Push do
       }
     }
 
-    let(:common_values) {
+    let(:default) {
       {
         audience: 'all',
         device_types: 'all',
@@ -52,7 +52,7 @@ describe Push do
 
     it 'can build a full payload structure' do
       a_push.notification = notification(alert: 'Hello')
-      expect(a_push.payload).to eq(common_values.merge({
+      expect(a_push.payload).to eq(default.merge({
         notification: {alert: 'Hello'}
       }))
     end
@@ -71,7 +71,7 @@ describe Push do
           app_defined: {some_app_defined_action: 'some_values'}
         )
       )
-      expect(a_push.payload).to eq(common_values.merge({
+      expect(a_push.payload).to eq(default.merge({
         notification: {
           alert: 'Hello',
           actions: {
@@ -106,7 +106,7 @@ describe Push do
           }
         )
       )
-      expect(a_push.payload).to eq(common_values.merge({
+      expect(a_push.payload).to eq(default.merge({
         notification: {
           interactive: {
             type: 'some_type',
@@ -133,7 +133,7 @@ describe Push do
         ios: ios(alert: { foo: 'bar' })
       )
       a_push.device_types = 'ios'
-      expect(a_push.payload).to eq(common_values.merge(
+      expect(a_push.payload).to eq(default.merge(
         {
           notification: {
             ios: {
