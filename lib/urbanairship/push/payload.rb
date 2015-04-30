@@ -97,9 +97,9 @@ module Urbanairship
           .compact
       end
 
-      def interactive(type:)
+      def interactive(type:, button_actions: nil)
         fail ArgumentError, "type must not be nil" if type.nil?
-        { type: type }
+        { type: type, button_actions: button_actions }.compact
       end
 
       def all_

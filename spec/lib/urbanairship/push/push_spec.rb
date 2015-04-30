@@ -86,7 +86,7 @@ describe Push do
     end
 
     it 'can build a payload with an interactive notification' do
-      a_push.notification = interactive(
+      a_push.notification = notification(
         interactive: interactive(
           type: 'some_type',
           button_actions: {
@@ -106,7 +106,6 @@ describe Push do
       )
       expect(a_push.payload).to eq({
         notification: {
-          alert: 'Hello',
           interactive: {
             type: 'some_type',
             button_actions: {
@@ -124,7 +123,6 @@ describe Push do
             }
           }
         },
-        alert: 'Hello',
         audience: 'all',
         device_types: 'all',
         options: { expiry: 10080 },
