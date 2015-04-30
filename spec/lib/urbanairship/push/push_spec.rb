@@ -8,9 +8,15 @@ include Urbanairship::Push::Payload
 
 describe Push do
   describe '#payload' do
-    it 'can build a full payload structure' do
+
+    let!(:a_push) {
       p = Push.new(nil)
       p.audience = all_
+      p
+    }
+
+    it 'can build a full payload structure' do
+      p = a_push
       p.notification = notification(alert: 'Hello')
       p.options = options(expiry: 10080)
       p.device_types = all_
@@ -44,8 +50,7 @@ describe Push do
     end
 
     it 'can build a payload with actions' do
-      p = Push.new(nil)
-      p.audience = all_
+      p = a_push
       p.notification = notification(
         alert: 'Hello',
         actions: actions(
