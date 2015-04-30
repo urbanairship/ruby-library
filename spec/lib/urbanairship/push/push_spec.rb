@@ -12,14 +12,14 @@ describe Push do
     let!(:a_push) {
       p = Push.new(nil)
       p.audience = all_
+      p.options = options(expiry: 10080)
+      p.device_types = all_
       p
     }
 
     it 'can build a full payload structure' do
       p = a_push
       p.notification = notification(alert: 'Hello')
-      p.options = options(expiry: 10080)
-      p.device_types = all_
       p.message = message(
         title: 'Title',
         body: 'Body',
@@ -64,8 +64,6 @@ describe Push do
           app_defined: {some_app_defined_action: 'some_values'}
         )
       )
-      p.options = options(expiry: 10080)
-      p.device_types = all_
       p.message = message(
         title: 'Title',
         body: 'Body',
