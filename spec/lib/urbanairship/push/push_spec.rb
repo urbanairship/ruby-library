@@ -33,7 +33,7 @@ describe Push do
         body: 'Body',
         content_type: 'text/html',
         content_encoding: 'utf8',
-        extra: {more: 'stuff'},
+        extra: { more: 'stuff' },
         expiry: 10080,
         icons: { list_icon: 'http://cdn.example.com/message.png' },
         options: { some_delivery_option: true },
@@ -43,8 +43,8 @@ describe Push do
     it 'can build a full payload structure' do
       a_push.notification = notification(alert: 'Hello')
       expect(a_push.payload).to eq({
-        audience: 'all',
         notification: {alert: 'Hello'},
+        audience: 'all',
         device_types: 'all',
         options: { expiry: 10080 },
         message: expected_message
@@ -66,7 +66,6 @@ describe Push do
         )
       )
       expect(a_push.payload).to eq({
-        audience: 'all',
         notification: {
           alert: 'Hello',
           actions: {
@@ -79,6 +78,7 @@ describe Push do
             },
             app_defined: {some_app_defined_action: 'some_values'}
           }},
+        audience: 'all',
         device_types: 'all',
         options: { expiry: 10080 },
         message: expected_message
@@ -87,7 +87,6 @@ describe Push do
 
     it 'can build a payload with an interactive notification' do
       a_push.notification = interactive(
-        alert: 'Hello',
         interactive: interactive(
           type: 'some_type',
           button_actions: {
@@ -106,7 +105,6 @@ describe Push do
         )
       )
       expect(a_push.payload).to eq({
-        audience: 'all',
         notification: {
           alert: 'Hello',
           interactive: {
@@ -126,6 +124,8 @@ describe Push do
             }
           }
         },
+        alert: 'Hello',
+        audience: 'all',
         device_types: 'all',
         options: { expiry: 10080 },
         message: expected_message
