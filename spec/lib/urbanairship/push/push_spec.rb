@@ -10,7 +10,7 @@ include Urbanairship::Push::Payload
 describe Urbanairship::Push do
   let(:some_expiry) { 10_080 }
 
-  let!(:a_push) {
+  let(:a_push) {
     p = Push.new(nil)
     p.audience = all_
     p.options = options(expiry: some_expiry)
@@ -41,8 +41,8 @@ describe Urbanairship::Push do
     }
   }
 
-  let(:default) {
-    {
+  before {
+    @default_payload = {
       audience: 'all',
       device_types: 'all',
       options: { expiry: some_expiry },
@@ -52,7 +52,7 @@ describe Urbanairship::Push do
 
   def payload_should_have(expected_structure)
     actual_payload = a_push.payload
-    expected_payload = default.merge(expected_structure)
+    expected_payload = @default_payload.merge(expected_structure)
     expect(actual_payload).to eq(expected_payload)
   end
 
