@@ -21,5 +21,13 @@ module Urbanairship
         }.compact
       end
     end
+
+    class ScheduledPush
+      attr_writer :schedule, :name, :push, :url
+      
+      def initialize(airship)
+        @airship = airship
+      end
+    end
   end
 end

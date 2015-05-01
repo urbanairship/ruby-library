@@ -1,10 +1,14 @@
 require 'spec_helper'
 
+# TODO: Think about the module / namespace setup. Then
+#       modify specs to run without the `include` statements.
 require 'urbanairship/push/push'
 require 'urbanairship/push/payload'
+require 'urbanairship/push/schedule'
 
 include Urbanairship::Push
 include Urbanairship::Push::Payload
+include Urbanairship::Push::Schedule
 
 
 describe Urbanairship::Push do
@@ -41,8 +45,8 @@ describe Urbanairship::Push do
     }
   }
 
-  before {
-    @default_payload = {
+  let(:default_payload) {
+    {
       audience: 'all',
       device_types: 'all',
       options: { expiry: some_expiry },
@@ -52,7 +56,7 @@ describe Urbanairship::Push do
 
   def payload_should_have(expected_structure)
     actual_payload = a_push.payload
-    expected_payload = @default_payload.merge(expected_structure)
+    expected_payload = default_payload.merge(expected_structure)
     expect(actual_payload).to eq(expected_payload)
   end
 
@@ -154,11 +158,16 @@ describe Urbanairship::Push do
       end
     end
 
-    # describe ScheduledPush do
-    #   describe '#payload' do
-    #     it 'can build a scheduled payload'
-    #   end
-    # end
+    describe ScheduledPush do
+      describe '#payload' do
+        it 'can build a scheduled payload' do
+          sched = ScheduledPush.new(nil)
+          sched.push = a_push
+          sched.name = 'A Schedule'
+          sched.schedule = scheduled_time(DateTime.new(2014, 1, 1, 12, 0, 0))
+        end
+      end
+    end
 
   end
 end
