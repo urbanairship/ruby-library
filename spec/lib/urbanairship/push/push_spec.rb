@@ -6,11 +6,14 @@ require 'urbanairship/push/payload'
 include Urbanairship::Push
 include Urbanairship::Push::Payload
 
+
 describe Urbanairship::Push do
+  let(:some_expiry) { 10_080 }
+
   let!(:a_push) {
     p = Push.new(nil)
     p.audience = all_
-    p.options = options(expiry: 10080)
+    p.options = options(expiry: some_expiry)
     p.device_types = all_
     p.message = message(
       title: 'Title',
@@ -18,7 +21,7 @@ describe Urbanairship::Push do
       content_type: 'text/html',
       content_encoding: 'utf8',
       extra: { more: 'stuff' },
-      expiry: 10080,
+      expiry: some_expiry,
       icons: { list_icon: 'http://cdn.example.com/message.png' },
       options: { some_delivery_option: true }
     )
@@ -32,9 +35,9 @@ describe Urbanairship::Push do
       content_type: 'text/html',
       content_encoding: 'utf8',
       extra: { more: 'stuff' },
-      expiry: 10080,
+      expiry: some_expiry,
       icons: { list_icon: 'http://cdn.example.com/message.png' },
-      options: { some_delivery_option: true },
+      options: { some_delivery_option: true }
     }
   }
 
@@ -42,14 +45,14 @@ describe Urbanairship::Push do
     {
       audience: 'all',
       device_types: 'all',
-      options: { expiry: 10080 },
+      options: { expiry: some_expiry },
       message: expected_message
     }
   }
 
-  def payload_should_have(structure)
+  def payload_should_have(expected_structure)
     actual_payload = a_push.payload
-    expected_payload = default.merge(structure)
+    expected_payload = default.merge(expected_structure)
     expect(actual_payload).to eq(expected_payload)
   end
 
@@ -72,7 +75,7 @@ describe Urbanairship::Push do
               type: 'url',
               content: 'http://www.urbanairship.com'
             },
-            app_defined: {some_app_defined_action: 'some_values'}
+            app_defined: { some_app_defined_action: 'some_values' }
           )
         )
         payload_should_have(
@@ -139,23 +142,23 @@ describe Urbanairship::Push do
         key_value = { foo: 'bar' }
         a_push.notification = notification(ios: ios(alert: key_value))
         a_push.device_types = 'ios'
-        expect(a_push.payload).to eq(default.merge(
-                                       {
-                                         notification: {
-                                           ios: {
-                                             alert: key_value
-                                           }
-                                         },
-                                         device_types: 'ios'
-                                       }
-        ))
-      end
 
+        payload_should_have(
+          notification: {
+            ios: {
+              alert: key_value
+            }
+          },
+          device_types: 'ios'
+        )
+      end
     end
+
+    describe ScheduledPush do
+      describe '#payload' do
+        it 'can build a scheduled payload'
+      end
+    end
+
   end
 end
-# describe ScheduledPush do
-#   describe '#payload' do
-#     it 'can build a scheduled payload'
-#   end
-# end
