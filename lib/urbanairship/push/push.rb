@@ -35,7 +35,7 @@ module Urbanairship
           name: @name,
           schedule: @schedule,
           push: @push.payload
-        }
+        }.compact
       end
     end
 

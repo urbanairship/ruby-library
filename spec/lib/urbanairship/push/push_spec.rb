@@ -174,6 +174,21 @@ describe Urbanairship::Push do
             }
           )
         end
+
+        it 'can build a local scheduled payload' do
+          sched = ScheduledPush.new(nil)
+          sched.push = a_push
+          sched.name = 'A Schedule'
+          sched.schedule = local_scheduled_time(DateTime.new(2014, 1, 1, 12, 0, 0))
+
+          expect(sched.payload).to eq(
+            {
+              name: 'A Schedule',
+              schedule: { local_scheduled_time: '2014-01-01T12:00:00' },
+              push: default_expected_payload
+            }
+          )
+        end
       end
     end
 
