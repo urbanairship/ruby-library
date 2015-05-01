@@ -14,7 +14,7 @@ include Urbanairship::Push::Schedule
 describe Urbanairship::Push do
   let(:some_expiry) { 10_080 }
 
-  let(:a_push) {
+  let!(:a_push) {
     p = Push.new(nil)
     p.audience = all_
     p.options = options(expiry: some_expiry)
@@ -45,7 +45,7 @@ describe Urbanairship::Push do
     }
   }
 
-  let(:default_payload) {
+  let(:default_expected_payload) {
     {
       audience: 'all',
       device_types: 'all',
@@ -54,9 +54,9 @@ describe Urbanairship::Push do
     }
   }
 
-  def expect_payload_to_have(expected_structure, payload_container: a_push)
-    actual_payload = payload_container.payload
-    expected_payload = default_payload.merge(expected_structure)
+  def expect_payload_to_have(additional_structure)
+    actual_payload = a_push.payload
+    expected_payload = default_expected_payload.merge(additional_structure)
     expect(actual_payload).to eq(expected_payload)
   end
 
@@ -166,12 +166,12 @@ describe Urbanairship::Push do
           sched.name = 'A Schedule'
           sched.schedule = scheduled_time(DateTime.new(2014, 1, 1, 12, 0, 0))
 
-          expect_payload_to_have(
+          expect(sched.payload).to eq(
             {
               name: 'A Schedule',
-              schedule: { scheduled_time: '2014-01-01T12:00:00' }
-            },
-            payload_container: sched
+              schedule: { scheduled_time: '2014-01-01T12:00:00' },
+              push: default_expected_payload
+            }
           )
         end
       end
