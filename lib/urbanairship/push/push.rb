@@ -22,12 +22,22 @@ module Urbanairship
       end
     end
 
+
     class ScheduledPush
       attr_writer :schedule, :name, :push, :url
-      
+
       def initialize(airship)
         @airship = airship
       end
+
+      def payload
+        {
+          name: @name,
+          schedule: @schedule,
+          push: @push.payload
+        }
+      end
     end
+
   end
 end

@@ -54,8 +54,8 @@ describe Urbanairship::Push do
     }
   }
 
-  def payload_should_have(expected_structure)
-    actual_payload = a_push.payload
+  def expect_payload_to_have(expected_structure, payload_container: a_push)
+    actual_payload = payload_container.payload
     expected_payload = default_payload.merge(expected_structure)
     expect(actual_payload).to eq(expected_payload)
   end
@@ -65,7 +65,7 @@ describe Urbanairship::Push do
     describe '#payload' do
       it 'can build a full payload structure' do
         a_push.notification = notification(alert: 'Hello')
-        payload_should_have(notification: { alert: 'Hello' })
+        expect_payload_to_have(notification: { alert: 'Hello' })
       end
 
       it 'can build a payload with actions' do
@@ -82,7 +82,7 @@ describe Urbanairship::Push do
             app_defined: { some_app_defined_action: 'some_values' }
           )
         )
-        payload_should_have(
+        expect_payload_to_have(
           notification: {
             alert: 'Hello',
             actions: {
@@ -120,7 +120,7 @@ describe Urbanairship::Push do
             }
           )
         )
-        payload_should_have(
+        expect_payload_to_have(
           notification: {
             interactive: {
               type: 'some_type',
@@ -147,7 +147,7 @@ describe Urbanairship::Push do
         a_push.notification = notification(ios: ios(alert: key_value))
         a_push.device_types = 'ios'
 
-        payload_should_have(
+        expect_payload_to_have(
           notification: {
             ios: {
               alert: key_value
@@ -165,6 +165,14 @@ describe Urbanairship::Push do
           sched.push = a_push
           sched.name = 'A Schedule'
           sched.schedule = scheduled_time(DateTime.new(2014, 1, 1, 12, 0, 0))
+
+          expect_payload_to_have(
+            {
+              name: 'A Schedule',
+              schedule: { scheduled_time: '2014-01-01T12:00:00' }
+            },
+            payload_container: sched
+          )
         end
       end
     end
