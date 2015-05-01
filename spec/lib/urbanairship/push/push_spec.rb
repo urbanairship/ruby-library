@@ -160,9 +160,9 @@ describe Urbanairship::Push do
 
     describe ScheduledPush do
       describe '#payload' do
-        let(:a_time) { DateTime.new(2013, 1, 1, 12, 56) }
+        let(:a_time)         { DateTime.new(2013, 1, 1, 12, 56) }
         let(:a_time_in_text) { '2013-01-01T12:56:00' }
-        let(:a_name) { 'This Schedule' }
+        let(:a_name)         { 'This Schedule' }
         let(:scheduled_push) {
           sched = ScheduledPush.new(nil)
           sched.push = a_push
@@ -191,6 +191,13 @@ describe Urbanairship::Push do
             }
           )
         end
+      end
+    end
+
+
+    describe PushResponse do
+      describe '#push_ids' do
+        it 'returns the ID from a successful push'
       end
     end
 
