@@ -47,8 +47,10 @@ describe Urbanairship::Push do
     }
   }
 
-  def expect_payload_to_have(structure)
-    expect(a_push.payload).to eq(default.merge(structure))
+  def payload_should_have(structure)
+    actual_payload = a_push.payload
+    expected_payload = default.merge(structure)
+    expect(actual_payload).to eq(expected_payload)
   end
 
 
@@ -56,7 +58,7 @@ describe Urbanairship::Push do
     describe '#payload' do
       it 'can build a full payload structure' do
         a_push.notification = notification(alert: 'Hello')
-        expect_payload_to_have(notification: { alert: 'Hello' })
+        payload_should_have(notification: { alert: 'Hello' })
       end
 
       it 'can build a payload with actions' do
@@ -73,20 +75,23 @@ describe Urbanairship::Push do
             app_defined: {some_app_defined_action: 'some_values'}
           )
         )
-        expect(a_push.payload).to eq(default.merge({
-                                                     notification: {
-                                                       alert: 'Hello',
-                                                       actions: {
-                                                         add_tag: 'new_tag',
-                                                         remove_tag: 'old_tag',
-                                                         share: 'Check out Urban Airship!',
-                                                         open: {
-                                                           type: 'url',
-                                                           content: 'http://www.urbanairship.com'
-                                                         },
-                                                         app_defined: {some_app_defined_action: 'some_values'}
-                                                     }}
-        }))
+        payload_should_have(
+          notification: {
+            alert: 'Hello',
+            actions: {
+              add_tag: 'new_tag',
+              remove_tag: 'old_tag',
+              share: 'Check out Urban Airship!',
+              open: {
+                type: 'url',
+                content: 'http://www.urbanairship.com'
+              },
+              app_defined: {
+                some_app_defined_action: 'some_values'
+              }
+            }
+          }
+        )
       end
 
       it 'can build a payload with an interactive notification' do
