@@ -3,7 +3,6 @@
 # file based on the class it contains.
 module Urbanairship
   module Push
-
     # A push notification.
     class Push
       attr_writer :audience, :notification, :options, :device_types, :message
@@ -22,6 +21,5 @@ module Urbanairship
         }.compact
       end
     end
-
   end
 end
