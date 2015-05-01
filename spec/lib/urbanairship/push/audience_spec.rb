@@ -157,8 +157,8 @@ describe Urbanairship do
   end
 
   describe '#location' do
-    let (:a_recent_date) {
-      { recent: { days: 4 }}
+    let(:a_recent_date) {
+      { recent: { days: 4 } }
     }
 
     it 'produces a location based on an id and date' do
