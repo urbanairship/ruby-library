@@ -129,17 +129,14 @@ describe Push do
     end
 
     it 'can handle an iOS alert key/value' do
-      a_push.notification = notification(
-        ios: ios(alert: { foo: 'bar' })
-      )
+      key_value = { foo: 'bar' }
+      a_push.notification = notification(ios: ios(alert: key_value))
       a_push.device_types = 'ios'
       expect(a_push.payload).to eq(default.merge(
         {
           notification: {
             ios: {
-              alert: {
-                foo: 'bar'
-              }
+              alert: key_value
             }
           },
           device_types: 'ios'
