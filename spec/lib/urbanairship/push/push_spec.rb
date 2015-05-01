@@ -113,26 +113,26 @@ describe Urbanairship::Push do
             }
           )
         )
-        expect(a_push.payload).to eq(default.merge({
-                                                     notification: {
-                                                       interactive: {
-                                                         type: 'some_type',
-                                                         button_actions: {
-                                                           yes: {
-                                                             add_tag: 'clicked_yes',
-                                                             remove_tag: 'never_clicked_yes',
-                                                             open: {
-                                                               type: 'url',
-                                                               content: 'http://www.urbanairship.com'
-                                                             }
-                                                           },
-                                                           no: {
-                                                             add_tag: 'hater'
-                                                           }
-                                                         }
-                                                       }
-                                                     }
-        }))
+        payload_should_have(
+          notification: {
+            interactive: {
+              type: 'some_type',
+              button_actions: {
+                yes: {
+                  add_tag: 'clicked_yes',
+                  remove_tag: 'never_clicked_yes',
+                  open: {
+                    type: 'url',
+                    content: 'http://www.urbanairship.com'
+                  }
+                },
+                no: {
+                  add_tag: 'hater'
+                }
+              }
+            }
+          }
+        )
       end
 
       it 'can handle an iOS alert key/value' do
