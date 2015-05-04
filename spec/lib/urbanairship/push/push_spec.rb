@@ -158,6 +158,7 @@ describe Urbanairship::Push do
       end
     end
 
+
     describe ScheduledPush do
       describe '#payload' do
         let(:a_time)         { DateTime.new(2013, 1, 1, 12, 56) }
@@ -174,8 +175,8 @@ describe Urbanairship::Push do
           scheduled_push.schedule = scheduled_time(a_time)
           expect(scheduled_push.payload).to eq(
             {
-              name: a_name,
               schedule: { scheduled_time: a_time_in_text },
+              name: a_name,
               push: default_expected_payload
             }
           )
@@ -185,8 +186,8 @@ describe Urbanairship::Push do
           scheduled_push.schedule = local_scheduled_time(a_time)
           expect(scheduled_push.payload).to eq(
             {
-              name: a_name,
               schedule: { local_scheduled_time: a_time_in_text },
+              name: a_name,
               push: default_expected_payload
             }
           )

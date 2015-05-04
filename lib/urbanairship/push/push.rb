@@ -39,5 +39,10 @@ module Urbanairship
       end
     end
 
+
+    class PushResponse
+
+    end
+
   end
 end
