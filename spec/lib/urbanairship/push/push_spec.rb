@@ -168,7 +168,9 @@ describe Urbanairship::Push do
     describe '#send_push' do
       it 'can be invoked and parse a response' do
         airship = UA::Airship.new(key: '123', secret: 'abc')
-        allow(airship).to receive(:send_request).and_return(simple_http_response)
+        allow(airship)
+          .to receive(:send_request)
+          .and_return(simple_http_response)
         a_push.airship = airship
 
         push_response = a_push.send_push
@@ -176,9 +178,10 @@ describe Urbanairship::Push do
       end
 
       it 'returns the push ids' do
-        mock_response = JSON.dump({push_ids: ['0492662a-1b52-4343-a1f9-c6b0c72931c0']})
         airship = UA::Airship.new(key: '123', secret: 'abc')
-        allow(airship).to receive(:send_request).and_return(mock_response)
+        allow(airship)
+          .to receive(:send_request)
+          .and_return(JSON.dump({push_ids: ['0492662a-1b52-4343-a1f9-c6b0c72931c0']}))
         a_push.airship = airship
 
         push_response = a_push.send_push
