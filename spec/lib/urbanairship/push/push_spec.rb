@@ -210,6 +210,10 @@ describe Urbanairship::Push do
 
 
   describe ScheduledPush do
+    describe '#from_url' do
+      it 'loads an existing scheduled push from its URL'
+    end
+
     describe '#payload' do
       let(:a_time)         { DateTime.new(2013, 1, 1, 12, 56) }
       let(:a_time_in_text) { '2013-01-01T12:56:00' }
