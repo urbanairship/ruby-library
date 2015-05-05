@@ -166,7 +166,7 @@ describe Urbanairship::Push do
     end
 
     describe '#send_push' do
-      it 'can be invoked and parse a response' do
+      it 'can be invoked and parse the "ok" value' do
         airship = UA::Airship.new(key: '123', secret: 'abc')
         allow(airship)
           .to receive(:send_request)
