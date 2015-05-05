@@ -2,6 +2,7 @@ require 'spec_helper'
 
 # TODO: Think about the module / namespace setup. Then
 #       modify specs to run without the `include` statements.
+require 'urbanairship/airship'
 require 'urbanairship/push/push'
 require 'urbanairship/push/payload'
 require 'urbanairship/push/schedule'
@@ -12,6 +13,8 @@ include Urbanairship::Push::Schedule
 
 
 describe Urbanairship::Push do
+  UA = Urbanairship
+
   let(:some_expiry) { 10_080 }
   let(:simple_http_response) { 
     '{"ok":"yes", "push_ids":["04fca66c-f33a-11e4-9c82-5ff5f086852f"]}' 
@@ -163,7 +166,8 @@ describe Urbanairship::Push do
 
     describe '#send_push' do
       it 'can be invoked and parse a response' do
-        a_push.airship = double(send_request: simple_http_response)
+        a_push.airship = UA::Airship.new(key: '123', secret: 'abc')
+        # a_push.airship = double(send_request: simple_http_response)
 
         push_response = a_push.send_push
         expect(push_response.ok).to eq 'yes'
