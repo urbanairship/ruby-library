@@ -36,7 +36,7 @@ module Urbanairship
       # Named #send_push instead of #send like the Python library,
       # because #send is a method of Ruby's #Object.
       #
-      # @raise [AirshipFailure (TBD)] if the request failed.
+      # @raise [AirshipFailure (TBD)] if the request failed
       # @raise [Unauthorized (TBD)] if authentication failed
       # @return [PushResponse] with `push_ids` and other response data.
       def send_push
@@ -56,6 +56,9 @@ module Urbanairship
 
     class ScheduledPush
       attr_writer :schedule, :name, :push, :url
+      attr_reader :url
+      include Urbanairship::Common
+      include Urbanairship::Loggable
 
       def initialize(airship)
         @airship = airship
@@ -67,6 +70,24 @@ module Urbanairship
           schedule: @schedule,
           push: @push.payload
         }.compact
+      end
+
+      # Schedule the notification
+      #
+      # @raise [AirshipFailure (TBD)] if the request failed
+      # @raise [Unauthorized (TBD)] if authentication failed
+      # @return [PushResponse] with `schedule_url` and other response data.
+      def send_push
+        response_body = @airship.send_request(
+          method: 'POST',
+          body: JSON.dump(payload),
+          url: SCHEDULES_URL,
+          content_type: 'application/json',
+          version: 3
+        )
+        pr = PushResponse.new(http_response_body: response_body)
+        logger.info { 'Scheduled push successful.' }
+        pr
       end
     end
 
