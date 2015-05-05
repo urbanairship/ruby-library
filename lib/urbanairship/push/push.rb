@@ -44,6 +44,13 @@ module Urbanairship
     end
 
 
+    # Response to a successful push notification send or schedule.
+    #
+    # Right now this is a fairly simple wrapper around the json payload response,
+    # but making it an object gives us some flexibility to add functionality
+    # later.
+    #
+    #
     class PushResponse
       attr_reader :ok, :push_ids, :schedule_url, :operation_id, :payload
 
