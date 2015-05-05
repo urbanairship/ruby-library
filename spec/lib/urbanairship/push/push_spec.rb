@@ -162,7 +162,7 @@ describe Urbanairship::Push do
       it 'can be invoked' do
         airship = double('airship', send_request: simple_http_response)
         a_push.airship = airship
-        expect { a_push.send_push }.not_to raise_error
+        expect(a_push.send_push.ok).to eq 'yes'
       end
     end
   end
