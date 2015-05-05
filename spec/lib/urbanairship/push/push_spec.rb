@@ -185,7 +185,8 @@ describe Urbanairship::Push do
         a_push.airship = airship
 
         push_response = a_push.send_push
-        expect(push_response.push_ids).to eq ['0492662a-1b52-4343-a1f9-c6b0c72931c0']
+        expect(push_response.push_ids)
+          .to eq ['0492662a-1b52-4343-a1f9-c6b0c72931c0']
       end
     end
   end
@@ -206,22 +207,18 @@ describe Urbanairship::Push do
       it 'can build a scheduled payload' do
         scheduled_push.schedule = scheduled_time(a_time)
         expect(scheduled_push.payload).to eq(
-          {
-            schedule: { scheduled_time: a_time_in_text },
-            name: a_name,
-            push: default_expected_payload
-          }
+          schedule: { scheduled_time: a_time_in_text },
+          name: a_name,
+          push: default_expected_payload
         )
       end
 
       it 'can build a local scheduled payload' do
         scheduled_push.schedule = local_scheduled_time(a_time)
         expect(scheduled_push.payload).to eq(
-          {
-            schedule: { local_scheduled_time: a_time_in_text },
-            name: a_name,
-            push: default_expected_payload
-          }
+          schedule: { local_scheduled_time: a_time_in_text },
+          name: a_name,
+          push: default_expected_payload
         )
       end
     end

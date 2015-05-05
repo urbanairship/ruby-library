@@ -174,7 +174,8 @@ describe Urbanairship do
     context 'Blackberry' do
       it 'sends "alerts" as plain text' do
         payload = notification(blackberry: blackberry(alert: 'Hello'))
-        expect(payload).to eq blackberry: { body: 'Hello', content_type: 'text/plain' }
+        expect(payload)
+          .to eq blackberry: { body: 'Hello', content_type: 'text/plain' }
       end
 
       it 'can send html' do
@@ -182,7 +183,8 @@ describe Urbanairship do
           body: 'Hello',
           content_type: 'text/html'
         ))
-        expect(payload).to eq blackberry: { body: 'Hello', content_type: 'text/html' }
+        expect(payload)
+          .to eq blackberry: { body: 'Hello', content_type: 'text/html' }
       end
     end
 
