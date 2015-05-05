@@ -1,4 +1,8 @@
+require 'logger'
+
 module Urbanairship
+
+  # Features mixed in to all classes
   module Common
     SERVER = 'go.urbanairship.com'
     BASE_URL = "https://go.urbanairship.com/api"
@@ -12,5 +16,14 @@ module Urbanairship
     SCHEDULES_URL = BASE_URL + '/schedules/'
     TAGS_URL = BASE_URL + '/tags/'
     SEGMENTS_URL = BASE_URL + '/segments/'
+
+    def logger
+      if @logger.nil?
+        @logger = Logger.new(STDERR)
+        @logger.datetime_format = '%Y-%m-%d %H:%M:%S'
+      end
+      @logger
+    end
   end
+
 end

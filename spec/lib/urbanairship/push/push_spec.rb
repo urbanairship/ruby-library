@@ -13,7 +13,7 @@ include Urbanairship::Push::Schedule
 
 describe Urbanairship::Push do
   let(:some_expiry) { 10_080 }
-  let(:simple_http_response) { '{"ok":"yes"}' }
+  let(:simple_http_response) { '{"ok":"yes", "push_ids":["1234abcd"]}' }
 
   let!(:a_push) {
     p = Push.new(nil)

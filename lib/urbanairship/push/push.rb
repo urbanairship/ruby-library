@@ -11,6 +11,7 @@ module Urbanairship
 
     # A push notification.
     class Push
+      include Urbanairship::Common
       attr_writer :airship, :audience, :notification, :options, :device_types, :message
 
       def initialize(airship)
@@ -39,11 +40,13 @@ module Urbanairship
         response_body = @airship.send_request(
           method: 'POST',
           body: JSON.dump(payload),
-          url: Urbanairship::Common::PUSH_URL,
+          url: PUSH_URL,
           content_type: 'application/json',
           version: 3
         )
-        PushResponse.new(http_response_body: response_body)
+        pr = PushResponse.new(http_response_body: response_body)
+        logger.info('Urbanairship') { "Push successful. push_ids: #{pr.push_ids}" }
+        pr
       end
     end
 
