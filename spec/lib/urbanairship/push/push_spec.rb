@@ -181,7 +181,7 @@ describe Urbanairship::Push do
         airship = UA::Airship.new(key: '123', secret: 'abc')
         allow(airship)
           .to receive(:send_request)
-          .and_return(JSON.dump({push_ids: ['0492662a-1b52-4343-a1f9-c6b0c72931c0']}))
+          .and_return('{"push_ids":["0492662a-1b52-4343-a1f9-c6b0c72931c0"]}')
         a_push.airship = airship
 
         push_response = a_push.send_push

@@ -3,6 +3,7 @@ module Urbanairship
 		def initialize(key:, secret:)
 		end
 
+		# @return [String] the HTTP response body
 		def send_request(method:, body:, url:, content_type:, version:)
 			fail "Not implemented yet."
 		end
