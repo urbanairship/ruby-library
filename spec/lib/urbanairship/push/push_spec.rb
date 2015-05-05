@@ -211,6 +211,12 @@ describe Urbanairship::Push do
             pr.ok = 'no'
           }.to raise_error(NoMethodError)
         end
+
+        it 'allows nil' do
+          expect {
+            PushResponse.new(http_response_body: '{}').ok
+          }.not_to raise_error
+        end
       end
     end
 

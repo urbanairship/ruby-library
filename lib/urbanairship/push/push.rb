@@ -48,6 +48,7 @@ module Urbanairship
       def initialize(http_response_body:)
         response = JSON.load(http_response_body)
         @ok = response['ok']
+        
       end
     end
 
