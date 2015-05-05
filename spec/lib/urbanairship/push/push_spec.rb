@@ -165,6 +165,15 @@ describe Urbanairship::Push do
         push_response = a_push.send_push
         expect(push_response.ok).to eq 'yes'
       end
+
+      it 'returns the push ids' do
+        mock_response = JSON.dump({push_ids: ['0492662a-1b52-4343-a1f9-c6b0c72931c0']})
+        airship = double(send_request: mock_response)
+        a_push.airship = airship
+
+        push_response = a_push.send_push
+        expect(push_response.push_ids).to eq ['0492662a-1b52-4343-a1f9-c6b0c72931c0']
+      end
     end
   end
 
