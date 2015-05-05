@@ -1,5 +1,7 @@
 require 'json'
 
+require 'ext/object'
+
 # In the Python library, this file is named `core.py`. Here it's
 # `push.rb` in keeping with the Ruby convention of naming the
 # file based on the class it contains.
@@ -46,9 +48,11 @@ module Urbanairship
       attr_reader :ok, :push_ids, :schedule_url, :operation_id, :payload
 
       def initialize(http_response_body:)
-        response = JSON.load(http_response_body)
-        @ok = response['ok']
-        
+        @payload = JSON.load(http_response_body)
+        @ok = @payload['ok']
+        @push_ids = @payload['push_ids']
+        @schedule_url = @payload['schedule_urls'].try(:first)
+        @operation_id = @payload['operation_id']
       end
     end
 

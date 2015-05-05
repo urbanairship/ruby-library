@@ -200,7 +200,7 @@ describe Urbanairship::Push do
       let (:simple_http_response) { '{"ok":"yes"}' }
 
       describe '#ok' do
-        it 'presents the ok message from the "response"' do
+        it 'presents the ok message from the response' do
           pr = PushResponse.new(http_response_body: simple_http_response)
           expect(pr.ok).to eq 'yes'
         end
