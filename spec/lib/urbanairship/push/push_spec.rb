@@ -17,8 +17,8 @@ describe Urbanairship::Push do
   UA = Urbanairship
 
   let(:some_expiry) { 10_080 }
-  let(:simple_http_response) { 
-    '{"ok":"true", "push_ids":["04fca66c-f33a-11e4-9c82-5ff5f086852f"]}' 
+  let(:simple_http_response) {
+    '{"ok":"true", "push_ids":["04fca66c-f33a-11e4-9c82-5ff5f086852f"]}'
   }
 
   let!(:a_push) {
