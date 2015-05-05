@@ -190,15 +190,11 @@ describe Urbanairship::Push do
       end
 
       it 'sends a scheduled push' do
+        SCHEDULE_URL = 'https://go.urbanairship.com/api/schedules/0492662a-1b52-4343-a1f9-c6b0c72931c0'
         airship = UA::Client.new(key: '123', secret: 'abc')
         allow(airship)
           .to receive(:send_request)
-          .and_return(JSON.dump(
-            'schedule_urls': [
-              'https://go.urbanairship.com/api/schedules/',
-              '0492662a-1b52-4343-a1f9-c6b0c72931c0'
-            ]
-          ))
+          .and_return(JSON.dump('schedule_urls': [SCHEDULE_URL]))
         a_push.airship = airship
 
         scheduled_push = ScheduledPush.new(airship)
@@ -207,10 +203,7 @@ describe Urbanairship::Push do
         scheduled_push.send_push
 
         expect(scheduled_push.url)
-          .to eq [
-            'https://go.urbanairship.com/api/schedules/',
-            '0492662a-1b52-4343-a1f9-c6b0c72931c0'
-          ]
+          .to eq SCHEDULE_URL
       end
     end
   end
