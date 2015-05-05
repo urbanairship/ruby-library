@@ -41,7 +41,8 @@ module Urbanairship
 
 
     class PushResponse
-
+      attr_reader :ok, :push_ids, :schedule_url, :operation_id, :payload
+      
     end
 
   end

@@ -197,9 +197,7 @@ describe Urbanairship::Push do
 
 
     describe PushResponse do
-      describe '#push_ids' do
-        it 'returns the ID from a successful push'
-      end
+      
     end
 
   end
