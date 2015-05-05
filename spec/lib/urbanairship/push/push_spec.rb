@@ -2,7 +2,7 @@ require 'spec_helper'
 
 # TODO: Think about the module / namespace setup. Then
 #       modify specs to run without the `include` statements.
-require 'urbanairship/airship'
+require 'urbanairship/client'
 require 'urbanairship/push/push'
 require 'urbanairship/push/payload'
 require 'urbanairship/push/schedule'
@@ -167,7 +167,7 @@ describe Urbanairship::Push do
 
     describe '#send_push' do
       it 'can be invoked and parse the "ok" value' do
-        airship = UA::Airship.new(key: '123', secret: 'abc')
+        airship = UA::Client.new(key: '123', secret: 'abc')
         allow(airship)
           .to receive(:send_request)
           .and_return(simple_http_response)
@@ -178,7 +178,7 @@ describe Urbanairship::Push do
       end
 
       it 'returns the push ids' do
-        airship = UA::Airship.new(key: '123', secret: 'abc')
+        airship = UA::Client.new(key: '123', secret: 'abc')
         allow(airship)
           .to receive(:send_request)
           .and_return('{"push_ids":["0492662a-1b52-4343-a1f9-c6b0c72931c0"]}')
