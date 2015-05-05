@@ -197,10 +197,12 @@ describe Urbanairship::Push do
 
 
     describe PushResponse do
-      it 'presents the ok message from the "response"' do
-        simple_response = '{"ok":"yes"}'
-        pr = PushResponse.new(simple_response)
-        expect(pr.ok).not_to be_nil
+      describe '#ok' do
+        it 'presents the ok message from the "response"' do
+          simple_response = '{"ok":"yes"}'
+          pr = PushResponse.new(simple_response)
+          expect(pr.ok).not_to be_nil
+        end
       end
     end
 
