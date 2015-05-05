@@ -13,6 +13,7 @@ include Urbanairship::Push::Schedule
 
 
 describe Urbanairship::Push do
+  # Equivalent to Python's `import Urbanairship as UA`
   UA = Urbanairship
 
   let(:some_expiry) { 10_080 }
@@ -166,8 +167,9 @@ describe Urbanairship::Push do
 
     describe '#send_push' do
       it 'can be invoked and parse a response' do
-        a_push.airship = UA::Airship.new(key: '123', secret: 'abc')
-        # a_push.airship = double(send_request: simple_http_response)
+        airship = UA::Airship.new(key: '123', secret: 'abc')
+        allow(airship).to receive(:send_request).and_return(simple_http_response)
+        a_push.airship = airship
 
         push_response = a_push.send_push
         expect(push_response.ok).to eq 'yes'
@@ -175,7 +177,8 @@ describe Urbanairship::Push do
 
       it 'returns the push ids' do
         mock_response = JSON.dump({push_ids: ['0492662a-1b52-4343-a1f9-c6b0c72931c0']})
-        airship = double(send_request: mock_response)
+        airship = UA::Airship.new(key: '123', secret: 'abc')
+        allow(airship).to receive(:send_request).and_return(mock_response)
         a_push.airship = airship
 
         push_response = a_push.send_push
