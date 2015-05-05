@@ -2,6 +2,7 @@ require 'json'
 
 require 'ext/object'
 require 'urbanairship/common'
+require 'urbanairship/loggable'
 
 # In the Python library, this file is named `core.py`. Here it's
 # `push.rb` in keeping with the Ruby convention of naming the
@@ -11,8 +12,9 @@ module Urbanairship
 
     # A push notification.
     class Push
-      include Urbanairship::Common
       attr_writer :airship, :audience, :notification, :options, :device_types, :message
+      include Urbanairship::Common
+      include Urbanairship::Loggable
 
       def initialize(airship)
         @airship = airship

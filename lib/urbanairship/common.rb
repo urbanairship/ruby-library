@@ -16,16 +16,6 @@ module Urbanairship
     SCHEDULES_URL = BASE_URL + '/schedules/'
     TAGS_URL = BASE_URL + '/tags/'
     SEGMENTS_URL = BASE_URL + '/segments/'
-
-    def logger
-      if @logger.nil?
-        # STDERR is a good alternative to the hard-coded filename:
-        @logger = Logger.new('urbanairship.log')
-        @logger.datetime_format = '%Y-%m-%d %H:%M:%S'
-        @logger.progname = 'Urbanairship'
-      end
-      @logger
-    end
   end
 
 end
