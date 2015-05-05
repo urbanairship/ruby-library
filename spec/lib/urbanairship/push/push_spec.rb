@@ -32,28 +32,27 @@ describe Urbanairship::Push do
     p
   }
 
-  let(:expected_message) {
-    {
-      title: 'Title',
-      body: 'Body',
-      content_type: 'text/html',
-      content_encoding: 'utf8',
-      extra: { more: 'stuff' },
-      expiry: some_expiry,
-      icons: { list_icon: 'http://cdn.example.com/message.png' },
-      options: { some_delivery_option: true }
-    }
-  }
-
   let(:default_expected_payload) {
     {
       audience: 'all',
       device_types: 'all',
       options: { expiry: some_expiry },
-      message: expected_message
+      message: {
+        title: 'Title',
+        body: 'Body',
+        content_type: 'text/html',
+        content_encoding: 'utf8',
+        extra: { more: 'stuff' },
+        expiry: some_expiry,
+        icons: { list_icon: 'http://cdn.example.com/message.png' },
+        options: { some_delivery_option: true }
+      }
+
     }
   }
 
+  # See if the current `a_push.payload` is the same as the default payload
+  # with the addition of the given `additional_structure`.
   def expect_payload_to_have(additional_structure)
     actual_payload = a_push.payload
     expected_payload = default_expected_payload.merge(additional_structure)
@@ -166,65 +165,65 @@ describe Urbanairship::Push do
   end
 
 
-    describe ScheduledPush do
-      describe '#payload' do
-        let(:a_time)         { DateTime.new(2013, 1, 1, 12, 56) }
-        let(:a_time_in_text) { '2013-01-01T12:56:00' }
-        let(:a_name)         { 'This Schedule' }
-        let(:scheduled_push) {
-          sched = ScheduledPush.new(nil)
-          sched.push = a_push
-          sched.name = a_name
-          sched
-        }
+  describe ScheduledPush do
+    describe '#payload' do
+      let(:a_time)         { DateTime.new(2013, 1, 1, 12, 56) }
+      let(:a_time_in_text) { '2013-01-01T12:56:00' }
+      let(:a_name)         { 'This Schedule' }
+      let(:scheduled_push) {
+        sched = ScheduledPush.new(nil)
+        sched.push = a_push
+        sched.name = a_name
+        sched
+      }
 
-        it 'can build a scheduled payload' do
-          scheduled_push.schedule = scheduled_time(a_time)
-          expect(scheduled_push.payload).to eq(
-            {
-              schedule: { scheduled_time: a_time_in_text },
-              name: a_name,
-              push: default_expected_payload
-            }
-          )
-        end
+      it 'can build a scheduled payload' do
+        scheduled_push.schedule = scheduled_time(a_time)
+        expect(scheduled_push.payload).to eq(
+          {
+            schedule: { scheduled_time: a_time_in_text },
+            name: a_name,
+            push: default_expected_payload
+          }
+        )
+      end
 
-        it 'can build a local scheduled payload' do
-          scheduled_push.schedule = local_scheduled_time(a_time)
-          expect(scheduled_push.payload).to eq(
-            {
-              schedule: { local_scheduled_time: a_time_in_text },
-              name: a_name,
-              push: default_expected_payload
-            }
-          )
-        end
+      it 'can build a local scheduled payload' do
+        scheduled_push.schedule = local_scheduled_time(a_time)
+        expect(scheduled_push.payload).to eq(
+          {
+            schedule: { local_scheduled_time: a_time_in_text },
+            name: a_name,
+            push: default_expected_payload
+          }
+        )
       end
     end
+  end
 
 
-    describe PushResponse do
-      let (:simple_http_response) { '{"ok":"yes"}' }
+  describe PushResponse do
+    let (:simple_http_response) { '{"ok":"yes"}' }
 
-      describe '#ok' do
-        it 'presents the ok message from the response' do
-          pr = PushResponse.new(http_response_body: simple_http_response)
-          expect(pr.ok).to eq 'yes'
-        end
+    describe '#ok' do
+      it 'presents the ok message from the response' do
+        pr = PushResponse.new(http_response_body: simple_http_response)
+        expect(pr.ok).to eq 'yes'
+      end
 
-        it 'is read-only' do
-          pr = PushResponse.new(http_response_body: simple_http_response)
-          expect {
-            pr.ok = 'no'
-          }.to raise_error(NoMethodError)
-        end
+      it 'is read-only' do
+        pr = PushResponse.new(http_response_body: simple_http_response)
+        expect {
+          pr.ok = 'no'
+        }.to raise_error(NoMethodError)
+      end
 
-        it 'allows nil' do
-          expect {
-            PushResponse.new(http_response_body: '{}').ok
-          }.not_to raise_error
-        end
+      it 'allows nil' do
+        expect {
+          PushResponse.new(http_response_body: '{}').ok
+        }.not_to raise_error
       end
     end
+  end
 
 end
