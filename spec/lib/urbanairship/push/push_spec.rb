@@ -159,10 +159,11 @@ describe Urbanairship::Push do
     end
 
     describe '#send_push' do
-      it 'can be invoked' do
-        airship = double('airship', send_request: simple_http_response)
-        a_push.airship = airship
-        expect(a_push.send_push.ok).to eq 'yes'
+      it 'can be invoked and parse a response' do
+        a_push.airship = double(send_request: simple_http_response)
+
+        push_response = a_push.send_push
+        expect(push_response.ok).to eq 'yes'
       end
     end
   end
