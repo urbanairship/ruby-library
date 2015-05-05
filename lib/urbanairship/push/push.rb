@@ -7,6 +7,8 @@ require 'ext/object'
 # file based on the class it contains.
 module Urbanairship
   module Push
+
+
     # A push notification.
     class Push
       attr_writer :audience, :notification, :options, :device_types, :message
@@ -23,6 +25,17 @@ module Urbanairship
           device_types: @device_types,
           message: @message
         }.compact
+      end
+
+      # Send the notification.
+      #
+      # Named #send_push instead of #send like the Python library,
+      # because #send is a method of Ruby's #Object.
+      #
+      # @raise [AirshipFailure (TBD)] if the request failed.
+      # @raise [Unauthorized (TBD)] if authentication failed
+      # @return [PushResponse] with `push_ids` and other response data.
+      def send_push
       end
     end
 

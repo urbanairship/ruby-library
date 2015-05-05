@@ -158,6 +158,13 @@ describe Urbanairship::Push do
       end
     end
 
+    describe '#send_push' do
+      it 'can be invoked' do
+        expect { a_push.send_push }.not_to raise_error
+      end
+    end
+  end
+
 
     describe ScheduledPush do
       describe '#payload' do
@@ -220,5 +227,4 @@ describe Urbanairship::Push do
       end
     end
 
-  end
 end
