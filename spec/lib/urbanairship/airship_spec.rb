@@ -1,9 +1,11 @@
 require 'spec_helper'
 
+require 'urbanairship/airship'
+
 describe Urbanairship::Airship do
-	let(:UA) { Urbanairship }
+	UA = Urbanairship
 
 	it 'is instantiated with a "key" and "secret"' do
-		expect(UA::Airship.new('key', 'secret')).not_to be_nil
+		expect(UA::Airship.new(key: '123', secret: 'abc')).not_to be_nil
 	end
 end
