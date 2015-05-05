@@ -197,11 +197,19 @@ describe Urbanairship::Push do
 
 
     describe PushResponse do
+      let (:simple_http_response) { '{"ok":"yes"}' }
+
       describe '#ok' do
         it 'presents the ok message from the "response"' do
-          simple_response = '{"ok":"yes"}'
-          pr = PushResponse.new(simple_response)
-          expect(pr.ok).not_to be_nil
+          pr = PushResponse.new(http_response_body: simple_http_response)
+          expect(pr.ok).to eq 'yes'
+        end
+
+        it 'is read-only' do
+          pr = PushResponse.new(http_response_body: simple_http_response)
+          expect {
+            pr.ok = 'no'
+          }.to raise_error(NoMethodError)
         end
       end
     end

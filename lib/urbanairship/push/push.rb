@@ -1,3 +1,5 @@
+require 'json'
+
 # In the Python library, this file is named `core.py`. Here it's
 # `push.rb` in keeping with the Ruby convention of naming the
 # file based on the class it contains.
@@ -42,7 +44,11 @@ module Urbanairship
 
     class PushResponse
       attr_reader :ok, :push_ids, :schedule_url, :operation_id, :payload
-      
+
+      def initialize(http_response_body:)
+        response = JSON.load(http_response_body)
+        @ok = response['ok']
+      end
     end
 
   end
