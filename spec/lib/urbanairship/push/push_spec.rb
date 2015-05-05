@@ -54,8 +54,9 @@ describe Urbanairship::Push do
     }
   }
 
-  # See if the current `a_push.payload` is the same as the default payload
-  # with the addition of the given `additional_structure`.
+  # True if the current (actual) `a_push.payload` is the same
+  # as the default payload with the addition of the given
+  # `additional_structure`.
   def expect_payload_to_have(additional_structure)
     actual_payload = a_push.payload
     expected_payload = default_expected_payload.merge(additional_structure)
