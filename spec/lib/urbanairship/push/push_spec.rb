@@ -18,7 +18,7 @@ describe Urbanairship::Push do
 
   let(:some_expiry) { 10_080 }
   let(:simple_http_response) { 
-    '{"ok":"yes", "push_ids":["04fca66c-f33a-11e4-9c82-5ff5f086852f"]}' 
+    '{"ok":"true", "push_ids":["04fca66c-f33a-11e4-9c82-5ff5f086852f"]}' 
   }
 
   let!(:a_push) {
@@ -174,7 +174,7 @@ describe Urbanairship::Push do
         a_push.airship = airship
 
         push_response = a_push.send_push
-        expect(push_response.ok).to eq 'yes'
+        expect(push_response.ok).to eq 'true'
       end
 
       it 'returns the push ids' do
@@ -229,12 +229,10 @@ describe Urbanairship::Push do
 
 
   describe PushResponse do
-    let (:simple_http_response) { '{"ok":"yes"}' }
-
     describe '#ok' do
       it 'presents the ok message from the response' do
         pr = PushResponse.new(http_response_body: simple_http_response)
-        expect(pr.ok).to eq 'yes'
+        expect(pr.ok).to eq 'true'
       end
 
       it 'is read-only' do
