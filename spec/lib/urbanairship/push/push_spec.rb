@@ -171,7 +171,7 @@ describe Urbanairship::Push do
         allow(airship)
           .to receive(:send_request)
           .and_return(simple_http_response)
-        a_push.airship = airship
+        a_push.client = airship
 
         push_response = a_push.send_push
         expect(push_response.ok).to eq 'true'
@@ -182,7 +182,7 @@ describe Urbanairship::Push do
         allow(airship)
           .to receive(:send_request)
           .and_return('{"push_ids":["0492662a-1b52-4343-a1f9-c6b0c72931c0"]}')
-        a_push.airship = airship
+        a_push.client = airship
 
         push_response = a_push.send_push
         expect(push_response.push_ids)
@@ -195,7 +195,7 @@ describe Urbanairship::Push do
         allow(airship)
           .to receive(:send_request)
           .and_return(JSON.dump('schedule_urls': [SCHEDULE_URL]))
-        a_push.airship = airship
+        a_push.client = airship
 
         scheduled_push = ScheduledPush.new(airship)
         scheduled_push.push = a_push

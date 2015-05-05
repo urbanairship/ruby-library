@@ -12,13 +12,13 @@ module Urbanairship
 
     # A push notification.
     class Push
-      attr_writer :airship, :audience, :notification, :options,
+      attr_writer :client, :audience, :notification, :options,
                   :device_types, :message
       include Urbanairship::Common
       include Urbanairship::Loggable
 
-      def initialize(airship)
-        @airship = airship
+      def initialize(client)
+        @client = client
       end
 
       def payload
@@ -40,7 +40,7 @@ module Urbanairship
       # @raise [Unauthorized (TBD)] if authentication failed
       # @return [PushResponse] with `push_ids` and other response data.
       def send_push
-        response_body = @airship.send_request(
+        response_body = @client.send_request(
           method: 'POST',
           body: JSON.dump(payload),
           url: PUSH_URL,
@@ -60,8 +60,8 @@ module Urbanairship
       include Urbanairship::Common
       include Urbanairship::Loggable
 
-      def initialize(airship)
-        @airship = airship
+      def initialize(client)
+        @client = client
       end
 
       def payload
@@ -78,7 +78,7 @@ module Urbanairship
       # @raise [Unauthorized (TBD)] if authentication failed
       # @return [PushResponse] with `schedule_url` and other response data.
       def send_push
-        response_body = @airship.send_request(
+        response_body = @client.send_request(
           method: 'POST',
           body: JSON.dump(payload),
           url: SCHEDULES_URL,
