@@ -36,6 +36,13 @@ module Urbanairship
       # @raise [Unauthorized (TBD)] if authentication failed
       # @return [PushResponse] with `push_ids` and other response data.
       def send_push
+        @airship.send_request(
+          method: 'POST',
+          body: JSON.dump(payload),
+          url: Common::PUSH_URL,
+          content_type: 'application/json',
+          version: 3
+          )
       end
     end
 
