@@ -188,6 +188,30 @@ describe Urbanairship::Push do
         expect(push_response.push_ids)
           .to eq ['0492662a-1b52-4343-a1f9-c6b0c72931c0']
       end
+
+      it 'sends a scheduled push' do
+        airship = UA::Client.new(key: '123', secret: 'abc')
+        allow(airship)
+          .to receive(:send_request)
+          .and_return(JSON.dump(
+            'schedule_urls': [
+              'https://go.urbanairship.com/api/schedules/',
+              '0492662a-1b52-4343-a1f9-c6b0c72931c0'
+            ]
+          ))
+        a_push.airship = airship
+
+        scheduled_push = ScheduledPush.new(airship)
+        scheduled_push.push = a_push
+        scheduled_push.schedule = scheduled_time(DateTime.now)
+        scheduled_push.send_push
+
+        expect(scheduled_push.url)
+          .to eq [
+            'https://go.urbanairship.com/api/schedules/',
+            '0492662a-1b52-4343-a1f9-c6b0c72931c0'
+          ]
+      end
     end
   end
 

@@ -4,7 +4,8 @@ module Urbanairship
     end
 
     # @return [String] the HTTP response body
-    def send_request(method:, body:, url:, content_type:, version:)
+    def send_request(method:, body:, url:, 
+                     content_type: nil, version: nil, params: nil)
       fail 'Not implemented yet.'
     end
 
