@@ -13,6 +13,7 @@ include Urbanairship::Push::Schedule
 
 describe Urbanairship::Push do
   let(:some_expiry) { 10_080 }
+  let(:simple_http_response) { '{"ok":"yes"}' }
 
   let!(:a_push) {
     p = Push.new(nil)
@@ -159,6 +160,8 @@ describe Urbanairship::Push do
 
     describe '#send_push' do
       it 'can be invoked' do
+        airship = double('airship', send_request: simple_http_response)
+        a_push.airship = airship
         expect { a_push.send_push }.not_to raise_error
       end
     end

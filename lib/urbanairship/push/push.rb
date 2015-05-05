@@ -1,6 +1,7 @@
 require 'json'
 
 require 'ext/object'
+require 'urbanairship/common'
 
 # In the Python library, this file is named `core.py`. Here it's
 # `push.rb` in keeping with the Ruby convention of naming the
@@ -8,10 +9,9 @@ require 'ext/object'
 module Urbanairship
   module Push
 
-
     # A push notification.
     class Push
-      attr_writer :audience, :notification, :options, :device_types, :message
+      attr_writer :airship, :audience, :notification, :options, :device_types, :message
 
       def initialize(airship)
         @airship = airship
@@ -39,10 +39,10 @@ module Urbanairship
         @airship.send_request(
           method: 'POST',
           body: JSON.dump(payload),
-          url: Common::PUSH_URL,
+          url: Urbanairship::Common::PUSH_URL,
           content_type: 'application/json',
           version: 3
-          )
+        )
       end
     end
 
@@ -69,7 +69,6 @@ module Urbanairship
     # Right now this is a fairly simple wrapper around the json payload response,
     # but making it an object gives us some flexibility to add functionality
     # later.
-    #
     #
     class PushResponse
       attr_reader :ok, :push_ids, :schedule_url, :operation_id, :payload
