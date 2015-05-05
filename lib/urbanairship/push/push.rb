@@ -45,7 +45,7 @@ module Urbanairship
           version: 3
         )
         pr = PushResponse.new(http_response_body: response_body)
-        logger.info('Urbanairship') { "Push successful. push_ids: #{pr.push_ids}" }
+        logger.info { "Push successful. Push ID's: #{pr.push_ids.join(', ')}" }
         pr
       end
     end

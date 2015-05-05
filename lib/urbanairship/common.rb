@@ -19,8 +19,9 @@ module Urbanairship
 
     def logger
       if @logger.nil?
-        @logger = Logger.new(STDERR)
+        @logger = Logger.new('urbanairship.log')
         @logger.datetime_format = '%Y-%m-%d %H:%M:%S'
+        @logger.progname = 'Urbanairship'
       end
       @logger
     end
