@@ -4,6 +4,7 @@ require 'ext/object'
 require 'urbanairship/common'
 require 'urbanairship/loggable'
 
+
 # In the Python library, this file is named `core.py`. Here it's
 # `push.rb` in keeping with the Ruby convention of naming the
 # file based on the class it contains.

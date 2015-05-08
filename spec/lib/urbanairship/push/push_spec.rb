@@ -211,7 +211,33 @@ describe Urbanairship::Push do
 
   describe ScheduledPush do
     describe '#from_url' do
-      it 'loads an existing scheduled push from its URL'
+      it 'loads an existing scheduled push from its URL' do
+        mock_response = JSON.dump({
+                'name': 'a schedule',
+                'schedule': {'scheduled_time': '2013-07-15T18:40:20'},
+                'push': {
+                    'audience': 'all',
+                    'notification': {'alert': 'Hello'},
+                    'device_types': 'all',
+                    'options': {'expiry': 10080},
+                    'message': {
+                        'title': 'Title',
+                        'body': 'Body',
+                        'content_type': 'text/html',
+                        'content_encoding': 'utf8',
+                    },
+                },
+            })
+        airship = UA::Client.new(key: '123', secret: 'abc')
+        allow(airship)
+          .to receive(:send_request)
+          .and_return(mock_response)
+        a_push.client = airship
+
+        lookup_url = 'https://go.urbanairship.com/api/schedules/0492662a-1b52-4343-a1f9-c6b0c72931c0'
+        scheduled_push = ScheduledPush.from_url(airship, lookup_url)
+        expect(scheduled_push.push.device_types).to eq 'all'
+      end
     end
 
     describe '#payload' do
