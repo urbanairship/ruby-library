@@ -101,14 +101,17 @@ module Urbanairship
           version: 3
         )
         payload = JSON.load(response_body)
+
+        p = Push.new(client)
+        p.audience = payload['push']['audience']
+        p.notification = payload['push']['notification']
+        p.device_types = payload['push']['device_types']
+        p.message = payload['push']['message']
+        p.options = payload['push']['options']
+
         scheduled_push.name = payload['name']
         scheduled_push.schedule = payload['schedule']
-        scheduled_push.push = Push.new(client)
-        scheduled_push.push.audience = payload['push']['audience']
-        scheduled_push.push.notification = payload['push']['notification']
-        scheduled_push.push.device_types = payload['push']['device_types']
-        scheduled_push.push.message = payload['push']['message']
-        scheduled_push.push.options = payload['push']['options']
+        scheduled_push.push = p
         scheduled_push.url = url
         scheduled_push
       end
