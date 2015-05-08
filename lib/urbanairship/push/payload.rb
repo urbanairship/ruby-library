@@ -3,7 +3,9 @@ module Urbanairship
     module Payload
       require 'ext/hash'
 
-      def notification(alert: nil, ios: nil, android: nil, amazon: nil, blackberry: nil, wns: nil, mpns: nil, actions: nil, interactive: nil)
+      def notification(alert: nil, ios: nil, android: nil, amazon: nil,
+                       blackberry: nil, wns: nil, mpns: nil, actions: nil,
+                       interactive: nil)
         payload = {
           alert: alert,
           actions: actions,
@@ -15,11 +17,12 @@ module Urbanairship
           mpns: mpns,
           interactive: interactive
         }.compact
-        fail ArgumentError, 'Notification body may not be empty' if payload.empty?
+        fail ArgumentError, 'Notification body is empty' if payload.empty?
         payload
       end
 
-      def ios(alert: nil, badge: nil, sound: nil, extra: nil, expiry: nil, category: nil, interactive: nil, content_available: nil)
+      def ios(alert: nil, badge: nil, sound: nil, extra: nil, expiry: nil,
+              category: nil, interactive: nil, content_available: nil)
         {
           alert: alert,
           badge: badge,
@@ -29,11 +32,11 @@ module Urbanairship
           category: category,
           interactive: interactive,
           'content-available' => content_available
-        }
-          .compact
+        }.compact
       end
 
-      def amazon(alert: nil, consolidation_key: nil, expires_after: nil, extra: nil, title: nil, summary: nil, interactive: nil)
+      def amazon(alert: nil, consolidation_key: nil, expires_after: nil,
+                 extra: nil, title: nil, summary: nil, interactive: nil)
         {
           alert: alert,
           consolidation_key: consolidation_key,
@@ -42,11 +45,11 @@ module Urbanairship
           title: title,
           summary: summary,
           interactive: interactive
-        }
-          .compact
+        }.compact
       end
 
-      def android(alert: nil, collapse_key: nil, time_to_live: nil, extra: nil, delay_while_idle: nil, interactive: nil)
+      def android(alert: nil, collapse_key: nil, time_to_live: nil,
+                  extra: nil, delay_while_idle: nil, interactive: nil)
         {
           alert: alert,
           collapse_key: collapse_key,
@@ -54,8 +57,7 @@ module Urbanairship
           extra: extra,
           delay_while_idle: delay_while_idle,
           interactive: interactive
-        }
-          .compact
+        }.compact
       end
 
       def blackberry(alert: nil, body: nil, content_type: 'text/plain')
@@ -83,7 +85,8 @@ module Urbanairship
         payload
       end
 
-      def message(title:, body:, content_type: nil, content_encoding: nil, extra: nil, expiry: nil, icons: nil, options: nil)
+      def message(title:, body:, content_type: nil, content_encoding: nil,
+                  extra: nil, expiry: nil, icons: nil, options: nil)
         {
           title: title,
           body: body,
@@ -93,8 +96,7 @@ module Urbanairship
           expiry: expiry,
           icons: icons,
           options: options
-        }
-          .compact
+        }.compact
       end
 
       def interactive(type:, button_actions: nil)
@@ -114,7 +116,8 @@ module Urbanairship
         { expiry: expiry }
       end
 
-      def actions(add_tag: nil, remove_tag: nil, open_: nil, share: nil, app_defined: nil)
+      def actions(add_tag: nil, remove_tag: nil, open_: nil, share: nil,
+                  app_defined: nil)
         {
           add_tag: add_tag,
           remove_tag: remove_tag,

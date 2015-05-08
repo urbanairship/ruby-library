@@ -1,11 +1,9 @@
-require 'logger'
-
 module Urbanairship
 
   # Features mixed in to all classes
   module Common
     SERVER = 'go.urbanairship.com'
-    BASE_URL = "https://go.urbanairship.com/api"
+    BASE_URL = 'https://go.urbanairship.com/api'
     CHANNEL_URL = BASE_URL + '/channels/'
     DEVICE_TOKEN_URL = BASE_URL + '/device_tokens/'
     APID_URL = BASE_URL + '/apids/'
@@ -17,5 +15,4 @@ module Urbanairship
     TAGS_URL = BASE_URL + '/tags/'
     SEGMENTS_URL = BASE_URL + '/segments/'
   end
-
 end

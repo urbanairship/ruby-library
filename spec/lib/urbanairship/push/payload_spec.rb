@@ -16,9 +16,19 @@ describe Urbanairship do
     end
   end
 
+  describe '#options' do
+    it 'accepts an integer expiry' do
+      expect(options(expiry: 12_000)).to eq(expiry: 12_000)
+    end
+
+    it 'accepts a string date' do
+      date = '2015-04-01T12:00:00'
+      expect(options(expiry: date)).to eq(expiry: date)
+    end
+  end
+
 
   describe '#notification' do
-
     it 'builds a simple text alert' do
       expect(notification(alert: 'Hello')).to eq alert: 'Hello'
     end
@@ -28,7 +38,6 @@ describe Urbanairship do
         notification
       }.to raise_error
     end
-
 
     context 'Android' do
       it 'builds a notification' do
@@ -174,7 +183,8 @@ describe Urbanairship do
     context 'Blackberry' do
       it 'sends "alerts" as plain text' do
         payload = notification(blackberry: blackberry(alert: 'Hello'))
-        expect(payload).to eq blackberry: { body: 'Hello', content_type: 'text/plain' }
+        expect(payload)
+          .to eq blackberry: { body: 'Hello', content_type: 'text/plain' }
       end
 
       it 'can send html' do
@@ -182,7 +192,8 @@ describe Urbanairship do
           body: 'Hello',
           content_type: 'text/html'
         ))
-        expect(payload).to eq blackberry: { body: 'Hello', content_type: 'text/html' }
+        expect(payload)
+          .to eq blackberry: { body: 'Hello', content_type: 'text/html' }
       end
     end
 
