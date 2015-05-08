@@ -194,7 +194,7 @@ describe Urbanairship::Push do
         airship = UA::Client.new(key: '123', secret: 'abc')
         allow(airship)
           .to receive(:send_request)
-          .and_return(JSON.dump('schedule_urls': [SCHEDULE_URL]))
+          .and_return(JSON.dump('schedule_urls' => [SCHEDULE_URL]))
         a_push.client = airship
 
         scheduled_push = ScheduledPush.new(airship)
