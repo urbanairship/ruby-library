@@ -244,6 +244,16 @@ describe Urbanairship::Push do
       end
     end
 
+    describe '#cancel' do
+      it 'fails without a URL' do
+        airship = UA::Client.new(key: '123', secret: 'abc') 
+        scheduled_push = ScheduledPush.new(airship)
+        expect {
+          scheduled_push.cancel
+        }.to raise_error
+      end
+    end
+
     describe '#payload' do
       let(:a_time)         { DateTime.new(2013, 1, 1, 12, 56) }
       let(:a_time_in_text) { '2013-01-01T12:56:00' }

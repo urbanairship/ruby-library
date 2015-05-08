@@ -112,6 +112,9 @@ module Urbanairship
         scheduled_push.url = url
         scheduled_push
       end
+
+      def cancel
+      end
     end
 
 
