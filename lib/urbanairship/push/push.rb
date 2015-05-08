@@ -118,13 +118,30 @@ module Urbanairship
 
       def cancel
         fail ArgumentError,
-             'Cannot cancel ScheduledPush without url.' if @url.nil?
+             'Cannot cancel ScheduledPush without a url.' if @url.nil?
+
         @client.send_request(
           method: 'DELETE',
           body: nil,
           url: @url,
           version: 3
         )
+      end
+
+      def update
+        fail ArgumentError,
+             'Cannot update a ScheduledPush without a url.' if @url.nil?
+
+        response_body = @client.send_request(
+          method: 'PUT',
+          body: JSON.dump(@payload),
+          url: @url,
+          content_type: 'application/json',
+          version: 3
+        )
+        pr = PushResponse.new(http_response_body: response_body)
+        logger.info { "Update successful. #{pr.inspect}" }
+        pr
       end
     end
 
