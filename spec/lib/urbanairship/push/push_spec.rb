@@ -250,7 +250,7 @@ describe Urbanairship::Push do
         scheduled_push = ScheduledPush.new(airship)
         expect {
           scheduled_push.cancel
-        }.to raise_error
+        }.to raise_error(ArgumentError)
       end
 
       it 'succeeds with a URL' do
@@ -265,6 +265,16 @@ describe Urbanairship::Push do
         expect {
           scheduled_push.cancel
         }.not_to raise_error
+      end
+    end
+
+    describe '#update' do
+      it 'fails without a URL' do
+        airship = UA::Client.new(key: '123', secret: 'abc')
+        scheduled_push = ScheduledPush.new(airship)
+        expect {
+          scheduled_push.update
+        }.to raise_error(ArgumentError)
       end
     end
 
