@@ -1,47 +1,48 @@
 require 'spec_helper'
 
-require 'urbanairship/push/payload'
-include Urbanairship::Push::Payload
+require 'urbanairship'
 
 describe Urbanairship do
+  UA = Urbanairship
+
   describe '#interactive' do
     it 'must be given a "type"' do
       expect {
-        interactive(type: nil)
+        UA.interactive(type: nil)
       }.to raise_error ArgumentError
     end
 
     it 'does not require button actions' do
-      expect(interactive(type: 't')).to eq type: 't'
+      expect(UA.interactive(type: 't')).to eq type: 't'
     end
   end
 
   describe '#options' do
     it 'accepts an integer expiry' do
-      expect(options(expiry: 12_000)).to eq(expiry: 12_000)
+      expect(UA.options(expiry: 12_000)).to eq(expiry: 12_000)
     end
 
     it 'accepts a string date' do
       date = '2015-04-01T12:00:00'
-      expect(options(expiry: date)).to eq(expiry: date)
+      expect(UA.options(expiry: date)).to eq(expiry: date)
     end
   end
 
 
   describe '#notification' do
     it 'builds a simple text alert' do
-      expect(notification(alert: 'Hello')).to eq alert: 'Hello'
+      expect(UA.notification(alert: 'Hello')).to eq alert: 'Hello'
     end
 
     it 'requires a parameter' do
       expect {
-        notification
+        UA.notification
       }.to raise_error
     end
 
     context 'Android' do
       it 'builds a notification' do
-        payload = notification(android: android(
+        payload = UA.notification(android: android(
           alert: 'Hello',
           delay_while_idle: true,
           collapse_key: '123456',
@@ -73,7 +74,7 @@ describe Urbanairship do
 
     context 'iOS' do
       it 'builds a notification' do
-        payload = notification(ios: ios(
+        payload = UA.notification(ios: ios(
           alert: 'Hello',
           badge: '+1',
           sound: 'cat.caf',
@@ -105,7 +106,7 @@ describe Urbanairship do
       end
 
       it 'builds a notification with a key/value alert' do
-        payload = notification(ios: ios(
+        payload = UA.notification(ios: ios(
           alert: { foo: 'bar' },
           badge: '+1',
           sound: 'cat.caf',
@@ -137,12 +138,12 @@ describe Urbanairship do
       end
 
       it 'can handle Unicode' do
-        message = notification(ios: ios(alert: 'Paß auf!'))
+        message = UA.notification(ios: ios(alert: 'Paß auf!'))
         expect(message).to eq ios: { alert: 'Paß auf!' }
       end
 
       it 'handles the "content-available" attribute properly' do
-        message = notification(ios: ios(content_available: true))
+        message = UA.notification(ios: ios(content_available: true))
         expect(message).to eq ios: { 'content-available' => true }
       end
     end
@@ -150,7 +151,7 @@ describe Urbanairship do
 
     context 'Amazon' do
       it 'builds a notification' do
-        payload = notification(amazon: amazon(
+        payload = UA.notification(amazon: amazon(
           alert: 'Hello',
           title: 'My Title',
           consolidation_key: '123456',
@@ -182,13 +183,13 @@ describe Urbanairship do
 
     context 'Blackberry' do
       it 'sends "alerts" as plain text' do
-        payload = notification(blackberry: blackberry(alert: 'Hello'))
+        payload = UA.notification(blackberry: blackberry(alert: 'Hello'))
         expect(payload)
           .to eq blackberry: { body: 'Hello', content_type: 'text/plain' }
       end
 
       it 'can send html' do
-        payload = notification(blackberry: blackberry(
+        payload = UA.notification(blackberry: blackberry(
           body: 'Hello',
           content_type: 'text/html'
         ))
@@ -200,28 +201,28 @@ describe Urbanairship do
 
     context 'WNS' do
       it 'can send a simple text "alert"' do
-        payload = notification(wns: wns_payload(alert: 'Hello'))
+        payload = UA.notification(wns: wns_payload(alert: 'Hello'))
         expect(payload).to eq wns: { alert: 'Hello' }
       end
 
       it 'can send a key/value "toast"' do
-        payload = notification(wns: wns_payload(toast: { a_key: 'a_value' }))
+        payload = UA.notification(wns: wns_payload(toast: { a_key: 'a_value' }))
         expect(payload).to eq wns: { toast: { a_key: 'a_value' } }
       end
 
       it 'can send a key/value "tile"' do
-        payload = notification(wns: wns_payload(tile: { a_key: 'a_value' }))
+        payload = UA.notification(wns: wns_payload(tile: { a_key: 'a_value' }))
         expect(payload).to eq wns: { tile: { a_key: 'a_value' } }
       end
 
       it 'can send a key/value "badge"' do
-        payload = notification(wns: wns_payload(badge: { a_key: 'a_value' }))
+        payload = UA.notification(wns: wns_payload(badge: { a_key: 'a_value' }))
         expect(payload).to eq wns: { badge: { a_key: 'a_value' } }
       end
 
       it 'will only send one kind of notification at a time' do
         expect {
-          wns_payload(alert: 'Hello', tile: 'Foo')
+          UA.wns_payload(alert: 'Hello', tile: 'Foo')
         }.to raise_error ArgumentError
       end
     end
@@ -229,23 +230,23 @@ describe Urbanairship do
 
     context 'MPNS' do
       it 'can send a simple text "alert"' do
-        payload = notification(mpns: mpns_payload(alert: 'Hello'))
+        payload = UA.notification(mpns: mpns_payload(alert: 'Hello'))
         expect(payload).to eq mpns: { alert: 'Hello' }
       end
 
       it 'can send a key/value "toast"' do
-        payload = notification(mpns: mpns_payload(toast: { a_key: 'a_value' }))
+        payload = UA.notification(mpns: mpns_payload(toast: { a_key: 'a_value' }))
         expect(payload).to eq mpns: { toast: { a_key: 'a_value' } }
       end
 
       it 'can send a key/value "tile"' do
-        payload = notification(mpns: mpns_payload(tile: { a_key: 'a_value' }))
+        payload = UA.notification(mpns: mpns_payload(tile: { a_key: 'a_value' }))
         expect(payload).to eq mpns: { tile: { a_key: 'a_value' } }
       end
 
       it 'will only send one kind of notification at a time' do
         expect {
-          mpns_payload(alert: 'Hello', tile: 'Foo')
+          UA.mpns_payload(alert: 'Hello', tile: 'Foo')
         }.to raise_error ArgumentError
       end
     end
@@ -253,7 +254,7 @@ describe Urbanairship do
 
     context 'Rich Push' do
       it 'can send UTF-8 HTML' do
-        payload = message(
+        payload = UA.message(
           title: 'My Title',
           body: '<html>Körper des Dokumentes</html>',
           content_type: 'text/html',
@@ -272,14 +273,14 @@ describe Urbanairship do
       end
 
       it 'can send plain text' do
-        payload = message(title: 'My Title', body: 'My Body')
+        payload = UA.message(title: 'My Title', body: 'My Body')
         expect(payload).to eq title: 'My Title', body: 'My Body'
       end
     end
 
     describe '#device_types' do
       it 'supports the "all" option' do
-        expect(device_types(all_)).to eq 'all'
+        expect(UA.device_types(all_)).to eq 'all'
       end
     end
 
