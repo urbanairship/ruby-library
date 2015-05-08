@@ -1,6 +1,5 @@
-require 'logger'
-
 module Urbanairship
+
   # Features mixed in to all classes
   module Common
     SERVER = 'go.urbanairship.com'
