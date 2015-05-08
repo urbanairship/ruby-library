@@ -15,6 +15,7 @@ module Urbanairship
     class Push
       attr_writer :client, :audience, :notification, :options,
                   :device_types, :message
+      attr_reader :device_types
       include Urbanairship::Common
       include Urbanairship::Loggable
 
@@ -57,7 +58,7 @@ module Urbanairship
 
     class ScheduledPush
       attr_writer :schedule, :name, :push, :url
-      attr_reader :url
+      attr_reader :url, :push
       include Urbanairship::Common
       include Urbanairship::Loggable
 
@@ -87,9 +88,29 @@ module Urbanairship
           version: 3
         )
         pr = PushResponse.new(http_response_body: response_body)
-        @url = pr.schedule_url
         logger.info { "Scheduled push successful: #{pr.inspect}" }
-        pr
+        @url = pr.schedule_url
+      end
+
+      def self.from_url(client:, url:)
+        scheduled_push = ScheduledPush.new(client)
+        response_body = client.send_request(
+          method: 'GET',
+          body: nil,
+          url: url,
+          version: 3
+        )
+        payload = JSON.load(response_body)
+        scheduled_push.name = payload['name']
+        scheduled_push.schedule = payload['schedule']
+        scheduled_push.push = Push.new(client)
+        scheduled_push.push.audience = payload['push']['audience']
+        scheduled_push.push.notification = payload['push']['notification']
+        scheduled_push.push.device_types = payload['push']['device_types']
+        scheduled_push.push.message = payload['push']['message']
+        scheduled_push.push.options = payload['push']['options']
+        scheduled_push.url = url
+        scheduled_push
       end
     end
 

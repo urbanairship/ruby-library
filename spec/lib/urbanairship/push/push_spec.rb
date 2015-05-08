@@ -235,8 +235,9 @@ describe Urbanairship::Push do
         a_push.client = airship
 
         lookup_url = 'https://go.urbanairship.com/api/schedules/0492662a-1b52-4343-a1f9-c6b0c72931c0'
-        scheduled_push = ScheduledPush.from_url(airship, lookup_url)
-        expect(scheduled_push.push.device_types).to eq 'all'
+        scheduled_push = ScheduledPush.from_url(client: airship, url: lookup_url)
+        retrieved_push = scheduled_push.push
+        expect(retrieved_push.device_types).to eq 'all'
       end
     end
 
