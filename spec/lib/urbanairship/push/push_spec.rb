@@ -212,22 +212,22 @@ describe Urbanairship::Push do
   describe ScheduledPush do
     describe '#from_url' do
       it 'loads an existing scheduled push from its URL' do
-        mock_response = JSON.dump({
-                'name': 'a schedule',
-                'schedule': {'scheduled_time': '2013-07-15T18:40:20'},
-                'push': {
-                    'audience': 'all',
-                    'notification': {'alert': 'Hello'},
-                    'device_types': 'all',
-                    'options': {'expiry': 10080},
-                    'message': {
-                        'title': 'Title',
-                        'body': 'Body',
-                        'content_type': 'text/html',
-                        'content_encoding': 'utf8',
-                    },
-                },
-            })
+        mock_response = JSON.dump(
+          'name' => 'a schedule',
+          'schedule' => { 'scheduled_time' => '2013-07-15T18:40:20' },
+          'push' => {
+            'audience' => 'all',
+            'notification' => { 'alert' => 'Hello' },
+            'device_types' => 'all',
+            'options' => { 'expiry' => some_expiry },
+            'message' => {
+              'title' => 'Title',
+              'body' => 'Body',
+              'content_type' => 'text/html',
+              'content_encoding' => 'utf8'
+            }
+          }
+        )
         airship = UA::Client.new(key: '123', secret: 'abc')
         allow(airship)
           .to receive(:send_request)
@@ -235,7 +235,10 @@ describe Urbanairship::Push do
         a_push.client = airship
 
         lookup_url = 'https://go.urbanairship.com/api/schedules/0492662a-1b52-4343-a1f9-c6b0c72931c0'
-        scheduled_push = ScheduledPush.from_url(client: airship, url: lookup_url)
+        scheduled_push = ScheduledPush.from_url(
+          client: airship,
+          url: lookup_url
+        )
         retrieved_push = scheduled_push.push
         expect(retrieved_push.device_types).to eq 'all'
       end
