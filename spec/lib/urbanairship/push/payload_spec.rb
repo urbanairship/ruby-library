@@ -42,7 +42,7 @@ describe Urbanairship do
 
     context 'Android' do
       it 'builds a notification' do
-        payload = UA.notification(android: android(
+        payload = UA.notification(android: UA.android(
           alert: 'Hello',
           delay_while_idle: true,
           collapse_key: '123456',
@@ -74,7 +74,7 @@ describe Urbanairship do
 
     context 'iOS' do
       it 'builds a notification' do
-        payload = UA.notification(ios: ios(
+        payload = UA.notification(ios: UA.ios(
           alert: 'Hello',
           badge: '+1',
           sound: 'cat.caf',
@@ -106,7 +106,7 @@ describe Urbanairship do
       end
 
       it 'builds a notification with a key/value alert' do
-        payload = UA.notification(ios: ios(
+        payload = UA.notification(ios: UA.ios(
           alert: { foo: 'bar' },
           badge: '+1',
           sound: 'cat.caf',
@@ -138,12 +138,12 @@ describe Urbanairship do
       end
 
       it 'can handle Unicode' do
-        message = UA.notification(ios: ios(alert: 'Paß auf!'))
+        message = UA.notification(ios: UA.ios(alert: 'Paß auf!'))
         expect(message).to eq ios: { alert: 'Paß auf!' }
       end
 
       it 'handles the "content-available" attribute properly' do
-        message = UA.notification(ios: ios(content_available: true))
+        message = UA.notification(ios: UA.ios(content_available: true))
         expect(message).to eq ios: { 'content-available' => true }
       end
     end
@@ -151,7 +151,7 @@ describe Urbanairship do
 
     context 'Amazon' do
       it 'builds a notification' do
-        payload = UA.notification(amazon: amazon(
+        payload = UA.notification(amazon: UA.amazon(
           alert: 'Hello',
           title: 'My Title',
           consolidation_key: '123456',
@@ -183,13 +183,13 @@ describe Urbanairship do
 
     context 'Blackberry' do
       it 'sends "alerts" as plain text' do
-        payload = UA.notification(blackberry: blackberry(alert: 'Hello'))
+        payload = UA.notification(blackberry: UA.blackberry(alert: 'Hello'))
         expect(payload)
           .to eq blackberry: { body: 'Hello', content_type: 'text/plain' }
       end
 
       it 'can send html' do
-        payload = UA.notification(blackberry: blackberry(
+        payload = UA.notification(blackberry: UA.blackberry(
           body: 'Hello',
           content_type: 'text/html'
         ))
@@ -201,22 +201,22 @@ describe Urbanairship do
 
     context 'WNS' do
       it 'can send a simple text "alert"' do
-        payload = UA.notification(wns: wns_payload(alert: 'Hello'))
+        payload = UA.notification(wns: UA.wns_payload(alert: 'Hello'))
         expect(payload).to eq wns: { alert: 'Hello' }
       end
 
       it 'can send a key/value "toast"' do
-        payload = UA.notification(wns: wns_payload(toast: { a_key: 'a_value' }))
+        payload = UA.notification(wns: UA.wns_payload(toast: { a_key: 'a_value' }))
         expect(payload).to eq wns: { toast: { a_key: 'a_value' } }
       end
 
       it 'can send a key/value "tile"' do
-        payload = UA.notification(wns: wns_payload(tile: { a_key: 'a_value' }))
+        payload = UA.notification(wns: UA.wns_payload(tile: { a_key: 'a_value' }))
         expect(payload).to eq wns: { tile: { a_key: 'a_value' } }
       end
 
       it 'can send a key/value "badge"' do
-        payload = UA.notification(wns: wns_payload(badge: { a_key: 'a_value' }))
+        payload = UA.notification(wns: UA.wns_payload(badge: { a_key: 'a_value' }))
         expect(payload).to eq wns: { badge: { a_key: 'a_value' } }
       end
 
@@ -230,17 +230,17 @@ describe Urbanairship do
 
     context 'MPNS' do
       it 'can send a simple text "alert"' do
-        payload = UA.notification(mpns: mpns_payload(alert: 'Hello'))
+        payload = UA.notification(mpns: UA.mpns_payload(alert: 'Hello'))
         expect(payload).to eq mpns: { alert: 'Hello' }
       end
 
       it 'can send a key/value "toast"' do
-        payload = UA.notification(mpns: mpns_payload(toast: { a_key: 'a_value' }))
+        payload = UA.notification(mpns: UA.mpns_payload(toast: { a_key: 'a_value' }))
         expect(payload).to eq mpns: { toast: { a_key: 'a_value' } }
       end
 
       it 'can send a key/value "tile"' do
-        payload = UA.notification(mpns: mpns_payload(tile: { a_key: 'a_value' }))
+        payload = UA.notification(mpns: UA.mpns_payload(tile: { a_key: 'a_value' }))
         expect(payload).to eq mpns: { tile: { a_key: 'a_value' } }
       end
 
@@ -280,7 +280,7 @@ describe Urbanairship do
 
     describe '#device_types' do
       it 'supports the "all" option' do
-        expect(UA.device_types(all_)).to eq 'all'
+        expect(UA.device_types(UA.all_)).to eq 'all'
       end
     end
 
