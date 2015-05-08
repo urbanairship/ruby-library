@@ -114,6 +114,14 @@ module Urbanairship
       end
 
       def cancel
+        fail ArgumentError,
+             'Cannot cancel ScheduledPush without url.' if @url.nil?
+        @client.send_request(
+          method: 'DELETE',
+          body: nil,
+          url: @url,
+          version: 3
+        )
       end
     end
 

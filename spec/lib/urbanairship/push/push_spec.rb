@@ -246,11 +246,25 @@ describe Urbanairship::Push do
 
     describe '#cancel' do
       it 'fails without a URL' do
-        airship = UA::Client.new(key: '123', secret: 'abc') 
+        airship = UA::Client.new(key: '123', secret: 'abc')
         scheduled_push = ScheduledPush.new(airship)
         expect {
           scheduled_push.cancel
         }.to raise_error
+      end
+
+      it 'succeeds with a URL' do
+        lookup_url = 'https://go.urbanairship.com/api/schedules/0492662a-1b52-4343-a1f9-c6b0c72931c0'
+        airship = UA::Client.new(key: '123', secret: 'abc')
+        allow(airship)
+          .to receive(:send_request)
+          .and_return('')
+
+        scheduled_push = ScheduledPush.new(airship)
+        scheduled_push.url = lookup_url
+        expect {
+          scheduled_push.cancel
+        }.not_to raise_error
       end
     end
 
