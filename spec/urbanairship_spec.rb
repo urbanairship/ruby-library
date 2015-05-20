@@ -30,6 +30,10 @@ shared_examples_for "an Urbanairship client" do
     FakeWeb.register_uri(:post, "https://my_app_key2:my_master_secret2@go.urbanairship.com/api/push/", :status => ["400", "Bad Request"])
     FakeWeb.register_uri(:post, /bad_key\:my_master_secret\@go\.urbanairship\.com/, :status => ["401", "Unauthorized"])
 
+    # push info
+    FakeWeb.register_uri(:get, /my_app_key\:my_master_secret\@go\.urbanairship.com\/api\/reports\/perpush\/detail\/.+/, :status => ["200", "OK"], :body => "{\"app_key\":\"vDt0ksKoS7CrKNyg1NpdHQ\",\"push_id\":\"01a91d8a-4124-4e4d-810e-0337ab9ebda9\",\"created\":\"2015-03-01 22:35:45\",\"push_body\":\"eyJhdWRpZW5jZSI6eyJhbmQiOlt7InRhZyI6WyJnYW1lcy1uYmEtcXVhcnRlci0xMCIsImdhbWVzLW5iYS1xdWFydGVyLTUiLCJnYW1lcy1uYmEtcXVhcnRlci0xNDU5OTIwIiwiZ2FtZXMtbmJhLXF1YXJ0ZXIiXX1dfSwiZGV2aWNlX3R5cGVzIjpbImlvcyIsImFuZHJvaWQiXSwibm90aWZpY2F0aW9uIjp7ImFsZXJ0IjoiRW5kIG9mIDNyZDogQ2F2YWxpZXJzIDc0LCBSb2NrZXRzIDgyLiIsImlvcyI6eyJzb3VuZCI6ImRlZmF1bHQiLCJleHRyYSI6eyJvdCI6ZmFsc2UsImhvbWVfc2NvcmUiOjgyLCJjbG9jayI6IjA6MDAiLCJpc19hY3RpdmUiOmZhbHNlLCJsZWFndWUiOiJuYmEiLCJnYW1lX3N0YXR1cyI6IkluLVByb2dyZXNzIiwiaWQiOjE0NTk5MjAsImhvbWVfY2l0eSI6IkhvdXN0b24iLCJob21lX3RlYW1fbmFtZSI6IlJvY2tldHMiLCJ2aXNpdGluZ19jaXR5IjoiQ2xldmVsYW5kIiwidmlzaXRpbmdfc2NvcmUiOjc0LCJzdGFydGVkX2F0IjoxNDI1MjQxODAwLCJob21lX3RlYW1faWQiOjEwLCJ2aXNpdGluZ190ZWFtX2lkIjo1LCJ2aXNpdGluZ190ZWFtX25hbWUiOiJDYXZhbGllcnMiLCJxdWFydGVyIjozfX0sImFuZHJvaWQiOnsiZXh0cmEiOnsiaWQiOiIxNDU5OTIwIiwiZ2FtZV9zdGF0dXMiOiJJbi1Qcm9ncmVzcyIsImlzX2FjdGl2ZSI6ImZhbHNlIiwicXVhcnRlciI6IjMiLCJsZWFndWUiOiJuYmEiLCJjbG9jayI6IjA6MDAiLCJob21lX3Njb3JlIjoiODIiLCJ2aXNpdGluZ19zY29yZSI6Ijc0IiwiaG9tZV9jaXR5IjoiSG91c3RvbiIsInZpc2l0aW5nX2NpdHkiOiJDbGV2ZWxhbmQiLCJob21lX3RlYW1fbmFtZSI6IlJvY2tldHMiLCJ2aXNpdGluZ190ZWFtX25hbWUiOiJDYXZhbGllcnMiLCJob21lX3RlYW1faWQiOiIxMCIsInZpc2l0aW5nX3RlYW1faWQiOiI1Iiwic3RhcnRlZF9hdCI6IjE0MjUyNDE4MDAiLCJvdCI6ImZhbHNlIn19fX0=\",\"sends\":0,\"direct_responses\":0,\"influenced_responses\":0,\"rich_sends\":0,\"rich_responses\":0,\"rich_deletions\":0,\"platforms\":{\"ios\":{\"sends\":0,\"direct_responses\":0,\"influenced_responses\":0},\"android\":{\"sends\":0,\"direct_responses\":0,\"influenced_responses\":0},\"amazon\":{\"sends\":0,\"direct_responses\":0,\"influenced_responses\":0}}}")
+    FakeWeb.register_uri(:get, /bad_key\:my_master_secret\@go\.urbanairship\.com/, :status => ["401", "Unauthorized"])
+
     # batch_push
     FakeWeb.register_uri(:post, "https://my_app_key:my_master_secret@go.urbanairship.com/api/push/batch/", :status => ["200", "OK"])
     FakeWeb.register_uri(:post, "https://my_app_key2:my_master_secret2@go.urbanairship.com/api/push/batch/", :status => ["400", "Bad Request"])
@@ -600,6 +604,39 @@ shared_examples_for "an Urbanairship client" do
       subject.application_key = "bad_key"
       subject.delete_scheduled_push("123456789").success?.should == false
     end
+  end
+
+  describe "::push_info" do
+    before(:each) do
+      @valid_params = {:push_id => "01a91d8a-4124-4e4d-810e-0337ab9ebda9"}
+      subject.application_key = "my_app_key"
+      subject.master_secret = "my_master_secret"
+    end
+
+    it "raises an error if call is made without an app key and master secret configured" do
+      subject.application_key = nil
+      subject.master_secret = nil
+
+      lambda {
+        subject.push(@valid_params)
+      }.should raise_error(RuntimeError, "Must configure application_key, master_secret before making this request.")
+    end
+
+    it "uses app key and secret to sign the request" do
+      subject.push(@valid_params)
+      FakeWeb.last_request['authorization'].should == "Basic #{Base64::encode64('my_app_key:my_master_secret').chomp}"
+    end
+
+    it "uses v3 of the API when requested" do
+      subject.push(@valid_params.merge(:version => 3)).success?.should == true
+      FakeWeb.last_request["Accept"].should == "application/vnd.urbanairship+json; version=3;"
+    end
+
+    it "takes and sends a push id" do
+      subject.push_info(:push_id => "push_id")
+      FakeWeb.last_request.path.should == "/api/reports/perpush/detail/push_id"
+    end
+
   end
 
   describe "::push" do

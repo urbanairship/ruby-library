@@ -53,6 +53,10 @@ module Urbanairship
       do_request(:post, "/api/push/", :body => body, :authenticate_with => :master_secret, :version => options[:version])
     end
 
+    def push_info(options = {})
+      do_request(:get, "/api/reports/perpush/detail/#{options[:push_id]}", :authenticate_with => :master_secret, :version => options[:version])
+    end
+
     def push_to_segment(options = {})
       warn "[DEPRECATED] http://docs.urbanairship.com/reference/api/v3/api-v3-migration-guide.html#api-push-segments"
       body = parse_push_options(options).to_json
