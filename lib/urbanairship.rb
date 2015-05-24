@@ -101,6 +101,11 @@ module Urbanairship
       do_request(:post, "/api/tags/#{params[:tag]}", :body => {provider_field => {:remove => [params[:device_token]]}}.to_json, :authenticate_with => :master_secret)
     end
 
+    def batch_tag_devices(params)
+      device_array = [params].flatten.to_json
+      do_request(:post, '/api/tags/batch/', :body => device_array, :authenticate_with => :master_secret)
+    end
+
     def device_tokens
       do_request(:get, "/api/device_tokens/", :authenticate_with => :master_secret)
     end
