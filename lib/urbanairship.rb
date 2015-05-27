@@ -129,8 +129,19 @@ module Urbanairship
       do_request(:delete, "/api/segments/#{id}", :authenticate_with => :master_secret)
     end
 
-    private
+    def channels
+      do_request(:get, '/api/channels', :authenticate_with => :master_secret)
+    end
 
+    def channel_info(channel_id)
+      do_request(:get, "/api/channels/#{channel_id}", :authenticate_with => :master_secret)
+    end
+
+    def uninstall_channels(channels_array)
+      do_request(:post, '/api/channels/uninstall', :body => channels_array.to_json, :authenticate_with => :master_secret)
+    end
+
+    private
     def do_request(http_method, path, options = {})
       verify_configuration_values(:application_key, options[:authenticate_with])
 
@@ -146,7 +157,7 @@ module Urbanairship
         start_time = Time.now
         response = http_client.request(request)
         log_request_and_response(request, response, Time.now - start_time)
-        Urbanairship::Response.wrap(response)
+        Urbanairship::Response.wrap(response, :original_request => { :ua_client => self, :options => options})
       end
     rescue Timeout::Error
       unless logger.nil?
