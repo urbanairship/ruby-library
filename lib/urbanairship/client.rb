@@ -1,6 +1,9 @@
 module Urbanairship
   class Client
+    attr_accessor :key, :secret
     def initialize(key:, secret:)
+      @key = key
+      @secret = secret
     end
 
     # @return [String] the HTTP response body
