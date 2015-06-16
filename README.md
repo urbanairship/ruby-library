@@ -24,7 +24,33 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+Once the gem has been installed you can start sending pushes!
+
+###Broadcast to All Devices
+```ruby
+require 'urbanairship'
+UA = Urbanairship
+airship = UA::Client.new(key:'application_key', secret:'master_secret')
+p = UA::Push::Push::PlainPush.new(airship)
+p.audience = UA.all_
+p.notification = UA.notification(alert: 'Hello')  
+p.device_types = UA.all_
+p.send_push
+```
+
+###Simple Tag Push
+```ruby
+require 'urbanairship'
+UA = Urbanairship
+airship = UA::Client.new(key:'application_key', secret:'master_secret')
+p = UA::Push::Push::PlainPush.new(airship)
+p.audience = UA.tag('some_tag')
+p.notification = UA.notification(alert: 'Hello')  
+p.device_types = UA.all_
+p.send_push
+```
+
+
 
 ## Development
 
