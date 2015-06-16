@@ -89,7 +89,7 @@ module Urbanairship
             version: 3
           )
           pr = PushResponse.new(http_response_body: response['body'], http_response_code: response['code'].to_s)
-          logger.info { "Scheduled push successful: #{pr.inspect}" }
+          logger.info { pr.format }
           @url = pr.schedule_url
         end
 
