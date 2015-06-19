@@ -91,6 +91,7 @@ module Urbanairship
           pr = PushResponse.new(http_response_body: response['body'], http_response_code: response['code'].to_s)
           logger.info { pr.format }
           @url = pr.schedule_url
+          pr
         end
 
         def self.from_url(client:, url:)
@@ -121,27 +122,33 @@ module Urbanairship
           fail ArgumentError,
                'Cannot cancel ScheduledPush without a url.' if @url.nil?
 
-          @client.send_request(
+          response = @client.send_request(
             method: 'DELETE',
             body: nil,
             url: @url,
+            content_type: 'application/json',
             version: 3
           )
+          pr = PushResponse.new(http_response_body: response['body'], http_response_code: response['code'].to_s)
+          logger.info { "Result of canceling scheduled push: #{@url} was a: [#{pr.status_code}]" }
+          pr
         end
 
         def update
           fail ArgumentError,
                'Cannot update a ScheduledPush without a url.' if @url.nil?
 
+          puts JSON.dump(@payload)
+          puts @url
           response = @client.send_request(
             method: 'PUT',
-            body: JSON.dump(@payload),
+            body: JSON.dump(self.payload),
             url: @url,
             content_type: 'application/json',
             version: 3
           )
-          pr = PushResponse.new(http_response: response)
-          logger.info { pr.to_s }
+          pr = PushResponse.new(http_response_body: response['body'], http_response_code: response['code'].to_s)
+          logger.info { pr.format }
           pr
         end
       end
@@ -154,11 +161,11 @@ module Urbanairship
       # functionality later.
       #
       class PushResponse
-        attr_reader :ok, :push_ids, :schedule_url, :operation_id, :payload
+        attr_reader :ok, :push_ids, :schedule_url, :operation_id, :payload, :status_code
 
         def initialize(http_response_body:, http_response_code:)
-          @payload = http_response_body
-          @ok = @payload['ok']
+          @payload = http_response_body || "No Content"
+          @ok = @payload['ok'] || "None"
           @push_ids = @payload['push_ids'] || "None"
           @schedule_url = @payload['schedule_urls'].try(:first) || "None"
           @operation_id = @payload['operation_id'] || "None"

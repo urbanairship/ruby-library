@@ -44,7 +44,7 @@ Once the gem has been installed you can start sending pushes!
 require 'urbanairship'
 UA = Urbanairship
 airship = UA::Client.new(key:'application_key', secret:'master_secret')
-p = UA::Push::Push::PlainPush.new(airship)
+p = airship.create_push
 p.audience = UA.all_
 p.notification = UA.notification(alert: 'Hello')  
 p.device_types = UA.all_
@@ -56,7 +56,7 @@ p.send_push
 require 'urbanairship'
 UA = Urbanairship
 airship = UA::Client.new(key:'application_key', secret:'master_secret')
-p = UA::Push::Push::PlainPush.new(airship)
+p = airship.create_push
 p.audience = UA.tag('some_tag')
 p.notification = UA.notification(alert: 'Hello')  
 p.device_types = UA.all_

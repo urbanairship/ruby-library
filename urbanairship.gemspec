@@ -9,14 +9,13 @@ Gem::Specification.new do |spec|
   spec.authors       = ['Urban Airship']
   spec.email         = ['support@urbanairship.com']
 
-  spec.summary       = 'TODO: Write a short summary, because Rubygems requires one.'
-  spec.description   = 'TODO: Write a longer description or delete this line.'
-  spec.homepage      = "TODO: Put your gem's website or public repo URL here."
+  spec.summary       = 'Ruby library for using the Urban Airship web service API for push notifications and rich app pages'
+  spec.homepage      = "https://github.com/urbanairship/ruby-library"
 
   # Prevent pushing this gem to RubyGems.org by setting 'allowed_push_host', or
   # delete this section to allow pushing this gem to any host.
   if spec.respond_to?(:metadata)
-    spec.metadata['allowed_push_host'] = "TODO: Set to 'http://mygemserver.com'"
+    spec.metadata['allowed_push_host'] = "'http://mygemserver.com'"
   else
     fail 'RubyGems 2.0 or newer is required to protect against public gem pushes.'
   end
