@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/urbanairship/ruby-library.svg?branch=api-v3)](https://travis-ci.org/urbanairship/ruby-library)
+[![Build Status](https://travis-ci.org/urbanairship/ruby-library.svg?branch=master)](https://travis-ci.org/urbanairship/ruby-library)
 
 # Urbanairship
 
