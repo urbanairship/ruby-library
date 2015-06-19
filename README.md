@@ -40,7 +40,7 @@ Or install it yourself as:
 
 Once the gem has been installed you can start sending pushes!
 
-###Broadcast to All Devices
+####Broadcast to All Devices
 ```ruby
 require 'urbanairship'
 UA = Urbanairship
@@ -52,7 +52,7 @@ p.device_types = UA.all_
 p.send_push
 ```
 
-###Simple Tag Push
+####Simple Tag Push
 ```ruby
 require 'urbanairship'
 UA = Urbanairship
