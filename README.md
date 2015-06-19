@@ -17,7 +17,6 @@ To encourage the use of our SDK, which takes care of proper channel registration
 
 * blackberry pin lookup,
 * lookup and listing for device tokens, and
-* sending to device tokens
 
 will be moved from v1 to v3.
 
