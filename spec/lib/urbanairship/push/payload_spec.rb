@@ -280,7 +280,7 @@ describe Urbanairship do
 
     describe '#device_types' do
       it 'supports the "all" option' do
-        expect(UA.device_types(UA.all_)).to eq 'all'
+        expect(UA.device_types(UA.all)).to eq 'all'
       end
     end
 

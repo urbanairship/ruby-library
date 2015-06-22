@@ -104,7 +104,7 @@ module Urbanairship
         { type: type, button_actions: button_actions }.compact
       end
 
-      def all_
+      def all
         'all'
       end
 

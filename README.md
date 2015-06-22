@@ -46,9 +46,9 @@ require 'urbanairship'
 UA = Urbanairship
 airship = UA::Client.new(key:'application_key', secret:'master_secret')
 p = airship.create_push
-p.audience = UA.all_
+p.audience = UA.all
 p.notification = UA.notification(alert: 'Hello')  
-p.device_types = UA.all_
+p.device_types = UA.all
 p.send_push
 ```
 
@@ -60,7 +60,7 @@ airship = UA::Client.new(key:'application_key', secret:'master_secret')
 p = airship.create_push
 p.audience = UA.tag('some_tag')
 p.notification = UA.notification(alert: 'Hello')  
-p.device_types = UA.all_
+p.device_types = UA.all
 p.send_push
 ```
 

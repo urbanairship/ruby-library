@@ -1,4 +1,3 @@
-# TODO find a better way to bring these all in
 require 'urbanairship/push/audience'
 require 'urbanairship/push/payload'
 require 'urbanairship/push/schedule'

@@ -14,9 +14,9 @@ describe Urbanairship::Push do
 
   let!(:a_push) {
     p = UA::Push::Push.new(nil)
-    p.audience = UA.all_
+    p.audience = UA.all
     p.options = UA.options(expiry: some_expiry)
-    p.device_types = UA.all_
+    p.device_types = UA.all
     p.message = UA.message(
       title: 'Title',
       body: 'Body',
