@@ -1,5 +1,3 @@
-require 'net/http'
-require 'uri'
 require 'unirest'
 
 module Urbanairship
@@ -14,54 +12,33 @@ module Urbanairship
 
       def send_request(method:, body:, url:,
                        content_type: nil, version: nil, params: nil)
-        case method
+        req_type = case method
           when 'GET'
-            response = Unirest.get(
-                       url,
-                       headers:{
-                           "Content-type" => content_type,
-                           "Accept" => "application/vnd.urbanairship+json; version=" + version.to_s
-                       },
-                       auth:{:user=>@key, :password=>@secret},
-                       parameters: body
-            )
-            return {'body'=>response.body, 'code'=>response.code}
+            :get
           when 'POST'
-            response = Unirest.post(
-                url,
-                headers:{
-                    "Content-type" => content_type,
-                    "Accept" => "application/vnd.urbanairship+json; version=" + version.to_s
-                },
-                auth:{:user=>@key, :password=>@secret},
-                parameters: body
-            )
-            return {'body'=>response.body, 'code'=>response.code}
-          when 'PUT'
-            response = Unirest.put(
-                url,
-                headers:{
-                    "Content-type" => content_type,
-                    "Accept" => "application/vnd.urbanairship+json; version=" + version.to_s
-                },
-                auth:{:user=>@key, :password=>@secret},
-                parameters: body
-            )
-            return {'body'=>response.body, 'code'=>response.code}
+            :post
+          when "PUT"
+            :put
           when 'DELETE'
-            response = Unirest.delete(
-                url,
-                headers:{
-                    "Content-type" => content_type,
-                    "Accept" => "application/vnd.urbanairship+json; version=" + version.to_s
-                },
-                auth:{:user=>@key, :password=>@secret},
-                parameters: body
-            )
-            return {'body'=>nil, 'code'=>response.code}
+            :delete
           else
             fail 'Method was not "GET" "POST" "PUT" or "DELETE"'
         end
+
+        response = Unirest.method(req_type).call(
+            url,
+            headers:{
+                "Content-type" => content_type,
+                "Accept" => "application/vnd.urbanairship+json; version=" + version.to_s
+            },
+            auth:{
+                :user=>@key,
+                :password=>@secret
+            },
+            parameters: body
+        )
+
+        {'body'=>response.body, 'code'=>response.code}
       end
 
       def create_push
@@ -71,6 +48,5 @@ module Urbanairship
       def create_scheduled_push
         Push::ScheduledPush.new(self)
       end
-
     end
-end
+  end
