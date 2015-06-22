@@ -13,7 +13,7 @@ describe Urbanairship::Push do
   let(:simple_http_response) { example_hash }
 
   let!(:a_push) {
-    p = UA::Push::Push::PlainPush.new(nil)
+    p = UA::Push::Push.new(nil)
     p.audience = UA.all_
     p.options = UA.options(expiry: some_expiry)
     p.device_types = UA.all_
@@ -59,7 +59,7 @@ describe Urbanairship::Push do
   end
 
 
-  describe Urbanairship::Push::Push do
+  describe Urbanairship::Push do
     describe '#payload' do
       it 'can build a full payload structure' do
         a_push.notification = UA.notification(alert: 'Hello')
@@ -188,7 +188,7 @@ describe Urbanairship::Push do
           .and_return(simple_http_response)
         a_push.client = airship
 
-        scheduled_push = UA::Push::Push::ScheduledPush.new(airship)
+        scheduled_push = UA::Push::ScheduledPush.new(airship)
         scheduled_push.push = a_push
         scheduled_push.schedule = UA.scheduled_time(DateTime.now)
         scheduled_push.send_push
@@ -200,7 +200,7 @@ describe Urbanairship::Push do
   end
 
 
-  describe Urbanairship::Push::Push::ScheduledPush do
+  describe Urbanairship::Push::ScheduledPush do
     describe '#from_url' do
       it 'loads an existing scheduled push from its URL' do
         mock_response = JSON.dump(
@@ -226,7 +226,7 @@ describe Urbanairship::Push do
         a_push.client = airship
 
         lookup_url = 'https://go.urbanairship.com/api/schedules/0492662a-1b52-4343-a1f9-c6b0c72931c0'
-        scheduled_push = UA::Push::Push::ScheduledPush.from_url(
+        scheduled_push = UA::Push::ScheduledPush.from_url(
           client: airship,
           url: lookup_url
         )
@@ -238,7 +238,7 @@ describe Urbanairship::Push do
     describe '#cancel' do
       it 'fails without a URL' do
         airship = UA::Client.new(key: '123', secret: 'abc')
-        scheduled_push = UA::Push::Push::ScheduledPush.new(airship)
+        scheduled_push = UA::Push::ScheduledPush.new(airship)
         expect {
           scheduled_push.cancel
         }.to raise_error(ArgumentError)
@@ -251,7 +251,7 @@ describe Urbanairship::Push do
           .to receive(:send_request)
           .and_return('')
 
-        scheduled_push = UA::Push::Push::ScheduledPush.new(airship)
+        scheduled_push = UA::Push::ScheduledPush.new(airship)
         scheduled_push.url = lookup_url
         expect {
           scheduled_push.cancel
@@ -262,7 +262,7 @@ describe Urbanairship::Push do
     describe '#update' do
       it 'fails without a URL' do
         airship = UA::Client.new(key: '123', secret: 'abc')
-        scheduled_push = UA::Push::Push::ScheduledPush.new(airship)
+        scheduled_push = UA::Push::ScheduledPush.new(airship)
         expect {
           scheduled_push.update
         }.to raise_error(ArgumentError)
@@ -274,7 +274,7 @@ describe Urbanairship::Push do
       let(:a_time_in_text) { '2013-01-01T12:56:00' }
       let(:a_name)         { 'This Schedule' }
       let(:scheduled_push) {
-        sched = UA::Push::Push::ScheduledPush.new(nil)
+        sched = UA::Push::ScheduledPush.new(nil)
         sched.push = a_push
         sched.name = a_name
         sched
@@ -301,15 +301,15 @@ describe Urbanairship::Push do
   end
 
 
-  describe Urbanairship::Push::Push::PushResponse do
+  describe Urbanairship::Push::PushResponse do
     describe '#ok' do
       it 'presents the ok message from the response' do
-        pr = UA::Push::Push::PushResponse.new(http_response_body: simple_http_response['body'], http_response_code:simple_http_response['code'])
+        pr = UA::Push::PushResponse.new(http_response_body: simple_http_response['body'], http_response_code:simple_http_response['code'])
         expect(pr.ok).to eq 'true'
       end
 
       it 'is read-only' do
-        pr = UA::Push::Push::PushResponse.new(http_response_body: simple_http_response['body'], http_response_code:simple_http_response['code'])
+        pr = UA::Push::PushResponse.new(http_response_body: simple_http_response['body'], http_response_code:simple_http_response['code'])
         expect {
           pr.ok = 'no'
         }.to raise_error(NoMethodError)
@@ -317,7 +317,7 @@ describe Urbanairship::Push do
 
       it 'allows nil' do
         expect {
-          UA::Push::Push::PushResponse.new(http_response_body: '{}', http_response_code: '{}').ok
+          UA::Push::PushResponse.new(http_response_body: '{}', http_response_code: '{}').ok
         }.not_to raise_error
       end
     end

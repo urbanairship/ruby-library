@@ -58,7 +58,6 @@ module Urbanairship
                 auth:{:user=>@key, :password=>@secret},
                 parameters: body
             )
-            puts response
             return {'body'=>nil, 'code'=>response.code}
           else
             fail 'Method was not "GET" "POST" "PUT" or "DELETE"'
@@ -66,11 +65,11 @@ module Urbanairship
       end
 
       def create_push
-        Push::Push::PlainPush.new(self)
+        Push::Push.new(self)
       end
 
       def create_scheduled_push
-        Push::Push::ScheduledPush.new(self)
+        Push::ScheduledPush.new(self)
       end
 
     end

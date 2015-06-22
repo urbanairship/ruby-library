@@ -16,6 +16,6 @@ module Urbanairship
   extend Urbanairship::Push::Audience
   extend Urbanairship::Push::Payload
   extend Urbanairship::Push::Schedule
-  extend Urbanairship::Push::Push
+  extend Urbanairship::Push
 
 end
