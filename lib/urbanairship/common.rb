@@ -20,6 +20,10 @@ module Urbanairship
       # raised when we get a 401 from server
     end
 
+    class Forbidden < StandardError
+      # raised when we get a 403 from server
+    end
+
     class AirshipFailure < StandardError
       include Urbanairship::Loggable
       # Raised when we get an error response from the server.
@@ -46,6 +50,18 @@ module Urbanairship
         self
       end
 
+    end
+
+    class Response
+      def self.check_code(response_code, response)
+        if response_code == 401
+          raise Unauthorized, "Client is not authorized to make this request. The authorization credentials are incorrect or missing."
+        elsif response_code == 403
+          raise Forbidden, "Client is not forbidden from making this request. The application does not have the proper entitlement to access this feature."
+        elsif !((200 <= response_code) & (300 > response_code))
+          raise AirshipFailure.new.from_response(response)
+        end
+      end
     end
 
   end

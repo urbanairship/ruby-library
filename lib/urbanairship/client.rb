@@ -47,11 +47,7 @@ module Urbanairship
 
         logger.debug("Received #{response.code} response. Headers:\n\t#{response.headers}\nBody:\n\t#{response.body}")
 
-        if response.code == 401
-              raise Common::Unauthorized, "Client is not authorized to make this request."
-        elsif !((200 <= response.code) & (response.code < 300))
-            raise Common::AirshipFailure.new().from_response(response)
-        end
+        Response.check_code(response.code, response)
 
         {'body'=>response.body, 'code'=>response.code}
       end
