@@ -30,9 +30,9 @@ module Urbanairship
       end
 
       # Send the notification.
-      # TODO
-      # @raise [AirshipFailure (TBD)] if the request failed
-      # @raise [Unauthorized (TBD)] if authentication failed
+      # @raise [AirshipFailure] if the request failed
+      # @raise [Unauthorized] if authentication failed
+      # @raise [Forbidden] if app does not have entitlement
       # @return [PushResponse] with `push_ids` and other response data.
       def send_push
         response = @client.send_request(
@@ -68,9 +68,9 @@ module Urbanairship
       end
 
       # Schedule the notification
-      # TODO
-      # @raise [AirshipFailure (TBD)] if the request failed
-      # @raise [Unauthorized (TBD)] if authentication failed
+      # @raise [AirshipFailure] if the request failed
+      # @raise [Unauthorized] if authentication failed
+      # @raise [Forbidden] if app does not have entitlement
       # @return [PushResponse] with `schedule_url` and other response data.
       def send_push
         response = @client.send_request(
@@ -129,9 +129,6 @@ module Urbanairship
       def update
         fail ArgumentError,
              'Cannot update a ScheduledPush without a url.' if @url.nil?
-
-        puts JSON.dump(@payload)
-        puts @url
         response = @client.send_request(
           method: 'PUT',
           body: JSON.dump(self.payload),

@@ -30,7 +30,7 @@ module Urbanairship
             fail 'Method was not "GET" "POST" "PUT" or "DELETE"'
         end
 
-        logger.debug("Making #{method} request to #{url}. Headers:\n\t#{content_type}\n\t#{version.to_s}\nBody:\n\t#{body}")
+        logger.debug("Making #{method} request to #{url}. \n\tHeaders:\n\tcontent-type: #{content_type}\n\tversion=#{version.to_s}\nBody:\n\t#{body}")
 
         response = Unirest.method(req_type).call(
             url,

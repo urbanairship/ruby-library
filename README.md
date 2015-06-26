@@ -93,4 +93,4 @@ for an interactive prompt that will allow you to experiment.
 OR you can build a local gem to play with:
 
     $ gem build urbanairship.gemspec
-    $  gem install ./urbanairship-<VERSION>.gem
+    $ gem install ./urbanairship-<VERSION>.gem
