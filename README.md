@@ -80,12 +80,17 @@ Note: Changes will not be approved and merged without a signed contribution agre
 ## Development
 
 After checking out the repo, ensure you have ```bundler``` installed (```$ gem install bundler```) run 
-```$ bin/setup``` 
+    
+    $ bin/setup
+     
 to install dependencies. 
 Then, run 
-```$ bin/console``` 
+   
+    $ bin/console
+     
 for an interactive prompt that will allow you to experiment.
 
 OR you can build a local gem to play with:
-```$ gem build urbanairship.gemspec
-$  gem install ./urbanairship-<VERSION>.gem```
+
+    $ gem build urbanairship.gemspec
+    $  gem install ./urbanairship-<VERSION>.gem
