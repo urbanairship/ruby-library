@@ -22,7 +22,7 @@ will be moved from v1 to v3.
 
 ## Installation
 
-Add this line to your application's Gemfile:
+If you have the ```bundler``` gem (if not you can get it with ```$ gem install bundler```) add this line to your application's Gemfile:
 
 ```ruby
 gem 'urbanairship'
@@ -32,7 +32,7 @@ And then execute:
 
     $ bundle
 
-Or install it yourself as:
+OR install it yourself as:
 
     $ gem install urbanairship
 
@@ -79,4 +79,13 @@ Note: Changes will not be approved and merged without a signed contribution agre
 
 ## Development
 
-After checking out the repo, run `bin/setup` to install dependencies. Then, run `bin/console` for an interactive prompt that will allow you to experiment.
+After checking out the repo, ensure you have ```bundler``` installed (```$ gem install bundler```) run 
+```$ bin/setup``` 
+to install dependencies. 
+Then, run 
+```$ bin/console``` 
+for an interactive prompt that will allow you to experiment.
+
+OR you can build a local gem to play with:
+```$ gem build urbanairship.gemspec
+$  gem install ./urbanairship-<VERSION>.gem```
