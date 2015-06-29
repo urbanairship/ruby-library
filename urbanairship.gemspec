@@ -8,8 +8,10 @@ Gem::Specification.new do |spec|
   spec.version       = Urbanairship::VERSION
   spec.authors       = ['Urban Airship']
   spec.email         = ['support@urbanairship.com']
+  spec.licenses      = ['Apache-2.0']
 
-  spec.summary       = 'Ruby library for using the Urban Airship web service API for push notifications and rich app pages'
+  spec.summary       = 'Ruby Gem for using the Urban Airship API'
+  spec.description   = 'A Ruby Library for using the Urban Airship web service API for push notifications and rich app pages.'
   spec.homepage      = "https://github.com/urbanairship/ruby-library"
 
   # Prevent pushing this gem to RubyGems.org by setting 'allowed_push_host', or
@@ -26,9 +28,9 @@ Gem::Specification.new do |spec|
   spec.require_paths = ['lib']
 
   spec.add_development_dependency 'bundler', '~> 1'
-  spec.add_development_dependency 'guard-rspec'
-  spec.add_development_dependency 'pry'
+  spec.add_development_dependency 'guard-rspec', '~> 2'
+  spec.add_development_dependency 'pry', '~> 0'
   spec.add_development_dependency 'rake', '~> 10.0'
   spec.add_development_dependency 'rspec', '~> 3'
-  spec.add_development_dependency 'terminal-notifier-guard'
+  spec.add_development_dependency 'terminal-notifier-guard', '~> 1'
 end
