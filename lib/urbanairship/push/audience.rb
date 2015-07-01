@@ -9,19 +9,16 @@ module Urbanairship
       DATE_TERMS = %i(minutes hours days weeks months years)
 
 
-      # Select a single iOS Channel
-      def ios_channel(uuid)
-        { ios_channel: cleanup(uuid) }
-      end
-
-      # Select a single Android Channel
-      def android_channel(uuid)
-        { android_channel: cleanup(uuid) }
-      end
-
-      # Select a single Amazon Channel
-      def amazon_channel(uuid)
-        { amazon_channel: cleanup(uuid) }
+      # Methods to select a single iOS Channel, Android Channel, Amazon Channel,
+      # Android APID, Windows 8 APID, or Windows Phone 8 APID respectively.
+      #
+      # @example
+      #   ios_channel(<channel>) # ==>
+      #     {:ios_channel=>"<channel>"}
+      %w(ios_channel android_channel amazon_channel apid wns mpns).each do |name|
+        define_method(name) do |uuid|
+          { name.to_sym => cleanup(uuid) }
+        end
       end
 
       # Select a single iOS device token
@@ -34,21 +31,6 @@ module Urbanairship
       def device_pin(pin)
         Util.validate(pin, 'pin', DEVICE_PIN_PATTERN)
         { device_pin: pin.downcase.strip }
-      end
-
-      # Select a single Android APID
-      def apid(uuid)
-        { apid: cleanup(uuid) }
-      end
-
-      # Select a single Windows 8 APID
-      def wns(uuid)
-        { wns: cleanup(uuid) }
-      end
-
-      # Select a single Windows Phone 8 APID
-      def mpns(uuid)
-        { mpns: cleanup(uuid) }
       end
 
       # Select a single tag
@@ -69,27 +51,27 @@ module Urbanairship
       # Select devices that match at least one of the given selectors.
       #
       # @example
-      #   or_(tag('sports'), tag('business')) # ==>
+      #   or(tag('sports'), tag('business')) # ==>
       #     {or: [{tag: 'sports'}, {tag: 'business'}]}
-      def or_(*children)
+      def or(*children)
         { or: children }
       end
 
       # Select devices that match all of the given selectors.
       #
       # @example
-      #   and_(tag('sports'), tag('business')) # ==>
+      #   and(tag('sports'), tag('business')) # ==>
       #     {and: [{tag: 'sports'}, {tag: 'business'}]}
-      def and_(*children)
+      def and(*children)
         { and: children }
       end
 
       # Select devices that do not match the given selectors.
       #
       # @example
-      #   not_(and_(tag('sports'), tag('business'))) # ==>
+      #   not(and_(tag('sports'), tag('business'))) # ==>
       #     {not: {and: [{tag: 'sports'}, {tag: 'business'}]}}
-      def not_(child)
+      def not(child)
         { not: child }
       end
 

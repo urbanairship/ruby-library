@@ -98,17 +98,17 @@ describe Urbanairship do
 
   context 'compound selectors' do
     it 'can create an OR' do
-      result = UA.or_({ tag: 'foo' }, tag: 'bar')
+      result = UA.or({ tag: 'foo' }, tag: 'bar')
       expect(result).to eq(or: [{ tag: 'foo' }, { tag: 'bar' }])
     end
 
     it 'can create an AND' do
-      result = UA.and_({ tag: 'foo' }, tag: 'bar')
+      result = UA.and({ tag: 'foo' }, tag: 'bar')
       expect(result).to eq(and: [{ tag: 'foo' }, { tag: 'bar' }])
     end
 
     it 'can create a NOT' do
-      result = UA.not_(tag: 'foo')
+      result = UA.not(tag: 'foo')
       expect(result).to eq(not: { tag: 'foo' })
     end
   end
