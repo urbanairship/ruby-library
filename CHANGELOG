@@ -3,4 +3,4 @@
 --------------------
 - added CHANGELOG
 - rewrite with v3 support for push and scheduled push
-- backwards incompatable with previous versions of library
+- backwards incompatible with previous versions of library
