@@ -99,11 +99,11 @@ module Urbanairship
       # @param the_end [String] UTC end time in ISO 8601 format.
       #
       # @example
-      #   absolute_date(resolution: :months, start: '2013-01', end: '2013-06')
+      #   absolute_date(resolution: :months, start: '2013-01', the_end: '2013-06')
       #   #=> {months: {end: '2013-06', start: '2013-01'}}
       #
-      #   absolute_date(resolution: 'minutes', start: '2012-01-01 12:00',
-      #                 end: '2012-01-01 12:45')
+      #   absolute_date(resolution: :minutes, start: '2012-01-01 12:00',
+      #                 the_end: '2012-01-01 12:45')
       #   #=> {minutes: {end: '2012-01-01 12:45', start: '2012-01-01 12:00'}}
       def absolute_date(resolution:, start:, the_end:)
         unless DATE_TERMS.include?(resolution)
