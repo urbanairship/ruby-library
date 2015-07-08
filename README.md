@@ -15,12 +15,7 @@ Version 3.0 is a major upgrade and backwards incompatible with earlier versions.
 Note: the BETA release only supports UA's ```/push/``` and ```/schedules/``` endpoints. Expanded support for UA's other endpoints will be in the forthcoming release. 
 
 ####Forthcoming Release
-To encourage the use of our SDK, which takes care of proper channel registration, support for device token registration will be removed. Support for v1 endpoints will also be removed and support for:
-
-* blackberry pin lookup, and
-* lookup and listing for device tokens
-
-will be moved from v1 to v3.
+To encourage the use of our SDK, which takes care of proper channel registration, support for device token registration will be removed. Support for v1 endpoints will also be removed and transitioned to their v3 equivalents where possible.
 
 ## Installation
 
