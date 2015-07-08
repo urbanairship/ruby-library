@@ -45,7 +45,7 @@ module Urbanairship
         { alias: an_alias }
       end
 
-      # Select a single segment
+      # Select a single segment using segment_id
       def segment(segment)
         { segment: segment }
       end
