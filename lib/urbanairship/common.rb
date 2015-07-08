@@ -16,6 +16,12 @@ module Urbanairship
     TAGS_URL = BASE_URL + '/tags/'
     SEGMENTS_URL = BASE_URL + '/segments/'
 
+    # Helper method for required keyword args in 2.0 that is compatible with 2.1+
+    def required(arg=nil)
+      method = caller_locations(1,1)[0].label
+      raise ArgumentError.new("required parameter #{arg.to_sym.inspect + ' ' if arg}not passed to method #{method}")
+    end
+
     class Unauthorized < StandardError
       # raised when we get a 401 from server
     end
