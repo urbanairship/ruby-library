@@ -10,12 +10,12 @@ module Urbanairship
       # set default client timeout to 5 seconds
       Unirest.timeout(5)
 
-      def initialize(key:, secret:)
+      def initialize(key: required('key'), secret: required('secret'))
         @key = key
         @secret = secret
       end
 
-      def send_request(method:, body:, url:,
+      def send_request(method: required('method'), body: required('body'), url: required('url'),
                        content_type: nil, version: nil, params: nil)
         req_type = case method
           when 'GET'

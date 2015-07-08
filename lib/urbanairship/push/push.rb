@@ -86,7 +86,7 @@ module Urbanairship
         pr
       end
 
-      def self.from_url(client:, url:)
+      def self.from_url(client: required('client'), url: required('url'))
         scheduled_push = ScheduledPush.new(client)
         response_body = client.send_request(
           method: 'GET',
@@ -147,7 +147,7 @@ module Urbanairship
     class PushResponse
       attr_reader :ok, :push_ids, :schedule_url, :operation_id, :payload, :status_code
 
-      def initialize(http_response_body:, http_response_code:)
+      def initialize(http_response_body: nil, http_response_code: nil)
         @payload = http_response_body || "No Content"
         @ok = @payload['ok'] || "None"
         @push_ids = @payload['push_ids'] || "None"

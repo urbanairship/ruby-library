@@ -1,8 +1,10 @@
 require 'urbanairship/util'
+require 'urbanairship/common'
 
 module Urbanairship
   module Push
     module Audience
+      include Urbanairship::Common
       UUID_PATTERN = /^\h{8}-\h{4}-\h{4}-\h{4}-\h{12}$/
       DEVICE_TOKEN_PATTERN = /^\h{64}$/
       DEVICE_PIN_PATTERN = /^\h{8}$/
@@ -43,7 +45,7 @@ module Urbanairship
         { alias: an_alias }
       end
 
-      # Select a single segment
+      # Select a single segment using segment_id
       def segment(segment)
         { segment: segment }
       end
@@ -99,13 +101,13 @@ module Urbanairship
       # @param the_end [String] UTC end time in ISO 8601 format.
       #
       # @example
-      #   absolute_date(resolution: :months, start: '2013-01', end: '2013-06')
+      #   absolute_date(resolution: :months, start: '2013-01', the_end: '2013-06')
       #   #=> {months: {end: '2013-06', start: '2013-01'}}
       #
-      #   absolute_date(resolution: 'minutes', start: '2012-01-01 12:00',
-      #                 end: '2012-01-01 12:45')
+      #   absolute_date(resolution: :minutes, start: '2012-01-01 12:00',
+      #                 the_end: '2012-01-01 12:45')
       #   #=> {minutes: {end: '2012-01-01 12:45', start: '2012-01-01 12:00'}}
-      def absolute_date(resolution:, start:, the_end:)
+      def absolute_date(resolution: required('resolution'), start: required('start'), the_end: required('the_end'))
         unless DATE_TERMS.include?(resolution)
           fail ArgumentError, "#{resolution} not in #{DATE_TERMS}"
         end
@@ -128,7 +130,7 @@ module Urbanairship
       #            resolution: 'days', start: '2012-01-01', end: '2012-01-15'))
       #   #=> {location: {date: {days: {end: '2012-01-15',
       #       start: '2012-01-01'}}, us_zip: '94103'}}
-      def location(date:, **params)
+      def location(date: required('date'), **params)
         unless params.size == 1
           fail ArgumentError, 'One location specifier required'
         end

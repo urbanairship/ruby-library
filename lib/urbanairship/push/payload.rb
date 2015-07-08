@@ -2,6 +2,7 @@ module Urbanairship
   module Push
     module Payload
       require 'ext/hash'
+      include Urbanairship::Common
 
       def notification(alert: nil, ios: nil, android: nil, amazon: nil,
                        blackberry: nil, wns: nil, mpns: nil, actions: nil,
@@ -85,7 +86,7 @@ module Urbanairship
         payload
       end
 
-      def message(title:, body:, content_type: nil, content_encoding: nil,
+      def message(title: required('title'), body: required('body'), content_type: nil, content_encoding: nil,
                   extra: nil, expiry: nil, icons: nil, options: nil)
         {
           title: title,
@@ -99,7 +100,7 @@ module Urbanairship
         }.compact
       end
 
-      def interactive(type:, button_actions: nil)
+      def interactive(type: required('type'), button_actions: nil)
         fail ArgumentError, 'type must not be nil' if type.nil?
         { type: type, button_actions: button_actions }.compact
       end
@@ -112,7 +113,7 @@ module Urbanairship
         types
       end
 
-      def options(expiry:)
+      def options(expiry: required('expiry'))
         { expiry: expiry }
       end
 

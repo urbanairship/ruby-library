@@ -96,3 +96,6 @@ OR you can build a local gem to play with:
 
     $ gem build urbanairship.gemspec
     $ gem install ./urbanairship-<VERSION>.gem
+
+Having a local build will give you better logging if you are running into issues, but be careful to make sure to use our released
+public gem in Production.
