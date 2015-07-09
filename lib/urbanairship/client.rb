@@ -7,14 +7,29 @@ module Urbanairship
       attr_accessor :key, :secret
       include Urbanairship::Common
       include Urbanairship::Loggable
+
       # set default client timeout to 5 seconds
       Unirest.timeout(5)
 
+      # Initialize the Client
+      #
+      # @param [Object] key Application Key
+      # @param [Object] secret Application Secret
+      # @return [Object] Client
       def initialize(key: required('key'), secret: required('secret'))
         @key = key
         @secret = secret
       end
 
+      # Send a request to Urban Airship's API
+      #
+      # @param [Object] method HTTP Method
+      # @param [Object] body Request Body
+      # @param [Object] url Request URL
+      # @param [Object] content_type Content-Type
+      # @param [Object] version API Version
+      # @param [Object] params Parameters
+      # @return [Object] Push Response
       def send_request(method: required('method'), body: required('body'), url: required('url'),
                        content_type: nil, version: nil, params: nil)
         req_type = case method
@@ -52,10 +67,16 @@ module Urbanairship
         {'body'=>response.body, 'code'=>response.code}
       end
 
+      # Create a Push Object
+      #
+      # @return [Object] Push Object
       def create_push
         Push::Push.new(self)
       end
 
+      # Create a Scheduled Push Object
+      #
+      # @return [Object] Scheduled Push Object
       def create_scheduled_push
         Push::ScheduledPush.new(self)
       end

@@ -140,6 +140,7 @@ module Urbanairship
 
       private
 
+      # Clean up a UUID for use in the library
       def cleanup(uuid)
         Util.validate(uuid, 'UUID', UUID_PATTERN)
         uuid.downcase.strip

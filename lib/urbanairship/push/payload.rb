@@ -4,6 +4,7 @@ module Urbanairship
       require 'ext/hash'
       include Urbanairship::Common
 
+      # Notification Object for a Push Payload
       def notification(alert: nil, ios: nil, android: nil, amazon: nil,
                        blackberry: nil, wns: nil, mpns: nil, actions: nil,
                        interactive: nil)
@@ -22,6 +23,7 @@ module Urbanairship
         payload
       end
 
+      # iOS specific portion of Push Notification Object
       def ios(alert: nil, badge: nil, sound: nil, extra: nil, expiry: nil,
               category: nil, interactive: nil, content_available: nil)
         {
@@ -36,6 +38,7 @@ module Urbanairship
         }.compact
       end
 
+      # Amazon specific portion of Push Notification Object
       def amazon(alert: nil, consolidation_key: nil, expires_after: nil,
                  extra: nil, title: nil, summary: nil, interactive: nil)
         {
@@ -49,6 +52,7 @@ module Urbanairship
         }.compact
       end
 
+      # Android specific portion of Push Notification Object
       def android(alert: nil, collapse_key: nil, time_to_live: nil,
                   extra: nil, delay_while_idle: nil, interactive: nil)
         {
@@ -61,10 +65,12 @@ module Urbanairship
         }.compact
       end
 
+      # BlackBerry specific portion of Push Notification Object
       def blackberry(alert: nil, body: nil, content_type: 'text/plain')
         { body: alert || body, content_type: content_type }
       end
 
+      # WNS specific portion of Push Notification Object
       def wns_payload(alert: nil, toast: nil, tile: nil, badge: nil)
         payload = {
           alert: alert,
@@ -76,6 +82,7 @@ module Urbanairship
         payload
       end
 
+      # MPNS specific portion of Push Notification Object
       def mpns_payload(alert: nil, toast: nil, tile: nil)
         payload = {
           alert: alert,
@@ -86,6 +93,7 @@ module Urbanairship
         payload
       end
 
+      # Rich Message specific portion of Push Notification Object
       def message(title: required('title'), body: required('body'), content_type: nil, content_encoding: nil,
                   extra: nil, expiry: nil, icons: nil, options: nil)
         {
@@ -100,6 +108,7 @@ module Urbanairship
         }.compact
       end
 
+      # Interactive Notification portion of Push Notification Object
       def interactive(type: required('type'), button_actions: nil)
         fail ArgumentError, 'type must not be nil' if type.nil?
         { type: type, button_actions: button_actions }.compact
@@ -109,14 +118,17 @@ module Urbanairship
         'all'
       end
 
+      # Target specified device types
       def device_types(types)
         types
       end
 
+      # Expiry for a Rich Message
       def options(expiry: required('expiry'))
         { expiry: expiry }
       end
 
+      # Actions for a Push Notification Object
       def actions(add_tag: nil, remove_tag: nil, open_: nil, share: nil,
                   app_defined: nil)
         {

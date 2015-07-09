@@ -17,15 +17,16 @@ module Urbanairship
     SEGMENTS_URL = BASE_URL + '/segments/'
 
     # Helper method for required keyword args in 2.0 that is compatible with 2.1+
-    # EX:
+    # @example
     #   def say(greeting: required('greeting'))
     #     puts greeting
     #   end
     #
-    # >> say
-    # >> test.rb:3:in `required': required parameter :greeting not passed to method say (ArgumentError)
-    # >>       from test.rb:6:in `say'
-    # >>       from test.rb:18:in `<main>'
+    #   >> say
+    #   >> test.rb:3:in `required': required parameter :greeting not passed to method say (ArgumentError)
+    #   >>       from test.rb:6:in `say'
+    #   >>       from test.rb:18:in `<main>'
+    # @param [Object] arg optional argument name
     def required(arg=nil)
       method = caller_locations(1,1)[0].label
       raise ArgumentError.new("required parameter #{arg.to_sym.inspect + ' ' if arg}not passed to method #{method}")
@@ -51,8 +52,8 @@ module Urbanairship
         @response = nil
       end
 
+      # Instantiate a ValidationFailure from a Response object
       def from_response(response)
-        """Instantiate a ValidationFailure from a Response object"""
 
         payload = response.body
         @error = payload['error']
@@ -68,6 +69,7 @@ module Urbanairship
     end
 
     class Response
+      # Parse Response Codes and trigger appropriate actions.
       def self.check_code(response_code, response)
         if response_code == 401
           raise Unauthorized, "Client is not authorized to make this request. The authorization credentials are incorrect or missing."

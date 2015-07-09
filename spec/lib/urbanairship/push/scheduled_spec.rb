@@ -5,7 +5,7 @@ require 'urbanairship'
 describe Urbanairship do
   UA = Urbanairship
 
-  let(:a_time) { DateTime.new(2013, 1, 1, 12, 56) }
+  let(:a_time) { Time.new(2013, 1, 1, 12, 56) }
   let(:a_time_in_text) { '2013-01-01T12:56:00' }
 
   describe '#scheduled_time' do
