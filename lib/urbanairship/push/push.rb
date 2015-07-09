@@ -7,7 +7,7 @@ require 'urbanairship/loggable'
 module Urbanairship
   module Push
 
-    # A push notification.
+    # A Push Notification.
     class Push
       attr_writer :client, :audience, :notification, :options,
                   :device_types, :message
@@ -74,7 +74,7 @@ module Urbanairship
         }.compact
       end
 
-      # Schedule the Push notification
+      # Schedule the Push Notification
       #
       # @raise [AirshipFailure] if the request failed
       # @raise [Unauthorized] if authentication failed

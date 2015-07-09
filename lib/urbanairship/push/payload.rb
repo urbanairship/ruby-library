@@ -70,7 +70,7 @@ module Urbanairship
         { body: alert || body, content_type: content_type }
       end
 
-      # wns specific portion of Push Notification Object
+      # WNS specific portion of Push Notification Object
       def wns_payload(alert: nil, toast: nil, tile: nil, badge: nil)
         payload = {
           alert: alert,
@@ -82,7 +82,7 @@ module Urbanairship
         payload
       end
 
-      # mpns specific portion of Push Notification Object
+      # MPNS specific portion of Push Notification Object
       def mpns_payload(alert: nil, toast: nil, tile: nil)
         payload = {
           alert: alert,
