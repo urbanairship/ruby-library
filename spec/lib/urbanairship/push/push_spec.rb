@@ -5,7 +5,6 @@ require 'urbanairship/client'
 require 'urbanairship/push/push'
 
 describe Urbanairship::Push do
-  # Equivalent to Python's `import Urbanairship as UA`
   UA = Urbanairship
 
   let(:some_expiry) { 10_080 }
@@ -190,7 +189,7 @@ describe Urbanairship::Push do
 
         scheduled_push = UA::Push::ScheduledPush.new(airship)
         scheduled_push.push = a_push
-        scheduled_push.schedule = UA.scheduled_time(DateTime.now)
+        scheduled_push.schedule = UA.scheduled_time(Time.now)
         scheduled_push.send_push
 
         expect(scheduled_push.url)
@@ -270,7 +269,7 @@ describe Urbanairship::Push do
     end
 
     describe '#payload' do
-      let(:a_time)         { DateTime.new(2013, 1, 1, 12, 56) }
+      let(:a_time)         { Time.new(2013, 1, 1, 12, 56) }
       let(:a_time_in_text) { '2013-01-01T12:56:00' }
       let(:a_name)         { 'This Schedule' }
       let(:scheduled_push) {
