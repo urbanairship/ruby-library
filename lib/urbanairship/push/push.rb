@@ -15,6 +15,9 @@ module Urbanairship
       include Urbanairship::Common
       include Urbanairship::Loggable
 
+      # Initialize a Push Object
+      #
+      # @param [Object] client
       def initialize(client)
         @client = client
       end
@@ -29,7 +32,8 @@ module Urbanairship
         }.compact
       end
 
-      # Send the notification.
+      # Send the Push Object
+      #
       # @raise [AirshipFailure] if the request failed
       # @raise [Unauthorized] if authentication failed
       # @raise [Forbidden] if app does not have entitlement
@@ -55,6 +59,9 @@ module Urbanairship
       include Urbanairship::Common
       include Urbanairship::Loggable
 
+      # Initialize a Scheduled Push Object
+      #
+      # @param [Object] client
       def initialize(client)
         @client = client
       end
@@ -67,7 +74,8 @@ module Urbanairship
         }.compact
       end
 
-      # Schedule the notification
+      # Schedule the Push notification
+      #
       # @raise [AirshipFailure] if the request failed
       # @raise [Unauthorized] if authentication failed
       # @raise [Forbidden] if app does not have entitlement
@@ -86,6 +94,11 @@ module Urbanairship
         pr
       end
 
+      # Build a Scheduled Push Notification object its existing Scheduled Push URL
+      #
+      # @param [Object] client The Client
+      # @param [Object] url The existing Scheduled Push URL
+      # @return [Object] Scheduled Push Object
       def self.from_url(client: required('client'), url: required('url'))
         scheduled_push = ScheduledPush.new(client)
         response_body = client.send_request(
@@ -110,6 +123,9 @@ module Urbanairship
         scheduled_push
       end
 
+      # Cancel the Scheduled Push
+      #
+      # @return [Object] Push Response
       def cancel
         fail ArgumentError,
              'Cannot cancel ScheduledPush without a url.' if @url.nil?
@@ -126,6 +142,9 @@ module Urbanairship
         pr
       end
 
+      # Update the Scheduled Push
+      #
+      # @return [Object]
       def update
         fail ArgumentError,
              'Cannot update a ScheduledPush without a url.' if @url.nil?
@@ -156,6 +175,9 @@ module Urbanairship
         @status_code = http_response_code
       end
 
+      # String Formatting of the PushResponse
+      #
+      # @return [Object] String Formatted PushResponse
       def format
         base = "Received [#{@status_code}] response code. \nHeaders: \tBody:\n"
         payload.each do |key, value|

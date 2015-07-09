@@ -35,7 +35,7 @@ OR install it yourself as:
 
 ## Usage
 
-Once the gem has been installed you can start sending pushes!
+Once the gem has been installed you can start sending pushes! See http://docs.urbanairship.com/topic-guides/api-examples.html for more examples.
 
 ####Broadcast to All Devices
 ```ruby
