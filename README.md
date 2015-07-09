@@ -2,14 +2,9 @@
 
 *Note*: This is an open source Ruby library, generously contributed by Groupon, for the Urban Airship v1 API. UA is currently working on a rewrite for our current (v3) API, and will publish updates shortly (though no new code has been released yet). We wish to thank Groupon for their quality engineering work and stewardship of the project.
 
-Please try to be patient while we work on the rewrite and hold off on new issues and pull requests for a bit. Thank you!
-
-
 Installation
 ============
     gem install urbanairship
-
-Note: if you are using Ruby 1.8, you should also install the ```system_timer``` gem for more reliable timeout behaviour. See http://ph7spot.com/musings/system-timer for more information.
 
 Configuration
 =============
@@ -53,14 +48,24 @@ Sending a push notification
 ---------------------------
 ```ruby
 notification = {
-  :schedule_for => [1.hour.from_now],
-  :device_tokens => ['DEVICE-TOKEN-ONE', 'DEVICE-TOKEN-TWO'],
-  :aps => {:alert => 'You have a new message!', :badge => 1}
+   audience: { 'device_token': 'DEVICE-TOKEN' },
+ },
+   device_types: [ 'ios', 'android' ]
+   notification: {
+      alert: 'You have a new message!',
+      ios: {
+        badge: '+1',
+        sound: 'incomingNotification.caf',
+        extra: {
+          type: 'awesome'
+        }
+      }
+   },
 }
 
 Urbanairship.push(notification) # =>
 # {
-#   "scheduled_notifications" => ["https://go.urbanairship.com/api/push/scheduled/123456"]
+#   'scheduled_notifications' => ['https://go.urbanairship.com/api/push/scheduled/123456']
 # }
 ```
 
@@ -73,9 +78,18 @@ Urbanairship.push notification.merge(version: 3)
 
 ```ruby
 notification = {
-  :schedule_for => [1.hour.from_now],
-  :aliases => ['ALIAS-ONE', 'ALIAS-TWO'],
-  :aps => {:alert => 'You have a new message!', :badge => 1}
+   audience: { alias: ['ALIAS-ONE', 'ALIAS-TWO'] },
+   device_types: [ 'ios', 'android' ]
+   notification: {
+      alert: 'You have a new message!',
+      ios: {
+        badge: '+1',
+        sound: 'incomingNotification.caf',
+        extra: {
+          type: 'awesome'
+        }
+      }
+   },
 }
 
 Urbanairship.push(notification) # =>

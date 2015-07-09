@@ -27,7 +27,7 @@ module Urbanairship
       output.ua_response = response
       output.ua_options = options
 
-      return output
+      output
     end
   end
 end
