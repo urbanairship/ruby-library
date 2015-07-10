@@ -14,8 +14,8 @@ Gem::Specification.new do |spec|
   spec.description   = 'A Ruby Library for using the Urban Airship web service API for push notifications and rich app pages.'
   spec.homepage      = "https://github.com/urbanairship/ruby-library"
 
-  # Prevent pushing this gem to RubyGems.org by setting 'allowed_push_host', or
-  # delete this section to allow pushing this gem to any host.
+  spec.required_ruby_version = '>= 2.0.0'
+
   if spec.respond_to?(:metadata)
     spec.metadata['allowed_push_host'] = "https://rubygems.org"
   else

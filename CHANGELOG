@@ -1,4 +1,11 @@
 --------------------
+3.0.1
+--------------------
+- Updating Gemspec to show required Ruby Version correctly
+
+
+
+--------------------
 3.0.0
 --------------------
 - added CHANGELOG
