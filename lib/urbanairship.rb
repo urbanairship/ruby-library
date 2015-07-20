@@ -2,6 +2,7 @@ require 'urbanairship/push/audience'
 require 'urbanairship/push/payload'
 require 'urbanairship/push/schedule'
 require 'urbanairship/push/push'
+require 'urbanairship/devices/channel_uninstall'
 require 'urbanairship/client'
 require 'urbanairship/common'
 require 'urbanairship/loggable'
@@ -16,5 +17,5 @@ module Urbanairship
   extend Urbanairship::Push::Payload
   extend Urbanairship::Push::Schedule
   extend Urbanairship::Push
-
+  extend Urbanairship::Devices
 end
