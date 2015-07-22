@@ -1,0 +1,351 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800' rel='stylesheet' type='text/css'>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  <title>Tags &mdash; Urban Airship Python Library 0.7.3 documentation</title>
+  
+
+  
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+    <link rel="top" title="Urban Airship Python Library 0.7.3 documentation" href="index.html"/>
+        <link rel="next" title="Reports" href="reports.html"/>
+        <link rel="prev" title="Segments" href="segment.html"/> 
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+
+</head>
+
+<body class="detail" role="document">
+  <header class="header fixed">
+  <h1 class="logo">
+    <a href="index.html" title="Urban Airship">Urban Airship</a>
+    <!--<a href="index.html" title="Urban Airship">Urban Airship</a>-->
+  </h1>
+  <a href="#" id="menu-toggle" class="icon-list"></a>
+  <a href="#" id="search-toggle" class="icon-search"></a>
+  <div class="main-nav-wrap" id="main-nav-wrap">
+    <div class="main-nav-inner">
+      <nav class="primary">
+        <ul class="main-menu">
+          <li>
+            <a href="#">Platforms</a>
+            <ul class="submenu">
+              <li><a href="platform/ios.html"><span>iOS</span></a></li>
+              <li><a href="platform/android.html"><span>Android</span></a></li>
+              <li><a href="platform/blackberry.html"><span>BlackBerry</span></a></li>
+              <li><a href="platform/windows.html"><span>Windows</span></a></li>
+              <li><a href="platform/phonegap.html"><span>PhoneGap</span></a></li>
+            </ul>
+          </li>
+          <li>
+            <a href="#">APIs</a>
+            <ul class="submenu">
+              <li><a href="integration.html"><span>Integration</span></a></li>
+              <li><a href="api/overview.html"><span>API Overview</span></a></li>
+              <li><a href="api/ua.html"><span>API Reference</span></a></li>
+            </ul>
+          </li>
+          <li>
+             <a href="#">User Guide</a>
+             <ul class="submenu">
+               <li><a href="user-guide/getting-started.html"><span>Getting Started</span></a></li>
+               <li><a href="user-guide/message-composer.html"><span>Messaging</span></a></li>
+               <li><a href="user-guide/audience.html"><span>Audience</span></a></li>
+               <li><a href="user-guide/reports.html"><span>Reports</span></a></li>
+               <li><a href="user-guide/settings.html"><span>Settings</span></a></li>
+               <li><a href="user-guide/account.html"><span>Account</span></a></li>
+             </ul>
+          </li>
+          <li>
+            <a href="#">Wallet Studio</a>
+            <ul class="submenu">
+              <li><a href="wallet-studio/getting-started.html"><span>Getting Started</span></a></li>
+              <li><a href="wallet-studio/reference.html"><span>Reference</span></a></li>
+              <li><a href="api/wallet.html"><span>API</span></a></li>
+            </ul>
+          </li>
+          <li><a href="topic-guides/index.html">Topic Guides</a></li>
+          <li><a href="reference/index.html">Reference</a></li>
+          <li class="hide-on-small"><a href="whats-new/index.html">What's New</a></li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+  <div class="search-wrapper">
+<script>
+  (function() {
+    var cx = '003987891287610372151:8d55aluonec';
+    var gcse = document.createElement('script');
+    gcse.type = 'text/javascript';
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<style>
+.gsc-control-cse {
+    background: #015172;
+    border: 0;
+    border-left: 1px solid #015172;
+}
+.gsc-control-cse div {
+    margin-top: 2px;
+}
+.gsc-input-box {
+    border: 0;
+    background: #015172;
+}
+.gsc-input input.gsc-input {
+    background: #f5f5f5 !important;
+    border-radius: 0; 
+}
+.gsc-input input.gsc-input:focus {
+    background: #FFFFFF !important;
+}
+input.gsc-search-button-v2 {
+    width: 13px;
+    height: 13px;
+    padding: 4px 12px;
+    min-width: 13px;
+    margin-top: 2px;
+}
+.gsc-search-box-tools .gsc-search-box .gsc-input {
+    padding-right: 0;
+}
+
+.gsib_a, .gsib_b {
+    padding: 0;
+}
+
+input.gsc-search-button {
+    border: 0;
+    background-color: #51c4cc;
+}
+
+</style>
+<gcse:search></gcse:search>
+  </div>
+</header>
+<div id="mobile-toc">
+  <a id="toc-toggle">Table of Contents</a>
+</div>
+
+  <div class="content">
+
+    
+    <aside id="side-nav" class="sidebar-first">
+
+      <!-- Local TOC -->
+      <nav class="toc">
+        <div class="local-toc"><ul>
+<li><a class="reference internal" href="#">Tags</a><ul>
+<li><a class="reference internal" href="#channeltags">ChannelTags</a></li>
+<li><a class="reference internal" href="#legacy-tags">Legacy Tags</a><ul>
+<li><a class="reference internal" href="#tag-listing">Tag Listing</a></li>
+<li><a class="reference internal" href="#adding-devices-to-a-tag">Adding Devices to a Tag</a></li>
+<li><a class="reference internal" href="#removing-devices-from-a-tag">Removing Devices from a Tag</a></li>
+<li><a class="reference internal" href="#deleting-a-tag">Deleting a Tag</a></li>
+<li><a class="reference internal" href="#batch-modification-of-tags">Batch Modification of Tags</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+      </nav>
+        <footer>
+  <div class="legal" role="contentinfo">
+  	<p>
+  	    &copy; Copyright 2015, Urban Airship.
+  	</p>
+  	<a href="http://urbanairship.com/legal/privacy-policy" target="_blank">Privacy Policy</a>
+  </div>
+</footer>
+      
+    </aside>
+
+    <div class="main-content">
+
+      <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+    <li>Tags</li>
+  </ul>
+</div>
+
+      
+      <div role="main" class="document">
+        
+  <div class="section" id="tags">
+<h1>Tags<a class="headerlink" href="#tags" title="Permalink to this headline">¶</a></h1>
+<p>Prior to the Urban Airship product release in Spring 2015, tag
+manipulation (addition, removal, setting of tags) was handled either on
+the client- or server-side, but not both. Tags set by the device would
+be overwritten by tags set from your server and vice versa.</p>
+<p>With the release of Named Users, Tag Groups, and Channel IDs, tag
+manipulation is now fundamentally simpler and supports significantly more
+complex use-cases and integrations.</p>
+<p>For more information, see: <a class="reference external" href="http://docs.urbanairship.com/api/ua.html#tags">http://docs.urbanairship.com/api/ua.html#tags</a>.</p>
+<div class="section" id="channeltags">
+<h2>ChannelTags<a class="headerlink" href="#channeltags" title="Permalink to this headline">¶</a></h2>
+<p>Allows the addition, removal, and setting of tags on a channel specified by
+the required audience field.</p>
+<p>A single request body may contain an add or remove
+field, or both, or a single set field. If both add and remove are fields are
+present and the intersection of the tags in these fields is not empty, then
+a 400 will be returned.</p>
+<p>Tag operations done by application secret can only be made to a single channel.</p>
+<p>Tag set operations only update tag groups that are present in the request.
+Tags for a given Tag Group can be cleared by sending a set field with an empty
+list.</p>
+<p>Secure Tag Groups require the master secret to modify tags, otherwise a 403
+Forbidden response is returned.</p>
+<p>If a tag update request contains tags in multiple Tag Groups, the request
+will be accepted if at least one of the Tag Groups is active. If inactive or
+missing Tag Groups are specified, a warning will be included in the response.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">urbanairship</span> <span class="kn">as</span> <span class="nn">ua</span>
+<span class="n">airship</span> <span class="o">=</span> <span class="n">ua</span><span class="o">.</span><span class="n">Airship</span><span class="p">(</span><span class="n">app_key</span><span class="p">,</span> <span class="n">master_secret</span><span class="p">)</span>
+<span class="n">channel_tags</span> <span class="o">=</span> <span class="n">ua</span><span class="o">.</span><span class="n">devices</span><span class="o">.</span><span class="n">ChannelTags</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">airship</span><span class="p">)</span>
+<span class="n">ios_audience</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;channel1&#39;</span><span class="p">,</span> <span class="s">&#39;channel2&#39;</span><span class="p">,</span> <span class="s">&#39;channel3&#39;</span><span class="p">]</span>
+<span class="n">android_audience</span> <span class="o">=</span> <span class="s">&#39;channel4&#39;</span>
+<span class="n">amazon_audience</span> <span class="o">=</span> <span class="bp">None</span>
+<span class="n">channel_tags</span><span class="o">.</span><span class="n">set_audience</span><span class="p">(</span><span class="n">ios_audience</span><span class="p">,</span> <span class="n">android_audience</span><span class="p">,</span> <span class="n">amazon_audience</span><span class="p">)</span>
+<span class="n">channel_tags</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s">&#39;group_name&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s">&#39;tag1&#39;</span><span class="p">,</span> <span class="s">&#39;tag2&#39;</span><span class="p">,</span> <span class="s">&#39;tag3&#39;</span><span class="p">])</span>
+<span class="n">channel_tags</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s">&#39;group_name&#39;</span><span class="p">,</span> <span class="s">&#39;tag4&#39;</span><span class="p">)</span>
+<span class="n">channel_tags</span><span class="o">.</span><span class="n">send_request</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The audience can be either a single channel or as a list of channels. Similarly,
+the tags can either be set as a single tag or a list of tags.</p>
+</div>
+</div>
+<div class="section" id="legacy-tags">
+<h2>Legacy Tags<a class="headerlink" href="#legacy-tags" title="Permalink to this headline">¶</a></h2>
+<p>The following commands have been deprecated.</p>
+<div class="section" id="tag-listing">
+<h3>Tag Listing<a class="headerlink" href="#tag-listing" title="Permalink to this headline">¶</a></h3>
+<p>Lists tags that exist for this application. Tag Listing will return
+up to the first 100 tags per application.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">urbanairship</span> <span class="kn">as</span> <span class="nn">ua</span>
+<span class="n">airship</span> <span class="o">=</span> <span class="n">ua</span><span class="o">.</span><span class="n">Airship</span><span class="p">(</span><span class="n">app_key</span><span class="p">,</span> <span class="n">master_secret</span><span class="p">)</span>
+<span class="n">list_tags</span> <span class="o">=</span> <span class="n">ua</span><span class="o">.</span><span class="n">TagList</span><span class="p">(</span><span class="n">airship</span><span class="p">)</span>
+<span class="n">list_tags</span><span class="o">.</span><span class="n">list_tags</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="adding-devices-to-a-tag">
+<h3>Adding Devices to a Tag<a class="headerlink" href="#adding-devices-to-a-tag" title="Permalink to this headline">¶</a></h3>
+<p>Add one or more channels to a particular tag. For more information, see
+<a class="reference external" href="adding">documentation on adding and removing devices from a tag</a>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">urbanairship</span> <span class="kn">as</span> <span class="nn">ua</span>
+<span class="n">airship</span> <span class="o">=</span> <span class="n">ua</span><span class="o">.</span><span class="n">Airship</span><span class="p">(</span><span class="n">app_key</span><span class="p">,</span> <span class="n">master_secret</span><span class="p">)</span>
+<span class="n">devices</span> <span class="o">=</span> <span class="n">ua</span><span class="o">.</span><span class="n">Tag</span><span class="p">(</span><span class="n">airship</span><span class="p">,</span> <span class="s">&#39;working_tag&#39;</span><span class="p">)</span>
+<span class="n">devices</span><span class="o">.</span><span class="n">add</span><span class="p">(</span>
+    <span class="n">ios_channels</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;ios_channel_id&#39;</span><span class="p">],</span>
+    <span class="n">android_channels</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;android_channel_id&#39;</span><span class="p">,</span> <span class="s">&#39;android_channel_id_2&#39;</span><span class="p">]</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="removing-devices-from-a-tag">
+<h3>Removing Devices from a Tag<a class="headerlink" href="#removing-devices-from-a-tag" title="Permalink to this headline">¶</a></h3>
+<p>Remove one or more channels from a particular tag. For more information,
+see: <a class="reference external" href="adding">documentation on adding and removing devices from a tag</a>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">urbanairship</span> <span class="kn">as</span> <span class="nn">ua</span>
+<span class="n">airship</span> <span class="o">=</span> <span class="n">ua</span><span class="o">.</span><span class="n">Airship</span><span class="p">(</span><span class="n">app_key</span><span class="p">,</span> <span class="n">master_secret</span><span class="p">)</span>
+<span class="n">devices</span> <span class="o">=</span> <span class="n">ua</span><span class="o">.</span><span class="n">Tag</span><span class="p">(</span><span class="n">airship</span><span class="p">,</span> <span class="s">&#39;working_tag&#39;</span><span class="p">)</span>
+<span class="n">devices</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span>
+    <span class="n">ios_channels</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;ios_channel_id&#39;</span><span class="p">],</span>
+    <span class="n">android_channels</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;android_channel_id&#39;</span><span class="p">,</span> <span class="s">&#39;android_channel_id_2&#39;</span><span class="p">]</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="deleting-a-tag">
+<h3>Deleting a Tag<a class="headerlink" href="#deleting-a-tag" title="Permalink to this headline">¶</a></h3>
+<p>A tag can be removed from our system by issuing a delete. This will
+remove the master record of the tag. For more information, see:
+<a class="reference external" href="deleting">documentation on deleting a tag</a>.</p>
+<dl class="docutils">
+<dt>Note:</dt>
+<dd>Delete will remove the tag from all devices with the exception of
+devices that are inactive due to uninstall. Devices that were
+uninstalled will retain their tags.</dd>
+</dl>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">urbanairship</span> <span class="kn">as</span> <span class="nn">ua</span>
+<span class="n">airship</span> <span class="o">=</span> <span class="n">ua</span><span class="o">.</span><span class="n">Airship</span><span class="p">(</span><span class="n">app_key</span><span class="p">,</span> <span class="n">master_secret</span><span class="p">)</span>
+<span class="n">delete_tag</span> <span class="o">=</span> <span class="n">ua</span><span class="o">.</span><span class="n">DeleteTag</span><span class="p">(</span><span class="n">airship</span><span class="p">,</span> <span class="s">&#39;tag_to_delete&#39;</span><span class="p">)</span>
+<span class="n">delete_tag</span><span class="o">.</span><span class="n">send_delete</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="batch-modification-of-tags">
+<h3>Batch Modification of Tags<a class="headerlink" href="#batch-modification-of-tags" title="Permalink to this headline">¶</a></h3>
+<p>Modify the tags for a number of device channels. For more information,
+see: <a class="reference external" href="batch">documentation on batch modification of tags</a>.</p>
+<dl class="docutils">
+<dt>Note:</dt>
+<dd>You must include an object containing an ios_channel,
+android_channel, or amazon_channel, and a list of tags
+to apply.</dd>
+</dl>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">urbanairship</span> <span class="kn">as</span> <span class="nn">ua</span>
+<span class="n">airship</span> <span class="o">=</span> <span class="n">ua</span><span class="o">.</span><span class="n">Airship</span><span class="p">(</span><span class="n">app_key</span><span class="p">,</span> <span class="n">master_secret</span><span class="p">)</span>
+<span class="n">send_batch</span> <span class="o">=</span> <span class="n">ua</span><span class="o">.</span><span class="n">BatchTag</span><span class="p">(</span><span class="n">airship</span><span class="p">)</span>
+<span class="n">send_batch</span><span class="o">.</span><span class="n">add_ios_channel</span><span class="p">(</span><span class="s">&#39;ios_channel_id&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s">&#39;ios_tag&#39;</span><span class="p">,</span> <span class="s">&#39;portland_OR&#39;</span><span class="p">])</span>
+<span class="n">send_batch</span><span class="o">.</span><span class="n">add_android_channel</span><span class="p">(</span><span class="s">&#39;android_channel_id&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s">&#39;tag11&#39;</span><span class="p">,</span> <span class="s">&#39;tag12&#39;</span><span class="p">])</span>
+<span class="n">send_batch</span><span class="o">.</span><span class="n">add_amazon_channel</span><span class="p">(</span>
+    <span class="s">&#39;amazon_channel_id&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s">&#39;tag11&#39;</span><span class="p">,</span> <span class="s">&#39;portland_OR&#39;</span><span class="p">]</span>
+<span class="p">)</span>
+<span class="n">send_batch</span><span class="o">.</span><span class="n">send_request</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+
+      </div>
+    </div>
+
+  </div>
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/waypoints/2.0.4/waypoints.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/waypoints/2.0.5/shortcuts/sticky-elements/waypoints-sticky.min.js"></script>
+  <script type="text/javascript" src="_static/sphinxcontrib-images/Lightbox2/lightbox2/js/lightbox.min.js"></script>
+  <script type="text/javascript" src="_static/js/theme.js"></script>
+  <script type="text/javascript" src="_static/js/primary-nav.js"></script>
+  <script type="text/javascript" src="_static/js/lazyload.js"></script>
+
+  <script>
+    var menu = new cbpHorizontalSlideOutMenu( document.getElementById( 'main-nav-wrap' ) );
+  </script>
+</body>
+</html>

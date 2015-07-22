@@ -1,0 +1,370 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800' rel='stylesheet' type='text/css'>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  <title>Urban Airship Python Library &mdash; Urban Airship Python Library 0.7.3 documentation</title>
+  
+
+  
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+    <link rel="top" title="Urban Airship Python Library 0.7.3 documentation" href="#"/>
+        <link rel="next" title="Defining and Sending Push Notifications" href="push.html"/> 
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+
+</head>
+
+<body class="detail" role="document">
+  <header class="header fixed">
+  <h1 class="logo">
+    <a href="#" title="Urban Airship">Urban Airship</a>
+    <!--<a href="#" title="Urban Airship">Urban Airship</a>-->
+  </h1>
+  <a href="#" id="menu-toggle" class="icon-list"></a>
+  <a href="#" id="search-toggle" class="icon-search"></a>
+  <div class="main-nav-wrap" id="main-nav-wrap">
+    <div class="main-nav-inner">
+      <nav class="primary">
+        <ul class="main-menu">
+          <li>
+            <a href="#">Platforms</a>
+            <ul class="submenu">
+              <li><a href="platform/ios.html"><span>iOS</span></a></li>
+              <li><a href="platform/android.html"><span>Android</span></a></li>
+              <li><a href="platform/blackberry.html"><span>BlackBerry</span></a></li>
+              <li><a href="platform/windows.html"><span>Windows</span></a></li>
+              <li><a href="platform/phonegap.html"><span>PhoneGap</span></a></li>
+            </ul>
+          </li>
+          <li>
+            <a href="#">APIs</a>
+            <ul class="submenu">
+              <li><a href="integration.html"><span>Integration</span></a></li>
+              <li><a href="api/overview.html"><span>API Overview</span></a></li>
+              <li><a href="api/ua.html"><span>API Reference</span></a></li>
+            </ul>
+          </li>
+          <li>
+             <a href="#">User Guide</a>
+             <ul class="submenu">
+               <li><a href="user-guide/getting-started.html"><span>Getting Started</span></a></li>
+               <li><a href="user-guide/message-composer.html"><span>Messaging</span></a></li>
+               <li><a href="user-guide/audience.html"><span>Audience</span></a></li>
+               <li><a href="user-guide/reports.html"><span>Reports</span></a></li>
+               <li><a href="user-guide/settings.html"><span>Settings</span></a></li>
+               <li><a href="user-guide/account.html"><span>Account</span></a></li>
+             </ul>
+          </li>
+          <li>
+            <a href="#">Wallet Studio</a>
+            <ul class="submenu">
+              <li><a href="wallet-studio/getting-started.html"><span>Getting Started</span></a></li>
+              <li><a href="wallet-studio/reference.html"><span>Reference</span></a></li>
+              <li><a href="api/wallet.html"><span>API</span></a></li>
+            </ul>
+          </li>
+          <li><a href="topic-guides/index.html">Topic Guides</a></li>
+          <li><a href="reference/index.html">Reference</a></li>
+          <li class="hide-on-small"><a href="whats-new/index.html">What's New</a></li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+  <div class="search-wrapper">
+<script>
+  (function() {
+    var cx = '003987891287610372151:8d55aluonec';
+    var gcse = document.createElement('script');
+    gcse.type = 'text/javascript';
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<style>
+.gsc-control-cse {
+    background: #015172;
+    border: 0;
+    border-left: 1px solid #015172;
+}
+.gsc-control-cse div {
+    margin-top: 2px;
+}
+.gsc-input-box {
+    border: 0;
+    background: #015172;
+}
+.gsc-input input.gsc-input {
+    background: #f5f5f5 !important;
+    border-radius: 0; 
+}
+.gsc-input input.gsc-input:focus {
+    background: #FFFFFF !important;
+}
+input.gsc-search-button-v2 {
+    width: 13px;
+    height: 13px;
+    padding: 4px 12px;
+    min-width: 13px;
+    margin-top: 2px;
+}
+.gsc-search-box-tools .gsc-search-box .gsc-input {
+    padding-right: 0;
+}
+
+.gsib_a, .gsib_b {
+    padding: 0;
+}
+
+input.gsc-search-button {
+    border: 0;
+    background-color: #51c4cc;
+}
+
+</style>
+<gcse:search></gcse:search>
+  </div>
+</header>
+<div id="mobile-toc">
+  <a id="toc-toggle">Table of Contents</a>
+</div>
+
+  <div class="content">
+
+    
+    <aside id="side-nav" class="sidebar-first">
+
+      <!-- Local TOC -->
+      <nav class="toc">
+        <div class="local-toc"><ul>
+<li><a class="reference internal" href="#">Urban Airship Python Library</a><ul>
+<li><a class="reference internal" href="#installation">Installation</a></li>
+<li><a class="reference internal" href="#using-the-library">Using the library</a></li>
+<li><a class="reference internal" href="#logging">Logging</a></li>
+<li><a class="reference internal" href="#development">Development</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#indices-and-tables">Indices and tables</a></li>
+</ul>
+</div>
+      </nav>
+        <footer>
+  <div class="legal" role="contentinfo">
+  	<p>
+  	    &copy; Copyright 2015, Urban Airship.
+  	</p>
+  	<a href="http://urbanairship.com/legal/privacy-policy" target="_blank">Privacy Policy</a>
+  </div>
+</footer>
+      
+    </aside>
+
+    <div class="main-content">
+
+      <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="breadcrumbs">
+    <li><a href="#">Docs</a> &raquo;</li>
+      
+    <li>Urban Airship Python Library</li>
+  </ul>
+</div>
+
+      
+      <div role="main" class="document">
+        
+  <div class="section" id="urban-airship-python-library">
+<h1>Urban Airship Python Library<a class="headerlink" href="#urban-airship-python-library" title="Permalink to this headline">¶</a></h1>
+<p><code class="docutils literal"><span class="pre">urbanairship</span></code> is a Python library for using the <a class="reference external" href="http://urbanairship.com/">Urban Airship</a> web service API for push notifications and
+rich app pages.</p>
+<div class="section" id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
+<p>Using <code class="docutils literal"><span class="pre">pip</span></code>:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ pip install urbanairship
+</pre></div>
+</div>
+</div>
+<div class="section" id="using-the-library">
+<h2>Using the library<a class="headerlink" href="#using-the-library" title="Permalink to this headline">¶</a></h2>
+<p>The library is intended to be used with the small footprint of a single
+import. To get started, import the package, and create an
+<code class="xref py py-class docutils literal"><span class="pre">Airship</span></code> object representing a single UA application.</p>
+<p>Note that channels are preferred over <cite>device_token</cite> and <cite>apid</cite>. See:
+<a class="reference external" href="channels">documentation on channels</a>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">urbanairship</span> <span class="kn">as</span> <span class="nn">ua</span>
+<span class="n">airship</span> <span class="o">=</span> <span class="n">ua</span><span class="o">.</span><span class="n">Airship</span><span class="p">(</span><span class="s">&#39;&lt;app key&gt;&#39;</span><span class="p">,</span> <span class="s">&#39;&lt;master secret&gt;&#39;</span><span class="p">)</span>
+
+<span class="n">push</span> <span class="o">=</span> <span class="n">airship</span><span class="o">.</span><span class="n">create_push</span><span class="p">()</span>
+<span class="n">push</span><span class="o">.</span><span class="n">audience</span> <span class="o">=</span> <span class="n">ua</span><span class="o">.</span><span class="n">ios_channel</span><span class="p">(</span><span class="s">&#39;074e84a2-9ed9-4eee-9ca4-cc597bfdbef3&#39;</span><span class="p">)</span>
+<span class="n">push</span><span class="o">.</span><span class="n">notification</span> <span class="o">=</span> <span class="n">ua</span><span class="o">.</span><span class="n">notification</span><span class="p">(</span><span class="n">ios</span><span class="o">=</span><span class="n">ua</span><span class="o">.</span><span class="n">ios</span><span class="p">(</span><span class="n">alert</span><span class="o">=</span><span class="s">&#39;Hello from Python&#39;</span><span class="p">,</span> <span class="n">badge</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
+<span class="n">push</span><span class="o">.</span><span class="n">device_types</span> <span class="o">=</span> <span class="n">ua</span><span class="o">.</span><span class="n">device_types</span><span class="p">(</span><span class="s">&#39;ios&#39;</span><span class="p">)</span>
+<span class="n">push</span><span class="o">.</span><span class="n">send</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>The library uses <a class="reference external" href="http://python-requests.org">requests</a> for communication with the UA API,
+providing connection pooling and strict SSL checking. The <code class="docutils literal"><span class="pre">Airship</span></code>
+object is threadsafe, and can be instantiated once and reused in
+multiple threads.</p>
+</div>
+<div class="section" id="logging">
+<h2>Logging<a class="headerlink" href="#logging" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal"><span class="pre">urbanairship</span></code> uses the standard logging module for integration into
+an application&#8217;s existing logging. If you do not have logging
+configured otherwise, your application can set it up like so:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">logging</span>
+<span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>If you&#8217;re having trouble with the UA API, you can turn on verbose debug
+logging.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s">&#39;urbanairship&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>As of Python 2.7, <code class="docutils literal"><span class="pre">DeprecationWarning</span></code> warnings are silenced by
+default. To enable them, use the <code class="docutils literal"><span class="pre">warnings</span></code> module:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">warnings</span>
+<span class="n">warnings</span><span class="o">.</span><span class="n">simplefilter</span><span class="p">(</span><span class="s">&#39;default&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="development">
+<h2>Development<a class="headerlink" href="#development" title="Permalink to this headline">¶</a></h2>
+<p>The library source code is <a class="reference external" href="github">available on GitHub</a>.</p>
+<p>Tests can be run with <a class="reference external" href="https://nose.readthedocs.org/en/latest/">nose</a>:</p>
+<div class="highlight-sh"><div class="highlight"><pre>nosetests --with-doctest
+</pre></div>
+</div>
+<p>Contents:</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="push.html">Defining and Sending Push Notifications</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="push.html#audience-selectors">Audience Selectors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="push.html#notification-payload">Notification Payload</a></li>
+<li class="toctree-l2"><a class="reference internal" href="push.html#actions">Actions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="push.html#interactive-notifications">Interactive Notifications</a></li>
+<li class="toctree-l2"><a class="reference internal" href="push.html#device-types">Device Types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="push.html#delivery">Delivery</a></li>
+<li class="toctree-l2"><a class="reference internal" href="push.html#scheduled-delivery">Scheduled Delivery</a></li>
+<li class="toctree-l2"><a class="reference internal" href="push.html#scheduled-delivery-in-device-local-time">Scheduled Delivery in Device Local Time</a></li>
+<li class="toctree-l2"><a class="reference internal" href="push.html#updating-or-canceling-a-schedule">Updating or Canceling a Schedule</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="devices.html">Retrieving Device Information</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="devices.html#channel-listing">Channel Listing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="devices.html#channel-lookup">Channel Lookup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="devices.html#blackberry-pin-lookup">Blackberry PIN Lookup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="devices.html#device-listing">Device Listing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="devices.html#feedback">Feedback</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="channel_uninstall.html">Channel Uninstall</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="channel_uninstall.html#uninstalling-channels">Uninstalling Channels</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="segment.html">Segments</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="segment.html#segment-listing">Segment Listing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="segment.html#creating-a-segment">Creating a Segment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="segment.html#modifying-a-segment">Modifying a Segment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="segment.html#deleting-a-segment">Deleting a Segment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="segment.html#segment-lookup">Segment Lookup</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tags.html">Tags</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="tags.html#channeltags">ChannelTags</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tags.html#legacy-tags">Legacy Tags</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="reports.html">Reports</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="reports.html#individual-push-response-stats">Individual Push Response Stats</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reports.html#devices-report">Devices Report</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reports.html#push-report">Push Report</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reports.html#per-push-reporting">Per Push Reporting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reports.html#response-report">Response Report</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reports.html#response-listing">Response Listing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reports.html#app-opens-report">App Opens Report</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reports.html#time-in-app-report">Time In App Report</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reports.html#opt-in-report">Opt-In Report</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reports.html#opt-out-report">Opt-Out Report</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="named_user.html">Named User</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="named_user.html#named-user-listing">Named User Listing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="named_user.html#association">Association</a></li>
+<li class="toctree-l2"><a class="reference internal" href="named_user.html#disassociation">Disassociation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="named_user.html#lookup">Lookup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="named_user.html#tags">Tags</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="static_lists.html">Static Lists</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="static_lists.html#create-list">Create List</a></li>
+<li class="toctree-l2"><a class="reference internal" href="static_lists.html#upload-list">Upload List</a></li>
+<li class="toctree-l2"><a class="reference internal" href="static_lists.html#update-list">Update List</a></li>
+<li class="toctree-l2"><a class="reference internal" href="static_lists.html#delete-list">Delete List</a></li>
+<li class="toctree-l2"><a class="reference internal" href="static_lists.html#lookup-list">Lookup List</a></li>
+<li class="toctree-l2"><a class="reference internal" href="static_lists.html#lookup-all-lists">Lookup All Lists</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="exceptions.html">Exceptions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="examples.html#simple-broadcast-to-all-devices">Simple broadcast to all devices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples.html#complex-audience-with-platform-specifics">Complex audience with platform specifics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples.html#single-ios-push">Single iOS push</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples.html#single-ios-rich-push-with-notification">Single iOS Rich Push with notification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples.html#rich-push-with-extra-and-without-notification">Rich Push with extra and without notification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples.html#scheduled-ios-push">Scheduled iOS Push</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="section" id="indices-and-tables">
+<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li><a class="reference internal" href="genindex.html"><span>Index</span></a></li>
+<li><a class="reference internal" href="py-modindex.html"><span>Module Index</span></a></li>
+<li><a class="reference internal" href="search.html"><span>Search Page</span></a></li>
+</ul>
+</div>
+
+
+      </div>
+    </div>
+
+  </div>
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/waypoints/2.0.4/waypoints.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/waypoints/2.0.5/shortcuts/sticky-elements/waypoints-sticky.min.js"></script>
+  <script type="text/javascript" src="_static/sphinxcontrib-images/Lightbox2/lightbox2/js/lightbox.min.js"></script>
+  <script type="text/javascript" src="_static/js/theme.js"></script>
+  <script type="text/javascript" src="_static/js/primary-nav.js"></script>
+  <script type="text/javascript" src="_static/js/lazyload.js"></script>
+
+  <script>
+    var menu = new cbpHorizontalSlideOutMenu( document.getElementById( 'main-nav-wrap' ) );
+  </script>
+</body>
+</html>

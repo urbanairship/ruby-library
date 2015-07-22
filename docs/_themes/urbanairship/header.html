@@ -1,0 +1,64 @@
+<header class="header fixed">
+  <h1 class="logo">
+    <a href="{{ pathto('index') }}" title="Urban Airship">Urban Airship</a>
+    <!--<a href="{{ pathto(master_doc) }}" title="Urban Airship">Urban Airship</a>-->
+  </h1>
+  <a href="#" id="menu-toggle" class="icon-list"></a>
+  <a href="#" id="search-toggle" class="icon-search"></a>
+  <div class="main-nav-wrap" id="main-nav-wrap">
+    <div class="main-nav-inner">
+      <nav class="primary">
+        <ul class="main-menu">
+          <li>
+            <a href="#">Platforms</a>
+            <ul class="submenu">
+              <li><a href="{{ pathto("platform/ios") }}"><span>iOS</span></a></li>
+              <li><a href="{{ pathto("platform/android") }}"><span>Android</span></a></li>
+              <li><a href="{{ pathto("platform/blackberry") }}"><span>BlackBerry</span></a></li>
+              <li><a href="{{ pathto("platform/windows") }}"><span>Windows</span></a></li>
+              <li><a href="{{ pathto("platform/phonegap") }}"><span>PhoneGap</span></a></li>
+            </ul>
+          </li>
+          <li>
+            <a href="#">APIs</a>
+            <ul class="submenu">
+              <li><a href="{{ pathto("integration") }}"><span>Integration</span></a></li>
+              <li><a href="{{ pathto("api/overview") }}"><span>API Overview</span></a></li>
+              <li><a href="{{ pathto("api/ua") }}"><span>API Reference</span></a></li>
+            </ul>
+          </li>
+          <li>
+             <a href="#">User Guide</a>
+             <ul class="submenu">
+               <li><a href="{{ pathto("user-guide/getting-started") }}"><span>Getting Started</span></a></li>
+               <li><a href="{{ pathto("user-guide/message-composer") }}"><span>Messaging</span></a></li>
+               <li><a href="{{ pathto("user-guide/audience") }}"><span>Audience</span></a></li>
+               <li><a href="{{ pathto("user-guide/reports") }}"><span>Reports</span></a></li>
+               <li><a href="{{ pathto("user-guide/settings") }}"><span>Settings</span></a></li>
+               <li><a href="{{ pathto("user-guide/account") }}"><span>Account</span></a></li>
+             </ul>
+          </li>
+          <li>
+            <a href="#">Wallet Studio</a>
+            <ul class="submenu">
+              <li><a href="{{ pathto("wallet-studio/getting-started") }}"><span>Getting Started</span></a></li>
+              <li><a href="{{ pathto("wallet-studio/reference") }}"><span>Reference</span></a></li>
+              <li><a href="{{ pathto("api/wallet") }}"><span>API</span></a></li>
+            </ul>
+          </li>
+          <li><a href="{{ pathto("topic-guides/index") }}">Topic Guides</a></li>
+          <li><a href="{{ pathto("reference/index") }}">Reference</a></li>
+          <li class="hide-on-small"><a href="{{ pathto("whats-new/index") }}">What's New</a></li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+  <div class="search-wrapper">
+    {%- block headersearch %}
+      {%- include "searchbox.html" %}
+    {%- endblock %}
+  </div>
+</header>
+<div id="mobile-toc">
+  <a id="toc-toggle">Table of Contents</a>
+</div>

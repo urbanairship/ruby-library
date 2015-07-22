@@ -1,0 +1,578 @@
+.tabber:after, .tertiary-header:after {
+  clear: both;
+  content: " ";
+  display: table;
+}
+
+/* Old tabs */
+.tabbar a {
+  background: #f2f2f2;
+  background: -webkit-linear-gradient(top, #f5f5f5, #e9e9e9);
+  background: -moz-linear-gradient(top, #f5f5f5, #e9e9e9);
+  background: linear-gradient(top, #f5f5f5, #e9e9e9);
+  border: 1px solid #d9d9d9;
+  border-bottom: none;
+  border-radius: 4px 4px 0 0;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  color: #346883;
+  display: inline-block;
+  float: left;
+  font-weight: bold;
+  margin-left: 5px;
+  min-height: 20px;
+  padding: 6px 10px 3px;
+  text-decoration: none;
+  text-shadow: 0px 1px 0 rgba(255, 255, 255, 0.8);
+  vertical-align: bottom;
+  width: auto;
+}
+
+.tabbar a.on {
+  background: #1d5073;
+  background: -webkit-linear-gradient(top, #33739e, #1d5173);
+  background: -moz-linear-gradient(top, #33739e, #1d5173);
+  background: linear-gradient(top, #33739e, #1d5173);
+  border-color: #396380;
+  color: #fff;
+  text-shadow: 0px -1px 0 rgba(29, 64, 87, 0.4);
+}
+
+#tab-content fieldset {
+  padding: 0;
+}
+
+/* New tabs */
+.tabs {
+  box-shadow: #dbdbdb 0 -1px 0 inset;
+  display: table;
+  list-style: none;
+  margin: 0 -20px 20px;
+  padding: 0 20px;
+  table-layout: fixed;
+  width: 100%;
+}
+.tabs > li {
+  display: table-cell;
+  position: relative;
+}
+.tabs > li a,
+.tabs > li label {
+  background: #fbfbfb;
+  border: #dbdbdb 1px solid;
+  border-radius: 4px 4px 0 0;
+  color: #21a1d9;
+  cursor: pointer;
+  display: block;
+  font-size: 14px;
+  -webkit-font-smoothing: antialiased;
+  font-weight: bold;
+  line-height: 20px;
+  margin: 0 0 0 10px;
+  overflow: hidden;
+  position: relative;
+  padding: 5px 10px;
+  text-align: center;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.tabs > li a:hover, .tabs > li a:focus,
+.tabs > li label:hover,
+.tabs > li label:focus {
+  background: #fff;
+  text-decoration: none;
+}
+.tabs > li:first-child a, .tabs > li:first-child label {
+  margin-left: 0;
+}
+.tabs > li.active a,
+.tabs > li [type="radio"]:checked + label {
+  background: #fafaf7;
+  border-bottom: #fafaf7 1px solid;
+  color: #666;
+  cursor: default;
+}
+
+@media only screen and (max-width: 940px) {
+  .tabbar a {
+    border: 1px solid #d9d9d9;
+    border-radius: 4px;
+    margin: 0 5px 5px 0;
+  }
+}
+table {
+  line-height: 20px;
+  margin: 0 0 20px;
+}
+
+table.data {
+  background: #fff;
+  font-size: 13px;
+  table-layout: fixed;
+  width: 100%;
+}
+
+table.data tr th {
+  background: #f5f5f5;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5);
+  color: #666;
+  font-weight: bold;
+  padding: 5px 10px;
+  text-align: left;
+  text-shadow: 0 1px 0 white;
+  white-space: nowrap;
+}
+
+table.data tr th a {
+  color: #666;
+  cursor: pointer;
+}
+
+table.data tr {
+  border-bottom: 1px solid #dedede;
+}
+
+table.data tr td {
+  color: #444;
+  padding: 5px 10px;
+}
+
+table.data tr td a {
+  font-weight: bold;
+  cursor: pointer;
+}
+
+table.data tr td em {
+  color: #888;
+  font-style: normal;
+}
+
+table.data .summary {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.alt tbody > tr:nth-child(even) {
+  background: #fbfbfb;
+}
+
+.table-actions {
+  line-height: 27px;
+}
+
+.table-actions button {
+  font-size: 12px;
+  height: 27px;
+  line-height: 20px;
+  margin: 0 10px 0 0;
+  padding: 3px 10px;
+}
+
+/*** Table module ***/
+.table-module {
+  background: #fff;
+  border: #dbdbdb 1px solid;
+  border-radius: 4px;
+  box-shadow: rgba(0, 0, 0, 0.1) 0 1px 2px;
+  color: #444;
+  line-height: 20px;
+  margin-bottom: 20px;
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+}
+
+.table-module table {
+  margin: 0;
+  border-radius: 4px;
+}
+
+.table-module table tr:last-child {
+  border: none;
+}
+
+.table-module table tr th:first-child {
+  border-radius: 4px 0 0 0;
+}
+
+.table-module table tr th:last-child {
+  border-radius: 0 4px 0 0;
+}
+
+.table-module + .table-actions,
+.table-module + .pages {
+  margin-top: -10px;
+}
+
+/* Grouped data table - account info */
+table.data tr {
+  border-bottom: 0 none;
+}
+
+table.data col.platform {
+  width: 80px;
+  border: 0 none;
+}
+
+.table-module table .numerical {
+  text-align: right;
+}
+
+.table-module table tr td {
+  border-top: #dbdbdb 1px solid;
+}
+
+.table-module thead + tbody tr:first-child td {
+  border-top: 0 none;
+}
+
+.table-module .toggle-row {
+  color: #21a1d9;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.table-module .month-detail {
+  display: none;
+}
+
+.table-module .month-detail.active {
+  display: table-row-group;
+}
+
+.table-module .month-detail td {
+  background-color: #f6f6f6;
+}
+
+/* Message table - greater than 100 */
+.message-table th:nth-child(1) {
+  width: 40%;
+}
+
+.message-table th:nth-child(2),
+.message-table th:nth-child(3),
+.message-table th:nth-child(5) {
+  width: 15%;
+}
+
+.message-table th:nth-child(4) {
+  width: 20%;
+}
+
+/* Schedule table */
+.schedule-table th:nth-child(1) {
+  width: 35%;
+}
+.schedule-table th:nth-child(2), .schedule-table th:nth-child(3), .schedule-table th:nth-child(5) {
+  width: 15%;
+}
+.schedule-table th:nth-child(4) {
+  width: 20%;
+}
+.schedule-table th:nth-child(6) {
+  width: 10%;
+}
+
+.automation-table th:nth-child(1) {
+  width: 30%;
+}
+.automation-table th:nth-child(2), .automation-table th:nth-child(3) {
+  width: 10%;
+}
+.automation-table th:nth-child(4) {
+  width: 20%;
+}
+.automation-table th:nth-child(5), .automation-table th:nth-child(6) {
+  width: 15%;
+}
+
+.table-actions {
+  font-size: 0;
+  position: relative;
+  text-align: right;
+}
+
+.table-actions input[type="checkbox"],
+.table-actions input[type="radio"] {
+  margin: 0;
+  vertical-align: middle;
+}
+
+.table-actions a {
+  display: inline-block;
+  line-height: 1;
+  text-decoration: none;
+}
+
+.table-actions a.active:after {
+  content: '';
+  background: #fff;
+  box-shadow: rgba(0, 0, 0, 0.1) 2px 4px 6px 0;
+  display: block;
+  height: 10px;
+  right: 42px;
+  position: absolute;
+  bottom: -5px;
+  width: 10px;
+  z-index: 1;
+  -moz-transform: rotate(45deg);
+  -webkit-transform: rotate(45deg);
+  -o-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=0.785398163);
+}
+
+/* Temp */
+input[type=submit].delete-welcome,
+.delete-welcome {
+  background: none;
+  border: none;
+  border: 0;
+  box-shadow: none;
+  font-size: 12px;
+  font-weight: normal;
+  color: #E92939;
+  padding: 0;
+  position: absolute;
+  right: 20px;
+  bottom: 25px;
+  text-shadow: none;
+}
+
+/* Old delete style */
+#scheduled-table button[type=submit],
+#drafts-table button[type=submit] {
+  display: none;
+}
+
+.pages > li.delete-btn {
+  float: right;
+}
+
+/* Messages tabs */
+.tab-section {
+  display: none;
+}
+
+.history .historical-messages,
+.drafts .draft-messages,
+.scheduled .scheduled-messages,
+.automated .automated-messages {
+  display: block;
+}
+
+/* Message report */
+table tr.message-report {
+  background: #f5f5f5;
+  overflow: hidden;
+  text-align: center;
+}
+
+table tr.message-report .row {
+  margin: 0;
+  overflow: hidden;
+}
+
+table tr.message-report.visible .oops p {
+  color: #888;
+  font-size: 12px;
+  padding: 10px 0 0;
+  text-align: center;
+}
+
+table tr.message-report td {
+  padding: 0;
+}
+
+/* Hide and show message report */
+.message-report {
+  display: none;
+}
+
+.message-report.visible {
+  display: table-row;
+}
+
+/* Report */
+.performance {
+  background: #f0f0f0;
+  display: table;
+  table-layout: fixed;
+  width: 100%;
+}
+
+.performance > div {
+  display: table-cell;
+  padding: 10px 0;
+  text-align: center;
+}
+
+.performance .count {
+  color: #666;
+  font-weight: bold;
+  font-size: 20px;
+  margin: 0;
+  padding: 0 20px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.performance .count small {
+  color: #888;
+}
+
+.performance h4 {
+  color: #666;
+  font-size: 12px;
+  font-weight: normal;
+  margin: 0;
+}
+
+/* No data -- */
+.no-data {
+  color: #aaa;
+}
+
+.tertiary-header {
+  margin: 0 0 15px;
+}
+
+.tertiary-header h3 {
+  float: left;
+  margin: 0;
+}
+
+.tertiary-header .btn-bar {
+  float: right;
+}
+
+/* New header section to replace tertiary-header */
+.table-header {
+  margin: 0 0 10px;
+  min-height: 20px;
+  position: relative;
+}
+.table-header .table-header-actions {
+  margin: -10px 0 0;
+  position: absolute;
+  right: 0;
+  text-align: right;
+  top: 50%;
+}
+
+table.data tr td a {
+  margin-right: 5px;
+}
+
+/* Disable pagination within the history table while loading new data */
+.loading #history-table .pages a,
+.loading div[rel="history-table"] a {
+  background-color: #e9e9e9;
+  background-image: none;
+  border-color: #ccc;
+  box-shadow: none;
+  color: #999;
+  cursor: not-allowed;
+  pointer-events: none;
+  text-shadow: none;
+}
+
+/* timezone table for push detail reports */
+.timezone-table table.data {
+  table-layout: auto;
+}
+
+.timezone-table col.notifications,
+.timezone-table col.rich {
+  width: 180px;
+}
+
+.timezone-table col.io-rate,
+.timezone-table col.do-rate,
+.timezone-table col.pv-rate {
+  width: 120px;
+}
+
+.timezone-table .numerical {
+  text-align: right;
+}
+
+.timezone-table td.io-rate,
+.timezone-table td.do-rate,
+.timezone-table td.pv-rate {
+  background: rgba(0, 0, 0, 0.0125);
+}
+
+/* maybe delete this */
+@media only screen and (max-width: 768px) {
+  table tr.message-report.visible .row {
+    max-height: 120px;
+  }
+
+  table tr.message-report .row > .col.three {
+    clear: none;
+    float: left;
+    width: 50%;
+  }
+}
+.main {
+  max-width: 100%;
+}
+
+.header .home {
+  font-size: 20px;
+  padding: 6px 0 0 10px;
+}
+.header .home a {
+  color: #555;
+}
+.header .search-form {
+  clear: none;
+  float: right;
+  margin: 0;
+  position: relative;
+  top: -47px;
+}
+.header .search-form label {
+  display: inline-block;
+}
+.header .search-form input[type=text] {
+  position: relative;
+  display: inline-block;
+  width: 180px;
+}
+
+.search-form button {
+  display: none;
+}
+
+.main-search .icon {
+  background: url("../images/icons.png") no-repeat 0 -25px;
+  display: block;
+  height: 16px;
+  left: 25px;
+  position: absolute;
+  top: 26px;
+}
+.main-search input[type="text"] {
+  padding: 5px 10px 5px 20px;
+}
+.main-search ul, .main-search button {
+  display: inline-block;
+}
+.main-search button {
+  vertical-align: top;
+  position: relative;
+  top: 14px;
+  float: right;
+}
+.main-search ul li, .main-search button {
+  display: inline-block;
+  margin-right: 20px;
+}
+.main-search ul li label, .main-search ul li input, .main-search button label, .main-search button input {
+  display: inline-block;
+}
+
+/*# sourceMappingURL=new-control-panel.css.map */

@@ -1,0 +1,287 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800' rel='stylesheet' type='text/css'>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  <title>Retrieving Device Information &mdash; Urban Airship Python Library 0.7.3 documentation</title>
+  
+
+  
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+    <link rel="top" title="Urban Airship Python Library 0.7.3 documentation" href="index.html"/>
+        <link rel="next" title="Channel Uninstall" href="channel_uninstall.html"/>
+        <link rel="prev" title="Defining and Sending Push Notifications" href="push.html"/> 
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+
+</head>
+
+<body class="detail" role="document">
+  <header class="header fixed">
+  <h1 class="logo">
+    <a href="index.html" title="Urban Airship">Urban Airship</a>
+    <!--<a href="index.html" title="Urban Airship">Urban Airship</a>-->
+  </h1>
+  <a href="#" id="menu-toggle" class="icon-list"></a>
+  <a href="#" id="search-toggle" class="icon-search"></a>
+  <div class="main-nav-wrap" id="main-nav-wrap">
+    <div class="main-nav-inner">
+      <nav class="primary">
+        <ul class="main-menu">
+          <li>
+            <a href="#">Platforms</a>
+            <ul class="submenu">
+              <li><a href="platform/ios.html"><span>iOS</span></a></li>
+              <li><a href="platform/android.html"><span>Android</span></a></li>
+              <li><a href="platform/blackberry.html"><span>BlackBerry</span></a></li>
+              <li><a href="platform/windows.html"><span>Windows</span></a></li>
+              <li><a href="platform/phonegap.html"><span>PhoneGap</span></a></li>
+            </ul>
+          </li>
+          <li>
+            <a href="#">APIs</a>
+            <ul class="submenu">
+              <li><a href="integration.html"><span>Integration</span></a></li>
+              <li><a href="api/overview.html"><span>API Overview</span></a></li>
+              <li><a href="api/ua.html"><span>API Reference</span></a></li>
+            </ul>
+          </li>
+          <li>
+             <a href="#">User Guide</a>
+             <ul class="submenu">
+               <li><a href="user-guide/getting-started.html"><span>Getting Started</span></a></li>
+               <li><a href="user-guide/message-composer.html"><span>Messaging</span></a></li>
+               <li><a href="user-guide/audience.html"><span>Audience</span></a></li>
+               <li><a href="user-guide/reports.html"><span>Reports</span></a></li>
+               <li><a href="user-guide/settings.html"><span>Settings</span></a></li>
+               <li><a href="user-guide/account.html"><span>Account</span></a></li>
+             </ul>
+          </li>
+          <li>
+            <a href="#">Wallet Studio</a>
+            <ul class="submenu">
+              <li><a href="wallet-studio/getting-started.html"><span>Getting Started</span></a></li>
+              <li><a href="wallet-studio/reference.html"><span>Reference</span></a></li>
+              <li><a href="api/wallet.html"><span>API</span></a></li>
+            </ul>
+          </li>
+          <li><a href="topic-guides/index.html">Topic Guides</a></li>
+          <li><a href="reference/index.html">Reference</a></li>
+          <li class="hide-on-small"><a href="whats-new/index.html">What's New</a></li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+  <div class="search-wrapper">
+<script>
+  (function() {
+    var cx = '003987891287610372151:8d55aluonec';
+    var gcse = document.createElement('script');
+    gcse.type = 'text/javascript';
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<style>
+.gsc-control-cse {
+    background: #015172;
+    border: 0;
+    border-left: 1px solid #015172;
+}
+.gsc-control-cse div {
+    margin-top: 2px;
+}
+.gsc-input-box {
+    border: 0;
+    background: #015172;
+}
+.gsc-input input.gsc-input {
+    background: #f5f5f5 !important;
+    border-radius: 0; 
+}
+.gsc-input input.gsc-input:focus {
+    background: #FFFFFF !important;
+}
+input.gsc-search-button-v2 {
+    width: 13px;
+    height: 13px;
+    padding: 4px 12px;
+    min-width: 13px;
+    margin-top: 2px;
+}
+.gsc-search-box-tools .gsc-search-box .gsc-input {
+    padding-right: 0;
+}
+
+.gsib_a, .gsib_b {
+    padding: 0;
+}
+
+input.gsc-search-button {
+    border: 0;
+    background-color: #51c4cc;
+}
+
+</style>
+<gcse:search></gcse:search>
+  </div>
+</header>
+<div id="mobile-toc">
+  <a id="toc-toggle">Table of Contents</a>
+</div>
+
+  <div class="content">
+
+    
+    <aside id="side-nav" class="sidebar-first">
+
+      <!-- Local TOC -->
+      <nav class="toc">
+        <div class="local-toc"><ul>
+<li><a class="reference internal" href="#">Retrieving Device Information</a><ul>
+<li><a class="reference internal" href="#channel-listing">Channel Listing</a></li>
+<li><a class="reference internal" href="#channel-lookup">Channel Lookup</a></li>
+<li><a class="reference internal" href="#blackberry-pin-lookup">Blackberry PIN Lookup</a></li>
+<li><a class="reference internal" href="#device-listing">Device Listing</a></li>
+<li><a class="reference internal" href="#feedback">Feedback</a></li>
+</ul>
+</li>
+</ul>
+</div>
+      </nav>
+        <footer>
+  <div class="legal" role="contentinfo">
+  	<p>
+  	    &copy; Copyright 2015, Urban Airship.
+  	</p>
+  	<a href="http://urbanairship.com/legal/privacy-policy" target="_blank">Privacy Policy</a>
+  </div>
+</footer>
+      
+    </aside>
+
+    <div class="main-content">
+
+      <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+    <li>Retrieving Device Information</li>
+  </ul>
+</div>
+
+      
+      <div role="main" class="document">
+        
+  <div class="section" id="retrieving-device-information">
+<h1>Retrieving Device Information<a class="headerlink" href="#retrieving-device-information" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="channel-listing">
+<h2>Channel Listing<a class="headerlink" href="#channel-listing" title="Permalink to this headline">¶</a></h2>
+<p>Device lists are fetched by instantiating an iterator object
+using <code class="xref py py-class docutils literal"><span class="pre">ChannelList</span></code>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">urbanairship</span> <span class="kn">as</span> <span class="nn">ua</span>
+<span class="n">airship</span> <span class="o">=</span> <span class="n">ua</span><span class="o">.</span><span class="n">Airship</span><span class="p">(</span><span class="n">app_key</span><span class="p">,</span> <span class="n">master_secret</span><span class="p">)</span>
+
+<span class="n">channel_id</span> <span class="o">=</span> <span class="bp">None</span>
+<span class="k">for</span> <span class="n">channel</span> <span class="ow">in</span> <span class="n">ua</span><span class="o">.</span><span class="n">ChannelList</span><span class="p">(</span><span class="n">airship</span><span class="p">):</span>
+    <span class="n">channel_id</span> <span class="o">=</span> <span class="n">channel</span><span class="o">.</span><span class="n">channel_id</span>
+    <span class="k">print</span> <span class="p">(</span><span class="n">channel</span><span class="o">.</span><span class="n">channel_id</span><span class="p">,</span> <span class="n">channel</span><span class="o">.</span><span class="n">device_type</span><span class="p">,</span> <span class="n">channel</span><span class="o">.</span><span class="n">tags</span><span class="p">,</span>
+           <span class="n">channel</span><span class="o">.</span><span class="n">push_address</span><span class="p">,</span> <span class="n">channel</span><span class="o">.</span><span class="n">alias</span><span class="p">,</span> <span class="n">channel</span><span class="o">.</span><span class="n">opt_in</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="channel-lookup">
+<h2>Channel Lookup<a class="headerlink" href="#channel-lookup" title="Permalink to this headline">¶</a></h2>
+<p>Device metadata is fetched for a specific channel by using
+<code class="xref py py-class docutils literal"><span class="pre">ChannelLookup:lookup</span></code>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">urbanairship</span> <span class="kn">as</span> <span class="nn">ua</span>
+<span class="n">airship</span> <span class="o">=</span> <span class="n">ua</span><span class="o">.</span><span class="n">Airship</span><span class="p">(</span><span class="n">app_key</span><span class="p">,</span> <span class="n">app_secret</span><span class="p">)</span>
+
+<span class="n">channel</span> <span class="o">=</span> <span class="n">ua</span><span class="o">.</span><span class="n">ChannelInfo</span><span class="o">.</span><span class="n">lookup</span><span class="p">(</span><span class="n">airship</span><span class="p">,</span> <span class="n">device_channel</span><span class="p">)</span>
+<span class="k">print</span> <span class="p">(</span><span class="n">channel</span><span class="o">.</span><span class="n">channel_id</span><span class="p">,</span> <span class="n">channel</span><span class="o">.</span><span class="n">device_type</span><span class="p">,</span> <span class="n">channel</span><span class="o">.</span><span class="n">tags</span><span class="p">,</span>
+       <span class="n">channel</span><span class="o">.</span><span class="n">push_address</span><span class="p">,</span> <span class="n">channel</span><span class="o">.</span><span class="n">alias</span><span class="p">,</span> <span class="n">channel</span><span class="o">.</span><span class="n">opt_in</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="blackberry-pin-lookup">
+<h2>Blackberry PIN Lookup<a class="headerlink" href="#blackberry-pin-lookup" title="Permalink to this headline">¶</a></h2>
+<p>Device metadata is fetched by instantiating a lookup for a specific
+device PIN by using <code class="xref py py-class docutils literal"><span class="pre">DevicePINInfo:pin_lookup</span></code></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">urbanairship</span> <span class="kn">as</span> <span class="nn">ua</span>
+<span class="n">airship</span> <span class="o">=</span> <span class="n">ua</span><span class="o">.</span><span class="n">Airship</span><span class="p">(</span><span class="n">app_key</span><span class="p">,</span> <span class="n">app_secret</span><span class="p">)</span>
+
+<span class="n">device_pin_info</span> <span class="o">=</span> <span class="n">ua</span><span class="o">.</span><span class="n">DevicePINInfo</span><span class="o">.</span><span class="n">pin_lookup</span><span class="p">(</span><span class="n">airship</span><span class="p">,</span> <span class="n">device_pin</span><span class="p">)</span>
+<span class="k">print</span> <span class="p">(</span><span class="n">device_pin_info</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="device-listing">
+<h2>Device Listing<a class="headerlink" href="#device-listing" title="Permalink to this headline">¶</a></h2>
+<p>Device lists are fetched by instantiating an iterator object for each
+type of device. The available iterators are <code class="xref py py-class docutils literal"><span class="pre">DeviceTokenList</span></code>,
+<code class="xref py py-class docutils literal"><span class="pre">APIDList</span></code>, and <code class="xref py py-class docutils literal"><span class="pre">DevicePINList</span></code>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">urbanairship</span> <span class="kn">as</span> <span class="nn">ua</span>
+<span class="n">airship</span> <span class="o">=</span> <span class="n">ua</span><span class="o">.</span><span class="n">Airship</span><span class="p">(</span><span class="n">app_key</span><span class="p">,</span> <span class="n">master_secret</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">dt</span> <span class="ow">in</span> <span class="n">ua</span><span class="o">.</span><span class="n">DeviceTokenList</span><span class="p">(</span><span class="n">airship</span><span class="p">):</span>
+   <span class="k">print</span> <span class="p">(</span><span class="n">dt</span><span class="o">.</span><span class="n">device_token</span><span class="p">,</span> <span class="n">dt</span><span class="o">.</span><span class="n">tags</span> <span class="ow">or</span> <span class="p">[],</span> <span class="n">dt</span><span class="o">.</span><span class="n">active</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="feedback">
+<h2>Feedback<a class="headerlink" href="#feedback" title="Permalink to this headline">¶</a></h2>
+<p>Feedback returns a list of dictionaries of device tokens/APIDs that the
+respective push provider has told us are uninstalled since the given
+timestamp. For more information, see: <a class="reference external" href="feedback">the documentation on feedback</a>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">urbanairship</span> <span class="kn">as</span> <span class="nn">ua</span>
+<span class="n">airship</span> <span class="o">=</span> <span class="n">ua</span><span class="o">.</span><span class="n">Airship</span><span class="p">(</span><span class="n">app_key</span><span class="p">,</span> <span class="n">master_secret</span><span class="p">)</span>
+<span class="n">since</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">utcnow</span><span class="p">()</span> <span class="o">-</span> <span class="n">datetime</span><span class="o">.</span><span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">tokens</span> <span class="o">=</span> <span class="n">ua</span><span class="o">.</span><span class="n">Feedback</span><span class="o">.</span><span class="n">device_token</span><span class="p">(</span><span class="n">airship</span><span class="p">,</span> <span class="n">since</span><span class="p">)</span>
+<span class="n">apids</span> <span class="o">=</span> <span class="n">ua</span><span class="o">.</span><span class="n">Feedback</span><span class="o">.</span><span class="n">apid</span><span class="p">(</span><span class="n">airship</span><span class="p">,</span> <span class="n">since</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+      </div>
+    </div>
+
+  </div>
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/waypoints/2.0.4/waypoints.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/waypoints/2.0.5/shortcuts/sticky-elements/waypoints-sticky.min.js"></script>
+  <script type="text/javascript" src="_static/sphinxcontrib-images/Lightbox2/lightbox2/js/lightbox.min.js"></script>
+  <script type="text/javascript" src="_static/js/theme.js"></script>
+  <script type="text/javascript" src="_static/js/primary-nav.js"></script>
+  <script type="text/javascript" src="_static/js/lazyload.js"></script>
+
+  <script>
+    var menu = new cbpHorizontalSlideOutMenu( document.getElementById( 'main-nav-wrap' ) );
+  </script>
+</body>
+</html>
