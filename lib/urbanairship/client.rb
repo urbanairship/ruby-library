@@ -64,7 +64,7 @@ module Urbanairship
 
         Response.check_code(response.code, response)
 
-        {'body'=>response.body, 'code'=>response.code}
+        {'body'=>response.body, 'code'=>response.code, 'headers'=>response.headers}
       end
 
       # Create a Push Object
