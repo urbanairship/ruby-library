@@ -12,13 +12,17 @@ module Urbanairship
       include Urbanairship::Common
       include Urbanairship::Loggable
 
+      # Initialize a ChannelUninstall Object
+      #
+      # @param [Object] client
       def initialize(client)
         @client = client
       end
 
       def uninstall(channels)
+        chan_num = channels.length
         fail ArgumentError,
-             'Maximum of 200 channel uninstalls exceeded.' if channels.length > 200
+             'Maximum of 200 channel uninstalls exceeded.' if chan_num > 200
 
         response = @client.send_request(
           method: 'POST',
@@ -28,9 +32,10 @@ module Urbanairship
           version: 3
         )
 
+        logger.info { "Successfully uninstalled #{chan_num} channels." }
         response
       end
-
     end
+
   end
 end
