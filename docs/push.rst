@@ -19,11 +19,11 @@ and device types:
 
     UA = Urbanairship
     airship = UA::Client.new(key:'application_key', secret:'master_secret')
-    p = airship.create_push
-    p.audience = UA.all
-    p.notification = UA.notification(alert: 'Hello')
-    p.device_types = UA.all
-    p.send_push
+    push = airship.create_push
+    push.audience = UA.all
+    push.notification = UA.notification(alert: 'Hello')
+    push.device_types = UA.all
+    push.send_push
 
 
 Audience Selectors
@@ -60,7 +60,7 @@ single piece of text:
 
 .. code-block:: ruby
 
-   push.notification = ua.notification(alert="Hello, world!")
+   push.notification = UA.notification(alert="Hello, world!")
 
 You can override the payload with platform-specific values as well.
 
@@ -78,21 +78,20 @@ http://docs.urbanairship.com/api/ua.html#actions, example:
 
 .. code-block:: ruby
 
-   push.notification = ua.notification(
-          alert="Hello, world!",
-          actions=ua.actions(
-              add_tag="new_tag",
-              remove_tag="old_tag",
-              share="Check out Urban Airship!",
-              open_={
-                  "type": "url",
-                  "content": "http://www.urbanairship.com"
-              },
-              app_defined={
-                  "some_app_defined_action": "some_values"
-              }
-          )
-   )
+   push.notification = UA.notification(
+    alert: 'Hello world',
+    actions: UA.actions(
+        add_tag: 'new_tag',
+        remove_old: 'old_tag',
+        share: 'Check out Urban Airship!',
+        open_: {
+            type: 'url',
+            content: 'http://www.urbanairship.com'
+        },
+        app_defined: {
+            some_app_defined_action: 'some_values'
+        },
+    ))
 
 .. automodule:: urbanairship.push.payload
    :members: notification, actions, ios, android, amazon
@@ -109,12 +108,12 @@ Example:
 
 .. code-block:: ruby
 
-    push.notification = ua.notification(
+    push.notification = UA.notification(
         alert="Hello, world!",
-        interactive=ua.interactive(
+        interactive=UA.interactive(
             type = "ua_share",
             button_actions = {
-                    "share" : { "share" : "Sharing is caring!"}
+                share: {share: "Sharing is caring!"}
             }
         )
     )
@@ -147,13 +146,13 @@ types you wish to target, either with a list of strings:
 
 .. code-block:: ruby
 
-   push.device_types = ua.device_types('ios', 'blackberry')
+   push.device_types = UA.device_types('ios', 'blackberry')
 
 or with the ``all_`` shortcut.
 
 .. code-block:: ruby
 
-   push.device_types = ua.all_
+   push.device_types = UA.all_
 
 .. autofunction:: urbanairship.push.payload.device_types
 
@@ -166,12 +165,12 @@ attributes, the notification is ready for delivery.
 
 .. code-block:: ruby
 
-   push.send()
+   push.send_push
 
-If the delivery is unsuccessful, an :py:class:`AirshipFailure` exception
+If the delivery is unsuccessful, an :rb:class:`AirshipFailure` exception
 will be raised.
 
-.. autoclass:: urbanairship.push.core.Push
+.. autoclass:: urbanairship.push.Push
    :members:
 
 
@@ -186,21 +185,17 @@ minute.
 
 .. code-block:: ruby
 
-   import datetime
+    schedule = airship.create_scheduled_push
+    schedule.push = push
+    schedule.name = "optional name for later reference"
+    schedule.schedule = UA.scheduled_time(Time.now.utc + 60)
+    response = schedule.send_push
+    print ("Created schedule. url: " + response.schedule_url)
 
-   schedule = airship.create_scheduled_push()
-   schedule.push = push
-   schedule.name = "optional name for later reference"
-   schedule.schedule = ua.scheduled_time(
-       datetime.datetime.utcnow() + datetime.timedelta(minutes=1))
-   response = schedule.send()
-
-   print ("Created schedule. url:", response.schedule_url)
-
-If the schedule is unsuccessful, an :py:class:`AirshipFailure`
+If the schedule is unsuccessful, an :rb:class:`AirshipFailure`
 exception will be raised.
 
-.. autoclass:: urbanairship.push.core.ScheduledPush
+.. autoclass:: urbanairship.push.ScheduledPush
    :members:
 
 
@@ -215,21 +210,17 @@ local time.
 
 .. code-block:: ruby
 
-   import datetime
+    schedule = airship.create_scheduled_push
+    schedule.push = push
+    schedule.name = "optional name for later reference"
+    schedule.schedule = UA.local_scheduled_time(Time.now + 60)
+    response = schedule.send_push
+    print ("Created schedule. url: " + response.schedule_url)
 
-   schedule = airship.create_scheduled_push()
-   schedule.push = push
-   schedule.name = "optional name for later reference"
-   schedule.schedule = ua.local_scheduled_time(
-       datetime.datetime(2015, 4, 1, 8, 5))
-   response = schedule.send()
-
-   print ("Created schedule. url:", response.schedule_url)
-
-If the schedule is unsuccessful, an :py:class:`AirshipFailure` exception
+If the schedule is unsuccessful, an :rb:class:`AirshipFailure` exception
 will be raised.
 
-.. autoclass:: urbanairship.push.core.ScheduledPush
+.. autoclass:: urbanairship.push.ScheduledPush
    :members:
 
 
@@ -241,10 +232,10 @@ notification, you can update or cancel it before it's sent.
 
 .. code-block:: ruby
 
-   schedule = ua.ScheduledPush.from_url(airship, url)
+   schedule = UA.ScheduledPush.from_url(airship, url)
    # change scheduled time to tomorrow
-   schedule.schedule = ua.scheduled_time(
-       datetime.datetime.utcnow() + datetime.timedelta(days=1))
+   schedule.schedule = UA.scheduled_time(
+       Time.now.utc + (60 * 60 * 24))
    schedule.update()
 
    # Cancel
