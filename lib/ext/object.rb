@@ -1,5 +1,7 @@
-class Object
-  def try(method)
-    send method if respond_to? method
+unless Object.method_defined?(:try)
+  class Object
+    def try(method)
+      send method if respond_to? method
+    end
   end
 end
