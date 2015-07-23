@@ -1,6 +1,5 @@
 require 'json'
 
-require 'ext/object'
 require 'urbanairship/common'
 require 'urbanairship/loggable'
 
@@ -8,7 +7,7 @@ module Urbanairship
   module Devices
 
     class ChannelUninstall
-      attr_writer :client
+      attr_reader :client
       include Urbanairship::Common
       include Urbanairship::Loggable
 

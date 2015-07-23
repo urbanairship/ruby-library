@@ -19,18 +19,6 @@ describe Urbanairship::Devices do
     let(:simple_http_response) { example_hash }
 
     describe "#uninstall" do
-      it 'fails with over 200 channels' do
-        airship = UA::Client.new(key: '123', secret: 'abc')
-        allow(airship)
-          .to receive(:send_request)
-          .and_return(simple_http_response)
-        cu = UA::Devices::ChannelUninstall.new(airship)
-
-        expect {
-          cu.uninstall(build_array(201))
-        }.to raise_error(ArgumentError)
-      end
-
       it 'can be invoked and parse the "ok" value' do
         airship = UA::Client.new(key: '123', secret: 'abc')
         allow(airship)
@@ -41,6 +29,18 @@ describe Urbanairship::Devices do
 
         ok = resp['body']['ok'] || "None"
         expect(ok).to eq 'true'
+      end
+
+      it 'fails with over 200 channels' do
+        airship = UA::Client.new(key: '123', secret: 'abc')
+        allow(airship)
+          .to receive(:send_request)
+          .and_return(simple_http_response)
+        cu = UA::Devices::ChannelUninstall.new(airship)
+
+        expect {
+          cu.uninstall(build_array(201))
+        }.to raise_error(ArgumentError)
       end
     end
   end

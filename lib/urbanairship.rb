@@ -17,5 +17,6 @@ module Urbanairship
   extend Urbanairship::Push::Payload
   extend Urbanairship::Push::Schedule
   extend Urbanairship::Push
-  extend Urbanairship::Devices
+  include Urbanairship::Devices
+
 end
