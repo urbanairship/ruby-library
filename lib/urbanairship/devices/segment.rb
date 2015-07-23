@@ -28,7 +28,7 @@ module Urbanairship
 
         seg_url = response['headers'][:location]
         @id = seg_url.split('/')[-1]
-        response['code']
+        response
       end
 
       # Retrieve a segment based on the provided ID.
@@ -71,7 +71,7 @@ module Urbanairship
         )
 
         logger.info { "Successful segment update: #{@display_name}" }
-        response['code']
+        response
       end
 
       def delete(airship)
