@@ -17,7 +17,7 @@ describe Urbanairship::Devices do
       ]
     }
     data = {
-      'name' => test_name,
+      'display_name' => test_name,
       'criteria' => test_criteria
     }
 
@@ -55,18 +55,18 @@ describe Urbanairship::Devices do
           .and_return(example_hash_lookup)
 
         lookup_res = seg.from_id(airship, 'test_id')
-        expect(lookup_res['code']).to eq "200"
+        expect(lookup_res['code']).to eq '200'
         expect(lookup_res['body']).to eq data
       end
     end
 
     describe '#update' do
       it 'can update a segment' do
-        seg.display_name = "new_test_name"
         allow(airship)
           .to receive(:send_request)
           .and_return(example_hash_update)
 
+        seg.display_name = 'New Test Segment'
         update_res = seg.update(airship)
         expect(update_res['code']).to eq "200"
       end
@@ -80,6 +80,32 @@ describe Urbanairship::Devices do
 
         delete_res = seg.delete(airship)
         expect(delete_res['code']).to eq "204"
+      end
+    end
+  end
+
+  describe Urbanairship::Devices::SegmentList do
+    example_hash_list = {
+      'body' => {
+        'segments' => [
+          { 'display_name' => 'test1' },
+          { 'display_name' => 'test2' }
+        ]
+      },
+      'code' => 200
+    }
+    let(:seglist_http_response) { example_hash_list }
+    name_list = ['test2', 'test1']
+
+    it 'can be invoked and iterate through values' do
+      airship = UA::Client.new(key: '123', secret: 'abc')
+      response =
+      allow(airship)
+        .to receive(:send_request)
+        .and_return(seglist_http_response)
+      seglist = UA::SegmentList.new(airship)
+      seglist.each do |seg|
+        expect(seg.display_name).to eq name_list.pop
       end
     end
   end

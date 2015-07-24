@@ -76,8 +76,6 @@ module Urbanairship
         elsif response_code == 403
           raise Forbidden, "Client is not forbidden from making this request. The application does not have the proper entitlement to access this feature."
         elsif !((200...300).include?(response_code))
-          puts response_code
-          puts response
           raise AirshipFailure.new.from_response(response)
         end
       end

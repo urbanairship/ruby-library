@@ -51,6 +51,8 @@ module Urbanairship
         payload = response['body']
         @id = id
         from_payload(payload)
+
+        response
       end
 
       # Helper method, sets a Segment's attributes
