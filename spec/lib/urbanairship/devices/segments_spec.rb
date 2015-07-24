@@ -34,7 +34,7 @@ describe Urbanairship::Devices do
     example_hash_delete = { "body" => {"ok"=>"true"}, "code" => "204"}
 
     airship = UA::Client.new(key: '123', secret: 'abc')
-    seg = UA::Devices::Segment.new
+    seg = UA::Segment.new
     seg.display_name = test_name
     seg.criteria = test_criteria
 
