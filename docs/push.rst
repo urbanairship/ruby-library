@@ -32,22 +32,146 @@ Audience Selectors
 An audience should specify one or more devices. An audience can be a
 device, such as a ``channel``, ``device_token`` or ``apid``; a tag,
 alias, or segment; a location; or a combination. Audience selectors are
-combined with ``and_``, ``or_``, and ``not_``.
-
-.. rb:data:: urbanairship.push.all_
-
-   Select all, to do a broadcast.
-
-   Used in both ``audience`` and ``device_types``.
-
-   .. code-block:: ruby
-
-      push.audience = UA.all
+combined with ``and``, ``or``, and ``not``.
 
 
-   :members:
-   :noindex:
+Select all to do a broadcast.
 
+.. code-block:: ruby
+
+    push.audience = UA.all
+
+Select a single iOS Channel:
+
+.. code-block:: ruby
+
+    push.audience = UA.ios_channel(uuid)
+
+Select a single Android Channel:
+
+.. code-block:: ruby
+
+    push.audience = UA.android_channel(uuid)
+
+Select a single Amazon Channel:
+
+.. code-block:: ruby
+
+    push.audience = UA.amazon_channel(uuid)
+
+Select a single iOS device token:
+
+.. code-block:: ruby
+
+    push.audience = UA.device_token(token)
+
+Select a single BlackBerry PIN:
+
+.. code-block:: ruby
+
+    push.audience = UA.device_pin(pin)
+
+Select a single Android APID:
+
+.. code-block:: ruby
+
+    push.audience = UA.apid(uuid)
+
+Select a single Windows 8 APID:
+
+.. code-block:: ruby
+
+    push.audience = UA.wns(uuid)
+
+Select a single Windows Phone 8 APID:
+
+.. code-block:: ruby
+
+    push.audience = UA.mpns(uuid)
+
+Select a single tag:
+
+.. code-block:: ruby
+
+    push.audience = UA.tag(tag)
+
+Select a single alias:
+
+.. code-block:: ruby
+
+    push.audience = UA.alias(alias)
+
+Select a single segment:
+
+.. code-block:: ruby
+
+    push.audience = UA.segment(segment)
+
+Select devices that match at least one of the given selectors:
+
+.. code-block:: ruby
+
+    push.audience = UA.or(UA.tag('sports'), UA.tag('business'))
+
+Select devices that match all of the given selectors:
+
+.. code-block:: ruby
+
+    push.audience = UA.and(UA.tag('sports'), UA.tag('business'))
+
+Select devices that do not match the given selectors:
+
+.. code-block:: ruby
+
+    push.audience = UA.not(UA.and(UA.tag('sports'), UA.tag('business')))
+
+Select a location expression. Location selectors are made up of either an id or
+an alias and a date period specifier. Use a date specification function to
+generate the time period specifier. Location aliases can be found here:
+http://docs.urbanairship.com/reference/location_boundary_catalog.html
+
+ID location example:
+
+.. code-block:: ruby
+
+    push.audience = UA.location(
+        id: 'location_id',
+        date: UA.recent_date(days: 4)
+    )
+
+Alias location example:
+
+.. code-block:: ruby
+
+    push.audience = UA.location(
+        us_zip: 12345,
+        date: UA.recent_date(days: 4)
+    )
+
+Select a recent date range for a location selector.
+Valid selectors are: minutes, hours ,days, weeks, months, years
+
+.. code-block:: ruby
+
+    recent_date(months: 6)
+    recent_date(weeks: 3)
+
+Select an absolute date range for a location selector. Parameters are resolution,
+start, and the_end. Resolutions is one of :minutes, :hours, :days, :weeks, :months, or :years.
+Start and the_end are UTC times in ISO 8601 format.
+
+.. code-block:: ruby
+
+    absolute_date(
+        resolution: months,
+        start: '2013-01', the_end: '2013-06'
+    )
+
+    absolute_date(
+        resolution: :minutes,
+        start: '2012-01-01 12:00',
+        the_end: '2012-01-01 12:45')
+    )
 
 Notification Payload
 --------------------
@@ -59,12 +183,83 @@ single piece of text:
 
 .. code-block:: ruby
 
-   push.notification = UA.notification(alert="Hello, world!")
+    push.notification = UA.notification(alert="Hello, world!")
 
 You can override the payload with platform-specific values as well.
 
-   :members: notification, ios, android, blackberry, wns_payload, mpns_payload
+.. code-block:: ruby
 
+    push.notification = UA.ios(
+        alert: 'hello world',
+        badge: 123,
+        sound: 'sound file',
+        extra: { 'key' => 'value', 'key2' => 'value2' }
+        expiry: '2012-01-01 12:45',
+        category: 'category_name',
+        interactive: UA.interactive(
+            type: 'ua_share',
+            button_actions: {
+                share: { share: 'Sharing is caring!' }
+            }
+        ),
+        content_available: true
+    )
+
+    push.notification = UA.amazon(
+        alert: 'hello world',
+        consolidation_key: 'key',
+        expires_after: '2012-01-01 12:45',
+        extra: { 'key' => 'value', 'key2' => 'value2' },
+        title: 'title',
+        summary: 'summary',
+        interactive: UA.interactive(
+            type: 'ua_share',
+            button_actions: {
+                share: { share: 'Sharing is caring!' }
+            }
+        )
+    )
+
+    push.notification = UA.android(
+        alert: 'hello world',
+        collapse_key: 'key',
+        time_to_live: 123,
+        extra: { 'key' => 'value', 'key2' => 'value2' },
+        delay_while_idle: false,
+        interactive: UA.interactive(
+            type: 'ua_share',
+            button_actions: {
+                share: { share: 'Sharing is caring!' }
+            }
+        )
+    )
+
+    push.notification = UA.blackberry(
+        alert: 'hello world',
+        body: 'body',
+        content_type: 'text/plain'
+    )
+
+    push.notification = UA.wns_payload(
+        alert: 'hello world',
+        tile: nil,
+        toast: nil,
+        badge: nil
+    )
+
+    push.notification = UA.mpns_payload(
+        alert: 'hello world',
+        tile: nil,
+        toast: nil,
+        badge: nil
+    )
+
+.. note::
+    The input for wns_payload must include exactly one of
+    alert, toast, tile, or badge.
+
+    The input for mpns_payload must include exactly one of
+    alert, toast, or tile.
 
 Actions
 -------
@@ -76,7 +271,7 @@ http://docs.urbanairship.com/api/ua.html#actions, example:
 
 .. code-block:: ruby
 
-   push.notification = UA.notification(
+    push.notification = UA.notification(
     alert: 'Hello world',
     actions: UA.actions(
         add_tag: 'new_tag',
@@ -91,8 +286,6 @@ http://docs.urbanairship.com/api/ua.html#actions, example:
         },
     ))
 
-   :members: notification, actions, ios, android, amazon
-   :noindex:
 
 Interactive Notifications
 -------------------------
@@ -108,8 +301,8 @@ Example:
     push.notification = UA.notification(
         alert="Hello, world!",
         interactive=UA.interactive(
-            type = "ua_share",
-            button_actions = {
+            type: "ua_share",
+            button_actions: {
                 share: {share: "Sharing is caring!"}
             }
         )
@@ -130,25 +323,22 @@ Button actions can also be mapped to *actions* objects as shown below:
         )
     )
 
-   :members: notification, interactive
-   :noindex:
-
 
 Device Types
 ------------
 
 In addition to specifying the audience, you must specify the device
-types you wish to target, either with a list of strings:
+types you wish to target with a list of strings:
 
 .. code-block:: ruby
 
-   push.device_types = UA.device_types('ios', 'blackberry')
+    push.device_types = UA.device_types(['ios', 'blackberry'])
 
-or with the ``all_`` shortcut.
+or with the ``all`` shortcut.
 
 .. code-block:: ruby
 
-   push.device_types = UA.all_
+    push.device_types = UA.all
 
 
 Delivery
@@ -159,7 +349,7 @@ attributes, the notification is ready for delivery.
 
 .. code-block:: ruby
 
-   push.send_push
+    push.send_push
 
 If the delivery is unsuccessful, an :rb:class:`AirshipFailure` exception
 will be raised.
