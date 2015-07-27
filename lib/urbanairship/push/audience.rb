@@ -42,7 +42,7 @@ module Urbanairship
 
       # Select a single alias
       def alias(an_alias)
-        { alias: an_alias }
+        { alias: an_alias.to_s }
       end
 
       # Select a single segment using segment_id

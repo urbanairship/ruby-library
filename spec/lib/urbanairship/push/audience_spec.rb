@@ -96,6 +96,14 @@ describe Urbanairship do
     end
   end
 
+  describe '#alias' do
+    let(:an_alias) { 42 }
+
+    it 'coerses the alias to a string before sending' do
+      expect(UA.alias(an_alias)).to eq({ alias: '42' })
+    end
+  end
+
   context 'compound selectors' do
     it 'can create an OR' do
       result = UA.or({ tag: 'foo' }, tag: 'bar')
