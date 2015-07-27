@@ -6,8 +6,8 @@ require 'urbanairship/loggable'
 module Urbanairship
   module Devices
     class Segment
-      attr_accessor :display_name, :criteria, :creation_date,
-                    :modification_date, :url, :id
+      attr_accessor :display_name, :criteria
+      attr_reader   :creation_date, :modification_date, :url, :id
       include Urbanairship::Common
       include Urbanairship::Loggable
 
@@ -28,7 +28,6 @@ module Urbanairship
           version: 3
         )
         logger.info { "Successful segment creation: #{@display_name}" }
-
         seg_url = response['headers'][:location]
         @id = seg_url.split('/')[-1]
         response
@@ -47,11 +46,9 @@ module Urbanairship
           content_type: 'application/json',
           version: 3
         )
-
         payload = response['body']
         @id = id
         from_payload(payload)
-
         response
       end
 
@@ -70,7 +67,6 @@ module Urbanairship
         data = {}
         data[:display_name] = @display_name
         data[:criteria] = @criteria
-
         url = SEGMENTS_URL + @id
         response = airship.send_request(
           method: 'PUT',
@@ -79,7 +75,6 @@ module Urbanairship
           content_type: 'application/json',
           version: 3
         )
-
         logger.info { "Successful segment update: #{@display_name}" }
         response
       end
@@ -101,6 +96,7 @@ module Urbanairship
         logger.info { "Successful segment deletion: #{@display_name}" }
         response
       end
+
     end
 
     class SegmentList
@@ -148,7 +144,6 @@ module Urbanairship
           params: params,
           version: 3
         )
-
         @data = response['body']['segments'].map do |raw|
           s = UA::Segment.new
           s.from_payload(raw); s

@@ -4,9 +4,7 @@ require 'urbanairship'
 require 'urbanairship/client'
 require 'urbanairship/devices/segment'
 
-
 describe Urbanairship::Devices do
-
   describe Urbanairship::Devices::Segment do
     UA = Urbanairship
     test_name = 'Test Segment'
@@ -30,8 +28,8 @@ describe Urbanairship::Devices do
       "body" => data,
       "code" => "200"
     }
-    example_hash_update = { "body" => {"ok"=>"true"}, "code" => "200"}
-    example_hash_delete = { "body" => {"ok"=>"true"}, "code" => "204"}
+    example_hash_update = { "body" => "", "code" => "200"}
+    example_hash_delete = { "body" => "", "code" => "204"}
 
     airship = UA::Client.new(key: '123', secret: 'abc')
     seg = UA::Segment.new
@@ -39,17 +37,18 @@ describe Urbanairship::Devices do
     seg.criteria = test_criteria
 
     describe '#create' do
-      it 'can be invoked and parse 200 success' do
+      it 'can be invoked and parse 200 value' do
         allow(airship)
           .to receive(:send_request)
           .and_return(example_hash_create)
+
         create_res = seg.create(airship)
         expect(create_res['code']).to eq "200"
       end
     end
 
     describe '#from_id' do
-      it 'can lookup a segment from an id' do
+      it 'can be invoked and parse 200 value' do
         allow(airship)
           .to receive(:send_request)
           .and_return(example_hash_lookup)
@@ -61,7 +60,7 @@ describe Urbanairship::Devices do
     end
 
     describe '#update' do
-      it 'can update a segment' do
+      it 'can be invoked and parse 200 return value' do
         allow(airship)
           .to receive(:send_request)
           .and_return(example_hash_update)
@@ -73,7 +72,7 @@ describe Urbanairship::Devices do
     end
 
     describe '#delete' do
-      it 'can delete a segment' do
+      it 'can be invoked and parse a 204 return value' do
         allow(airship)
           .to receive(:send_request)
           .and_return(example_hash_delete)
@@ -103,6 +102,7 @@ describe Urbanairship::Devices do
       allow(airship)
         .to receive(:send_request)
         .and_return(seglist_http_response)
+
       seglist = UA::SegmentList.new(airship)
       seglist.each do |seg|
         expect(seg.display_name).to eq name_list.pop
