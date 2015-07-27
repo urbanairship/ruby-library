@@ -45,7 +45,6 @@ combined with ``and_``, ``or_``, and ``not_``.
       push.audience = UA.all
 
 
-.. automodule:: urbanairship.push.audience
    :members:
    :noindex:
 
@@ -64,7 +63,6 @@ single piece of text:
 
 You can override the payload with platform-specific values as well.
 
-.. automodule:: urbanairship.push.payload
    :members: notification, ios, android, blackberry, wns_payload, mpns_payload
 
 
@@ -93,7 +91,6 @@ http://docs.urbanairship.com/api/ua.html#actions, example:
         },
     ))
 
-.. automodule:: urbanairship.push.payload
    :members: notification, actions, ios, android, amazon
    :noindex:
 
@@ -133,7 +130,6 @@ Button actions can also be mapped to *actions* objects as shown below:
         )
     )
 
-.. automodule:: urbanairship.push.payload
    :members: notification, interactive
    :noindex:
 
@@ -154,8 +150,6 @@ or with the ``all_`` shortcut.
 
    push.device_types = UA.all_
 
-.. autofunction:: urbanairship.push.payload.device_types
-
 
 Delivery
 --------
@@ -169,9 +163,6 @@ attributes, the notification is ready for delivery.
 
 If the delivery is unsuccessful, an :rb:class:`AirshipFailure` exception
 will be raised.
-
-.. autoclass:: urbanairship.push.Push
-   :members:
 
 
 Scheduled Delivery
@@ -195,9 +186,6 @@ minute.
 If the schedule is unsuccessful, an :rb:class:`AirshipFailure`
 exception will be raised.
 
-.. autoclass:: urbanairship.push.ScheduledPush
-   :members:
-
 
 Scheduled Delivery in Device Local Time
 ---------------------------------------
@@ -219,9 +207,6 @@ local time.
 
 If the schedule is unsuccessful, an :rb:class:`AirshipFailure` exception
 will be raised.
-
-.. autoclass:: urbanairship.push.ScheduledPush
-   :members:
 
 
 Updating or Canceling a Schedule

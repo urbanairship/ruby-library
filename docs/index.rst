@@ -68,6 +68,6 @@ Indices and tables
 
 
 .. _channels: http://docs.urbanairship.com/topic-guides/channels.html
-.. _requests: http://unirest.io/ruby.html
+.. _unirest: http://unirest.io/ruby.html
 .. _github: https://github.com/urbanairship/ruby-library
 .. _rspec: https://nose.readthedocs.org/en/latest/
