@@ -7,6 +7,7 @@ require 'urbanairship/common'
 require 'urbanairship/loggable'
 require 'urbanairship/util'
 require 'urbanairship/version'
+require 'urbanairship/devices/devicelist'
 
 module Urbanairship
   # Make these functions available in the
@@ -16,5 +17,5 @@ module Urbanairship
   extend Urbanairship::Push::Payload
   extend Urbanairship::Push::Schedule
   extend Urbanairship::Push
-
+  include Urbanairship::Devices
 end
