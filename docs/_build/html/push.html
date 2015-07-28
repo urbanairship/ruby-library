@@ -10,7 +10,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
   
-  <title>Defining and Sending Push Notifications &mdash; Urban Airship Python Library 0.7.3 documentation</title>
+  <title>Defining and Sending Push Notifications &mdash; ruby-library 3.0.1 documentation</title>
   
 
   
@@ -26,9 +26,8 @@
   
     <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   
-    <link rel="top" title="Urban Airship Python Library 0.7.3 documentation" href="index.html"/>
-        <link rel="next" title="Retrieving Device Information" href="devices.html"/>
-        <link rel="prev" title="Urban Airship Python Library" href="index.html"/> 
+    <link rel="top" title="ruby-library 3.0.1 documentation" href="index.html"/>
+        <link rel="prev" title="Urban Airship Ruby Library" href="index.html"/> 
 
   
   <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
@@ -178,7 +177,7 @@ input.gsc-search-button {
         <footer>
   <div class="legal" role="contentinfo">
   	<p>
-  	    &copy; Copyright 2015, Urban Airship.
+  	    &copy; Copyright 2015, Urban Airship Ruby Library.
   	</p>
   	<a href="http://urbanairship.com/legal/privacy-policy" target="_blank">Privacy Policy</a>
   </div>
@@ -201,7 +200,7 @@ input.gsc-search-button {
         
   <div class="section" id="defining-and-sending-push-notifications">
 <h1>Defining and Sending Push Notifications<a class="headerlink" href="#defining-and-sending-push-notifications" title="Permalink to this headline">¶</a></h1>
-<p>The Urban Airship Python Library strives to match the standard Urban
+<p>The Urban Airship Ruby Library strives to match the standard Urban
 Airship JSON format for specifying push notifications. When creating a
 push notification, you:</p>
 <ol class="arabic simple">
@@ -212,14 +211,15 @@ push notification, you:</p>
 </ol>
 <p>This example performs a broadcast with the same alert to all recipients
 and device types:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">urbanairship</span> <span class="kn">as</span> <span class="nn">ua</span>
-<span class="n">airship</span> <span class="o">=</span> <span class="n">ua</span><span class="o">.</span><span class="n">Airship</span><span class="p">(</span><span class="n">app_key</span><span class="p">,</span> <span class="n">master_secret</span><span class="p">)</span>
+<div class="highlight-ruby"><div class="highlight"><pre><span class="nb">require</span> <span class="s1">&#39;urbanairship&#39;</span>
 
-<span class="n">push</span> <span class="o">=</span> <span class="n">airship</span><span class="o">.</span><span class="n">create_push</span><span class="p">()</span>
-<span class="n">push</span><span class="o">.</span><span class="n">audience</span> <span class="o">=</span> <span class="n">ua</span><span class="o">.</span><span class="n">all_</span>
-<span class="n">push</span><span class="o">.</span><span class="n">notification</span> <span class="o">=</span> <span class="n">ua</span><span class="o">.</span><span class="n">notification</span><span class="p">(</span><span class="n">alert</span><span class="o">=</span><span class="s">&quot;Hello, world!&quot;</span><span class="p">)</span>
-<span class="n">push</span><span class="o">.</span><span class="n">device_types</span> <span class="o">=</span> <span class="n">ua</span><span class="o">.</span><span class="n">all_</span>
-<span class="n">push</span><span class="o">.</span><span class="n">send</span><span class="p">()</span>
+<span class="no">UA</span> <span class="o">=</span> <span class="no">Urbanairship</span>
+<span class="n">airship</span> <span class="o">=</span> <span class="no">UA</span><span class="o">::</span><span class="no">Client</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="ss">key</span><span class="p">:</span><span class="s1">&#39;application_key&#39;</span><span class="p">,</span> <span class="ss">secret</span><span class="p">:</span><span class="s1">&#39;master_secret&#39;</span><span class="p">)</span>
+<span class="n">push</span> <span class="o">=</span> <span class="n">airship</span><span class="o">.</span><span class="n">create_push</span>
+<span class="n">push</span><span class="o">.</span><span class="n">audience</span> <span class="o">=</span> <span class="no">UA</span><span class="o">.</span><span class="n">all</span>
+<span class="n">push</span><span class="o">.</span><span class="n">notification</span> <span class="o">=</span> <span class="no">UA</span><span class="o">.</span><span class="n">notification</span><span class="p">(</span><span class="ss">alert</span><span class="p">:</span> <span class="s1">&#39;Hello&#39;</span><span class="p">)</span>
+<span class="n">push</span><span class="o">.</span><span class="n">device_types</span> <span class="o">=</span> <span class="no">UA</span><span class="o">.</span><span class="n">all</span>
+<span class="n">push</span><span class="o">.</span><span class="n">send_push</span>
 </pre></div>
 </div>
 <div class="section" id="audience-selectors">
@@ -227,17 +227,106 @@ and device types:</p>
 <p>An audience should specify one or more devices. An audience can be a
 device, such as a <code class="docutils literal"><span class="pre">channel</span></code>, <code class="docutils literal"><span class="pre">device_token</span></code> or <code class="docutils literal"><span class="pre">apid</span></code>; a tag,
 alias, or segment; a location; or a combination. Audience selectors are
-combined with <code class="docutils literal"><span class="pre">and_</span></code>, <code class="docutils literal"><span class="pre">or_</span></code>, and <code class="docutils literal"><span class="pre">not_</span></code>.</p>
-<dl class="data">
-<dt id="urbanairship.push.all_">
-<code class="descclassname">urbanairship.push.</code><code class="descname">all_</code><a class="headerlink" href="#urbanairship.push.all_" title="Permalink to this definition">¶</a></dt>
-<dd><p>Select all, to do a broadcast.</p>
-<p>Used in both <code class="docutils literal"><span class="pre">audience</span></code> and <code class="docutils literal"><span class="pre">device_types</span></code>.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">push</span><span class="o">.</span><span class="n">audience</span> <span class="o">=</span> <span class="n">ua</span><span class="o">.</span><span class="n">all_</span>
+combined with <code class="docutils literal"><span class="pre">and</span></code>, <code class="docutils literal"><span class="pre">or</span></code>, and <code class="docutils literal"><span class="pre">not</span></code>.</p>
+<p>Select all to do a broadcast.</p>
+<div class="highlight-ruby"><div class="highlight"><pre><span class="n">push</span><span class="o">.</span><span class="n">audience</span> <span class="o">=</span> <span class="no">UA</span><span class="o">.</span><span class="n">all</span>
 </pre></div>
 </div>
-</dd></dl>
+<p>Select a single iOS Channel:</p>
+<div class="highlight-ruby"><div class="highlight"><pre><span class="n">push</span><span class="o">.</span><span class="n">audience</span> <span class="o">=</span> <span class="no">UA</span><span class="o">.</span><span class="n">ios_channel</span><span class="p">(</span><span class="n">uuid</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Select a single Android Channel:</p>
+<div class="highlight-ruby"><div class="highlight"><pre><span class="n">push</span><span class="o">.</span><span class="n">audience</span> <span class="o">=</span> <span class="no">UA</span><span class="o">.</span><span class="n">android_channel</span><span class="p">(</span><span class="n">uuid</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Select a single Amazon Channel:</p>
+<div class="highlight-ruby"><div class="highlight"><pre><span class="n">push</span><span class="o">.</span><span class="n">audience</span> <span class="o">=</span> <span class="no">UA</span><span class="o">.</span><span class="n">amazon_channel</span><span class="p">(</span><span class="n">uuid</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Select a single iOS device token:</p>
+<div class="highlight-ruby"><div class="highlight"><pre><span class="n">push</span><span class="o">.</span><span class="n">audience</span> <span class="o">=</span> <span class="no">UA</span><span class="o">.</span><span class="n">device_token</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Select a single BlackBerry PIN:</p>
+<div class="highlight-ruby"><div class="highlight"><pre><span class="n">push</span><span class="o">.</span><span class="n">audience</span> <span class="o">=</span> <span class="no">UA</span><span class="o">.</span><span class="n">device_pin</span><span class="p">(</span><span class="n">pin</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Select a single Android APID:</p>
+<div class="highlight-ruby"><div class="highlight"><pre><span class="n">push</span><span class="o">.</span><span class="n">audience</span> <span class="o">=</span> <span class="no">UA</span><span class="o">.</span><span class="n">apid</span><span class="p">(</span><span class="n">uuid</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Select a single Windows 8 APID:</p>
+<div class="highlight-ruby"><div class="highlight"><pre><span class="n">push</span><span class="o">.</span><span class="n">audience</span> <span class="o">=</span> <span class="no">UA</span><span class="o">.</span><span class="n">wns</span><span class="p">(</span><span class="n">uuid</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Select a single Windows Phone 8 APID:</p>
+<div class="highlight-ruby"><div class="highlight"><pre><span class="n">push</span><span class="o">.</span><span class="n">audience</span> <span class="o">=</span> <span class="no">UA</span><span class="o">.</span><span class="n">mpns</span><span class="p">(</span><span class="n">uuid</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Select a single tag:</p>
+<div class="highlight-ruby"><div class="highlight"><pre><span class="n">push</span><span class="o">.</span><span class="n">audience</span> <span class="o">=</span> <span class="no">UA</span><span class="o">.</span><span class="n">tag</span><span class="p">(</span><span class="n">tag</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Select a single alias:</p>
+<div class="highlight-ruby"><div class="highlight"><pre><span class="n">push</span><span class="o">.</span><span class="n">audience</span> <span class="o">=</span> <span class="no">UA</span><span class="o">.</span><span class="n">alias</span><span class="p">(</span><span class="k">alias</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Select a single segment:</p>
+<div class="highlight-ruby"><div class="highlight"><pre><span class="n">push</span><span class="o">.</span><span class="n">audience</span> <span class="o">=</span> <span class="no">UA</span><span class="o">.</span><span class="n">segment</span><span class="p">(</span><span class="n">segment</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Select devices that match at least one of the given selectors:</p>
+<div class="highlight-ruby"><div class="highlight"><pre><span class="n">push</span><span class="o">.</span><span class="n">audience</span> <span class="o">=</span> <span class="no">UA</span><span class="o">.</span><span class="n">or</span><span class="p">(</span><span class="no">UA</span><span class="o">.</span><span class="n">tag</span><span class="p">(</span><span class="s1">&#39;sports&#39;</span><span class="p">),</span> <span class="no">UA</span><span class="o">.</span><span class="n">tag</span><span class="p">(</span><span class="s1">&#39;business&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>Select devices that match all of the given selectors:</p>
+<div class="highlight-ruby"><div class="highlight"><pre><span class="n">push</span><span class="o">.</span><span class="n">audience</span> <span class="o">=</span> <span class="no">UA</span><span class="o">.</span><span class="n">and</span><span class="p">(</span><span class="no">UA</span><span class="o">.</span><span class="n">tag</span><span class="p">(</span><span class="s1">&#39;sports&#39;</span><span class="p">),</span> <span class="no">UA</span><span class="o">.</span><span class="n">tag</span><span class="p">(</span><span class="s1">&#39;business&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>Select devices that do not match the given selectors:</p>
+<div class="highlight-ruby"><div class="highlight"><pre><span class="n">push</span><span class="o">.</span><span class="n">audience</span> <span class="o">=</span> <span class="no">UA</span><span class="o">.</span><span class="n">not</span><span class="p">(</span><span class="no">UA</span><span class="o">.</span><span class="n">and</span><span class="p">(</span><span class="no">UA</span><span class="o">.</span><span class="n">tag</span><span class="p">(</span><span class="s1">&#39;sports&#39;</span><span class="p">),</span> <span class="no">UA</span><span class="o">.</span><span class="n">tag</span><span class="p">(</span><span class="s1">&#39;business&#39;</span><span class="p">)))</span>
+</pre></div>
+</div>
+<p>Select a location expression. Location selectors are made up of either an id or
+an alias and a date period specifier. Use a date specification function to
+generate the time period specifier. Location aliases can be found here:
+<a class="reference external" href="http://docs.urbanairship.com/reference/location_boundary_catalog.html">http://docs.urbanairship.com/reference/location_boundary_catalog.html</a></p>
+<p>ID location example:</p>
+<div class="highlight-ruby"><div class="highlight"><pre><span class="n">push</span><span class="o">.</span><span class="n">audience</span> <span class="o">=</span> <span class="no">UA</span><span class="o">.</span><span class="n">location</span><span class="p">(</span>
+    <span class="nb">id</span><span class="p">:</span> <span class="s1">&#39;location_id&#39;</span><span class="p">,</span>
+    <span class="ss">date</span><span class="p">:</span> <span class="no">UA</span><span class="o">.</span><span class="n">recent_date</span><span class="p">(</span><span class="ss">days</span><span class="p">:</span> <span class="mi">4</span><span class="p">)</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>Alias location example:</p>
+<div class="highlight-ruby"><div class="highlight"><pre><span class="n">push</span><span class="o">.</span><span class="n">audience</span> <span class="o">=</span> <span class="no">UA</span><span class="o">.</span><span class="n">location</span><span class="p">(</span>
+    <span class="ss">us_zip</span><span class="p">:</span> <span class="mi">12345</span><span class="p">,</span>
+    <span class="ss">date</span><span class="p">:</span> <span class="no">UA</span><span class="o">.</span><span class="n">recent_date</span><span class="p">(</span><span class="ss">days</span><span class="p">:</span> <span class="mi">4</span><span class="p">)</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>Select a recent date range for a location selector.
+Valid selectors are: minutes, hours ,days, weeks, months, years</p>
+<div class="highlight-ruby"><div class="highlight"><pre><span class="n">recent_date</span><span class="p">(</span><span class="ss">months</span><span class="p">:</span> <span class="mi">6</span><span class="p">)</span>
+<span class="n">recent_date</span><span class="p">(</span><span class="ss">weeks</span><span class="p">:</span> <span class="mi">3</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Select an absolute date range for a location selector. Parameters are resolution,
+start, and the_end. Resolutions is one of :minutes, :hours, :days, :weeks, :months, or :years.
+Start and the_end are UTC times in ISO 8601 format.</p>
+<div class="highlight-ruby"><div class="highlight"><pre><span class="n">absolute_date</span><span class="p">(</span>
+    <span class="ss">resolution</span><span class="p">:</span> <span class="n">months</span><span class="p">,</span>
+    <span class="ss">start</span><span class="p">:</span> <span class="s1">&#39;2013-01&#39;</span><span class="p">,</span> <span class="ss">the_end</span><span class="p">:</span> <span class="s1">&#39;2013-06&#39;</span>
+<span class="p">)</span>
 
+<span class="n">absolute_date</span><span class="p">(</span>
+    <span class="ss">resolution</span><span class="p">:</span> <span class="ss">:minutes</span><span class="p">,</span>
+    <span class="ss">start</span><span class="p">:</span> <span class="s1">&#39;2012-01-01 12:00&#39;</span><span class="p">,</span>
+    <span class="ss">the_end</span><span class="p">:</span> <span class="s1">&#39;2012-01-01 12:45&#39;</span><span class="p">)</span>
+<span class="p">)</span>
+</pre></div>
+</div>
 </div>
 <div class="section" id="notification-payload">
 <h2>Notification Payload<a class="headerlink" href="#notification-payload" title="Permalink to this headline">¶</a></h2>
@@ -245,10 +334,83 @@ combined with <code class="docutils literal"><span class="pre">and_</span></code
 device. At its simplest, it consists of a single string-valued
 attribute, &#8220;alert&#8221;, which sends a push notification consisting of a
 single piece of text:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">push</span><span class="o">.</span><span class="n">notification</span> <span class="o">=</span> <span class="n">ua</span><span class="o">.</span><span class="n">notification</span><span class="p">(</span><span class="n">alert</span><span class="o">=</span><span class="s">&quot;Hello, world!&quot;</span><span class="p">)</span>
+<div class="highlight-ruby"><div class="highlight"><pre><span class="n">push</span><span class="o">.</span><span class="n">notification</span> <span class="o">=</span> <span class="no">UA</span><span class="o">.</span><span class="n">notification</span><span class="p">(</span><span class="n">alert</span><span class="o">=</span><span class="s2">&quot;Hello, world!&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>You can override the payload with platform-specific values as well.</p>
+<div class="highlight-ruby"><div class="highlight"><pre><span class="n">push</span><span class="o">.</span><span class="n">notification</span> <span class="o">=</span> <span class="no">UA</span><span class="o">.</span><span class="n">ios</span><span class="p">(</span>
+    <span class="ss">alert</span><span class="p">:</span> <span class="s1">&#39;hello world&#39;</span><span class="p">,</span>
+    <span class="ss">badge</span><span class="p">:</span> <span class="mi">123</span><span class="p">,</span>
+    <span class="ss">sound</span><span class="p">:</span> <span class="s1">&#39;sound file&#39;</span><span class="p">,</span>
+    <span class="ss">extra</span><span class="p">:</span> <span class="p">{</span> <span class="s1">&#39;key&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;value&#39;</span><span class="p">,</span> <span class="s1">&#39;key2&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;value2&#39;</span> <span class="p">}</span>
+    <span class="ss">expiry</span><span class="p">:</span> <span class="s1">&#39;2012-01-01 12:45&#39;</span><span class="p">,</span>
+    <span class="ss">category</span><span class="p">:</span> <span class="s1">&#39;category_name&#39;</span><span class="p">,</span>
+    <span class="ss">interactive</span><span class="p">:</span> <span class="no">UA</span><span class="o">.</span><span class="n">interactive</span><span class="p">(</span>
+        <span class="ss">type</span><span class="p">:</span> <span class="s1">&#39;ua_share&#39;</span><span class="p">,</span>
+        <span class="ss">button_actions</span><span class="p">:</span> <span class="p">{</span>
+            <span class="ss">share</span><span class="p">:</span> <span class="p">{</span> <span class="ss">share</span><span class="p">:</span> <span class="s1">&#39;Sharing is caring!&#39;</span> <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">),</span>
+    <span class="ss">content_available</span><span class="p">:</span> <span class="kp">true</span>
+<span class="p">)</span>
+
+<span class="n">push</span><span class="o">.</span><span class="n">notification</span> <span class="o">=</span> <span class="no">UA</span><span class="o">.</span><span class="n">amazon</span><span class="p">(</span>
+    <span class="ss">alert</span><span class="p">:</span> <span class="s1">&#39;hello world&#39;</span><span class="p">,</span>
+    <span class="ss">consolidation_key</span><span class="p">:</span> <span class="s1">&#39;key&#39;</span><span class="p">,</span>
+    <span class="ss">expires_after</span><span class="p">:</span> <span class="s1">&#39;2012-01-01 12:45&#39;</span><span class="p">,</span>
+    <span class="ss">extra</span><span class="p">:</span> <span class="p">{</span> <span class="s1">&#39;key&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;value&#39;</span><span class="p">,</span> <span class="s1">&#39;key2&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;value2&#39;</span> <span class="p">},</span>
+    <span class="ss">title</span><span class="p">:</span> <span class="s1">&#39;title&#39;</span><span class="p">,</span>
+    <span class="ss">summary</span><span class="p">:</span> <span class="s1">&#39;summary&#39;</span><span class="p">,</span>
+    <span class="ss">interactive</span><span class="p">:</span> <span class="no">UA</span><span class="o">.</span><span class="n">interactive</span><span class="p">(</span>
+        <span class="ss">type</span><span class="p">:</span> <span class="s1">&#39;ua_share&#39;</span><span class="p">,</span>
+        <span class="ss">button_actions</span><span class="p">:</span> <span class="p">{</span>
+            <span class="ss">share</span><span class="p">:</span> <span class="p">{</span> <span class="ss">share</span><span class="p">:</span> <span class="s1">&#39;Sharing is caring!&#39;</span> <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">)</span>
+<span class="p">)</span>
+
+<span class="n">push</span><span class="o">.</span><span class="n">notification</span> <span class="o">=</span> <span class="no">UA</span><span class="o">.</span><span class="n">android</span><span class="p">(</span>
+    <span class="ss">alert</span><span class="p">:</span> <span class="s1">&#39;hello world&#39;</span><span class="p">,</span>
+    <span class="ss">collapse_key</span><span class="p">:</span> <span class="s1">&#39;key&#39;</span><span class="p">,</span>
+    <span class="ss">time_to_live</span><span class="p">:</span> <span class="mi">123</span><span class="p">,</span>
+    <span class="ss">extra</span><span class="p">:</span> <span class="p">{</span> <span class="s1">&#39;key&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;value&#39;</span><span class="p">,</span> <span class="s1">&#39;key2&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;value2&#39;</span> <span class="p">},</span>
+    <span class="ss">delay_while_idle</span><span class="p">:</span> <span class="kp">false</span><span class="p">,</span>
+    <span class="ss">interactive</span><span class="p">:</span> <span class="no">UA</span><span class="o">.</span><span class="n">interactive</span><span class="p">(</span>
+        <span class="ss">type</span><span class="p">:</span> <span class="s1">&#39;ua_share&#39;</span><span class="p">,</span>
+        <span class="ss">button_actions</span><span class="p">:</span> <span class="p">{</span>
+            <span class="ss">share</span><span class="p">:</span> <span class="p">{</span> <span class="ss">share</span><span class="p">:</span> <span class="s1">&#39;Sharing is caring!&#39;</span> <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">)</span>
+<span class="p">)</span>
+
+<span class="n">push</span><span class="o">.</span><span class="n">notification</span> <span class="o">=</span> <span class="no">UA</span><span class="o">.</span><span class="n">blackberry</span><span class="p">(</span>
+    <span class="ss">alert</span><span class="p">:</span> <span class="s1">&#39;hello world&#39;</span><span class="p">,</span>
+    <span class="ss">body</span><span class="p">:</span> <span class="s1">&#39;body&#39;</span><span class="p">,</span>
+    <span class="ss">content_type</span><span class="p">:</span> <span class="s1">&#39;text/plain&#39;</span>
+<span class="p">)</span>
+
+<span class="n">push</span><span class="o">.</span><span class="n">notification</span> <span class="o">=</span> <span class="no">UA</span><span class="o">.</span><span class="n">wns_payload</span><span class="p">(</span>
+    <span class="ss">alert</span><span class="p">:</span> <span class="s1">&#39;hello world&#39;</span><span class="p">,</span>
+    <span class="ss">tile</span><span class="p">:</span> <span class="kp">nil</span><span class="p">,</span>
+    <span class="ss">toast</span><span class="p">:</span> <span class="kp">nil</span><span class="p">,</span>
+    <span class="ss">badge</span><span class="p">:</span> <span class="kp">nil</span>
+<span class="p">)</span>
+
+<span class="n">push</span><span class="o">.</span><span class="n">notification</span> <span class="o">=</span> <span class="no">UA</span><span class="o">.</span><span class="n">mpns_payload</span><span class="p">(</span>
+    <span class="ss">alert</span><span class="p">:</span> <span class="s1">&#39;hello world&#39;</span><span class="p">,</span>
+    <span class="ss">tile</span><span class="p">:</span> <span class="kp">nil</span><span class="p">,</span>
+    <span class="ss">toast</span><span class="p">:</span> <span class="kp">nil</span><span class="p">,</span>
+    <span class="ss">badge</span><span class="p">:</span> <span class="kp">nil</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>The input for wns_payload must include exactly one of
+alert, toast, tile, or badge.</p>
+<p class="last">The input for mpns_payload must include exactly one of
+alert, toast, or tile.</p>
+</div>
 </div>
 <div class="section" id="actions">
 <h2>Actions<a class="headerlink" href="#actions" title="Permalink to this headline">¶</a></h2>
@@ -256,21 +418,20 @@ single piece of text:</p>
 perform tasks by name in response to push notifications,
 Rich App Page interactions and JavaScript. More information at
 <a class="reference external" href="http://docs.urbanairship.com/api/ua.html#actions">http://docs.urbanairship.com/api/ua.html#actions</a>, example:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">push</span><span class="o">.</span><span class="n">notification</span> <span class="o">=</span> <span class="n">ua</span><span class="o">.</span><span class="n">notification</span><span class="p">(</span>
-       <span class="n">alert</span><span class="o">=</span><span class="s">&quot;Hello, world!&quot;</span><span class="p">,</span>
-       <span class="n">actions</span><span class="o">=</span><span class="n">ua</span><span class="o">.</span><span class="n">actions</span><span class="p">(</span>
-           <span class="n">add_tag</span><span class="o">=</span><span class="s">&quot;new_tag&quot;</span><span class="p">,</span>
-           <span class="n">remove_tag</span><span class="o">=</span><span class="s">&quot;old_tag&quot;</span><span class="p">,</span>
-           <span class="n">share</span><span class="o">=</span><span class="s">&quot;Check out Urban Airship!&quot;</span><span class="p">,</span>
-           <span class="n">open_</span><span class="o">=</span><span class="p">{</span>
-               <span class="s">&quot;type&quot;</span><span class="p">:</span> <span class="s">&quot;url&quot;</span><span class="p">,</span>
-               <span class="s">&quot;content&quot;</span><span class="p">:</span> <span class="s">&quot;http://www.urbanairship.com&quot;</span>
-           <span class="p">},</span>
-           <span class="n">app_defined</span><span class="o">=</span><span class="p">{</span>
-               <span class="s">&quot;some_app_defined_action&quot;</span><span class="p">:</span> <span class="s">&quot;some_values&quot;</span>
-           <span class="p">}</span>
-       <span class="p">)</span>
-<span class="p">)</span>
+<div class="highlight-ruby"><div class="highlight"><pre><span class="n">push</span><span class="o">.</span><span class="n">notification</span> <span class="o">=</span> <span class="no">UA</span><span class="o">.</span><span class="n">notification</span><span class="p">(</span>
+<span class="ss">alert</span><span class="p">:</span> <span class="s1">&#39;Hello world&#39;</span><span class="p">,</span>
+<span class="ss">actions</span><span class="p">:</span> <span class="no">UA</span><span class="o">.</span><span class="n">actions</span><span class="p">(</span>
+    <span class="ss">add_tag</span><span class="p">:</span> <span class="s1">&#39;new_tag&#39;</span><span class="p">,</span>
+    <span class="ss">remove_old</span><span class="p">:</span> <span class="s1">&#39;old_tag&#39;</span><span class="p">,</span>
+    <span class="ss">share</span><span class="p">:</span> <span class="s1">&#39;Check out Urban Airship!&#39;</span><span class="p">,</span>
+    <span class="ss">open_</span><span class="p">:</span> <span class="p">{</span>
+        <span class="ss">type</span><span class="p">:</span> <span class="s1">&#39;url&#39;</span><span class="p">,</span>
+        <span class="ss">content</span><span class="p">:</span> <span class="s1">&#39;http://www.urbanairship.com&#39;</span>
+    <span class="p">},</span>
+    <span class="ss">app_defined</span><span class="p">:</span> <span class="p">{</span>
+        <span class="ss">some_app_defined_action</span><span class="p">:</span> <span class="s1">&#39;some_values&#39;</span>
+    <span class="p">},</span>
+<span class="p">))</span>
 </pre></div>
 </div>
 </div>
@@ -281,25 +442,25 @@ with a notification. It contains two attributes: &#8220;type&#8221; (mandatory) 
 &#8220;button_actions&#8221; (optional). More information at
 <a class="reference external" href="http://docs.urbanairship.com/api/ua.html#interactive-notifications">http://docs.urbanairship.com/api/ua.html#interactive-notifications</a>
 Example:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">push</span><span class="o">.</span><span class="n">notification</span> <span class="o">=</span> <span class="n">ua</span><span class="o">.</span><span class="n">notification</span><span class="p">(</span>
-    <span class="n">alert</span><span class="o">=</span><span class="s">&quot;Hello, world!&quot;</span><span class="p">,</span>
-    <span class="n">interactive</span><span class="o">=</span><span class="n">ua</span><span class="o">.</span><span class="n">interactive</span><span class="p">(</span>
-        <span class="nb">type</span> <span class="o">=</span> <span class="s">&quot;ua_share&quot;</span><span class="p">,</span>
-        <span class="n">button_actions</span> <span class="o">=</span> <span class="p">{</span>
-                <span class="s">&quot;share&quot;</span> <span class="p">:</span> <span class="p">{</span> <span class="s">&quot;share&quot;</span> <span class="p">:</span> <span class="s">&quot;Sharing is caring!&quot;</span><span class="p">}</span>
+<div class="highlight-ruby"><div class="highlight"><pre><span class="n">push</span><span class="o">.</span><span class="n">notification</span> <span class="o">=</span> <span class="no">UA</span><span class="o">.</span><span class="n">notification</span><span class="p">(</span>
+    <span class="n">alert</span><span class="o">=</span><span class="s2">&quot;Hello, world!&quot;</span><span class="p">,</span>
+    <span class="n">interactive</span><span class="o">=</span><span class="no">UA</span><span class="o">.</span><span class="n">interactive</span><span class="p">(</span>
+        <span class="ss">type</span><span class="p">:</span> <span class="s2">&quot;ua_share&quot;</span><span class="p">,</span>
+        <span class="ss">button_actions</span><span class="p">:</span> <span class="p">{</span>
+            <span class="ss">share</span><span class="p">:</span> <span class="p">{</span><span class="ss">share</span><span class="p">:</span> <span class="s2">&quot;Sharing is caring!&quot;</span><span class="p">}</span>
         <span class="p">}</span>
     <span class="p">)</span>
 <span class="p">)</span>
 </pre></div>
 </div>
 <p>Button actions can also be mapped to <em>actions</em> objects as shown below:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">shared</span> <span class="o">=</span> <span class="n">ua</span><span class="o">.</span><span class="n">actions</span><span class="p">(</span><span class="n">share</span><span class="o">=</span><span class="s">&quot;Sharing is caring!&quot;</span><span class="p">)</span>
+<div class="highlight-ruby"><div class="highlight"><pre><span class="n">shared</span> <span class="o">=</span> <span class="n">ua</span><span class="o">.</span><span class="n">actions</span><span class="p">(</span><span class="n">share</span><span class="o">=</span><span class="s2">&quot;Sharing is caring!&quot;</span><span class="p">)</span>
 <span class="n">push</span><span class="o">.</span><span class="n">notification</span> <span class="o">=</span> <span class="n">ua</span><span class="o">.</span><span class="n">notification</span><span class="p">(</span>
-    <span class="n">alert</span><span class="o">=</span><span class="s">&quot;Hello, world!&quot;</span><span class="p">,</span>
+    <span class="n">alert</span><span class="o">=</span><span class="s2">&quot;Hello, world!&quot;</span><span class="p">,</span>
     <span class="n">interactive</span><span class="o">=</span><span class="n">ua</span><span class="o">.</span><span class="n">interactive</span><span class="p">(</span>
-        <span class="nb">type</span> <span class="o">=</span> <span class="s">&quot;ua_share&quot;</span><span class="p">,</span>
+        <span class="n">type</span> <span class="o">=</span> <span class="s2">&quot;ua_share&quot;</span><span class="p">,</span>
         <span class="n">button_actions</span> <span class="o">=</span> <span class="p">{</span>
-                <span class="s">&quot;share&quot;</span> <span class="p">:</span> <span class="n">shared</span>
+                <span class="s2">&quot;share&quot;</span> <span class="p">:</span> <span class="n">shared</span>
         <span class="p">}</span>
     <span class="p">)</span>
 <span class="p">)</span>
@@ -309,12 +470,12 @@ Example:</p>
 <div class="section" id="device-types">
 <h2>Device Types<a class="headerlink" href="#device-types" title="Permalink to this headline">¶</a></h2>
 <p>In addition to specifying the audience, you must specify the device
-types you wish to target, either with a list of strings:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">push</span><span class="o">.</span><span class="n">device_types</span> <span class="o">=</span> <span class="n">ua</span><span class="o">.</span><span class="n">device_types</span><span class="p">(</span><span class="s">&#39;ios&#39;</span><span class="p">,</span> <span class="s">&#39;blackberry&#39;</span><span class="p">)</span>
+types you wish to target with a list of strings:</p>
+<div class="highlight-ruby"><div class="highlight"><pre><span class="n">push</span><span class="o">.</span><span class="n">device_types</span> <span class="o">=</span> <span class="no">UA</span><span class="o">.</span><span class="n">device_types</span><span class="p">(</span><span class="o">[</span><span class="s1">&#39;ios&#39;</span><span class="p">,</span> <span class="s1">&#39;blackberry&#39;</span><span class="o">]</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>or with the <code class="docutils literal"><span class="pre">all_</span></code> shortcut.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">push</span><span class="o">.</span><span class="n">device_types</span> <span class="o">=</span> <span class="n">ua</span><span class="o">.</span><span class="n">all_</span>
+<p>or with the <code class="docutils literal"><span class="pre">all</span></code> shortcut.</p>
+<div class="highlight-ruby"><div class="highlight"><pre><span class="n">push</span><span class="o">.</span><span class="n">device_types</span> <span class="o">=</span> <span class="no">UA</span><span class="o">.</span><span class="n">all</span>
 </pre></div>
 </div>
 </div>
@@ -322,10 +483,10 @@ types you wish to target, either with a list of strings:</p>
 <h2>Delivery<a class="headerlink" href="#delivery" title="Permalink to this headline">¶</a></h2>
 <p>Once you have set the <code class="docutils literal"><span class="pre">audience</span></code>, <code class="docutils literal"><span class="pre">notification</span></code>, and <code class="docutils literal"><span class="pre">device_types</span></code>
 attributes, the notification is ready for delivery.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">push</span><span class="o">.</span><span class="n">send</span><span class="p">()</span>
+<div class="highlight-ruby"><div class="highlight"><pre><span class="n">push</span><span class="o">.</span><span class="n">send_push</span>
 </pre></div>
 </div>
-<p>If the delivery is unsuccessful, an <code class="xref py py-class docutils literal"><span class="pre">AirshipFailure</span></code> exception
+<p>If the delivery is unsuccessful, an <code class="xref rb rb-class docutils literal"><span class="pre">AirshipFailure</span></code> exception
 will be raised.</p>
 </div>
 <div class="section" id="scheduled-delivery">
@@ -334,19 +495,15 @@ will be raised.</p>
 components: the scheduled time(s) and an optional name.</p>
 <p>This example schedules the above notification for delivery in one
 minute.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">datetime</span>
-
-<span class="n">schedule</span> <span class="o">=</span> <span class="n">airship</span><span class="o">.</span><span class="n">create_scheduled_push</span><span class="p">()</span>
+<div class="highlight-ruby"><div class="highlight"><pre><span class="n">schedule</span> <span class="o">=</span> <span class="n">airship</span><span class="o">.</span><span class="n">create_scheduled_push</span>
 <span class="n">schedule</span><span class="o">.</span><span class="n">push</span> <span class="o">=</span> <span class="n">push</span>
-<span class="n">schedule</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s">&quot;optional name for later reference&quot;</span>
-<span class="n">schedule</span><span class="o">.</span><span class="n">schedule</span> <span class="o">=</span> <span class="n">ua</span><span class="o">.</span><span class="n">scheduled_time</span><span class="p">(</span>
-    <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">utcnow</span><span class="p">()</span> <span class="o">+</span> <span class="n">datetime</span><span class="o">.</span><span class="n">timedelta</span><span class="p">(</span><span class="n">minutes</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
-<span class="n">response</span> <span class="o">=</span> <span class="n">schedule</span><span class="o">.</span><span class="n">send</span><span class="p">()</span>
-
-<span class="k">print</span> <span class="p">(</span><span class="s">&quot;Created schedule. url:&quot;</span><span class="p">,</span> <span class="n">response</span><span class="o">.</span><span class="n">schedule_url</span><span class="p">)</span>
+<span class="n">schedule</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;optional name for later reference&quot;</span>
+<span class="n">schedule</span><span class="o">.</span><span class="n">schedule</span> <span class="o">=</span> <span class="no">UA</span><span class="o">.</span><span class="n">scheduled_time</span><span class="p">(</span><span class="no">Time</span><span class="o">.</span><span class="n">now</span><span class="o">.</span><span class="n">utc</span> <span class="o">+</span> <span class="mi">60</span><span class="p">)</span>
+<span class="n">response</span> <span class="o">=</span> <span class="n">schedule</span><span class="o">.</span><span class="n">send_push</span>
+<span class="nb">print</span> <span class="p">(</span><span class="s2">&quot;Created schedule. url: &quot;</span> <span class="o">+</span> <span class="n">response</span><span class="o">.</span><span class="n">schedule_url</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>If the schedule is unsuccessful, an <code class="xref py py-class docutils literal"><span class="pre">AirshipFailure</span></code>
+<p>If the schedule is unsuccessful, an <code class="xref rb rb-class docutils literal"><span class="pre">AirshipFailure</span></code>
 exception will be raised.</p>
 </div>
 <div class="section" id="scheduled-delivery-in-device-local-time">
@@ -355,32 +512,28 @@ exception will be raised.</p>
 components: the scheduled time(s) and an optional name.</p>
 <p>This example schedules the above notification for delivery in device
 local time.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">datetime</span>
-
-<span class="n">schedule</span> <span class="o">=</span> <span class="n">airship</span><span class="o">.</span><span class="n">create_scheduled_push</span><span class="p">()</span>
+<div class="highlight-ruby"><div class="highlight"><pre><span class="n">schedule</span> <span class="o">=</span> <span class="n">airship</span><span class="o">.</span><span class="n">create_scheduled_push</span>
 <span class="n">schedule</span><span class="o">.</span><span class="n">push</span> <span class="o">=</span> <span class="n">push</span>
-<span class="n">schedule</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s">&quot;optional name for later reference&quot;</span>
-<span class="n">schedule</span><span class="o">.</span><span class="n">schedule</span> <span class="o">=</span> <span class="n">ua</span><span class="o">.</span><span class="n">local_scheduled_time</span><span class="p">(</span>
-    <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2015</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
-<span class="n">response</span> <span class="o">=</span> <span class="n">schedule</span><span class="o">.</span><span class="n">send</span><span class="p">()</span>
-
-<span class="k">print</span> <span class="p">(</span><span class="s">&quot;Created schedule. url:&quot;</span><span class="p">,</span> <span class="n">response</span><span class="o">.</span><span class="n">schedule_url</span><span class="p">)</span>
+<span class="n">schedule</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;optional name for later reference&quot;</span>
+<span class="n">schedule</span><span class="o">.</span><span class="n">schedule</span> <span class="o">=</span> <span class="no">UA</span><span class="o">.</span><span class="n">local_scheduled_time</span><span class="p">(</span><span class="no">Time</span><span class="o">.</span><span class="n">now</span> <span class="o">+</span> <span class="mi">60</span><span class="p">)</span>
+<span class="n">response</span> <span class="o">=</span> <span class="n">schedule</span><span class="o">.</span><span class="n">send_push</span>
+<span class="nb">print</span> <span class="p">(</span><span class="s2">&quot;Created schedule. url: &quot;</span> <span class="o">+</span> <span class="n">response</span><span class="o">.</span><span class="n">schedule_url</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>If the schedule is unsuccessful, an <code class="xref py py-class docutils literal"><span class="pre">AirshipFailure</span></code> exception
+<p>If the schedule is unsuccessful, an <code class="xref rb rb-class docutils literal"><span class="pre">AirshipFailure</span></code> exception
 will be raised.</p>
 </div>
 <div class="section" id="updating-or-canceling-a-schedule">
 <h2>Updating or Canceling a Schedule<a class="headerlink" href="#updating-or-canceling-a-schedule" title="Permalink to this headline">¶</a></h2>
 <p>If you have the <code class="docutils literal"><span class="pre">schedule_url</span></code> returned from creating a scheduled
 notification, you can update or cancel it before it&#8217;s sent.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">schedule</span> <span class="o">=</span> <span class="n">ua</span><span class="o">.</span><span class="n">ScheduledPush</span><span class="o">.</span><span class="n">from_url</span><span class="p">(</span><span class="n">airship</span><span class="p">,</span> <span class="n">url</span><span class="p">)</span>
-<span class="c"># change scheduled time to tomorrow</span>
-<span class="n">schedule</span><span class="o">.</span><span class="n">schedule</span> <span class="o">=</span> <span class="n">ua</span><span class="o">.</span><span class="n">scheduled_time</span><span class="p">(</span>
-    <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">utcnow</span><span class="p">()</span> <span class="o">+</span> <span class="n">datetime</span><span class="o">.</span><span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
+<div class="highlight-ruby"><div class="highlight"><pre><span class="n">schedule</span> <span class="o">=</span> <span class="no">UA</span><span class="o">.</span><span class="n">ScheduledPush</span><span class="o">.</span><span class="n">from_url</span><span class="p">(</span><span class="n">airship</span><span class="p">,</span> <span class="n">url</span><span class="p">)</span>
+<span class="c1"># change scheduled time to tomorrow</span>
+<span class="n">schedule</span><span class="o">.</span><span class="n">schedule</span> <span class="o">=</span> <span class="no">UA</span><span class="o">.</span><span class="n">scheduled_time</span><span class="p">(</span>
+    <span class="no">Time</span><span class="o">.</span><span class="n">now</span><span class="o">.</span><span class="n">utc</span> <span class="o">+</span> <span class="p">(</span><span class="mi">60</span> <span class="o">*</span> <span class="mi">60</span> <span class="o">*</span> <span class="mi">24</span><span class="p">))</span>
 <span class="n">schedule</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
 
-<span class="c"># Cancel</span>
+<span class="c1"># Cancel</span>
 <span class="n">schedule</span><span class="o">.</span><span class="n">cancel</span><span class="p">()</span>
 </pre></div>
 </div>
