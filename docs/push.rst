@@ -409,9 +409,8 @@ notification, you can update or cancel it before it's sent.
 
    schedule = UA.ScheduledPush.from_url(airship, url)
    # change scheduled time to tomorrow
-   schedule.schedule = UA.scheduled_time(
-       Time.now.utc + (60 * 60 * 24))
-   schedule.update()
+   schedule.schedule = UA.scheduled_time(Time.now.utc + (60 * 60 * 24))
+   schedule.update
 
    # Cancel
-   schedule.cancel()
+   schedule.cancel
