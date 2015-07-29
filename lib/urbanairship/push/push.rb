@@ -167,11 +167,11 @@ module Urbanairship
       attr_reader :ok, :push_ids, :schedule_url, :operation_id, :payload, :status_code
 
       def initialize(http_response_body: nil, http_response_code: nil)
-        @payload = http_response_body || "No Content"
-        @ok = @payload['ok'] || "None"
-        @push_ids = @payload['push_ids'] || "None"
-        @schedule_url = @payload['schedule_urls'].try(:first) || "None"
-        @operation_id = @payload['operation_id'] || "None"
+        @payload = http_response_body || 'No Content'
+        @ok = @payload['ok'] || 'None'
+        @push_ids = @payload['push_ids'] || 'None'
+        @schedule_url = @payload['schedule_urls'].try(:first) || 'None'
+        @operation_id = @payload['operation_id'] || 'None'
         @status_code = http_response_code
       end
 
@@ -181,7 +181,7 @@ module Urbanairship
       def format
         base = "Received [#{@status_code}] response code. \nHeaders: \tBody:\n"
         payload.each do |key, value|
-          safe_value = value.to_s || "None"
+          safe_value = value.to_s || 'None'
           base << "#{key}:\t#{safe_value}\n"
         end
         base

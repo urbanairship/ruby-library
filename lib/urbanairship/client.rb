@@ -50,7 +50,7 @@ module Urbanairship
         headers = {'User-agent' => 'UARubyLib/' + UA::VERSION}
 
         if version
-          headers['Accept'] = "application/vnd.urbanairship+json; version=" + version.to_s
+          headers['Accept'] = 'application/vnd.urbanairship+json; version=' + version.to_s
         end
 
         if content_type
