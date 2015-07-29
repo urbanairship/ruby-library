@@ -25,7 +25,7 @@ Using the library
 
 The library is intended to be used with the small footprint of a single
 import. To get started, import the package, and create an
-:rb:class:``Airship`` object representing a single UA application.
+:rb:class:`Airship` object representing a single UA application.
 
 Note that channels are preferred over ``device_token`` and ``apid``. See:
 `documentation on channels <channels>`_.

@@ -62,6 +62,7 @@ Broadcast to All Devices
 
 Simple Tag Push
 -------------------------------------------------
+
     >>> require 'urbanairship'
     >>> UA = Urbanairship
     >>> airship = UA::Client.new(key:'application_key', secret:'master_secret')
@@ -79,6 +80,7 @@ http://support.urbanairship.com/
 
 Contributing
 ============
+
 1. Fork it ( https://github.com/urbanairship/ruby-library )
 2. Create your feature branch (`git checkout -b my-new-feature`)
 3. Commit your changes (`git commit -am 'Add some feature'`)
@@ -89,18 +91,18 @@ Note: Changes will not be approved and merged without a signed contribution agre
 
 Development
 ===========
-After checking out the repo, ensure you have ```bundler``` installed (```$ gem install bundler```) run
+
+After checking out the repo, ensure you have ``bundler`` installed (``$ gem install bundler``) run::
 
     >>> $ bin/setup
 
-to install dependencies.
-Then, run
+to install dependencies. Then, run::
 
     >>> $ bin/console
 
 for an interactive prompt that will allow you to experiment.
 
-OR you can build a local gem to play with:
+OR you can build a local gem to play with::
 
     >>> $ gem build urbanairship.gemspec
     >>> $ gem install ./urbanairship-<VERSION>.gem
