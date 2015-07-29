@@ -27,20 +27,22 @@ A more detailed list of changes can be found in the CHANGELOG.
 
 Installation
 ============
-If you have the ```bundler``` gem (if not you can get it with ```$ gem install bundler```) add this line to your application's Gemfile:
+
+If you have the ``bundler`` gem (if not you can get it with ``$ gem install bundler``) add this line to your application's Gemfile::
 
     >>> gem 'urbanairship'
 
-And then execute:
+And then execute::
 
     >>> $ bundle
 
-OR install it yourself as:
+OR install it yourself as::
 
     >>> gem install urbanairship
 
 Usage
 =====
+
 Once the gem has been installed you can start sending pushes!
  See `api examples
 <http://docs.urbanairship.com/topic-guides/api-examples.html>`_, for more

@@ -8,15 +8,15 @@ rich app pages.
 Installation
 ------------
 
-If you have the ```bundler``` gem (if not you can get it with ```$ gem install bundler```) add this line to your application's Gemfile:
+If you have the ``bundler`` gem (if not you can get it with ``$ gem install bundler``) add this line to your application's Gemfile::
 
     >>> gem 'urbanairship'
 
-And then execute:
+And then execute::
 
     >>> $ bundle
 
-OR install it yourself as:
+OR install it yourself as::
 
     >>> gem install urbanairship
 
@@ -25,9 +25,9 @@ Using the library
 
 The library is intended to be used with the small footprint of a single
 import. To get started, import the package, and create an
-:rb:class:`Airship` object representing a single UA application.
+:rb:class:``Airship`` object representing a single UA application.
 
-Note that channels are preferred over `device_token` and `apid`. See:
+Note that channels are preferred over ``device_token`` and ``apid``. See:
 `documentation on channels <channels>`_.
 
 .. code-block:: ruby
