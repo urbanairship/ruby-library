@@ -32,6 +32,16 @@ module Urbanairship
       raise ArgumentError.new("required parameter #{arg.to_sym.inspect + ' ' if arg}not passed to method #{method}")
     end
 
+    def try_helper(method, obj)
+      if obj.respond_to?(method)
+        obj.send(method)
+      end
+    end
+
+    def compact_helper(a_hash)
+      a_hash.keep_if {|_, value| !value.nil?}
+    end
+
     class Unauthorized < StandardError
       # raised when we get a 401 from server
     end
