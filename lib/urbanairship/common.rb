@@ -16,7 +16,7 @@ module Urbanairship
     TAGS_URL = BASE_URL + '/tags/'
     SEGMENTS_URL = BASE_URL + '/segments/'
 
-    # Helper method for required keyword args in 2.0 that is compatible with 2.1+
+    # Helper method for required keyword args in Ruby 2.0 that is compatible with 2.1+
     # @example
     #   def say(greeting: required('greeting'))
     #     puts greeting
@@ -32,12 +32,22 @@ module Urbanairship
       raise ArgumentError.new("required parameter #{arg.to_sym.inspect + ' ' if arg}not passed to method #{method}")
     end
 
+    # Helper method that sends the indicated method to the indicated object, if the object responds to the method
+    # @example
+    #   try_helper(:first, [1,2,3])
+    #
+    #   >> 1
     def try_helper(method, obj)
       if obj.respond_to?(method)
         obj.send(method)
       end
     end
 
+    # Helper method that deletes every key-value pair from a hash for which the value is nil
+    # @example
+    #   compact_helper({"a" => 1, "b" => nil})
+    #
+    #   >> {"a" => 1}
     def compact_helper(a_hash)
       a_hash.keep_if {|_, value| !value.nil?}
     end
