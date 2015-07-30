@@ -1,6 +1,5 @@
 require 'json'
 
-require 'ext/object'
 require 'urbanairship/common'
 require 'urbanairship/loggable'
 
@@ -23,13 +22,13 @@ module Urbanairship
       end
 
       def payload
-        {
+        compact_helper({
           audience: @audience,
           notification: @notification,
           options: @options,
           device_types: @device_types,
           message: @message
-        }.compact
+        })
       end
 
       # Send the Push Object
@@ -67,11 +66,11 @@ module Urbanairship
       end
 
       def payload
-        {
+        compact_helper({
           name: @name,
           schedule: @schedule,
           push: @push.payload
-        }.compact
+        })
       end
 
       # Schedule the Push Notification
@@ -165,13 +164,14 @@ module Urbanairship
     # Response to a successful push notification send or schedule.
     class PushResponse
       attr_reader :ok, :push_ids, :schedule_url, :operation_id, :payload, :status_code
+      include Urbanairship::Common
 
       def initialize(http_response_body: nil, http_response_code: nil)
-        @payload = http_response_body || 'No Content'
-        @ok = @payload['ok'] || 'None'
-        @push_ids = @payload['push_ids'] || 'None'
-        @schedule_url = @payload['schedule_urls'].try(:first) || 'None'
-        @operation_id = @payload['operation_id'] || 'None'
+        @payload = http_response_body || "No Content"
+        @ok = @payload['ok'] || "None"
+        @push_ids = @payload['push_ids'] || "None"
+        @schedule_url = try_helper(:first, @payload['schedule_urls']) || "None"
+        @operation_id = @payload['operation_id'] || "None"
         @status_code = http_response_code
       end
 
