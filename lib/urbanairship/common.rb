@@ -1,5 +1,6 @@
 require 'urbanairship/loggable'
 
+
 module Urbanairship
   # Features mixed in to all classes
   module Common

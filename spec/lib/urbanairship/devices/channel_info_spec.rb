@@ -1,8 +1,6 @@
 require 'spec_helper'
-
 require 'urbanairship'
-require 'urbanairship/client'
-require 'urbanairship/devices/devicelist'
+
 
 describe Urbanairship::Devices do
   UA = Urbanairship

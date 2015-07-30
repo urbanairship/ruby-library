@@ -1,7 +1,6 @@
 require 'unirest'
 require 'urbanairship'
-# require 'urbanairship/common'
-# require 'urbanairship/loggable'
+
 
 module Urbanairship
     class Client
@@ -32,7 +31,7 @@ module Urbanairship
       # @param [Object] params Parameters
       # @return [Object] Push Response
       def send_request(method: required('method'), url: required('url'), body: nil,
-                       content_type: nil, version: nil, params: nil)
+                       content_type: nil, version: nil)
         req_type = case method
           when 'GET'
             :get

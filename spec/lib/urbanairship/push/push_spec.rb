@@ -1,8 +1,6 @@
 require 'spec_helper'
-
 require 'urbanairship'
-require 'urbanairship/client'
-require 'urbanairship/push/push'
+
 
 describe Urbanairship::Push do
   UA = Urbanairship

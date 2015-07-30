@@ -1,6 +1,7 @@
 require 'urbanairship/util'
 require 'urbanairship/common'
 
+
 module Urbanairship
   module Push
     module Audience

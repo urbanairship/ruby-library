@@ -1,5 +1,5 @@
 require 'urbanairship'
-require 'urbanairship/common'
+
 
 module Urbanairship
   module Devices

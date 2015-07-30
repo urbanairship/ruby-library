@@ -1,7 +1,7 @@
 require 'json'
-
 require 'urbanairship/common'
 require 'urbanairship/loggable'
+
 
 module Urbanairship
   module Push
