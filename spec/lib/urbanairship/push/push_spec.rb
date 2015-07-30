@@ -8,7 +8,16 @@ describe Urbanairship::Push do
   UA = Urbanairship
 
   let(:some_expiry) { 10_080 }
-  example_hash = { "body" => {"ok"=>"true", "push_ids"=>["04fca66c-f33a-11e4-9c82-5ff5f086852f"], "schedule_urls" => ["https://go.urbanairship.com/api/schedules/0492662a-1b52-4343-a1f9-c6b0c72931c0"]}, "code" => "200"}
+
+  example_hash = {
+    "body" => {
+      "ok"=>"true",
+      "push_ids"=>["04fca66c-f33a-11e4-9c82-5ff5f086852f"],
+      "schedule_urls" => ["https://go.urbanairship.com/api/schedules/0492662a-1b52-4343-a1f9-c6b0c72931c0"]
+    },
+    "code" => "200"
+  }
+
   let(:simple_http_response) { example_hash }
 
   let!(:a_push) {
@@ -44,7 +53,6 @@ describe Urbanairship::Push do
         icons: { list_icon: 'http://cdn.example.com/message.png' },
         options: { some_delivery_option: true }
       }
-
     }
   }
 
