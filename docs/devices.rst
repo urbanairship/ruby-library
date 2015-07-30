@@ -21,9 +21,10 @@ Channel Lookup
 --------------
 
 Device metadata is fetched for a specific channel by using
-:rb:class:`ChannelLookup:lookup`.
+:rb:class:`ChannelInfo` with the method ``lookup('uuid')``.
 
 .. code-block:: ruby
+
     require 'urbanairship'
     UA = Urbanairship
     airship = UA::Client.new(key:'application_key', secret:'master_secret')

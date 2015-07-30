@@ -57,6 +57,7 @@ Contents:
    :maxdepth: 2
 
    push.rst
+   devices.rst
    exceptions.rst
    examples.rst
 
