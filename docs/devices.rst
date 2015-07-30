@@ -15,14 +15,7 @@ using :rb:class:`ChannelList`.
     channel_list = UA::ChannelList.new(airship)
 
     channel_list.each |channel|
-        print (
-            channel['channel_id'],
-            channel['device_type'],
-            channel['tags'],
-            channel['push_address'],
-            channel['alias'],
-            channel['opt_in']
-        )
+        puts(channel)
 
 Channel Lookup
 --------------
