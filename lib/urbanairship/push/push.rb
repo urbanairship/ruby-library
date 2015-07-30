@@ -180,7 +180,7 @@ module Urbanairship
       # @return [Object] String Formatted PushResponse
       def format
         base = "Received [#{@status_code}] response code. \nHeaders: \tBody:\n"
-        payload.each do |key, value|
+        Array.wrap(payload).each do |key, value|
           safe_value = value.to_s || "None"
           base << "#{key}:\t#{safe_value}\n"
         end
