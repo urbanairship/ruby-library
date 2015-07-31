@@ -9,8 +9,8 @@ describe Urbanairship::Devices do
 
   # create an array of size n
   def build_array(n)
-    dummy_id = { :device_type => "android",
-                 :channel_id => "01000001-01010000-01010000-01001100" }
+    dummy_id = { "device_type" => "android",
+                 "channel_id" => "01000001-01010000-01010000-01001100" }
     Array.new(n, dummy_id)
   end
 
@@ -24,7 +24,7 @@ describe Urbanairship::Devices do
         allow(airship)
           .to receive(:send_request)
           .and_return(simple_http_response)
-        cu = UA::Devices::ChannelUninstall.new(airship)
+        cu = UA::ChannelUninstall.new(airship)
         resp = cu.uninstall(build_array(1))
 
         ok = resp['body']['ok'] || "None"
@@ -36,7 +36,7 @@ describe Urbanairship::Devices do
         allow(airship)
           .to receive(:send_request)
           .and_return(simple_http_response)
-        cu = UA::Devices::ChannelUninstall.new(airship)
+        cu = UA::ChannelUninstall.new(airship)
 
         expect {
           cu.uninstall(build_array(201))
