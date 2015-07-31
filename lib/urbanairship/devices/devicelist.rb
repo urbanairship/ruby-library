@@ -59,5 +59,29 @@ module Urbanairship
         @channel_list = response['body']['channels']
       end
     end
+
+    class Feedback
+      def initialize(client)
+        @client = client
+      end
+
+      def device_token(since)
+        url = common.DT_FEEDBACK_URL + '?since' + since
+        get_feedback(url)
+      end
+
+      def apid(since)
+        url = common.APID_FEEDBACK_URL + '?since' + since
+        get_feedback(url)
+      end
+
+      def get_feedback(url)
+        response = @client.send_request(
+            method: 'GET',
+            url: url,
+            version: 3,
+        )
+      end
+    end
   end
 end
