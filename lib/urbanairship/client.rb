@@ -19,6 +19,7 @@ module Urbanairship
       def initialize(key: required('key'), secret: required('secret'))
         @key = key
         @secret = secret
+        @version = 3
       end
 
       # Send a request to Urban Airship's API
@@ -49,8 +50,9 @@ module Urbanairship
         headers = {'User-agent' => 'UARubyLib/' + UA::VERSION}
 
         if version
-          headers['Accept'] = 'application/vnd.urbanairship+json; version=' + version.to_s
+          @version = version
         end
+        headers['Accept'] = 'application/vnd.urbanairship+json; version=' + @version.to_s
 
         if content_type
           headers['Content-type'] = content_type

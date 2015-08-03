@@ -9,6 +9,7 @@ require 'urbanairship/util'
 require 'urbanairship/version'
 require 'urbanairship/devices/devicelist'
 require 'urbanairship/devices/channel_tags'
+require 'urbanairship/devices/named_user'
 
 module Urbanairship
   # Make these functions available in the
