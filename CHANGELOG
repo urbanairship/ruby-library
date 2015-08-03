@@ -1,4 +1,11 @@
 --------------------
+3.0.2
+--------------------
+- Resolve compatibility issues with Rails ActiveSupport
+
+
+
+--------------------
 3.0.1
 --------------------
 - Updating Gemspec to show required Ruby Version correctly
