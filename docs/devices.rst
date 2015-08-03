@@ -29,5 +29,6 @@ Device metadata is fetched for a specific channel by using
     require 'urbanairship'
     UA = Urbanairship
     airship = UA::Client.new(key:'application_key', secret:'master_secret')
-    channel = UA::ChannelInfo.new(airship).lookup('uuid')
-    puts(channel)
+    channel_client = UA::ChannelInfo.new(airship)
+    channel_info = channel_client.lookup('uuid')
+    puts(channel_info)
