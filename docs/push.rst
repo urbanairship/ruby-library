@@ -149,7 +149,7 @@ Alias location example:
     )
 
 Select a recent date range for a location selector.
-Valid selectors are: minutes, hours ,days, weeks, months, years
+Valid selectors are: hours ,days, weeks, months, years
 
 .. code-block:: ruby
 
@@ -157,7 +157,7 @@ Valid selectors are: minutes, hours ,days, weeks, months, years
     recent_date(weeks: 3)
 
 Select an absolute date range for a location selector. Parameters are resolution,
-start, and the_end. Resolutions is one of :minutes, :hours, :days, :weeks, :months, or :years.
+start, and the_end. Resolutions is one of :hours, :days, :weeks, :months, or :years.
 Start and the_end are UTC times in ISO 8601 format.
 
 .. code-block:: ruby
@@ -168,9 +168,9 @@ Start and the_end are UTC times in ISO 8601 format.
     )
 
     absolute_date(
-        resolution: :minutes,
-        start: '2012-01-01 12:00',
-        the_end: '2012-01-01 12:45')
+        resolution: :hours,
+        start: '2012-01-01 11:00',
+        the_end: '2012-01-01 12:00')
     )
 
 Notification Payload
