@@ -61,17 +61,18 @@ module Urbanairship
     end
 
     class Feedback
+      include Urbanairship::Common
       def initialize(client)
         @client = client
       end
 
       def device_token(since)
-        url = common.DT_FEEDBACK_URL + '?since' + since
+        url = DT_FEEDBACK_URL + '?since=' + since
         get_feedback(url)
       end
 
       def apid(since)
-        url = common.APID_FEEDBACK_URL + '?since' + since
+        url = APID_FEEDBACK_URL + '?since=' + since
         get_feedback(url)
       end
 

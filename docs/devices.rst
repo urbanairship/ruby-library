@@ -43,9 +43,10 @@ http://docs.urbanairship.com/api/ua.html#feedback
 .. code-block:: ruby
 
     require 'urbanairship'
+    require 'time
     UA = Urbanairship
     airship = UA::Client.new(key:'application_key', secret:'master_secret')
-    since = Time.now.utc - (60 * 60 * 24 * 3)
+    since = Time.now.utc - (60 * 60 * 24 * 3).iso8601
     feedback = UA::Feedback.new(airship)
     tokens = feedback.device_token(since)
     apids = feedback.apid(since)
