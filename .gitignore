@@ -4,9 +4,11 @@
 /_yardoc/
 /coverage/
 /doc/
+/docs/_build/
 /pkg/
 /spec/reports/
 /tmp/
+
 
 # App
 urbanairship.log

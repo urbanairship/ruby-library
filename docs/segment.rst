@@ -19,7 +19,7 @@ information, see `the API documentation <http://docs.urbanairship.com/api/ua.htm
 
    segment_list.each do |segment|
       puts segment
-
+   end
 
 ******************
 Creating a Segment
