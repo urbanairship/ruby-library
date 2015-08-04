@@ -21,6 +21,13 @@ describe Urbanairship::Devices do
         actual_resp = named_user.associate('123', 'android')
         expect(actual_resp).to eq(expected_resp)
       end
+
+      it 'fails when the user_id is not set' do
+        named_user_without_id = UA::NamedUser.new(airship)
+        expect {
+          named_user_without_id.associate('123', 'android')
+        }.to raise_error(ArgumentError)
+      end
     end
 
     describe '#disassociate' do
@@ -68,6 +75,13 @@ describe Urbanairship::Devices do
         allow(airship).to receive(:send_request).and_return(expected_lookup_resp)
         actual_resp = named_user.lookup
         expect(actual_resp).to eq(expected_lookup_resp)
+      end
+
+      it 'fails when the user_id is not set' do
+        named_user_without_id = UA::NamedUser.new(airship)
+        expect {
+          named_user_without_id.lookup
+        }.to raise_error(ArgumentError)
       end
     end
   end
@@ -128,7 +142,7 @@ describe Urbanairship::Devices do
         }.to raise_error(ArgumentError)
       end
 
-      it 'fails when remove, add, or set are not set' do
+      it 'fails when remove, add, and set are not set' do
         named_user_tags.set_audience(ios: :ios_audience)
         expect {
           named_user_tags.send_request

@@ -59,6 +59,7 @@ Contents:
    push.rst
    devices.rst
    tags.rst
+   named_user.rst
    exceptions.rst
    examples.rst
 
