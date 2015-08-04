@@ -7,6 +7,7 @@ module Urbanairship
 
       attr_writer :client
       include Urbanairship::Common
+      include Urbanairship::Loggable
 
       def initialize(client)
         @client = client
@@ -18,6 +19,7 @@ module Urbanairship
           url: CHANNEL_URL + uuid,
           version: 3
         )
+        logger.info("Retrieved channel information for #{uuid}")
         response['body']['channel']
       end
     end
