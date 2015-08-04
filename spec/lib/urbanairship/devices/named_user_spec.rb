@@ -74,12 +74,87 @@ describe Urbanairship::Devices do
 
   describe Urbanairship::NamedUserTags do
     named_user_list = ['user1', 'user2', 'user3']
-    named_user_tags = UA::NamedUserTags.new(airship)
+    let(:named_user_tags) { UA::NamedUserTags.new(airship) }
 
     describe '#set_audience' do
       it 'can set the audience successfully' do
-        named_user_tags.set_audience('test')
-        expect(named_user_list) .to eq(named_user_list)
+        named_user_tags.set_audience(named_user_list)
+        expect(named_user_tags.audience['named_user_id']) .to eq(named_user_list)
+      end
+    end
+
+    describe '#add' do
+      it 'adds a group correctly' do
+        named_user_tags.add(:group_name, :tag1)
+        expect(named_user_tags.add_group[:group_name]).to eq :tag1
+      end
+    end
+
+    describe '#remove' do
+      it 'removes a group correctly' do
+        named_user_tags.remove(:group_name, :tag1)
+        expect(named_user_tags.remove_group[:group_name]).to eq :tag1
+      end
+    end
+
+    describe '#set' do
+      it 'sets a group correctly' do
+        named_user_tags.set(:group_name, :tag1)
+        expect(named_user_tags.set_group[:group_name]).to eq :tag1
+      end
+    end
+
+    it 'add and removes a group correctly simultaneously' do
+      named_user_tags.add(:group_name, :tag1)
+      named_user_tags.remove(:group_name, :tag2)
+      expect(named_user_tags.add_group[:group_name]).to eq :tag1
+      expect(named_user_tags.remove_group[:group_name]).to eq :tag2
+    end
+
+    describe '#send_request' do
+      it 'fails when add and set are used simultaneously' do
+        named_user_tags.add(:group_name, :tag1)
+        named_user_tags.set(:group_name, :tag1)
+        expect {
+          named_user_tags.send_request
+        }.to raise_error(ArgumentError)
+      end
+
+      it 'fails when remove and set are used simultaneously' do
+        named_user_tags.remove(:group_name, :tag1)
+        named_user_tags.set(:group_name, :tag1)
+        expect {
+          named_user_tags.send_request
+        }.to raise_error(ArgumentError)
+      end
+
+      it 'fails when remove, add, or set are not set' do
+        named_user_tags.set_audience(ios: :ios_audience)
+        expect {
+          named_user_tags.send_request
+        }.to raise_error(ArgumentError)
+      end
+
+      it 'fails when audience is not set' do
+        named_user_tags.add(:group_name, :tag1)
+        expect {
+          named_user_tags.send_request
+        }.to raise_error(ArgumentError)
+      end
+
+      it 'sends a request correctly' do
+        mock_response = {
+            'body' => {
+                'ok' => true
+            },
+            'code' => 200
+        }
+        named_user_tags.set_audience(ios: :ios_audience)
+        named_user_tags.add(:group_name, :tag1)
+        allow(airship)
+            .to receive(:send_request).and_return(mock_response)
+        response = named_user_tags.send_request
+        expect(response).to eq(mock_response)
       end
     end
   end

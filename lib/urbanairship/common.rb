@@ -105,6 +105,7 @@ module Urbanairship
     class PageIterator
       include Urbanairship::Common
       include Enumerable
+      attr_accessor :data_attribute
 
       def initialize(client)
         @client = client

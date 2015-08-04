@@ -55,7 +55,6 @@ module Urbanairship
 
     class NamedUserTags < ChannelTags
       include Urbanairship::Common
-      attr_reader(:audience)
 
       def initialize(client)
         super(client)
