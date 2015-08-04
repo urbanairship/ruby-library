@@ -1,10 +1,13 @@
 require 'urbanairship'
+require 'urbanairship/loggable'
 
 
 module Urbanairship
   module Devices
     class NamedUser
       include Urbanairship::Common
+      include Urbanairship::Loggable
+
       def initialize(client, named_user_id=nil)
         @client = client
         @named_user_id = named_user_id
@@ -19,12 +22,14 @@ module Urbanairship
         payload['device_type'] = device_type
         payload['named_user_id'] = @named_user_id
 
-        @client.send_request(
+        response = @client.send_request(
           method: 'POST',
           body: JSON.dump(payload),
           url: NAMED_USER_URL + '/associate',
           content_type: 'application/json'
         )
+        logger.info { "Associated channel_id #{channel_id} with named_user #{@named_user_id}" }
+        response
       end
 
       def disassociate(channel_id, device_type)
@@ -34,24 +39,29 @@ module Urbanairship
         if @named_user_id
           payload['named_user_id'] = @named_user_id
 
-          @client.send_request(
+          response = @client.send_request(
               method: 'POST',
               body: JSON.dump(payload),
               url: NAMED_USER_URL + '/disassociate',
               content_type: 'application/json'
           )
         end
+        logger.info { "Dissociated channel_id #{channel_id}" }
+        response
       end
 
       def lookup
         fail ArgumentError,
            'named_user_id is required for lookup' if @named_user_id.nil?
-        @client.send_request(
+        response = @client.send_request(
             method: 'GET',
             url: NAMED_USER_URL + '?id=' + @named_user_id,
         )
+        logger.info { "Retrieved information on named_user_id #{@named_user_id}" }
+        response
       end
     end
+
 
     class NamedUserTags < ChannelTags
       include Urbanairship::Common
@@ -65,6 +75,7 @@ module Urbanairship
         @audience['named_user_id'] = user_ids
       end
     end
+
 
     class NamedUserList < Urbanairship::Common::PageIterator
       include Urbanairship::Common
