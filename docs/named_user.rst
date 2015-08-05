@@ -17,10 +17,12 @@ http://docs.urbanairship.com/api/ua.html#listing
     named_user_list = UA::NamedUserList.new(airship)
 
     named_user_list.each do |named_user|
-      puts(named_user)
+        puts(named_user)
+    end
 
 Association
 -----------
+
 Associate a channel with a named user ID. For more information, see:
 http://docs.urbanairship.com/api/ua.html#association
 

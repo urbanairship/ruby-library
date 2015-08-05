@@ -59,13 +59,13 @@ module Urbanairship
         payload['remove'] = @remove_group if !@remove_group.empty?
         payload['set'] = @set_group if !@set_group.empty?
 
-        @client.send_request(
+        response = @client.send_request(
           method: 'POST',
           body: JSON.dump(payload),
           url: @url,
           content_type: 'application/json'
         )
-        logger.info("Set the channel tags for audience: #{@audience}")
+        logger.info("Set tags for audience: #{@audience}")
         response
       end
     end
