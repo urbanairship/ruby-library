@@ -16,6 +16,7 @@ module Urbanairship
     SCHEDULES_URL = BASE_URL + '/schedules/'
     SEGMENTS_URL = BASE_URL + '/segments/'
     NAMED_USER_URL = BASE_URL + '/named_users/'
+    REPORTS_URL = BASE_URL + '/reports/'
 
     # Helper method for required keyword args in Ruby 2.0 that is compatible with 2.1+
     # @example
