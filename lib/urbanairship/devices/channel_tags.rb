@@ -5,6 +5,7 @@ module Urbanairship
   module Devices
     class ChannelTags
       include Urbanairship::Common
+      include Urbanairship::Loggable
       attr_writer :client
       attr_reader :audience, :add_group, :remove_group, :set_group
 
@@ -64,6 +65,8 @@ module Urbanairship
           url: @url,
           content_type: 'application/json'
         )
+        logger.info("Set the channel tags for audience: #{@audience}")
+        response
       end
     end
   end
