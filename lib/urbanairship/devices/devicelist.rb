@@ -33,6 +33,8 @@ module Urbanairship
 
     class Feedback
       include Urbanairship::Common
+      include Urbanairship::Loggable
+
       def initialize(client)
         @client = client
       end
@@ -50,8 +52,10 @@ module Urbanairship
       def get_feedback(url)
         response = @client.send_request(
             method: 'GET',
-            url: url
+            url: url,
         )
+        logger.info("Requested feedback at url #{url}")
+        response
       end
     end
   end
