@@ -15,8 +15,9 @@ http://docs.urbanairship.com/api/ua.html#channels
     airship = UA::Client.new(key:'application_key', secret:'master_secret')
     channel_list = UA::ChannelList.new(airship)
 
-    channel_list.each |channel|
+    channel_list.each do |channel|
         puts(channel)
+    end
 
 Channel Lookup
 --------------
@@ -29,8 +30,9 @@ Device metadata is fetched for a specific channel by using
     require 'urbanairship'
     UA = Urbanairship
     airship = UA::Client.new(key:'application_key', secret:'master_secret')
-    channel = UA::ChannelInfo.new(airship).lookup('uuid')
-    puts(channel)
+    channel_client = UA::ChannelInfo.new(airship)
+    channel_info = channel_client.lookup('uuid')
+    puts(channel_info)
 
 Feedback
 --------
