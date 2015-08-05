@@ -11,9 +11,6 @@ require 'urbanairship/devices/devicelist'
 
 
 module Urbanairship
-  # Make these functions available in the
-  # `Urbanairship` namespace, as in the Python
-  # library.
   extend Urbanairship::Push::Audience
   extend Urbanairship::Push::Payload
   extend Urbanairship::Push::Schedule

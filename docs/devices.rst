@@ -15,8 +15,9 @@ http://docs.urbanairship.com/api/ua.html#channels
     airship = UA::Client.new(key:'application_key', secret:'master_secret')
     channel_list = UA::ChannelList.new(airship)
 
-    channel_list.each |channel|
+    channel_list.each do |channel|
         puts(channel)
+    end
 
 Channel Lookup
 --------------
