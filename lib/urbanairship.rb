@@ -12,9 +12,6 @@ require 'urbanairship/devices/channel_tags'
 require 'urbanairship/devices/named_user'
 
 module Urbanairship
-  # Make these functions available in the
-  # `Urbanairship` namespace, as in the Python
-  # library.
   extend Urbanairship::Push::Audience
   extend Urbanairship::Push::Payload
   extend Urbanairship::Push::Schedule

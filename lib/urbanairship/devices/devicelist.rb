@@ -4,9 +4,9 @@ require 'urbanairship'
 module Urbanairship
   module Devices
     class ChannelInfo
-
-      attr_writer :client
       include Urbanairship::Common
+      include Urbanairship::Loggable
+      attr_writer :client
 
       def initialize(client)
         @client = client
@@ -17,6 +17,7 @@ module Urbanairship
           method: 'GET',
           url: CHANNEL_URL + uuid
         )
+        logger.info("Retrieved channel information for #{uuid}")
         response['body']['channel']
       end
     end
