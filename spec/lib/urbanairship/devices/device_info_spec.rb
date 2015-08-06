@@ -40,7 +40,7 @@ describe Urbanairship::Devices do
     describe '#lookup' do
       it 'can get a response' do
         allow(airship).to receive(:send_request).and_return(lookup_hash)
-        response = channel_info.lookup('321')
+        response = channel_info.lookup(uuid: '321')
         expect(response[:channel_id]).to eq '123'
       end
     end
