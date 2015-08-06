@@ -35,6 +35,7 @@ module Urbanairship
           method: 'POST',
           body: JSON.dump({ 'push_ids' => push_ids }),
           url: REPORTS_URL + 'perpush/detail/',
+          content_type: 'application/json'
         )
         logger.info("Requested info for push ids: #{push_ids}")
         response
