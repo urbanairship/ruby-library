@@ -35,7 +35,7 @@ describe Urbanairship::Devices do
         }
       }
     }
-    channel_info = UA::ChannelInfo.new(airship)
+    channel_info = UA::ChannelInfo.new(client: airship)
 
     describe '#lookup' do
       it 'can get a response' do
@@ -166,7 +166,7 @@ describe Urbanairship::Devices do
   end
 
   describe Urbanairship::Devices::Feedback do
-    feedback = UA::Feedback.new(airship)
+    feedback = UA::Feedback.new(client: airship)
 
     describe '#device_token' do
       it 'can get the device_list' do

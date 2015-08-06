@@ -8,7 +8,7 @@ module Urbanairship
       include Urbanairship::Loggable
       attr_writer :client
 
-      def initialize(client)
+      def initialize(client: client)
         @client = client
       end
 
@@ -23,8 +23,8 @@ module Urbanairship
     end
 
     class ChannelList < Urbanairship::Common::PageIterator
-      def initialize(client)
-        super(client)
+      def initialize(client: client)
+        super(client: client)
         @next_page = CHANNEL_URL
         @data_attribute = 'channels'
         load_page
@@ -35,7 +35,7 @@ module Urbanairship
       include Urbanairship::Common
       include Urbanairship::Loggable
 
-      def initialize(client)
+      def initialize(client: client)
         @client = client
       end
 
