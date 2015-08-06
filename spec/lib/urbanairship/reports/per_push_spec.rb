@@ -71,4 +71,32 @@ describe Urbanairship::Reports do
       end
     end
   end
+
+  describe UA::Reports::PerPushSeries do
+    describe "#get" do
+      push_series = UA::PerPushSeries.new(client: airship)
+
+      it 'fails when push_id is nil' do
+        expect {
+          push_series.get(push_id: nil)
+        }.to raise_error(ArgumentError)
+      end
+
+      it 'fails when precision is not valid' do
+        expect {
+          push_series.get(push_id: 'push_id', precision: 'bad_value')
+        }.to raise_error(ArgumentError)
+      end
+
+      it 'fails when start is specified but not end' do
+        expect {
+          push_series.get(
+              push_id: 'push_id',
+              precision: 'HOURLY',
+              start_date: '2015-08-01 00:00:00'
+          )
+        }.to raise_error(ArgumentError)
+      end
+    end
+  end
 end

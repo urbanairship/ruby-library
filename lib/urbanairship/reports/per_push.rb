@@ -1,4 +1,5 @@
 require 'urbanairship'
+require 'time'
 
 
 module Urbanairship
@@ -65,6 +66,8 @@ module Urbanairship
         if start_date or end_date
           fail ArgumentError,
                "Precision must be included with start and end dates" if precision.nil?
+          fail ArgumentError,
+               "Both start_date and end_date must be provided if one is included" if start_date.nil? or end_date.nil?
           begin
             Time.parse(start_date)
             Time.parse(end_date)
