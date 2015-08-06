@@ -9,7 +9,7 @@ describe Urbanairship::Common do
   describe Urbanairship::Common::PageIterator do
     UA = Urbanairship
     airship = UA::Client.new(key: '123', secret: 'abc')
-    page_iterator = UA::Common::PageIterator.new(airship)
+    page_iterator = UA::Common::PageIterator.new(client: airship)
     page_iterator.data_attribute = :data_attr
     expected_first_list = {
       'body' => {
