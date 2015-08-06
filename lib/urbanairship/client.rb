@@ -19,7 +19,6 @@ module Urbanairship
       def initialize(key: required('key'), secret: required('secret'))
         @key = key
         @secret = secret
-        @version = 3
       end
 
       # Send a request to Urban Airship's API
@@ -32,7 +31,7 @@ module Urbanairship
       # @param [Object] params Parameters
       # @return [Object] Push Response
       def send_request(method: required('method'), url: required('url'), body: nil,
-                       content_type: nil, version: nil)
+                       content_type: nil, version: 3)
         req_type = case method
           when 'GET'
             :get
@@ -48,11 +47,7 @@ module Urbanairship
 
 
         headers = {'User-agent' => 'UARubyLib/' + UA::VERSION}
-
-        if version
-          @version = version
-        end
-        headers['Accept'] = 'application/vnd.urbanairship+json; version=' + @version.to_s
+        headers['Accept'] = 'application/vnd.urbanairship+json; version=' + version.to_s
 
         if content_type
           headers['Content-type'] = content_type

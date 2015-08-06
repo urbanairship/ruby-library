@@ -7,11 +7,11 @@ module Urbanairship
       include Urbanairship::Common
       include Urbanairship::Loggable
 
-      def initialize(client)
+      def initialize(client: required)
         @client = client
       end
 
-      def get_single(push_id)
+      def get_single(push_id: required)
         fail ArgumentError,
            'push_id cannot be empty' if push_id.nil?
         url = REPORTS_URL + 'perpush/detail/' + push_id
@@ -23,11 +23,11 @@ module Urbanairship
         response
       end
 
-      def get_batch(push_ids)
+      def get_batch(push_ids: required)
         fail ArgumentError,
-           'push_ids cannot be empty' if push_ids.nil? or push_ids.empty?
+             'push_ids must be an array' if !push_ids.kind_of?(Array)
         fail ArgumentError,
-          'push_ids must be an array' if !push_ids.kind_of?(Array)
+           'push_ids cannot be empty' if push_ids.empty?
         fail ArgumentError,
           'push_ids cannot contain more than 100 IDs' if push_ids.count > 100
 
@@ -63,6 +63,8 @@ module Urbanairship
         end
 
         if start_date or end_date
+          fail ArgumentError,
+               "Precision must be included with start and end dates" if precision.nil?
           begin
             Time.parse(start_date)
             Time.parse(end_date)
@@ -70,7 +72,7 @@ module Urbanairship
             fail ArgumentError,
                  'start_date and end_date must be valid date strings'
           end
-          url += '?start=' + start_date + '?end=' + end_date
+          url += '&start=' + start_date + '&end=' + end_date
         end
 
         response = @client.send_request(
