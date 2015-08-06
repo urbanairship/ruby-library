@@ -50,10 +50,10 @@ module Urbanairship
         @client = client
       end
 
-      def get(push_id, precision=nil, start_date=nil, end_date=nil)
+      def get(push_id: required, precision:nil, start_date:nil, end_date:nil)
         fail ArgumentError,
            'push_id cannot be empty' if push_id.nil?
-        url = REPORTS_URL + '/perpush/series'
+        url = REPORTS_URL + 'perpush/series/' + push_id
 
         if precision
           precision_array = ['HOURLY', 'DAILY', 'MONTHLY']
