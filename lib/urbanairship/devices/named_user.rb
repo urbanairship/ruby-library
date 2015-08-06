@@ -67,7 +67,7 @@ module Urbanairship
       include Urbanairship::Common
 
       def initialize(client: required)
-        super(client)
+        super(client: client)
         @url = NAMED_USER_URL + 'tags/'
       end
 
