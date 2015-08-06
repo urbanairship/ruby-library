@@ -34,7 +34,7 @@ describe Urbanairship::Devices do
         }
       }
     }
-    channel_info = UA::ChannelInfo.new(airship)
+    channel_info = UA::ChannelInfo.new(client: airship)
 
     describe '#lookup' do
       it 'can get a response' do
@@ -157,7 +157,7 @@ describe Urbanairship::Devices do
     it 'can iterate through a response' do
       allow(airship).to receive(:send_request)
         .and_return(channel_list_hash, channel_list_hash_cont)
-      channel_list = UA::ChannelList.new(airship)
+      channel_list = UA::ChannelList.new(client: airship)
       channel_list.each do |channel|
         expect(channel[:channel_id]).to eq channel_id_list.pop
       end
