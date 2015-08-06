@@ -8,7 +8,7 @@ module Urbanairship
       include Urbanairship::Loggable
       attr_writer :client
 
-      def initialize(client)
+      def initialize(client: client)
         @client = client
       end
 
@@ -28,7 +28,7 @@ module Urbanairship
       include Urbanairship::Loggable
       include Enumerable
 
-      def initialize(client)
+      def initialize(client: client)
         @next_page = CHANNEL_URL
         @client = client
         @channel_list = nil
