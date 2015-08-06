@@ -38,8 +38,8 @@ missing Tag Groups are specified, a warning will be included in the response.
         android: android_audience,
         amazon: amazon_audience
     )
-    channel_tags.add('group_name', ['tag1', 'tag2', 'tag3'])
-    channel_tags.remove('group_name', 'tag4')
+    channel_tags.add(group_name: 'group_name', tags: ['tag1', 'tag2', 'tag3'])
+    channel_tags.remove(group_name: 'group_name', tags: 'tag4')
     channel_tags.send_request
 
 .. note::
