@@ -85,6 +85,7 @@ module Urbanairship
         response = @client.send_request(
             method: 'GET',
             url: url,
+            version: 3
         )
         logger.info("Requested feedback at url #{url}")
         response
