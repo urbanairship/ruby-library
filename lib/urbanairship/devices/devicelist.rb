@@ -12,7 +12,7 @@ module Urbanairship
         @client = client
       end
 
-      def lookup(uuid)
+      def lookup(uuid: required)
         response = @client.send_request(
           method: 'GET',
           url: CHANNEL_URL + uuid,
