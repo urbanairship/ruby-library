@@ -67,7 +67,7 @@ module Urbanairship
       include Urbanairship::Common
       include Urbanairship::Loggable
 
-      def initialize(client)
+      def initialize(client: client)
         @client = client
       end
 

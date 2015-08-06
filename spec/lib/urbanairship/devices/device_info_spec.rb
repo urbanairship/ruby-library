@@ -166,7 +166,7 @@ describe Urbanairship::Devices do
   end
 
   describe Urbanairship::Devices::Feedback do
-    feedback = UA::Feedback.new(airship)
+    feedback = UA::Feedback.new(client: airship)
 
     describe '#device_token' do
       it 'can get the device_list' do
