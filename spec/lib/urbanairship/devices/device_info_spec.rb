@@ -188,7 +188,7 @@ describe Urbanairship::Devices do
 
         allow(airship).to receive(:send_request).and_return(device_response)
         since = (Time.new.utc - 60 * 70 * 24 * 3).iso8601 # Get tokens deactivated since 3 days ago
-        response = feedback.device_token(since)
+        response = feedback.device_token(since: since)
         expect(response).to eq device_response  
       end
     end
@@ -214,7 +214,7 @@ describe Urbanairship::Devices do
         }
         allow(airship).to receive(:send_request).and_return(device_response)
         since = (Time.new.utc - 60 * 70 * 24 * 3).iso8601 # Get apids deactivated since 3 days ago
-        response = feedback.apid(since)
+        response = feedback.apid(since: since)
         expect(response).to eq device_response
       end
     end
