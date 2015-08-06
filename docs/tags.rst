@@ -29,7 +29,7 @@ missing Tag Groups are specified, a warning will be included in the response.
     require 'urbanairship'
     UA = Urbanairship
     airship = UA::Client.new(key:'application_key', secret:'master_secret')
-    channel_tags = UA::ChannelTags.new(airship)
+    channel_tags = UA::ChannelTags.new(client: airship)
     ios_audience = ['channel1', 'channel2', 'channel3']
     android_audience = 'channel4'
     amazon_audience = nil

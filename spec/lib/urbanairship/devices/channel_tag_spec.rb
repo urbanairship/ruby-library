@@ -7,7 +7,7 @@ describe Urbanairship::Devices do
     UA = Urbanairship
     airship = UA::Client.new(key: '123', secret: 'abc')
 
-    let(:channel_tags) { UA::ChannelTags.new(airship) }
+    let(:channel_tags) { UA::ChannelTags.new(client: airship) }
     describe '#set_audience' do
       it 'sets an ios audience correctly' do
         channel_tags.set_audience(ios: :ios_audience)
