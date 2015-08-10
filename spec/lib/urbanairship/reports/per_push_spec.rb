@@ -75,6 +75,34 @@ describe Urbanairship::Reports do
   describe UA::Reports::PerPushSeries do
     describe "#get" do
       push_series = UA::PerPushSeries.new(client: airship)
+      series_detail_item = {
+          "app_key" => "ABC123",
+          "push_id" => "CBA321",
+          "created" => 0,
+          "push_body" => "ABC",
+          "sends" => 57356,
+          "direct_responses" => 2654,
+          "influenced_responses" => 8915,
+          "rich_sends" => 0,
+          "rich_responses" => 0,
+          "rich_deletions" => 0,
+          "platforms" => {
+              "ios" => {
+                  "sends" => 31522,
+                  "direct_responses" => 1632,
+                  "influenced_responses" => 5347
+              },
+              "android" => {
+                  "sends" => 25834,
+                  "direct_responses" => 1022,
+                  "influenced_responses" => 3568
+              }
+          }
+      }
+      expected_response = {
+          :body => [ series_detail_item, series_detail_item ],
+          :code => 200
+      }
 
       it 'fails when push_id is nil' do
         expect {
@@ -96,6 +124,41 @@ describe Urbanairship::Reports do
               start_date: '2015-08-01 00:00:00'
           )
         }.to raise_error(ArgumentError)
+      end
+
+      it 'fails when bad date is specified' do
+        expect {
+          push_series.get(
+            push_id: 'push_id',
+            precision: 'HOURLY',
+            start_date: '2015-08-01 00:00:00',
+            end_date: 'bad date'
+          )
+        }.to raise_error(ArgumentError)
+      end
+
+      it 'returns a correct response with push_id only' do
+
+        allow(airship).to receive(:send_request).and_return(expected_response)
+        actual_response = push_series.get(push_id: '123')
+        expect(actual_response).to eq(expected_response)
+      end
+
+      it 'returns a correct response with precision specified' do
+        allow(airship).to receive(:send_request).and_return(expected_response)
+        actual_response = push_series.get(push_id: '123', precision: 'MONTHLY')
+        expect(actual_response).to eq(expected_response)
+      end
+
+      it 'returns a correct response with precision, start, and end dates specified' do
+        allow(airship).to receive(:send_request).and_return(expected_response)
+        actual_response = push_series.get(
+            push_id: '123',
+            precision: 'MONTHLY',
+            start_date:'02/08/2015',
+            end_date: '03/08/2015'
+        )
+        expect(actual_response).to eq(expected_response)
       end
     end
   end

@@ -1,5 +1,4 @@
 require 'urbanairship'
-require 'urbanairship/loggable'
 
 
 module Urbanairship

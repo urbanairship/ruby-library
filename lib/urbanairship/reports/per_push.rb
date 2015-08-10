@@ -47,7 +47,7 @@ module Urbanairship
       include Urbanairship::Common
       include Urbanairship::Loggable
 
-      def initialize(client)
+      def initialize(client: required)
         @client = client
       end
 
@@ -69,13 +69,13 @@ module Urbanairship
           fail ArgumentError,
                "Both start_date and end_date must be provided if one is included" if start_date.nil? or end_date.nil?
           begin
-            Time.parse(start_date)
-            Time.parse(end_date)
+            start_parsed = Time.parse(start_date)
+            end_parsed = Time.parse(end_date)
           rescue ArgumentError
             fail ArgumentError,
                  'start_date and end_date must be valid date strings'
           end
-          url += '&start=' + start_date + '&end=' + end_date
+          url += '&start=' + start_parsed.iso8601 + '&end=' + end_parsed.iso8601
         end
 
         response = @client.send_request(

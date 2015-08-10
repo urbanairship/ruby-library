@@ -11,6 +11,7 @@ require 'urbanairship/devices/devicelist'
 require 'urbanairship/devices/channel_tags'
 require 'urbanairship/devices/named_user'
 require 'urbanairship/reports/per_push'
+require 'urbanairship/reports/response_statistics'
 
 module Urbanairship
   extend Urbanairship::Push::Audience

@@ -60,6 +60,7 @@ Contents:
    devices.rst
    tags.rst
    named_user.rst
+   reports.rst
    exceptions.rst
    examples.rst
 
