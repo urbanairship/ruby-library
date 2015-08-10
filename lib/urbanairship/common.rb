@@ -105,6 +105,7 @@ module Urbanairship
 
     class PageIterator
       include Urbanairship::Common
+      include Urbanairship::Loggable
       include Enumerable
       attr_accessor :data_attribute
 
@@ -120,6 +121,7 @@ module Urbanairship
             method: 'GET',
             url: @next_page
         )
+        logger.info("Retrieving data from: #{@next_page}")
         if response['body']['next_page']
           @next_page = response['body']['next_page']
         else

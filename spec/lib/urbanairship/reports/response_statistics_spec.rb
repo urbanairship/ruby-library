@@ -649,24 +649,3 @@ describe Urbanairship::Reports do
     end
   end
 end
-
-#
-#
-#                   class TestPushList(TestOptInList):
-#                       test_class = ua.reports.PushList
-#                   response_key = 'sends'
-#
-#
-#                   class TestResponseReportList(TestOptInList):
-#                       test_class = ua.reports.ResponseReportList
-#                   response_key = 'responses'
-#
-#
-#                   class TestAppOpensList(TestOptInList):
-#                       test_class = ua.reports.AppOpensList
-#                   response_key = 'opens'
-#
-#
-#                   class TestTimeInAppList(TestOptInList):
-#                       test_class = ua.reports.TimeInAppList
-#                   response_key = 'timeinapp'
