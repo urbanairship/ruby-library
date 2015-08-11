@@ -129,7 +129,8 @@ see: http://docs.urbanairship.com/api/ua.html#per-push-series
 .. note::
     precision, start_date, and end_date are optional parameters. However, if specifying
     a date range, precision, start_date and end_date must all be specified. Precision
-    can be specified without start_date and end_date.
+    can be specified without start_date and end_date but must be a member of
+    ['HOURLY', 'DAILY', 'MONTHLY'].
 
 Response Report
 ===============
