@@ -31,7 +31,7 @@ module Urbanairship
       # @param [Object] params Parameters
       # @return [Object] Push Response
       def send_request(method: required('method'), url: required('url'), body: nil,
-                       content_type: nil, version: 3)
+                       content_type: nil, version: 3, encoding: nil)
         req_type = case method
           when 'GET'
             :get
@@ -48,10 +48,8 @@ module Urbanairship
 
         headers = {'User-agent' => 'UARubyLib/' + UA::VERSION}
         headers['Accept'] = 'application/vnd.urbanairship+json; version=' + version.to_s
-
-        if content_type
-          headers['Content-type'] = content_type
-        end
+        headers['Content-type'] = content_type unless content_type.nil?
+        headers['Content-Encoding'] = encoding unless encoding.nil?
 
         logger.debug("Making #{method} request to #{url}. \n\tHeaders:\n\tcontent-type: #{content_type}\n\tversion=#{version.to_s}\nBody:\n\t#{body}")
 

@@ -55,9 +55,9 @@ module Urbanairship
           'A tag request must add, remove, or set a tag' if @remove_group.empty? and @add_group.empty? and @set_group.empty?
 
         payload['audience'] = @audience
-        payload['add'] = @add_group if !@add_group.empty?
-        payload['remove'] = @remove_group if !@remove_group.empty?
-        payload['set'] = @set_group if !@set_group.empty?
+        payload['add'] = @add_group unless @add_group.empty?
+        payload['remove'] = @remove_group unless @remove_group.empty?
+        payload['set'] = @set_group unless @set_group.empty?
 
         response = @client.send_request(
           method: 'POST',

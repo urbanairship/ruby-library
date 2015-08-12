@@ -23,7 +23,7 @@ module Urbanairship
     end
 
     class ChannelList < Urbanairship::Common::PageIterator
-      def initialize(client: client)
+      def initialize(client: required)
         super(client: client)
         @next_page = CHANNEL_URL
         @data_attribute = 'channels'
@@ -53,7 +53,6 @@ module Urbanairship
         response = @client.send_request(
             method: 'GET',
             url: url,
-            version: 3
         )
         logger.info("Requested feedback at url #{url}")
         response
