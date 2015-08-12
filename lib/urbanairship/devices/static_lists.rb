@@ -26,7 +26,7 @@ module Urbanairship
           url: LISTS_URL,
           content_type: 'application/json'
         )
-        logger.info('Created static list for #{@name}')
+        logger.info("Created static list for #{@name}")
         response
       end
 
@@ -42,7 +42,7 @@ module Urbanairship
             content_type: 'text/csv',
             encoding: 'gzip'
           )
-          logger.info('Uploading a list for #{@name}')
+          logger.info("Uploading a list for #{@name}")
           response
         end
       end
@@ -59,7 +59,7 @@ module Urbanairship
           url: LISTS_URL + @name,
           content_type: 'application/json'
         )
-        logger.info('Updating the metadata for list #{@name}')
+        logger.info("Updating the metadata for list #{@name}")
         response
       end
 
@@ -68,7 +68,7 @@ module Urbanairship
           method: 'GET',
           url: LISTS_URL + @name
         )
-        logger.info('Retrieving info for list #{@name}')
+        logger.info("Retrieving info for list #{@name}")
         response
       end
 
@@ -77,7 +77,7 @@ module Urbanairship
           method: 'DELETE',
           url: LISTS_URL + @name
         )
-        logger.info('Deleted list #{@name}')
+        logger.info("Deleted list #{@name}")
         response
       end
     end
