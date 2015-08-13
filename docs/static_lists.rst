@@ -110,6 +110,7 @@ Retrieve information about one static list.
 
 Lookup All Lists
 ----------------
+
 Retrieve information about all static lists. This call returns a paginated list of
 metadata that will not contain the actual lists of users.
 
