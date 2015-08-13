@@ -158,7 +158,7 @@ information, see: http://docs.urbanairship.com/api/ua.html#response-report
 
 
 Response Listing
-==================
+================
 Get a listing of all pushes and basic response information in a given
 timeframe by instantiating an iterator object using ResponseList. 
 Start and end date times are required parameters.
@@ -233,7 +233,7 @@ http://docs.urbanairship.com/api/ua.html#time-in-app-report
     end
 
 .. note::
-precision needs to be a member of ['HOURLY', 'DAILY', 'MONTHLY']
+    precision needs to be a member of ['HOURLY', 'DAILY', 'MONTHLY']
 
 
 Opt-In Report
@@ -259,11 +259,11 @@ http://docs.urbanairship.com/api/ua.html#opt-in-report
     end
 
 .. note::
-precision needs to be a member of ['HOURLY', 'DAILY', 'MONTHLY']
+    precision needs to be a member of ['HOURLY', 'DAILY', 'MONTHLY']
 
 
 Opt-Out Report
-=============
+==============
 
 Get the number of opted-out push users who access the app within the specified 
 time period.
@@ -285,5 +285,5 @@ http://docs.urbanairship.com/api/ua.html#opt-out-report
     end
 
 .. note::
-precision needs to be a member of ['HOURLY', 'DAILY', 'MONTHLY']
+    precision needs to be a member of ['HOURLY', 'DAILY', 'MONTHLY']
 
