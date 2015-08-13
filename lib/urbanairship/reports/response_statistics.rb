@@ -4,19 +4,19 @@ require 'time'
 module Urbanairship
   module Reports
     class Helper
-      def getUrlFromDatesAndPrecision(start_date, end_date, precision)
+      def get_url(start_date, end_date, precision)
         fail ArgumentError,
-             'the parameters cannot be set to nil' if start_date.nil? or end_date.nil? or precision.nil?
-        precision_array = ['HOURLY', 'DAILY', 'MONTHLY']
+           'the parameters cannot be set to nil' if start_date.nil? or end_date.nil? or precision.nil?
+        precision_array = %w(HOURLY DAILY MONTHLY)
         fail ArgumentError,
-             "Precision must be 'HOURLY', 'DAILY', or 'MONTHLY'" if !precision_array.include?(precision)
+             "Precision must be 'HOURLY', 'DAILY', or 'MONTHLY'" unless precision_array.include?(precision)
 
         begin
           start_parsed = Time.parse(start_date)
           end_parsed = Time.parse(end_date)
         rescue ArgumentError
           fail ArgumentError,
-               'start_date and end_date must be valid date strings'
+             'start_date and end_date must be valid date strings'
         end
         url = '?start=' + start_parsed.iso8601 + '&end=' + end_parsed.iso8601
         url += '&precision=' + precision
@@ -33,7 +33,7 @@ module Urbanairship
 
       def get(push_id: required)
         fail ArgumentError,
-             'push_id cannot be nil' if push_id.nil?
+           'push_id cannot be nil' if push_id.nil?
 
         url = REPORTS_URL + 'responses/' + push_id
         response = @client.send_request(method: 'GET', url: url)
@@ -46,11 +46,11 @@ module Urbanairship
       def initialize(client: required, start_date: required, end_date: required, limit: nil, push_id_start: nil)
         super(client: client)
         fail ArgumentError,
-             'start_date and end_date are required fields' if start_date.nil? or end_date.nil?
+           'start_date and end_date are required fields' if start_date.nil? or end_date.nil?
         fail ArgumentError,
-             'limit must be a number' if !limit.nil? and !limit.is_a? Numeric
+           'limit must be a number' if !limit.nil? and !limit.is_a? Numeric
         fail ArgumentError,
-             'push_id_start must be a string' if !push_id_start.nil? and !push_id_start.is_a? String
+           'push_id_start must be a string' if !push_id_start.nil? and !push_id_start.is_a? String
 
         begin
           start_parsed = Time.parse(start_date)
@@ -60,8 +60,8 @@ module Urbanairship
                'start_date and end_date must be valid date strings'
         end
         url = REPORTS_URL + 'responses/list?start=' + start_parsed.iso8601 + '&end=' + end_parsed.iso8601
-        url += '&limit' + limit.to_s if !limit.nil?
-        url += '&push_id_start&' + push_id_start if !push_id_start.nil?
+        url += '&limit' + limit.to_s unless limit.nil?
+        url += '&push_id_start&' + push_id_start unless push_id_start.nil?
         @next_page = url
         @data_attribute = 'pushes'
         load_page
@@ -97,7 +97,7 @@ module Urbanairship
     class OptInList < Urbanairship::Common::PageIterator
       def initialize(client: required, start_date: required, end_date: required, precision: nil)
         super(client: client)
-        url = Helper.new.getUrlFromDatesAndPrecision(start_date, end_date, precision)
+        url = Helper.new.get_url(start_date, end_date, precision)
         @next_page = REPORTS_URL + 'optins/' + url
         @data_attribute = 'optins'
         load_page
@@ -107,7 +107,7 @@ module Urbanairship
     class OptOutList < Urbanairship::Common::PageIterator
       def initialize(client: required, start_date: required, end_date: required, precision: nil)
         super(client: client)
-        url = Helper.new.getUrlFromDatesAndPrecision(start_date, end_date, precision)
+        url = Helper.new.get_url(start_date, end_date, precision)
         @next_page = REPORTS_URL + 'optouts/' + url
         @data_attribute = 'optouts'
         load_page
@@ -117,7 +117,7 @@ module Urbanairship
     class PushList < Urbanairship::Common::PageIterator
       def initialize(client: required, start_date: required, end_date: required, precision: nil)
         super(client: client)
-        url = Helper.new.getUrlFromDatesAndPrecision(start_date, end_date, precision)
+        url = Helper.new.get_url(start_date, end_date, precision)
         @next_page = REPORTS_URL + 'sends/' + url
         @data_attribute = 'sends'
         load_page
@@ -127,7 +127,7 @@ module Urbanairship
     class ResponseReportList < Urbanairship::Common::PageIterator
       def initialize(client: required, start_date: required, end_date: required, precision: nil)
         super(client: client)
-        url = Helper.new.getUrlFromDatesAndPrecision(start_date, end_date, precision)
+        url = Helper.new.get_url(start_date, end_date, precision)
         @next_page = REPORTS_URL + 'responses/' + url
         @data_attribute = 'responses'
         load_page
@@ -137,7 +137,7 @@ module Urbanairship
     class AppOpensList < Urbanairship::Common::PageIterator
       def initialize(client: required, start_date: required, end_date: required, precision: nil)
         super(client: client)
-        url = Helper.new.getUrlFromDatesAndPrecision(start_date, end_date, precision)
+        url = Helper.new.get_url(start_date, end_date, precision)
         @next_page = REPORTS_URL + 'opens/' + url
         @data_attribute = 'opens'
         load_page
@@ -147,7 +147,7 @@ module Urbanairship
     class TimeInAppList < Urbanairship::Common::PageIterator
       def initialize(client: required, start_date: required, end_date: required, precision: nil)
         super(client: client)
-        url = Helper.new.getUrlFromDatesAndPrecision(start_date, end_date, precision)
+        url = Helper.new.get_url(start_date, end_date, precision)
         @next_page = REPORTS_URL + 'timeinapp/' + url
         @data_attribute = 'timeinapp'
         load_page

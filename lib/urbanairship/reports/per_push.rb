@@ -26,7 +26,7 @@ module Urbanairship
 
       def get_batch(push_ids: required)
         fail ArgumentError,
-             'push_ids must be an array' if !push_ids.kind_of?(Array)
+             'push_ids must be an array' unless push_ids.kind_of?(Array)
         fail ArgumentError,
            'push_ids cannot be empty' if push_ids.empty?
         fail ArgumentError,
@@ -57,23 +57,23 @@ module Urbanairship
         url = REPORTS_URL + 'perpush/series/' + push_id
 
         if precision
-          precision_array = ['HOURLY', 'DAILY', 'MONTHLY']
+          precision_array = %w(HOURLY DAILY MONTHLY)
           fail ArgumentError,
-               "Precision must be 'HOURLY', 'DAILY', or 'MONTHLY'" if !precision_array.include?(precision)
+             "Precision must be 'HOURLY', 'DAILY', or 'MONTHLY'" unless precision_array.include?(precision)
           url += '?precision=' + precision
         end
 
         if start_date or end_date
           fail ArgumentError,
-               "Precision must be included with start and end dates" if precision.nil?
+             'Precision must be included with start and end dates' if precision.nil?
           fail ArgumentError,
-               "Both start_date and end_date must be provided if one is included" if start_date.nil? or end_date.nil?
+             'Both start_date and end_date must be provided if one is included' if start_date.nil? or end_date.nil?
           begin
             start_parsed = Time.parse(start_date)
             end_parsed = Time.parse(end_date)
           rescue ArgumentError
             fail ArgumentError,
-                 'start_date and end_date must be valid date strings'
+               'start_date and end_date must be valid date strings'
           end
           url += '&start=' + start_parsed.iso8601 + '&end=' + end_parsed.iso8601
         end
