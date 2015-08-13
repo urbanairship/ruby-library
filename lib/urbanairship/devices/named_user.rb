@@ -36,16 +36,13 @@ module Urbanairship
         payload = {}
         payload['channel_id'] = channel_id
         payload['device_type'] = device_type
-        if @named_user_id
-          payload['named_user_id'] = @named_user_id
-
-          response = @client.send_request(
-              method: 'POST',
-              body: JSON.dump(payload),
-              url: NAMED_USER_URL + '/disassociate',
-              content_type: 'application/json'
-          )
-        end
+        payload['named_user_id'] = @named_user_id unless @named_user_id.nil?
+        response = @client.send_request(
+          method: 'POST',
+          body: JSON.dump(payload),
+          url: NAMED_USER_URL + '/disassociate',
+          content_type: 'application/json'
+        )
         logger.info { "Dissociated channel_id #{channel_id}" }
         response
       end
