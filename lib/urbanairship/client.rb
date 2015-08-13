@@ -16,7 +16,7 @@ module Urbanairship
       # @param [Object] key Application Key
       # @param [Object] secret Application Secret
       # @return [Object] Client
-      def initialize(key: required('key'), secret: required('secret'))
+      def initialize(key: required, secret: required)
         @key = key
         @secret = secret
       end
@@ -28,9 +28,8 @@ module Urbanairship
       # @param [Object] url Request URL
       # @param [Object] content_type Content-Type
       # @param [Object] version API Version
-      # @param [Object] params Parameters
       # @return [Object] Push Response
-      def send_request(method: required('method'), url: required('url'), body: nil,
+      def send_request(method: required, url: required, body: nil,
                        content_type: nil, version: nil)
         req_type = case method
           when 'GET'
@@ -59,13 +58,13 @@ module Urbanairship
         logger.debug("Making #{method} request to #{url}. \n\tHeaders:\n\tcontent-type: #{content_type}\n\tversion=#{version.to_s}\nBody:\n\t#{body}")
 
         response = Unirest.method(req_type).call(
-            url,
-            headers: headers,
-            auth:{
-                :user=>@key,
-                :password=>@secret
-            },
-            parameters: body
+          url,
+          headers: headers,
+          auth:{
+            :user=>@key,
+            :password=>@secret
+          },
+          parameters: body
         )
 
         logger.debug("Received #{response.code} response. Headers:\n\t#{response.headers}\nBody:\n\t#{response.body}")
