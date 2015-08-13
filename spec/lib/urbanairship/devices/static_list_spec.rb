@@ -41,10 +41,10 @@ describe Urbanairship::Devices do
     end
 
     describe '#upload' do
-      CSV.open("csv_file", "wb") do |csv|
-        csv << ["alias", "stevenh"]
-        csv << ["alias", "marianb"]
-        csv << ["named_user", "billg"]
+      CSV.open('csv_file', 'wb') do |csv|
+        csv << %w(alias stevenh)
+        csv << %w(alias marianb)
+        csv << %w(named_user billg)
       end
 
       it 'can upload a csv file successfully' do
@@ -77,14 +77,14 @@ describe Urbanairship::Devices do
     describe '#lookup' do
       expected_response = {
         'body' => {
-          "ok"=> true,
-          "name" => 'test_list',
-          "description" => "loyalty program platinum members",
-          "extra" => {"key" => "value"},
-          "created" => "2013-08-08T20:41:06",
-          "last_updated" => "2014-05-01T18:00:27",
-          "channel_count" => 1000,
-          "status" => "ready"
+          'ok' => true,
+          'name' => 'test_list',
+          'description' => 'loyalty program platinum members',
+          'extra' => {'key' => 'value'},
+          'created' => '2013-08-08T20:41:06',
+          'last_updated' => '2014-05-01T18:00:27',
+          'channel_count' => 1000,
+          'status' => 'ready'
         },
         'code' => 200
       }
