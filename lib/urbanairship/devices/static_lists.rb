@@ -8,7 +8,7 @@ module Urbanairship
       include Urbanairship::Common
       include Urbanairship::Loggable
 
-      def initialize(client: required, name: required)
+      def initialize(client: required('client'), name: required('name'))
         fail ArgumentError,
            'Neither client nor name can be set to nil' if client.nil? or name.nil?
         @client = client
@@ -30,7 +30,7 @@ module Urbanairship
         response
       end
 
-      def upload(csv_file: required)
+      def upload(csv_file: required('csv_file'))
         Tempfile.open('ua_upload.gz') do |temp|
           Zlib::GzipWriter.open(temp) do |gz|
             gz.write IO.binread(csv_file)
@@ -83,7 +83,7 @@ module Urbanairship
     end
 
     class StaticLists < Urbanairship::Common::PageIterator
-      def initialize(client: required)
+      def initialize(client: required('client'))
         super(client: client)
         @next_page = LISTS_URL
         @data_attribute = 'lists'
