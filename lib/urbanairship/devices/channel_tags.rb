@@ -29,15 +29,15 @@ module Urbanairship
         end
       end
 
-      def add(group_name: required, tags: required)
+      def add(group_name: required('group_name'), tags: required('tags'))
         @add_group[group_name] = tags
       end
 
-      def remove(group_name: required, tags: required)
+      def remove(group_name: required('group_name'), tags: required('tags'))
         @remove_group[group_name] = tags
       end
 
-      def set(group_name: required, tags: required)
+      def set(group_name: required('group_name'), tags: required('tags'))
         @set_group[group_name] = tags
       end
 
