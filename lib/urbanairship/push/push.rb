@@ -186,7 +186,6 @@ module Urbanairship
         end
         base
       end
-
     end
   end
 end
