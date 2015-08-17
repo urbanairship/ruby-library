@@ -9,7 +9,7 @@ module Urbanairship
       attr_writer :client
       attr_reader :audience, :add_group, :remove_group, :set_group
 
-      def initialize(client: client)
+      def initialize(client: required('client'))
         @client = client
         @audience = {}
         @add_group = {}
