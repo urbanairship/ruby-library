@@ -55,20 +55,11 @@ module Urbanairship
         payload
       end
 
-      def historical_trigger(type: required('type'), tag: nil)
-        allowed_types = ['open', 'tag_added', 'tag_removed']
-        fail ArgumentError,
-             "Historical triggers must be of type 'open'," +
-                 " 'tag_added', or 'tag_removed'" unless allowed_types.member? type
-        fail ArgumentError,
-             "Historical triggers of type 'tag_added' or 'tag_removed' " +
-                 "must specify the tag_id" if tag.nil? and type != 'open'
-        if type == 'open'
-          payload = type
-        else
-          payload = { type => tag }
-        end
-        payload
+      def historical_trigger(type: 'open', equals: false, days: required('days'))
+        fail ArgumentError, 'days must be a number' unless days.is_a? Numeric
+        fail ArgumentError, 'equals must be a boolean' unless equals == true or equals == false
+        equals_as_num = equals ? 1:0
+        { 'event' => type, 'equals' => equals_as_num, 'days' => days }
       end
 
       def tag_condition(tag: required('tag'), negated: false)
@@ -82,15 +73,11 @@ module Urbanairship
         }
       end
 
-      def or(cond_array: required('cond_array'))
-        fail ArgumentError,
-             'cond_array must be an array' unless cond_array.is_a Array
+      def or_condition(cond_array: required('cond_array'))
         { 'or' => cond_array }
       end
 
-      def and(cond_array: required('cond_array'))
-        fail ArgumentError,
-             'cond_array must be an array' unless cond_array.is_a Array
+      def and_condition(cond_array: required('cond_array'))
         { 'and' => cond_array }
       end
     end

@@ -91,6 +91,16 @@ module Urbanairship
         logger.info('Updated state of pipeline #{pipeline_id} to #{pipeline}')
         resp
       end
+
+      def delete(pipeline_id: required('pipeline_id'))
+        fail ArgumentError 'pipeline_id should be a string' unless pipeline_id.is_a? String
+        resp = @client.send_request(
+            method: 'DELETE',
+            url: PIPELINES_URL + pipeline_id
+        )
+        logger.info('Deleted pipeline #{pipeline_id}')
+        resp
+      end
     end
   end
 end
