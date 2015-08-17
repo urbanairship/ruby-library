@@ -41,36 +41,36 @@ describe Urbanairship::Devices do
     describe '#lookup' do
       it 'can look up a named_user' do
         expected_lookup_resp = {
-          "body" => {
-            "ok" => true,
-            "named_user" => {
-              "named_user_id" => "user-id-1234",
-              "tags" => {
-                "crm" => ["tag1", "tag2"]
+          'body' => {
+            'ok' => true,
+            'named_user' => {
+              'named_user_id' => 'user-id-1234',
+              'tags' => {
+                'crm' => %w(tag1 tag2)
               },
-              "channels" => [
+              'channels' => [
                 {
-                  "channel_id" => "ABCD",
-                  "device_type" => "ios",
-                  "installed" => true,
-                  "opt_in" => true,
-                  "push_address" => "FFFF",
-                  "created" => "2013-08-08T20:41:06",
-                  "last_registration" => "2014-05-01T18:00:27",
-                  "alias" => "xxxx",
-                  "ios" => {
-                    "badge" => 0,
-                    "quiettime" => {
-                      "start" => "22:00",
-                      "end" => "06:00"
+                  'channel_id' => 'ABCD',
+                  'device_type' => 'ios',
+                  'installed' => true,
+                  'opt_in' => true,
+                  'push_address' => 'FFFF',
+                  'created' => '2013-08-08T20:41:06',
+                  'last_registration' => '2014-05-01T18:00:27',
+                  'alias' => 'xxxx',
+                  'ios' => {
+                    'badge' => 0,
+                    'quiettime' => {
+                      'start' => '22:00',
+                      'end' => '06:00'
                     },
-                    "tz" => "America/Los_Angeles"
+                    'tz' => 'America/Los_Angeles'
                   }
                 }
               ]
             }
           },
-          "code" => 200
+          'code' => 200
         }
         allow(airship).to receive(:send_request).and_return(expected_lookup_resp)
         actual_resp = named_user.lookup
@@ -87,7 +87,7 @@ describe Urbanairship::Devices do
   end
 
   describe Urbanairship::NamedUserTags do
-    named_user_list = ['user1', 'user2', 'user3']
+    named_user_list = %w(user1 user2 user3)
     let(:named_user_tags) { UA::NamedUserTags.new(client: airship) }
 
     describe '#set_audience' do
