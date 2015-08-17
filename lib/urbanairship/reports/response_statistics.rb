@@ -27,11 +27,11 @@ module Urbanairship
       include Urbanairship::Common
       include Urbanairship::Loggable
 
-      def initialize(client: required)
+      def initialize(client: required('client'))
         @client = client
       end
 
-      def get(push_id: required)
+      def get(push_id: required('push_id'))
         fail ArgumentError,
            'push_id cannot be nil' if push_id.nil?
 
@@ -43,7 +43,8 @@ module Urbanairship
     end
 
     class ResponseList < Urbanairship::Common::PageIterator
-      def initialize(client: required, start_date: required, end_date: required, limit: nil, push_id_start: nil)
+      def initialize(client: required('client'), start_date: required('start_date'),
+          end_date: required('end_date'), limit: nil, push_id_start: nil)
         super(client: client)
         fail ArgumentError,
            'start_date and end_date are required fields' if start_date.nil? or end_date.nil?
@@ -72,11 +73,11 @@ module Urbanairship
       include Urbanairship::Common
       include Urbanairship::Loggable
 
-      def initialize(client: required)
+      def initialize(client: required('client'))
         @client = client
       end
 
-      def get(date: required)
+      def get(date: required('date'))
         fail ArgumentError,
            'date cannot be set to nil' if date.nil?
         begin
@@ -95,7 +96,8 @@ module Urbanairship
     end
 
     class OptInList < Urbanairship::Common::PageIterator
-      def initialize(client: required, start_date: required, end_date: required, precision: nil)
+      def initialize(client: required('client'), start_date: required('start_date'),
+                     end_date: required('end_date'), precision: nil)
         super(client: client)
         url = Helper.new.get_url(start_date, end_date, precision)
         @next_page = REPORTS_URL + 'optins/' + url
@@ -105,7 +107,8 @@ module Urbanairship
     end
 
     class OptOutList < Urbanairship::Common::PageIterator
-      def initialize(client: required, start_date: required, end_date: required, precision: nil)
+      def initialize(client: required('client'), start_date: required('start_date'),
+                     end_date: required('end_date'), precision: nil)
         super(client: client)
         url = Helper.new.get_url(start_date, end_date, precision)
         @next_page = REPORTS_URL + 'optouts/' + url
@@ -115,7 +118,8 @@ module Urbanairship
     end
 
     class PushList < Urbanairship::Common::PageIterator
-      def initialize(client: required, start_date: required, end_date: required, precision: nil)
+      def initialize(client: required('client'), start_date: required('start_date'),
+                     end_date: required('end_date'), precision: nil)
         super(client: client)
         url = Helper.new.get_url(start_date, end_date, precision)
         @next_page = REPORTS_URL + 'sends/' + url
@@ -125,7 +129,8 @@ module Urbanairship
     end
 
     class ResponseReportList < Urbanairship::Common::PageIterator
-      def initialize(client: required, start_date: required, end_date: required, precision: nil)
+      def initialize(client: required('client'), start_date: required('start_date'),
+                     end_date: required('end_date'), precision: nil)
         super(client: client)
         url = Helper.new.get_url(start_date, end_date, precision)
         @next_page = REPORTS_URL + 'responses/' + url
@@ -135,7 +140,8 @@ module Urbanairship
     end
 
     class AppOpensList < Urbanairship::Common::PageIterator
-      def initialize(client: required, start_date: required, end_date: required, precision: nil)
+      def initialize(client: required('client'), start_date: required('start_date'),
+                     end_date: required('end_date'), precision: nil)
         super(client: client)
         url = Helper.new.get_url(start_date, end_date, precision)
         @next_page = REPORTS_URL + 'opens/' + url
@@ -145,7 +151,8 @@ module Urbanairship
     end
 
     class TimeInAppList < Urbanairship::Common::PageIterator
-      def initialize(client: required, start_date: required, end_date: required, precision: nil)
+      def initialize(client: required('client'), start_date: required('start_date'),
+                     end_date: required('end_date'), precision: nil)
         super(client: client)
         url = Helper.new.get_url(start_date, end_date, precision)
         @next_page = REPORTS_URL + 'timeinapp/' + url
