@@ -28,7 +28,7 @@ module Urbanairship
         payload
       end
 
-      def constraint(pushes: required('pushes'), days: required('days'))
+      def rate_constraint(pushes: required('pushes'), days: required('days'))
         fail ArgumentError,
              'Neither Pushes nor Days can be set to nil' if pushes.nil? or days.nil?
         {
@@ -39,7 +39,7 @@ module Urbanairship
         }
       end
 
-      def immediate_trigger(type: required('type'), tag: nil)
+      def immediate_trigger(type: required('type'), tag: nil, group: 'device')
         allowed_types = ['open_first', 'tag_added', 'tag_removed']
         fail ArgumentError,
              "Immediate triggers must be of type 'open_first'," +
@@ -50,7 +50,7 @@ module Urbanairship
         if type == 'open_first'
           payload = type
         else
-          payload = { type => tag }
+          payload = { type => { 'tag' => tag, 'group' => group } }
         end
         payload
       end
