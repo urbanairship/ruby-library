@@ -108,7 +108,7 @@ module Urbanairship
       include Enumerable
       attr_accessor :data_attribute
 
-      def initialize(client: required)
+      def initialize(client: required('client'))
         @client = client
         @next_page = nil
         @data_list = nil
