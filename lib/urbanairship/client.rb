@@ -29,7 +29,6 @@ module Urbanairship
       # @param [Object] url Request URL
       # @param [Object] content_type Content-Type
       # @param [Object] version API Version
-      # @param [Object] params Parameters
       # @return [Object] Push Response
       def send_request(method: required('method'), url: required('url'), body: nil,
                        content_type: nil, version: nil)
@@ -61,13 +60,13 @@ module Urbanairship
         logger.debug("Making #{method} request to #{url}. \n\tHeaders:\n\tcontent-type: #{content_type}\n\tversion=#{version.to_s}\nBody:\n\t#{body}")
 
         response = Unirest.method(req_type).call(
-            url,
-            headers: headers,
-            auth:{
-                :user=>@key,
-                :password=>@secret
-            },
-            parameters: body
+          url,
+          headers: headers,
+          auth:{
+            :user=>@key,
+            :password=>@secret
+          },
+          parameters: body
         )
 
         logger.debug("Received #{response.code} response. Headers:\n\t#{response.headers}\nBody:\n\t#{response.body}")

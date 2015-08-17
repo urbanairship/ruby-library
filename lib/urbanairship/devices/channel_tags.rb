@@ -9,7 +9,7 @@ module Urbanairship
       attr_writer :client
       attr_reader :audience, :add_group, :remove_group, :set_group
 
-      def initialize(client: client)
+      def initialize(client: required('client'))
         @client = client
         @audience = {}
         @add_group = {}
@@ -30,15 +30,15 @@ module Urbanairship
         end
       end
 
-      def add(group_name: required, tags: required)
+      def add(group_name: required('group_name'), tags: required('tags'))
         @add_group[group_name] = tags
       end
 
-      def remove(group_name: required, tags: required)
+      def remove(group_name: required('group_name'), tags: required('tags'))
         @remove_group[group_name] = tags
       end
 
-      def set(group_name: required, tags: required)
+      def set(group_name: required('group_name'), tags: required('tags'))
         @set_group[group_name] = tags
       end
 
@@ -55,9 +55,9 @@ module Urbanairship
           'A tag request must add, remove, or set a tag' if @remove_group.empty? and @add_group.empty? and @set_group.empty?
 
         payload['audience'] = @audience
-        payload['add'] = @add_group if !@add_group.empty?
-        payload['remove'] = @remove_group if !@remove_group.empty?
-        payload['set'] = @set_group if !@set_group.empty?
+        payload['add'] = @add_group unless @add_group.empty?
+        payload['remove'] = @remove_group unless @remove_group.empty?
+        payload['set'] = @set_group unless @set_group.empty?
 
         response = @client.send_request(
           method: 'POST',
