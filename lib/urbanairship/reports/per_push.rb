@@ -8,11 +8,11 @@ module Urbanairship
       include Urbanairship::Common
       include Urbanairship::Loggable
 
-      def initialize(client: required)
+      def initialize(client: required('client'))
         @client = client
       end
 
-      def get_single(push_id: required)
+      def get_single(push_id: required('push_id'))
         fail ArgumentError,
            'push_id cannot be empty' if push_id.nil?
         url = REPORTS_URL + 'perpush/detail/' + push_id
@@ -24,7 +24,7 @@ module Urbanairship
         response
       end
 
-      def get_batch(push_ids: required)
+      def get_batch(push_ids: required('push_ids'))
         fail ArgumentError,
              'push_ids must be an array' unless push_ids.kind_of?(Array)
         fail ArgumentError,
@@ -51,7 +51,7 @@ module Urbanairship
         @client = client
       end
 
-      def get(push_id: required, precision:nil, start_date:nil, end_date:nil)
+      def get(push_id: required('push_id'), precision:nil, start_date:nil, end_date:nil)
         fail ArgumentError,
            'push_id cannot be empty' if push_id.nil?
         url = REPORTS_URL + 'perpush/series/' + push_id

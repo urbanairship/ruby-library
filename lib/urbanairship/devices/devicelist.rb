@@ -8,14 +8,14 @@ module Urbanairship
       include Urbanairship::Loggable
       attr_writer :client
 
-      def initialize(client: client)
+      def initialize(client: required('client'))
         @client = client
       end
 
-      def lookup(uuid: required)
+      def lookup(uuid: required('uuid'))
         response = @client.send_request(
           method: 'GET',
-          url: CHANNEL_URL + uuid
+          url: CHANNEL_URL + uuid,
         )
         logger.info("Retrieved channel information for #{uuid}")
         response['body']['channel']
@@ -23,7 +23,7 @@ module Urbanairship
     end
 
     class ChannelList < Urbanairship::Common::PageIterator
-      def initialize(client: required)
+      def initialize(client: required('client'))
         super(client: client)
         @next_page = CHANNEL_URL
         @data_attribute = 'channels'
@@ -35,21 +35,21 @@ module Urbanairship
       include Urbanairship::Common
       include Urbanairship::Loggable
 
-      def initialize(client: client)
+      def initialize(client: required('client'))
         @client = client
       end
 
-      def device_token(since: required)
+      def device_token(since: required('device token'))
         url = DT_FEEDBACK_URL + '?since=' + since
         get_feedback(url: url)
       end
 
-      def apid(since: required)
+      def apid(since: required('since'))
         url = APID_FEEDBACK_URL + '?since=' + since
         get_feedback(url: url)
       end
 
-      def get_feedback(url: required)
+      def get_feedback(url: required('url'))
         response = @client.send_request(
             method: 'GET',
             url: url,
