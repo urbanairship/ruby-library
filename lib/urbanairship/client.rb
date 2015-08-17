@@ -16,7 +16,7 @@ module Urbanairship
       # @param [Object] key Application Key
       # @param [Object] secret Application Secret
       # @return [Object] Client
-      def initialize(key: required, secret: required)
+      def initialize(key: required('key'), secret: required('secret'))
         @key = key
         @secret = secret
       end
@@ -29,7 +29,7 @@ module Urbanairship
       # @param [Object] content_type Content-Type
       # @param [Object] version API Version
       # @return [Object] Push Response
-      def send_request(method: required, url: required, body: nil,
+      def send_request(method: required('method'), url: required('url'), body: nil,
                        content_type: nil, version: nil)
         req_type = case method
           when 'GET'
