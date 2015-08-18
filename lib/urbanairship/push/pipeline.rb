@@ -40,14 +40,14 @@ module Urbanairship
       end
 
       def immediate_trigger(type: required('type'), tag: nil, group: 'device')
-        allowed_types = ['open_first', 'tag_added', 'tag_removed']
+        allowed_types = ['first_open', 'tag_added', 'tag_removed']
         fail ArgumentError,
-             "Immediate triggers must be of type 'open_first'," +
+             "Immediate triggers must be of type 'first_open'," +
                  " 'tag_added', or 'tag_removed'" unless allowed_types.member? type
         fail ArgumentError,
              "Immediate triggers of type 'tag_added' or 'tag_removed' " +
-                 "must specify the tag_id" if tag.nil? and type != 'open_first'
-        if type == 'open_first'
+                 "must specify the tag_id" if tag.nil? and type != 'first_open'
+        if type == 'first_open'
           payload = type
         else
           payload = { type => { 'tag' => tag, 'group' => group } }
@@ -57,7 +57,8 @@ module Urbanairship
 
       def historical_trigger(type: 'open', equals: false, days: required('days'))
         fail ArgumentError, 'days must be a number' unless days.is_a? Numeric
-        fail ArgumentError, 'equals must be a boolean' unless equals == true or equals == false
+        fail ArgumentError, 'equals must be set to false' unless equals == false
+        fail ArgumentError, "type must be set to 'open'" unless type == 'open'
         equals_as_num = equals ? 1:0
         { 'event' => type, 'equals' => equals_as_num, 'days' => days }
       end
@@ -65,6 +66,8 @@ module Urbanairship
       def tag_condition(tag: required('tag'), negated: false)
         fail ArgumentError,
              'tag_name cannot be set to nil' if tag.nil?
+        fail ArgumentError,
+             'negated must be a boolean value' unless negated == true or negated == false
         {
             'tag' => {
                 'tag_name' => tag,

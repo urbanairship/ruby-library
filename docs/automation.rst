@@ -60,7 +60,7 @@ Immediate Trigger
 ``immediate_trigger`` defines a condition that activates a trigger immediately when an
 event matching it occurs. A single immediate trigger or an array of immediate triggers
 can be used when creating a pipeline. There are three types of events that can be used
-to create an immediate trigger: ``open_first``, ``tag_added``, or ``tag_removed``.
+to create an immediate trigger: ``first_open``, ``tag_added``, or ``tag_removed``.
 When specifying an event type of ``tag_added`` or ``tag_removed``, a parameter of
 ``tag`` will also need to be specified consisting of a string identifying the tag.
 An optional parameter ``group`` can also be provided that specifies the tag group for

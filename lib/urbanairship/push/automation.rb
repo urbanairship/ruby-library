@@ -7,6 +7,7 @@ module Urbanairship
     class AutomatedMessage
       include Urbanairship::Common
       include Urbanairship::Loggable
+      attr_reader :url
 
       def initialize(client: required('client'))
         @client = client
@@ -30,20 +31,22 @@ module Urbanairship
           body: JSON.dump(pipelines),
           content_type: 'application/json'
         )
+        logger.info('Successfully validated pipeline: #{pipelines}')
+        resp
       end
 
       def list_existing(start: nil, enabled: nil)
         fail ArgumentError, 'start needs to be a string' unless start == nil or start.is_a? String
         fail ArgumentError,
-          'enabled needs to be a boolean' unless start == nil or (enabled == true or enabled == false)
+          'enabled needs to be a boolean' unless enabled == nil or (enabled == true or enabled == false)
         url = PIPELINES_URL
         if start != nil
           url += '?start=' + start
-          url += '&enabled=' + enabled unless enabled.nil?
+          url += '&enabled=' + enabled.to_s unless enabled.nil?
         else
-          url += '?enabled=' + enabled unless enabled.nil?
+          url += '?enabled=' + enabled.to_s unless enabled.nil?
         end
-
+        @url = url
         resp = @client.send_request(
           method: 'GET',
           url: url
@@ -66,6 +69,7 @@ module Urbanairship
           method: 'GET',
           url: url
         )
+        @url = url
         logger.info('Retrieved list of deleted pipelines')
         resp
       end
@@ -81,7 +85,7 @@ module Urbanairship
       end
 
       def update(pipeline_id: required('pipeline_id'), pipeline: required('pipeline'))
-        fail ArgumentError 'pipeline_id should be a string' unless pipeline_id.is_a? String
+        fail ArgumentError, 'pipeline_id should be a string' unless pipeline_id.is_a? String
         resp = @client.send_request(
           method: 'PUT',
           url: PIPELINES_URL + pipeline_id,
@@ -93,7 +97,7 @@ module Urbanairship
       end
 
       def delete(pipeline_id: required('pipeline_id'))
-        fail ArgumentError 'pipeline_id should be a string' unless pipeline_id.is_a? String
+        fail ArgumentError, 'pipeline_id should be a string' unless pipeline_id.is_a? String
         resp = @client.send_request(
             method: 'DELETE',
             url: PIPELINES_URL + pipeline_id

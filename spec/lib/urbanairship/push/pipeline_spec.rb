@@ -85,10 +85,147 @@ describe Urbanairship do
       }.to raise_error(ArgumentError)
     end
 
-    it 'creates a correct immediate trigger' do
+    it 'creates a correct immediate trigger with tag added' do
       expected_trigger = { 'tag_added' => { 'tag' => 'tag1', 'group' => 'group1' }}
       actual_trigger = UA.immediate_trigger(type: 'tag_added', tag: 'tag1', group: 'group1')
       expect(expected_trigger).to eq(actual_trigger)
+    end
+
+    it 'creates a correct immediate trigger with first open' do
+      expected_trigger = 'first_open'
+      actual_trigger = UA.immediate_trigger(type: 'first_open')
+      expect(expected_trigger).to eq(actual_trigger)
+    end
+  end
+
+  describe '#historical_trigger' do
+    it 'fails when days is not numerical' do
+      expect {
+        UA.historical_trigger(days: 'bad value')
+      }.to raise_error(ArgumentError)
+    end
+
+    it 'fails when equals is not boolean' do
+      expect {
+        UA.historical_trigger(equals: 'bad value', days: 1)
+      }.to raise_error(ArgumentError)
+    end
+
+    it 'fails when type is not set to open' do
+      expect {
+        UA.historical_trigger(type: 'bad value', days: 1)
+      }.to raise_error(ArgumentError)
+    end
+
+    it 'creates a correct historical trigger' do
+      expected_trigger = { 'event' => 'open', 'equals' => 0, 'days' => 1 }
+      actual_trigger = UA.historical_trigger(type: 'open', equals: false, days: 1)
+      expect(expected_trigger).to eq(actual_trigger)
+    end
+  end
+
+  describe '#tag_condition' do
+    it 'fails when tag is set to nil' do
+      expect {
+        UA.tag_condition(tag: nil)
+      }.to raise_error(ArgumentError)
+    end
+
+    it 'fails when negated is not set to a boolean' do
+      expect {
+        UA.tag_condition(tag: 'tag', negated: 'bad value')
+      }.to raise_error(ArgumentError)
+    end
+
+    it 'sets the tag_condition correctly' do
+      expected_condition = { 'tag' => { 'tag_name' => 'tag', 'negated' => false }}
+      actual_condition = UA.tag_condition(tag: 'tag')
+      expect(actual_condition).to eq(expected_condition)
+    end
+  end
+
+  describe '#or_condition' do
+    it 'sets the or_condition correctly' do
+      expected_or_condition = { 'or' => { 'tag' => { 'tag_name' => 'tag', 'negated' => false }}}
+      condition = UA.tag_condition(tag: 'tag')
+      actual_or_condition = UA.or_condition(cond_array: condition)
+      expect(actual_or_condition).to eq(expected_or_condition)
+    end
+
+    it 'sets the or_condition correctly with an array' do
+      expected_or_condition = {
+          'or' => [
+              { 'tag' => { 'tag_name' => 'tag', 'negated' => false }},
+              { 'tag' => { 'tag_name' => 'tag2', 'negated' => false }}
+          ]
+      }
+      condition_array = [ UA.tag_condition(tag: 'tag') ]
+      condition_array.push(UA.tag_condition(tag: 'tag2'))
+      actual_or_condition = UA.or_condition(cond_array: condition_array)
+      expect(actual_or_condition).to eq(expected_or_condition)
+    end
+  end
+
+  describe '#and_condition' do
+    it 'sets the and_condition correctly' do
+      expected_and_condition = { 'and' => { 'tag' => { 'tag_name' => 'tag', 'negated' => false }}}
+      condition = UA.tag_condition(tag: 'tag')
+      actual_and_condition = UA.and_condition(cond_array: condition)
+      expect(actual_and_condition).to eq(expected_and_condition)
+    end
+
+    it 'sets the and_condition correctly with an array' do
+      expected_and_condition = {
+          'and' => [
+              { 'tag' => { 'tag_name' => 'tag', 'negated' => false }},
+              { 'tag' => { 'tag_name' => 'tag2', 'negated' => false }}
+          ]
+      }
+      condition_array = [ UA.tag_condition(tag: 'tag') ]
+      condition_array.push(UA.tag_condition(tag: 'tag2'))
+      actual_and_condition = UA.and_condition(cond_array: condition_array)
+      expect(actual_and_condition).to eq(expected_and_condition)
+    end
+  end
+
+  describe '#pipeline' do
+    it 'fails when enabled is not a boolean' do
+      expect {
+        UA.pipeline(enabled: 'bad value', outcome: 'outcome')
+      }.to raise_error(ArgumentError)
+    end
+
+    it 'creates correct pipeline' do
+      expected_pipeline = {
+        'enabled' => true,
+        'name' => 'pipeline_name',
+        'outcome' => {
+          'push' => {
+            :audience => 'triggered',
+            :notification => { 'alert' => 'hello world' },
+            :device_types => 'all'
+          }
+        },
+        'immediate_trigger' => {
+          'tag_added' => { 'tag' => 'tag', 'group' => 'tag_group' }
+        },
+        'constraint' => { 'rate' => { 'pushes' => 10, 'days' => 1 }},
+        'condition' => {
+          'or' => { 'tag' => { 'tag_name' => 'tag', 'negated' => false }}
+        }
+      }
+      push = airship.create_push
+      push.audience = 'triggered'
+      push.device_types = UA.all
+      push.notification = { 'alert' => 'hello world' }
+      outcome = UA.outcome(push: push)
+      imm_trigger = UA.immediate_trigger(type: 'tag_added', tag: 'tag', group: 'tag_group')
+      constraint = UA.rate_constraint(pushes: 10, days: 1)
+      condition = UA.tag_condition(tag: 'tag')
+      or_condition = UA.or_condition(cond_array: condition)
+      actual_pipeline = UA.pipeline(name: 'pipeline_name', enabled: true, outcome: outcome,
+        constraint: constraint, condition: or_condition, immediate_trigger: imm_trigger)
+      expect(actual_pipeline).to eq(expected_pipeline)
     end
   end
 end
