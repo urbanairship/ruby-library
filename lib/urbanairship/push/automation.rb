@@ -20,7 +20,7 @@ module Urbanairship
           body: JSON.dump(pipelines),
           content_type: 'application/json'
         )
-        logger.info('Created an automated message: #{pipelines}')
+        logger.info("Created an automated message: #{pipelines}")
         resp
       end
 
@@ -31,7 +31,7 @@ module Urbanairship
           body: JSON.dump(pipelines),
           content_type: 'application/json'
         )
-        logger.info('Successfully validated pipeline: #{pipelines}')
+        logger.info("Successfully validated pipeline: #{pipelines}")
         resp
       end
 
@@ -80,7 +80,7 @@ module Urbanairship
           method: 'GET',
           url: PIPELINES_URL + pipeline_id
         )
-        logger.info('Retrieved info for pipeline #{pipeline_id}')
+        logger.info("Retrieved info for pipeline #{pipeline_id}")
         resp
       end
 
@@ -92,7 +92,7 @@ module Urbanairship
           body: JSON.dump(pipeline),
           content_type: 'application/json'
         )
-        logger.info('Updated state of pipeline #{pipeline_id} to #{pipeline}')
+        logger.info("Updated state of pipeline #{pipeline_id} to #{pipeline}")
         resp
       end
 
@@ -102,7 +102,7 @@ module Urbanairship
             method: 'DELETE',
             url: PIPELINES_URL + pipeline_id
         )
-        logger.info('Deleted pipeline #{pipeline_id}')
+        logger.info("Deleted pipeline #{pipeline_id}")
         resp
       end
     end

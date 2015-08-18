@@ -52,26 +52,26 @@ describe Urbanairship do
         it 'can successfully list existing pipelines' do
           expected_response = {
             'body' => {
-              "ok" => true,
-              "pipelines" => [
+              'ok' => true,
+              'pipelines' => [
                 {
-                  "creation_time" => "2015-03-20T18:37:23",
-                  "enabled" => true,
-                  "immediate_trigger" => {
-                    "tag_added" => {"tag" => "bought_shoes"}
+                  'creation_time' => '2015-03-20T18:37:23',
+                  'enabled' => true,
+                  'immediate_trigger' => {
+                    'tag_added' => {'tag' => 'bought_shoes'}
                   },
-                  "last_modified_time" => "2015-03-20T19 =>35:12",
-                  "name" => "Shoe buyers",
-                  "outcome" => {
-                    "push" => {
-                      "audience" => "triggered",
-                      "device_types" => ["android"],
-                      "notification" => {"alert" => "So you like shoes, huh?"}
+                  'last_modified_time' => '2015-03-20T19 =>35:12',
+                  'name' => 'Shoe buyers',
+                  'outcome' => {
+                    'push' => {
+                      'audience' => 'triggered',
+                      'device_types' => ['android'],
+                      'notification' => {'alert' => 'So you like shoes, huh?'}
                     }
                   },
-                  "status" => "live",
-                  "uid" => "3987f98s-89s3-cx98-8z89-89adjkl29zds",
-                  "url" => "https =>//go.urbanairship.com/api/pipelines/3987f98s-89s3-cx98-8z89-89adjkl29zds"
+                  'status' => 'live',
+                  'uid' => '3987f98s-89s3-cx98-8z89-89adjkl29zds',
+                  'url' => 'https =>//go.urbanairship.com/api/pipelines/3987f98s-89s3-cx98-8z89-89adjkl29zds'
                 },
               ]
             },
@@ -152,23 +152,23 @@ describe Urbanairship do
       describe '#lookup' do
         it 'can successfully retrieve pipeline info' do
           expected_response = {
-            "ok" => true,
-            "pipeline" => {
-              "creation_time" => "2015-02-14T19 =>19:19",
-              "enabled" => true,
-              "immediate_trigger" => { "tag_added" => "new_customer" },
-              "last_modified_time" => "2015-03-01T12:12:54",
-              "name" => "New customer",
-              "outcome" => {
-                "push" => {
-                  "audience" => "triggered",
-                  "device_types" => "all",
-                  "notification" => { "alert" => "Hello new customer!" }
+            'ok' => true,
+            'pipeline' => {
+              'creation_time' => '2015-02-14T19 =>19:19',
+              'enabled' => true,
+              'immediate_trigger' => { 'tag_added' => 'new_customer'},
+              'last_modified_time' => '2015-03-01T12:12:54',
+              'name' => 'New customer',
+              'outcome' => {
+                'push' => {
+                  'audience' => 'triggered',
+                  'device_types' => 'all',
+                  'notification' => { 'alert' => 'Hello new customer!'}
                 }
               },
-              "status" => "live",
-              "uid" => "86ad9239-373d-d0a5-d5d8-04fed18f79bc",
-              "url" => "https =>//go.urbanairship/api/pipelines/86ad9239-373d-d0a5-d5d8-04fed18f79bc"
+              'status' => 'live',
+              'uid' => '86ad9239-373d-d0a5-d5d8-04fed18f79bc',
+              'url' => 'https =>//go.urbanairship/api/pipelines/86ad9239-373d-d0a5-d5d8-04fed18f79bc'
             }
           }
           allow(airship).to receive(:send_request).and_return(expected_response)
