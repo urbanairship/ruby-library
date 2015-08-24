@@ -22,7 +22,7 @@ module Urbanairship
           body: JSON.dump(payload),
           content_type: 'application/json'
         )
-        logger.info("Created a feed for #{url} with template #{template}")
+        logger.info("Created a feed for #{url} with template #{push.payload}")
         resp
       end
 
