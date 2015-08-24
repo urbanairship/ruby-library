@@ -63,6 +63,7 @@ Contents:
    reports.rst
    static_lists.rst
    automation.rst
+   feeds.rst
    exceptions.rst
    examples.rst
 
