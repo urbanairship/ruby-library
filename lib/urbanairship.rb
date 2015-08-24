@@ -15,6 +15,7 @@ require 'urbanairship/reports/response_statistics'
 require 'urbanairship/devices/static_lists'
 require 'urbanairship/push/pipeline'
 require 'urbanairship/push/automation'
+require 'urbanairship/devices/feed'
 
 module Urbanairship
   extend Urbanairship::Push::Audience
