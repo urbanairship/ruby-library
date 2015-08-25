@@ -135,6 +135,29 @@ List all APIDs for the application:
     end
 
 
+Blackberry PIN Register
+-----------------------
+
+Register a PIN with the application. This will mark the PIN as active in
+the system. You can also set up an alias and tags for the pin.
+
+.. code-block:: ruby
+
+    require 'urbanairship'
+
+    UA = Urbanairship
+    airship = UA::Client.new(key:'application_key', secret:'master_secret')
+    device_pin = UA::DevicePin.new(client: airship)
+    resp = device_pin.register(pin: '12345678', pin_alias: nil, tags: nil)
+    puts(resp)
+
+.. note::
+    ``pin_alias`` and ``tags`` are optional parameters for this command.
+    If no ``pin_alias`` is provided, any existing alias will be removed from the device
+    record. To empty the tag set, send an empty array of tags. If the tags
+    array is missing from the request, the tags will not be modified.
+
+
 Blackberry PIN Lookup
 ---------------------
 
@@ -148,6 +171,22 @@ Get information on a particular BlackBerry PIN:
     airship = UA::Client.new(key:'application_key', secret:'master_secret')
     device_pin = UA::DevicePin.new(client: airship)
     resp = device_pin.lookup(pin: 'device_pin')
+    puts(resp)
+
+
+Blackberry PIN Deactivate
+-------------------------
+
+Deactive a Blackberry pin for the application.
+
+.. code-block:: ruby
+
+    require 'urbanairship'
+
+    UA = Urbanairship
+    airship = UA::Client.new(key:'application_key', secret:'master_secret')
+    device_pin = UA::DevicePin.new(client: airship)
+    resp = device_pin.deactivate(pin: 'device_pin')
     puts(resp)
 
 
