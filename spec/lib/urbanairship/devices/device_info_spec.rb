@@ -367,4 +367,76 @@ describe Urbanairship::Devices do
       expect(instantiated_list.size).to eq(6)
     end
   end
+
+  describe Urbanairship::Devices::DevicePin do
+    include Urbanairship::Common
+    include Urbanairship::Loggable
+
+    device_pin = UA::DevicePin.new(client: airship)
+
+    describe '#lookup' do
+      it 'fails when a 7-digit hex string is given' do
+        expect {
+          device_pin.lookup(pin: '1234567')
+        }.to raise_error(ArgumentError)
+      end
+
+      it 'fails when a non-hex string is given' do
+        expect {
+          device_pin.lookup(pin: 'not hex')
+        }.to raise_error(ArgumentError)
+      end
+
+      it 'returns device pin information successfully' do
+        expected_resp = {
+          'body' => {
+            'device_pin' => '12345678',
+            'active' => true,
+            'alias' => 'user_id',
+            'tags' => ['tag1', 'tag2'],
+            'created' => '2015-08-01',
+            'last_registration' => '2015-08-01'
+          },
+          'code' => 200
+        }
+        allow(airship).to receive(:send_request).and_return(expected_resp)
+        actual_response = device_pin.lookup(pin: '12345678')
+        expect(actual_response).to eq(expected_resp)
+      end
+    end
+  end
+
+  describe Urbanairship::Devices::DevicePinList do
+    device_pin_item = {
+      'device_pin' => '12345678',
+      'active' => true,
+      'alias' => 'user_id',
+      'tags' => ['tag1', 'tag2'],
+      'created' => '2015-08-01',
+      'last_registration' => '2015-08-01'
+    }
+    expected_resp = {
+      'body' => {
+        'device_pins' => [device_pin_item, device_pin_item, device_pin_item],
+        'next_page' => 'url'
+      },
+      'code' => 200
+    }
+    expected_next_resp = {
+      'body' => {
+        'device_pins' => [device_pin_item, device_pin_item, device_pin_item]
+      },
+      'code' => 200
+    }
+    it 'can iterate through the list' do
+      allow(airship).to receive(:send_request).and_return(expected_resp, expected_next_resp)
+      device_pin_list = UA::DevicePinList.new(client: airship)
+      instantiated_list = Array.new
+      device_pin_list.each do |pin|
+        expect(pin).to eq(device_pin_item)
+        instantiated_list.push(pin)
+      end
+      expect(instantiated_list.size).to eq(6)
+    end
+  end
 end

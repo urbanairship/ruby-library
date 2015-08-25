@@ -138,7 +138,7 @@ module Urbanairship
       end
 
       def lookup(pin: required('pin'))
-        fail ArgumentError, 'Device pin must be an 8 digit hex string' if pin[/\h/] or pin.length != 8
+        fail ArgumentError, 'Device pin must be an 8 digit hex string' if pin[/\H/] or pin.length != 8
         resp = @client.send_request(
           method: 'GET',
           url: DEVICE_PIN_URL + pin

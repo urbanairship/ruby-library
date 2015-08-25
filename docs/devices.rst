@@ -52,3 +52,117 @@ http://docs.urbanairship.com/api/ua.html#feedback
     feedback = UA::Feedback.new(client: airship)
     tokens = feedback.device_token(since: since)
     apids = feedback.apid(since: since)
+
+
+Device Token Lookup
+-------------------
+
+Get information on a particular iOS device token:
+
+.. code-block:: ruby
+
+    require 'urbanairship'
+
+    UA = Urbanairship
+    airship = UA::Client.new(key:'application_key', secret:'master_secret')
+    device_token = UA::DeviceToken.new(client: airship)
+    resp = device_token.lookup(token: 'device_token')
+    puts(resp)
+
+
+Device Token List
+-----------------
+
+Get a list of iOS device tokens for the application:
+
+.. code-block:: ruby
+
+    require 'urbanairship'
+
+    UA = Urbanairship
+    airship = UA::Client.new(key:'application_key', secret:'master_secret')
+    device_token_list = UA::DeviceTokenList.new(client: airship)
+    device_token_list.each do |token|
+        puts(token)
+    end
+
+
+Device Token Count
+------------------
+
+Get the total iOS device tokens registered to the application.
+
+.. code-block:: ruby
+
+    require 'urbanairship'
+
+    UA = Urbanairship
+    airship = UA::Client.new(key:'application_key', secret:'master_secret')
+    device_token_list = UA::DeviceTokenList.new(client: airship)
+    puts(device_token_list.count)
+
+
+APID Lookup
+-----------
+
+Get information on a particular Android APID:
+
+.. code-block:: ruby
+
+    require 'urbanairship'
+
+    UA = Urbanairship
+    airship = UA::Client.new(key:'application_key', secret:'master_secret')
+    apid = UA::APID.new(client: airship)
+    resp = apid.lookup(apid: 'apid')
+    puts(resp)
+
+
+APID List
+---------
+
+List all APIDs for the application:
+
+.. code-block:: ruby
+
+    require 'urbanairship'
+
+    UA = Urbanairship
+    airship = UA::Client.new(key:'application_key', secret:'master_secret')
+    apid_list = UA::APIDList.new(client: airship)
+    apid_list.each do |apid|
+        puts(apid)
+    end
+
+
+Blackberry PIN Lookup
+---------------------
+
+Get information on a particular BlackBerry PIN:
+
+.. code-block:: ruby
+
+    require 'urbanairship'
+
+    UA = Urbanairship
+    airship = UA::Client.new(key:'application_key', secret:'master_secret')
+    device_pin = UA::DevicePin.new(client: airship)
+    resp = device_pin.lookup(pin: 'device_pin')
+    puts(resp)
+
+
+Blackberry PIN List
+-------------------
+
+Get a list of all Blackberry PINs registered to the application.
+
+.. code-block:: ruby
+
+    require 'urbanairship'
+
+    UA = Urbanairship
+    airship = UA::Client.new(key:'application_key', secret:'master_secret')
+    device_pin_list = UA::DevicePinList.new(client: airship)
+    device_pin_list.each do |pin|
+        puts(pin)
+    end
