@@ -16,6 +16,7 @@ require 'urbanairship/devices/static_lists'
 require 'urbanairship/push/pipeline'
 require 'urbanairship/push/automation'
 require 'urbanairship/devices/feed'
+require 'urbanairship/push/location'
 
 module Urbanairship
   extend Urbanairship::Push::Audience
