@@ -51,7 +51,7 @@ module Urbanairship
         response = @client.send_request(
           method: 'GET',
           url: @next_page,
-          version: 3,
+          version: 3
         )
         logger.info("Retrieved channel list from #{@next_page}")
         if response['body']['next_page']
