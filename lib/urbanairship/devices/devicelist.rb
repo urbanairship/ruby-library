@@ -8,11 +8,11 @@ module Urbanairship
       include Urbanairship::Loggable
       attr_writer :client
 
-      def initialize(client: client)
+      def initialize(client: required('client'))
         @client = client
       end
 
-      def lookup(uuid: required)
+      def lookup(uuid: required('uuid'))
         response = @client.send_request(
           method: 'GET',
           url: CHANNEL_URL + uuid,
@@ -28,7 +28,7 @@ module Urbanairship
       include Urbanairship::Loggable
       include Enumerable
 
-      def initialize(client: client)
+      def initialize(client: required('client'))
         @next_page = CHANNEL_URL
         @client = client
         @channel_list = nil
