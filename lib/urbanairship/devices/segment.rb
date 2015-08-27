@@ -1,26 +1,30 @@
 require 'json'
+require 'urbanairship'
 
-require 'urbanairship/common'
-require 'urbanairship/loggable'
 
 module Urbanairship
   module Devices
     class Segment
-      attr_accessor :display_name, :criteria
-      attr_reader   :creation_date, :modification_date, :url, :id
       include Urbanairship::Common
       include Urbanairship::Loggable
+      attr_writer   :client
+      attr_accessor :display_name, :criteria, :creation_date,
+                    :modification_date, :url, :id
+
+      def initialize(client: required('client'))
+        @client = client
+      end
 
       # Build a Segment from the display_name and criteria attributes
       #
       # @param [Object] client The Client
       # @return [Object] response HTTP response
-      def create(airship)
+      def create
         payload = {
-          display_name: @display_name,
-          criteria: @criteria
+          :display_name => @display_name,
+          :criteria => @criteria
         }
-        response = airship.send_request(
+        response = @client.send_request(
           method: 'POST',
           body: JSON.dump(payload),
           url: SEGMENTS_URL,
@@ -35,11 +39,10 @@ module Urbanairship
 
       # Build a Segment from the display_name and criteria attributes
       #
-      # @param [Object] airship The Client
       # @param [Object] id The id of the segment being looked up
-      def from_id(airship, id)
+      def from_id(id)
         url = SEGMENTS_URL + id
-        response = airship.send_request(
+        response = @client.send_request(
           method: 'GET',
           body: nil,
           url: url,
@@ -61,14 +64,13 @@ module Urbanairship
 
       # Update a segment with new criteria/display_name
       #
-      # @ param [Object] airship The client
       # @ returns [Object] response HTTP response
-      def update(airship)
+      def update
         data = {}
         data[:display_name] = @display_name
         data[:criteria] = @criteria
         url = SEGMENTS_URL + @id
-        response = airship.send_request(
+        response = @client.send_request(
           method: 'PUT',
           body: JSON.dump(data),
           url: url,
@@ -81,11 +83,10 @@ module Urbanairship
 
       # Delete a segment
       #
-      # @ param [Object] airship The client
       # @ returns [Object] response HTTP response
-      def delete(airship)
+      def delete
         url = SEGMENTS_URL + @id
-        response = airship.send_request(
+        response = @client.send_request(
           method: 'DELETE',
           body: nil,
           url: url,
@@ -100,13 +101,13 @@ module Urbanairship
     end
 
     class SegmentList
-      attr_accessor :limit, :client
-      attr_reader :start_url, :next_url, :data
       include Urbanairship::Common
       include Urbanairship::Devices
       include Enumerable
+      attr_accessor :limit, :client
+      attr_reader :start_url, :next_url, :data
 
-      def initialize(client, limit: nil)
+      def initialize(client: required('client'), limit: nil)
         @client = client
         @start_url = SEGMENTS_URL
         @next_url = @start_url
@@ -145,7 +146,7 @@ module Urbanairship
           version: 3
         )
         @data = response['body']['segments'].map do |raw|
-          s = UA::Segment.new
+          s = UA::Segment.new(client: @client)
           s.from_payload(raw); s
         end
         @next_url = response['body']['next_page']

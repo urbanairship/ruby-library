@@ -20,19 +20,19 @@ describe Urbanairship::Devices do
     }
 
     example_hash_create = {
-      "body" => "",
-      "code" => "200",
-      "headers" => {:location => "https://go.urbanairship.com/api/segments/1234"}
+      'body' => '',
+      'code' => '200',
+      'headers' => {:location => "https://go.urbanairship.com/api/segments/1234"}
     }
     example_hash_lookup = {
-      "body" => data,
-      "code" => "200"
+      'body' => data,
+      'code' => '200'
     }
-    example_hash_update = { "body" => "", "code" => "200"}
-    example_hash_delete = { "body" => "", "code" => "204"}
+    example_hash_update = { 'body' => '', 'code' => '200'}
+    example_hash_delete = { 'body' => '', 'code' => '204'}
 
     airship = UA::Client.new(key: '123', secret: 'abc')
-    seg = UA::Segment.new
+    seg = UA::Segment.new(client: airship)
     seg.display_name = test_name
     seg.criteria = test_criteria
 
@@ -42,7 +42,7 @@ describe Urbanairship::Devices do
           .to receive(:send_request)
           .and_return(example_hash_create)
 
-        create_res = seg.create(airship)
+        create_res = seg.create
         expect(create_res['code']).to eq "200"
       end
     end
@@ -53,7 +53,7 @@ describe Urbanairship::Devices do
           .to receive(:send_request)
           .and_return(example_hash_lookup)
 
-        lookup_res = seg.from_id(airship, 'test_id')
+        lookup_res = seg.from_id(id: "test_id")
         expect(lookup_res['code']).to eq '200'
         expect(lookup_res['body']).to eq data
       end
@@ -66,8 +66,8 @@ describe Urbanairship::Devices do
           .and_return(example_hash_update)
 
         seg.display_name = 'New Test Segment'
-        update_res = seg.update(airship)
-        expect(update_res['code']).to eq "200"
+        update_res = seg.update
+        expect(update_res['code']).to eq '200'
       end
     end
 
@@ -77,8 +77,8 @@ describe Urbanairship::Devices do
           .to receive(:send_request)
           .and_return(example_hash_delete)
 
-        delete_res = seg.delete(airship)
-        expect(delete_res['code']).to eq "204"
+        delete_res = seg.delete
+        expect(delete_res['code']).to eq '204'
       end
     end
   end
@@ -103,7 +103,7 @@ describe Urbanairship::Devices do
         .to receive(:send_request)
         .and_return(seglist_http_response)
 
-      seglist = UA::SegmentList.new(airship)
+      seglist = UA::SegmentList.new(client: airship)
       seglist.each do |seg|
         expect(seg.display_name).to eq name_list.pop
       end
