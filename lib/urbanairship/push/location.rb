@@ -27,6 +27,7 @@ module Urbanairship
       def coordinates_lookup(latitude: required('latitude'), longitude: required('longitude'), type: nil)
         fail ArgumentError,
           'latitude and longitude need to be numbers' unless latitude.is_a? Numeric and longitude.is_a? Numeric
+        fail ArgumentError, 'type needs to be a string' unless type == nil or type.is_a? String
         url = LOCATION_URL + latitude.to_s + ',' + longitude.to_s
         url += '?type=' + type unless type.nil?
         resp = @client.send_request(
@@ -43,6 +44,7 @@ module Urbanairship
         fail ArgumentError,
            'lat1, long1, lat2, and long2 need to be numbers' unless lat1.is_a? Numeric and long2.is_a? Numeric\
            and lat2.is_a? Numeric and long2.is_a? Numeric
+        fail ArgumentError, 'type needs to be a string' unless type == nil or type.is_a? String
         url = LOCATION_URL + lat1.to_s + ',' + long1.to_s + ',' + lat2.to_s + ',' + long2.to_s
         url += '?type=' + type unless type.nil?
         resp = @client.send_request(
@@ -78,21 +80,12 @@ module Urbanairship
         fail ArgumentError, 'polygon_id needs to be a string' unless polygon_id.is_a? String
         fail ArgumentError, 'zoom needs to be an integer' unless zoom.is_a? Integer
 
-        url = LOCATION_URL + polygon_id + '?zoom=' + zoom
+        url = LOCATION_URL + polygon_id + '?zoom=' + zoom.to_s
         resp = @client.send_request(
           method: 'GET',
           url: url
         )
         logger.info("Retrieved location info for polygon #{polygon_id} and zoom level #{zoom}")
-        resp
-      end
-
-      def date_range
-        resp = @client.send_request(
-          method: 'GET',
-          url: SEGMENTS_URL + 'dates/'
-        )
-        logger.info("Retrieved date range info for locations")
         resp
       end
     end
