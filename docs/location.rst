@@ -1,0 +1,107 @@
+Locations
+=========
+
+This class allows you to search for location information in
+various ways.
+
+
+Name Lookup
+-----------
+
+Search for a location boundary by name. The search primarily
+uses the location names, but you can also filter the results
+by boundary type. See http://docs.urbanairship.com/api/ua.html#location
+for more information.
+
+.. code-block:: ruby
+
+    require 'urbanairship'
+    UA = Urbanairship
+    airship = UA::Client.new(key:'application_key', secret:'master_secret')
+    location = UA::Location.new(client: airship)
+    location.name_lookup(name: 'name', type: 'type')
+
+.. note::
+
+    name is a required parameter, but type is optional
+
+
+Coordinates Lookup
+------------------
+
+Search for a location by latitude and longitude coordinates. Type is
+an optional parameter. See http://docs.urbanairship.com/api/ua.html#lat-long-lookup
+for more information.
+
+.. code-block:: ruby
+
+    require 'urbanairship'
+    UA = Urbanairship
+    airship = UA::Client.new(key:'application_key', secret:'master_secret')
+    location = UA::Location.new(client: airship)
+    location.coordinates_lookup(latitude: 123.45, longitude: 123.45, type: 'type')
+
+.. note::
+
+    longitude and latitude are required parameters that must be numbers.
+    Type is an optional parameter.
+
+
+Bounding Box Lookup
+-------------------
+
+Search for location using a bounding box. See:
+http://docs.urbanairship.com/api/ua.html#bounding-box-lookup
+for more information.
+
+.. code-block:: ruby
+
+    require 'urbanairship'
+    UA = Urbanairship
+    airship = UA::Client.new(key:'application_key', secret:'master_secret')
+    location = UA::Location.new(client: airship)
+    location.bounding_box_lookup(lat1: 123.45, long1: 123.45,
+      lat2: 321.45, long2: 321.45, type: 'type')
+
+.. note::
+
+    lat1, long1, lat2, and long2 and are required parameters that must be numbers.
+    Type is an optional parameter.
+
+
+Alias Lookup
+------------
+
+Search for location by alias. See
+http://docs.urbanairship.com/api/ua.html#alias-lookup
+
+.. code-block:: ruby
+
+    require 'urbanairship'
+    UA = Urbanairship
+    airship = UA::Client.new(key:'application_key', secret:'master_secret')
+    location = UA::Location.new(client: airship)
+    location.alias_lookup(from_alias: 'ua_state=CA')
+
+.. note::
+
+    from_alias can either be a single alias or an array of aliases.
+
+
+Polygon Lookup
+--------------
+
+Search for location by polygon id. See:
+http://docs.urbanairship.com/api/ua.html#polygon-lookup for more information.
+
+.. code-block:: ruby
+
+    require 'urbanairship'
+    UA = Urbanairship
+    airship = UA::Client.new(key:'application_key', secret:'master_secret')
+    location = UA::Location.new(client: airship)
+    location.polygon_lookup(polygon_id: 'id', zoom: 1)
+
+.. note::
+
+    polygon_id needs to be a string. Zoom is a number ranging 1-20.
