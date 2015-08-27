@@ -11,7 +11,7 @@ can be uninstalled at one time. For more information, see `the API documentation
    require 'urbanairship'
    UA = Urbanairship
    airship = UA::Client.new(key: 'app_key', secret: 'master_secret')
-   cu = UA::ChannelUninstall.new(airship)
+   cu = UA::ChannelUninstall.new(client: airship)
 
    chans = [{"channel_id" => "00000000-00000000-00000000-00000000",
              "device_type" => "ios"},

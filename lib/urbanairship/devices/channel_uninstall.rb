@@ -1,20 +1,17 @@
 require 'json'
-
-require 'urbanairship/common'
-require 'urbanairship/loggable'
+require 'urbanairship'
 
 module Urbanairship
   module Devices
-
     class ChannelUninstall
-      attr_reader :client
       include Urbanairship::Common
       include Urbanairship::Loggable
+      attr_reader :client
 
       # Initialize a ChannelUninstall Object
       #
       # @param [Object] client
-      def initialize(client)
+      def initialize(client: required(client))
         @client = client
       end
 
@@ -35,6 +32,5 @@ module Urbanairship
         response
       end
     end
-
   end
 end
