@@ -39,9 +39,6 @@ module Urbanairship
           @channel_list.each do | value |
             yield value
           end
-          if @next_page
-            load_page
-          end
         end
       end
 
