@@ -1,5 +1,6 @@
 require 'logger'
 
+
 module Urbanairship
   module Loggable
 

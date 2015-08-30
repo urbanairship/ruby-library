@@ -1,7 +1,7 @@
 require 'json'
-
 require 'urbanairship/common'
 require 'urbanairship/loggable'
+
 
 module Urbanairship
   module Push
@@ -181,7 +181,7 @@ module Urbanairship
       def format
         base = "Received [#{@status_code}] response code. \nHeaders: \tBody:\n"
         payload.each do |key, value|
-          safe_value = value.to_s || "None"
+          safe_value = value.to_s || 'None'
           base << "#{key}:\t#{safe_value}\n"
         end
         base

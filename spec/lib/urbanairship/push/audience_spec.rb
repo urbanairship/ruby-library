@@ -1,6 +1,6 @@
 require 'spec_helper'
-
 require 'urbanairship'
+
 
 describe Urbanairship do
   UA = Urbanairship

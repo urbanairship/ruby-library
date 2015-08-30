@@ -59,6 +59,7 @@ Contents:
    :maxdepth: 2
 
    push.rst
+   devices.rst
    channel-uninstall.rst
    exceptions.rst
    examples.rst

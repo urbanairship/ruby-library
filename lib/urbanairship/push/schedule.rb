@@ -1,5 +1,6 @@
 require 'urbanairship/util'
 
+
 module Urbanairship
   module Push
     module Schedule
