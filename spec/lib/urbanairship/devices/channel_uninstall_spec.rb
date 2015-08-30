@@ -27,7 +27,7 @@ describe Urbanairship::Devices do
           .to receive(:send_request)
           .and_return(simple_http_response)
         cu = UA::ChannelUninstall.new(client: airship)
-        resp = cu.uninstall(build_array(1))
+        resp = cu.uninstall(channels: build_array(1))
         ok = resp[:body][:ok] || 'None'
         expect(ok).to eq 'true'
       end
@@ -40,7 +40,7 @@ describe Urbanairship::Devices do
         cu = UA::ChannelUninstall.new(client: airship)
 
         expect {
-          cu.uninstall(build_array(201))
+          cu.uninstall(channels: build_array(201))
         }.to raise_error(ArgumentError)
       end
     end

@@ -11,11 +11,11 @@ module Urbanairship
       # Initialize a ChannelUninstall Object
       #
       # @param [Object] client
-      def initialize(client: required(client))
+      def initialize(client: required('client'))
         @client = client
       end
 
-      def uninstall(channels)
+      def uninstall(channels: required('channels'))
         chan_num = channels.length
         fail ArgumentError,
              'Maximum of 200 channel uninstalls exceeded.' if chan_num > 200
