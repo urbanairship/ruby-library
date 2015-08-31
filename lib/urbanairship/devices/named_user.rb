@@ -80,7 +80,6 @@ module Urbanairship
         super(client: client)
         @next_page = NAMED_USER_URL
         @data_attribute = 'named_users'
-        load_page
       end
     end
   end

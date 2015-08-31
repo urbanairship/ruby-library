@@ -87,7 +87,6 @@ module Urbanairship
         super(client: client)
         @next_page = LISTS_URL
         @data_attribute = 'lists'
-        load_page
       end
     end
   end
