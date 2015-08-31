@@ -15,7 +15,7 @@ module Urbanairship
       def lookup(uuid: required('uuid'))
         response = @client.send_request(
           method: 'GET',
-          url: CHANNEL_URL + uuid,
+          url: CHANNEL_URL + uuid
         )
         logger.info("Retrieved channel information for #{uuid}")
         response['body']['channel']
