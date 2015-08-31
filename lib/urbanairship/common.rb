@@ -118,6 +118,9 @@ module Urbanairship
       end
 
       def load_page
+        unless @next_page
+          return false
+        end
         response = @client.send_request(
             method: 'GET',
             url: @next_page
@@ -129,16 +132,13 @@ module Urbanairship
           @next_page = nil
         end
         @data_list = response['body'][@data_attribute]
+        true
       end
 
       def each
-        while @data_list
+        while load_page
           @data_list.each do | value |
             yield value
-          end
-          @data_list = nil
-          if @next_page
-            load_page
           end
         end
       end
