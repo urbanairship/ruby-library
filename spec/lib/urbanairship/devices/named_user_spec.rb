@@ -172,4 +172,54 @@ describe Urbanairship::Devices do
       end
     end
   end
+
+  describe Urbanairship::NamedUserList do
+    named_user_item = {
+      'named_user_id' => 'id',
+      'tags' => { 'crm' => ['tag1', 'tag2' ] },
+      'channels' => [
+        {
+          'channel_id' => 'id',
+          'device_type' => 'ios',
+          'installed' => true,
+          'opt_in' => true,
+          'push_address' => 'FFFF',
+          'created' => '2015-08-01',
+          'last_registeration' => '2015-08-01',
+          'alias' => 'xxxx',
+          'tags' => ['tag1'],
+          'ios' => {
+            'badge' => 0,
+            'quiettime' => { 'start' => '22:00', 'end' => '06:00' },
+            'tz' => 'America/Los_Angeles'
+          }
+        }
+      ]
+    }
+    expected_resp = {
+      'body' => {
+        'named_users' => [named_user_item, named_user_item, named_user_item ],
+        'next_page' => 'url'
+      },
+      'code' => 200
+    }
+    expected_next_resp = {
+      'body' => {
+        'named_users' => [named_user_item, named_user_item, named_user_item ],
+      },
+      'code' => 200
+    }
+
+    it 'iterates correctly through a response' do
+      allow(airship).to receive(:send_request).and_return(expected_resp, expected_next_resp)
+      named_user_list = UA::NamedUserList.new(client:airship)
+      instantiated_list = Array.new
+      named_user_list.each do |named_user|
+        expect(named_user).to eq(named_user_item)
+        instantiated_list.push(named_user)
+      end
+      expect(instantiated_list.size).to eq(6)
+    end
+  end
+
 end
