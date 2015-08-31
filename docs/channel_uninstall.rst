@@ -18,4 +18,4 @@ can be uninstalled at one time. For more information, see `the API documentation
             {"channel_id" => "11111111-11111111-11111111-11111111",
              "device_type" => "android"}]
 
-   cu.uninstall(chans)
+   cu.uninstall(channels: chans)
