@@ -32,26 +32,24 @@ module Urbanairship
         @next_page = CHANNEL_URL
         @client = client
         @channel_list = nil
-        load_page
       end
 
       def each
-        while @channel_list
+        while load_page
           @channel_list.each do | value |
             yield value
-          end
-          @channel_list = nil
-          if @next_page
-            load_page
           end
         end
       end
 
       def load_page
+        unless @next_page
+          return false
+        end
         response = @client.send_request(
           method: 'GET',
           url: @next_page,
-          version: 3,
+          version: 3
         )
         logger.info("Retrieved channel list from #{@next_page}")
         if response['body']['next_page']
@@ -60,6 +58,7 @@ module Urbanairship
           @next_page = nil
         end
         @channel_list = response['body']['channels']
+        true
       end
     end
 
