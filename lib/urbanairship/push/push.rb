@@ -158,8 +158,28 @@ module Urbanairship
         logger.info { pr.format }
         pr
       end
+
+      def list(schedule_id: required('schedule_id'))
+        fail ArgumentError,
+           'schedule_id must be a string' unless schedule_id.is_a? String
+        resp = @client.send_request(
+          method: 'GET',
+          url: SCHEDULES_URL + schedule_id
+        )
+        logger.info("Retrieved info for schedule_id #{schedule_id}")
+        resp
+      end
     end
 
+
+    class ScheduledPushList < Urbanairship::Common::PageIterator
+      def initialize(client: required('client'))
+        super(client: client)
+        @next_page = SCHEDULES_URL
+        @data_attribute = 'schedules'
+        load_page
+      end
+    end
 
     # Response to a successful push notification send or schedule.
     class PushResponse
