@@ -27,7 +27,6 @@ module Urbanairship
         super(client: client)
         @next_page = CHANNEL_URL
         @data_attribute = 'channels'
-        load_page
       end
     end
 
@@ -52,7 +51,7 @@ module Urbanairship
       def get_feedback(url: required('url'))
         response = @client.send_request(
             method: 'GET',
-            url: url,
+            url: url
         )
         logger.info("Requested feedback at url #{url}")
         response
