@@ -43,7 +43,7 @@ describe Urbanairship::Devices do
           .and_return(example_hash_create)
 
         create_res = seg.create
-        expect(create_res['code']).to eq "200"
+        expect(create_res['code']).to eq '200'
       end
     end
 
@@ -53,7 +53,7 @@ describe Urbanairship::Devices do
           .to receive(:send_request)
           .and_return(example_hash_lookup)
 
-        lookup_res = seg.from_id(id: "test_id")
+        lookup_res = seg.from_id(id: 'test_id')
         expect(lookup_res['code']).to eq '200'
         expect(lookup_res['body']).to eq data
       end
@@ -105,7 +105,7 @@ describe Urbanairship::Devices do
 
       seglist = UA::SegmentList.new(client: airship)
       seglist.each do |seg|
-        expect(seg.display_name).to eq name_list.pop
+        expect(seg['display_name']).to eq name_list.pop
       end
     end
   end

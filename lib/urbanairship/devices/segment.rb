@@ -7,12 +7,13 @@ module Urbanairship
     class Segment
       include Urbanairship::Common
       include Urbanairship::Loggable
-      attr_writer   :client
-      attr_accessor :display_name, :criteria, :creation_date,
-                    :modification_date, :url, :id
+      attr_accessor :display_name, :criteria
 
       def initialize(client: required('client'))
         @client = client
+        @display_name = nil
+        @criteria = nil
+        @id = nil
       end
 
       # Build a Segment from the display_name and criteria attributes
@@ -20,6 +21,8 @@ module Urbanairship
       # @param [Object] client The Client
       # @return [Object] response HTTP response
       def create
+        fail ArgumentError,
+          'Both display_name and criteria must be set to a value' if display_name.nil? or criteria.nil?
         payload = {
           :display_name => @display_name,
           :criteria => @criteria
@@ -40,40 +43,38 @@ module Urbanairship
       # Build a Segment from the display_name and criteria attributes
       #
       # @param [Object] id The id of the segment being looked up
-      def from_id(id)
-        url = SEGMENTS_URL + id
+      def from_id(id: required('id'))
+        fail ArgumentError,
+          'id must be set to a valid string' if id.nil?
         response = @client.send_request(
           method: 'GET',
-          body: nil,
-          url: url,
+          url: SEGMENTS_URL + id,
           content_type: 'application/json',
           version: 3
         )
-        payload = response['body']
+        logger.info("Retrieved segment information for #{id}")
         @id = id
-        from_payload(payload)
+        @criteria = response['body']['criteria']
+        @display_name = response['body']['display_name']
         response
-      end
-
-      # Helper method, sets a Segment's attributes
-      #
-      # @ param [Object] payload A Hash of segment attributes and their values
-      def from_payload(payload)
-        payload.each { |key, val| send("#{key}=", val) }
       end
 
       # Update a segment with new criteria/display_name
       #
       # @ returns [Object] response HTTP response
       def update
+        fail ArgumentError,
+          'id cannot be nil' if @id.nil?
+        fail ArgumentError,
+          'Either display_name or criteria must be set to a value' if display_name.nil? and criteria.nil?
+
         data = {}
-        data[:display_name] = @display_name
-        data[:criteria] = @criteria
-        url = SEGMENTS_URL + @id
+        data['display_name'] = @display_name
+        data['criteria'] = @criteria
         response = @client.send_request(
           method: 'PUT',
           body: JSON.dump(data),
-          url: url,
+          url: SEGMENTS_URL + @id,
           content_type: 'application/json',
           version: 3
         )
@@ -88,70 +89,23 @@ module Urbanairship
         url = SEGMENTS_URL + @id
         response = @client.send_request(
           method: 'DELETE',
-          body: nil,
           url: url,
           content_type: 'application/json',
           version: 3
         )
-
         logger.info { "Successful segment deletion: #{@display_name}" }
         response
       end
-
     end
 
-    class SegmentList
+    class SegmentList < Urbanairship::Common::PageIterator
       include Urbanairship::Common
-      include Urbanairship::Devices
-      include Enumerable
-      attr_accessor :limit, :client
-      attr_reader :start_url, :next_url, :data
 
-      def initialize(client: required('client'), limit: nil)
-        @client = client
-        @start_url = SEGMENTS_URL
-        @next_url = @start_url
-        @data = []
-        if limit != nil
-          @limit = limit
-        end
+      def initialize(client: required('client'))
+        super(client: client)
+        @next_page = SEGMENTS_URL
+        @data_attribute = 'segments'
       end
-
-      # Makes the SegmentList iterable
-      #
-      # @ param [Object] block A ruby block with instructions on processing
-      #     each element of the iterable.
-      def each(&block)
-        # Continue to load more data so long as [next_url] is not nil.
-        while @next_url
-          get_page
-          @data.each(&block)
-        end
-      end
-
-      # Get a page of results
-      def get_page
-        if @limit != nil
-          params = {'limit' => @limit}
-        else
-          params = nil
-        end
-
-        response = @client.send_request(
-          method: 'GET',
-          body: nil,
-          url: @next_url,
-          content_type: 'application/json',
-          params: params,
-          version: 3
-        )
-        @data = response['body']['segments'].map do |raw|
-          s = UA::Segment.new(client: @client)
-          s.from_payload(raw); s
-        end
-        @next_url = response['body']['next_page']
-      end
-
     end
   end
 end
