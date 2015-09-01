@@ -71,9 +71,3 @@ module Urbanairship
     end
   end
 end
-
-
-
-
-
-
