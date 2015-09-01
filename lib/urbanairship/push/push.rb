@@ -177,7 +177,6 @@ module Urbanairship
         super(client: client)
         @next_page = SCHEDULES_URL
         @data_attribute = 'schedules'
-        load_page
       end
     end
 

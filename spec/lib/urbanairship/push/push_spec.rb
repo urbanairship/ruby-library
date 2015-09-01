@@ -303,8 +303,72 @@ describe Urbanairship::Push do
         )
       end
     end
+
+    describe '#list' do
+      airship = UA::Client.new(key: '123', secret: 'abc')
+      scheduled_push = UA::Push::ScheduledPush.new(airship)
+
+      it 'returns a specific schedule successfully' do
+        expected_resp = {
+          'body' => {
+            'name' => 'name',
+            'schedule' => { 'scheduled_time' => '2015-08-01' },
+            'push' => {
+              'audience' => 'all',
+              'notification' => { 'alert' => 'Hello' },
+              'device_types' => 'all'
+            }
+          },
+          'code' => 200
+        }
+        allow(airship).to receive(:send_request).and_return(expected_resp)
+        actual_resp = scheduled_push.list(schedule_id: 'schedule_id')
+        expect(actual_resp).to eq(expected_resp)
+      end
+
+      it 'fails when schedule_id is not a string' do
+        expect {
+          scheduled_push.list(schedule_id: 123)
+        }.to raise_error(ArgumentError)
+      end
+    end
   end
 
+  describe Urbanairship::Push::ScheduledPushList do
+    schedule_item = {
+      'url' => 'url',
+      'schedule' => { 'scheduled_time' => '2015-08-01' },
+      'push' => {
+        'audience' => 'all',
+        'notification' => { 'alert' => 'Hello' },
+        'device_types' => 'all'
+      }
+    }
+    expected_resp = {
+      'body' => {
+        'schedules' => [schedule_item, schedule_item, schedule_item],
+        'next_page' => 'url'
+      },
+      'code' => 200
+    }
+    expected_resp_next = {
+      'body' => {
+        'schedules' => [schedule_item, schedule_item, schedule_item],
+      },
+      'code' => 200
+    }
+    airship = UA::Client.new(key: '123', secret: 'abc')
+    it 'iterates correctly over the schedule list' do
+      allow(airship).to receive(:send_request).and_return(expected_resp, expected_resp_next)
+      schedule_list = UA::ScheduledPushList.new(client: airship)
+      instantiated_list = Array.new
+      schedule_list.each do |schedule|
+        expect(schedule).to eq(schedule_item)
+        instantiated_list.push(schedule)
+      end
+      expect(instantiated_list.size).to eq(6)
+    end
+  end
 
   describe Urbanairship::Push::PushResponse do
     describe '#ok' do
