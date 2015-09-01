@@ -65,7 +65,6 @@ module Urbanairship
         url += '&push_id_start&' + push_id_start unless push_id_start.nil?
         @next_page = url
         @data_attribute = 'pushes'
-        load_page
       end
     end
 
@@ -102,7 +101,6 @@ module Urbanairship
         url = Helper.new.get_url(start_date, end_date, precision)
         @next_page = REPORTS_URL + 'optins/' + url
         @data_attribute = 'optins'
-        load_page
       end
     end
 
@@ -113,7 +111,6 @@ module Urbanairship
         url = Helper.new.get_url(start_date, end_date, precision)
         @next_page = REPORTS_URL + 'optouts/' + url
         @data_attribute = 'optouts'
-        load_page
       end
     end
 
@@ -124,7 +121,6 @@ module Urbanairship
         url = Helper.new.get_url(start_date, end_date, precision)
         @next_page = REPORTS_URL + 'sends/' + url
         @data_attribute = 'sends'
-        load_page
       end
     end
 
@@ -135,7 +131,6 @@ module Urbanairship
         url = Helper.new.get_url(start_date, end_date, precision)
         @next_page = REPORTS_URL + 'responses/' + url
         @data_attribute = 'responses'
-        load_page
       end
     end
 
@@ -146,7 +141,6 @@ module Urbanairship
         url = Helper.new.get_url(start_date, end_date, precision)
         @next_page = REPORTS_URL + 'opens/' + url
         @data_attribute = 'opens'
-        load_page
       end
     end
 
@@ -157,7 +151,6 @@ module Urbanairship
         url = Helper.new.get_url(start_date, end_date, precision)
         @next_page = REPORTS_URL + 'timeinapp/' + url
         @data_attribute = 'timeinapp'
-        load_page
       end
     end
   end
