@@ -1,6 +1,6 @@
 require 'unirest'
-require 'urbanairship/common'
-require 'urbanairship/loggable'
+require 'urbanairship'
+
 
 module Urbanairship
     class Client
@@ -28,10 +28,9 @@ module Urbanairship
       # @param [Object] url Request URL
       # @param [Object] content_type Content-Type
       # @param [Object] version API Version
-      # @param [Object] params Parameters
       # @return [Object] Push Response
-      def send_request(method: required('method'), body: required('body'), url: required('url'),
-                       content_type: nil, version: nil, params: nil)
+      def send_request(method: required('method'), url: required('url'), body: nil,
+                       content_type: nil, version: 3)
         req_type = case method
           when 'GET'
             :get
@@ -45,19 +44,27 @@ module Urbanairship
             fail 'Method was not "GET" "POST" "PUT" or "DELETE"'
         end
 
+
+        headers = {'User-agent' => 'UARubyLib/' + UA::VERSION}
+
+        if version
+          headers['Accept'] = 'application/vnd.urbanairship+json; version=' + version.to_s
+        end
+
+        if content_type
+          headers['Content-type'] = content_type
+        end
+
         logger.debug("Making #{method} request to #{url}. \n\tHeaders:\n\tcontent-type: #{content_type}\n\tversion=#{version.to_s}\nBody:\n\t#{body}")
 
         response = Unirest.method(req_type).call(
-            url,
-            headers:{
-                "Content-type" => content_type,
-                "Accept" => "application/vnd.urbanairship+json; version=" + version.to_s
-            },
-            auth:{
-                :user=>@key,
-                :password=>@secret
-            },
-            parameters: body
+          url,
+          headers: headers,
+          auth:{
+            :user=>@key,
+            :password=>@secret
+          },
+          parameters: body
         )
 
         logger.debug("Received #{response.code} response. Headers:\n\t#{response.headers}\nBody:\n\t#{response.body}")
