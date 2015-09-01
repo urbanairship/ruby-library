@@ -61,5 +61,34 @@ module Urbanairship
         true
       end
     end
+
+    class Feedback
+      include Urbanairship::Common
+      include Urbanairship::Loggable
+
+      def initialize(client: required('client'))
+        @client = client
+      end
+
+      def device_token(since: required('device token'))
+        url = DT_FEEDBACK_URL + '?since=' + since
+        get_feedback(url: url)
+      end
+
+      def apid(since: required('since'))
+        url = APID_FEEDBACK_URL + '?since=' + since
+        get_feedback(url: url)
+      end
+
+      def get_feedback(url: required('url'))
+        response = @client.send_request(
+            method: 'GET',
+            url: url,
+            version: 3
+        )
+        logger.info("Requested feedback at url #{url}")
+        response
+      end
+    end
   end
 end

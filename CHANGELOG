@@ -3,6 +3,7 @@
 - Added documentation files
 - Added support for ChannelInfo and ChannelList
 - Added support for tags
+- Added support for feedback (device token and apid)
 
 
 
