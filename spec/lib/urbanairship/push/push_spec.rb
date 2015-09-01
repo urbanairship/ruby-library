@@ -391,5 +391,4 @@ describe Urbanairship::Push do
       end
     end
   end
-
 end
