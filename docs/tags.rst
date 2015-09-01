@@ -8,6 +8,7 @@ For more information, see: http://docs.urbanairship.com/api/ua.html#tags.
 
 ChannelTags
 -----------
+
 Allows the addition, removal, and setting of tags on a channel specified by
 the required audience field.
 
@@ -43,6 +44,6 @@ missing Tag Groups are specified, a warning will be included in the response.
     channel_tags.send_request
 
 .. note::
-    The audience can be either a single channel or as a list of channels. Similarly,
-    the tags can either be set as a single tag or a list of tags.
 
+    The audience can be either a single channel or a list of channels. Similarly,
+    the tags can either be set as a single tag or a list of tags.
