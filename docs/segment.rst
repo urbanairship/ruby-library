@@ -15,10 +15,10 @@ information, see `the API documentation <http://docs.urbanairship.com/api/ua.htm
    require 'urbanairship'
    UA = Urbanairship
    airship = UA::Client.new(key: 'application_key', secret: 'master_secret')
-   segment_list = UA::SegmentList.new(airship)
+   segment_list = UA::SegmentList.new(client: airship)
 
    segment_list.each do |segment|
-      puts segment
+      puts(segment['display_name'])
    end
 
 ******************
@@ -33,15 +33,10 @@ Create a segment for the application. See the segment creation `API documentatio
    require 'urbanairship'
    UA = Urbanairship
    airship = UA::Client.new(key: 'application_key', secret: 'master_secret')
-   segment = UA::Segment.new
+   segment = UA::Segment.new(client: airship)
    segment.display_name = 'Display Name'
    segment.criteria = { 'tag' => 'existing_tag' }
-   segment.create(airship)
-
-.. note::
-
-   Segment attributes are automatically set upon calling ``segment.create(airship)``. They can
-   be accessed in the usual manner: ``segment.id``, ``segment.criteria``, etc.
+   segment.create
 
 
 *******************
@@ -56,8 +51,8 @@ update `API documentation <http://docs.urbanairship.com/api/ua.html#update-segme
    require 'urbanairship'
    UA = Urbanairship
    airship = UA::Client.new(key: 'application_key', secret: 'master_secret')
-   segment = UA::Segment.new
-   segment.from_id(airship, 'segment_id')
+   segment = UA::Segment.new(client: airship)
+   segment.from_id(id: 'segment_id')
    segment.display_name = 'Updated Display Name'
    segment.criteria = { 'tag' => 'updated_tag' }
    segment.update(airship)
@@ -75,9 +70,9 @@ Delete a segment. For more information, see the segment deletion `API documentat
    require 'urbanairship'
    UA = Urbanairship
    airship = UA::Client.new(key: 'application_key', secret: 'master_secret')
-   segment = UA::Segment.new
-   segment.from_id(airship, 'segment_id')
-   segment.delete(airship)
+   segment = UA::Segment.new(client: airship)
+   segment.from_id(id: 'segment_id')
+   segment.delete
 
 
 **************
@@ -93,5 +88,10 @@ more information.
    require 'urbanairship'
    UA = Urbanairship
    airship = UA::Client.new(key: 'application_key', secret: 'master_secret')
-   segment = UA::Segment.new
-   segment.from_id(airship, 'segment_id')
+   segment = UA::Segment.new(client: airship)
+   segment.from_id(id: 'segment_id')
+
+.. note::
+
+   Calling ``segment.from_id(id: 'segment_id')`` automatically sets the ``display_name`` and
+   ``criteria`` attributes of segment.

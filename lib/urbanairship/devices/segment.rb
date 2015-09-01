@@ -8,6 +8,7 @@ module Urbanairship
       include Urbanairship::Common
       include Urbanairship::Loggable
       attr_accessor :display_name, :criteria
+      attr_reader :id
 
       def initialize(client: required('client'))
         @client = client
@@ -86,6 +87,9 @@ module Urbanairship
       #
       # @ returns [Object] response HTTP response
       def delete
+        fail ArgumentError,
+          'id cannot be nil' if @id.nil?
+
         url = SEGMENTS_URL + @id
         response = @client.send_request(
           method: 'DELETE',
