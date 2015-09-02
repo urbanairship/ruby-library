@@ -61,6 +61,7 @@ Contents:
    push.rst
    devices.rst
    channel-uninstall.rst
+   tags.rst
    exceptions.rst
    examples.rst
 

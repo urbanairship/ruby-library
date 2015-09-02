@@ -1,5 +1,6 @@
 /.bundle/
 /.yardoc
+/.idea/
 /Gemfile.lock
 /_yardoc/
 /coverage/
@@ -8,7 +9,6 @@
 /pkg/
 /spec/reports/
 /tmp/
-
 
 # App
 urbanairship.log

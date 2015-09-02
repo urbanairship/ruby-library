@@ -14,7 +14,6 @@ module Urbanairship
     DT_FEEDBACK_URL = BASE_URL + '/device_tokens/feedback/'
     APID_FEEDBACK_URL = BASE_URL + '/apids/feedback/'
     SCHEDULES_URL = BASE_URL + '/schedules/'
-    TAGS_URL = BASE_URL + '/tags/'
     SEGMENTS_URL = BASE_URL + '/segments/'
 
     # Helper method for required keyword args in Ruby 2.0 that is compatible with 2.1+

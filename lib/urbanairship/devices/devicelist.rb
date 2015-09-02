@@ -32,22 +32,20 @@ module Urbanairship
         @next_page = CHANNEL_URL
         @client = client
         @channel_list = nil
-        load_page
       end
 
       def each
-        while @channel_list
+        while load_page
           @channel_list.each do | value |
             yield value
-          end
-          @channel_list = nil
-          if @next_page
-            load_page
           end
         end
       end
 
       def load_page
+        unless @next_page
+          return false
+        end
         response = @client.send_request(
           method: 'GET',
           url: @next_page,
@@ -60,6 +58,36 @@ module Urbanairship
           @next_page = nil
         end
         @channel_list = response['body']['channels']
+        true
+      end
+    end
+
+    class Feedback
+      include Urbanairship::Common
+      include Urbanairship::Loggable
+
+      def initialize(client: required('client'))
+        @client = client
+      end
+
+      def device_token(since: required('device token'))
+        url = DT_FEEDBACK_URL + '?since=' + since
+        get_feedback(url: url)
+      end
+
+      def apid(since: required('since'))
+        url = APID_FEEDBACK_URL + '?since=' + since
+        get_feedback(url: url)
+      end
+
+      def get_feedback(url: required('url'))
+        response = @client.send_request(
+            method: 'GET',
+            url: url,
+            version: 3
+        )
+        logger.info("Requested feedback at url #{url}")
+        response
       end
     end
   end

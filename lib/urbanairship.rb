@@ -9,7 +9,7 @@ require 'urbanairship/loggable'
 require 'urbanairship/util'
 require 'urbanairship/version'
 require 'urbanairship/devices/devicelist'
-
+require 'urbanairship/devices/channel_tags'
 
 module Urbanairship
   extend Urbanairship::Push::Audience
