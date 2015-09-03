@@ -6,10 +6,11 @@ module Urbanairship
     class NamedUser
       include Urbanairship::Common
       include Urbanairship::Loggable
+      attr_accessor :named_user_id
 
-      def initialize(client: required('client'), named_user_id: nil)
+      def initialize(client: required('client'))
         @client = client
-        @named_user_id = named_user_id
+        @named_user_id =  nil
       end
 
       def associate(channel_id: required('channel_id'), device_type: required('device_type'))
