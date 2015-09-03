@@ -6,4 +6,8 @@ describe Urbanairship::Common do
   it 'has a PUSH_URL' do
     expect(Urbanairship::Common::PUSH_URL).not_to be nil
   end
+
+  it 'has a CHANNEL_URL' do
+    expect(Urbanairship::Common::CHANNEL_URL).not_to be nil
+  end
 end
