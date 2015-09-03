@@ -24,8 +24,7 @@ module Urbanairship
           method: 'POST',
           body: JSON.dump(channels),
           url: CHANNEL_URL + 'uninstall/',
-          content_type: 'application/json',
-          version: 3
+          content_type: 'application/json'
         )
 
         logger.info { "Successfully uninstalled #{chan_num} channels." }

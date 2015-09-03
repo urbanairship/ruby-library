@@ -42,8 +42,7 @@ module Urbanairship
           method: 'POST',
           body: JSON.dump(payload),
           url: PUSH_URL,
-          content_type: 'application/json',
-          version: 3
+          content_type: 'application/json'
         )
         pr = PushResponse.new(http_response_body: response['body'], http_response_code: response['code'].to_s)
         logger.info { pr.format }
@@ -84,8 +83,7 @@ module Urbanairship
           method: 'POST',
           body: JSON.dump(payload),
           url: SCHEDULES_URL,
-          content_type: 'application/json',
-          version: 3
+          content_type: 'application/json'
         )
         pr = PushResponse.new(http_response_body: response['body'], http_response_code: response['code'].to_s)
         logger.info { pr.format }
@@ -103,8 +101,7 @@ module Urbanairship
         response_body = client.send_request(
           method: 'GET',
           body: nil,
-          url: url,
-          version: 3
+          url: url
         )
         payload = JSON.load(response_body)
 
@@ -133,8 +130,7 @@ module Urbanairship
           method: 'DELETE',
           body: nil,
           url: @url,
-          content_type: 'application/json',
-          version: 3
+          content_type: 'application/json'
         )
         pr = PushResponse.new(http_response_body: response['body'], http_response_code: response['code'].to_s)
         logger.info { "Result of canceling scheduled push: #{@url} was a: [#{pr.status_code}]" }
@@ -151,8 +147,7 @@ module Urbanairship
           method: 'PUT',
           body: JSON.dump(self.payload),
           url: @url,
-          content_type: 'application/json',
-          version: 3
+          content_type: 'application/json'
         )
         pr = PushResponse.new(http_response_body: response['body'], http_response_code: response['code'].to_s)
         logger.info { pr.format }
