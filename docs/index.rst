@@ -60,8 +60,9 @@ Contents:
 
    push.rst
    devices.rst
-   channel-uninstall.rst
+   channel_uninstall.rst
    tags.rst
+   named_user.rst
    exceptions.rst
    examples.rst
 

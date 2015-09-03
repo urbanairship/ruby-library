@@ -15,50 +15,18 @@ module Urbanairship
       def lookup(uuid: required('uuid'))
         response = @client.send_request(
           method: 'GET',
-          url: CHANNEL_URL + uuid,
-          version: 3
+          url: CHANNEL_URL + uuid
         )
         logger.info("Retrieved channel information for #{uuid}")
         response['body']['channel']
       end
     end
 
-    class ChannelList
-      include Urbanairship::Common
-      include Urbanairship::Loggable
-      include Enumerable
-
+    class ChannelList < Urbanairship::Common::PageIterator
       def initialize(client: required('client'))
+        super(client: client)
         @next_page = CHANNEL_URL
-        @client = client
-        @channel_list = nil
-      end
-
-      def each
-        while load_page
-          @channel_list.each do | value |
-            yield value
-          end
-        end
-      end
-
-      def load_page
-        unless @next_page
-          return false
-        end
-        response = @client.send_request(
-          method: 'GET',
-          url: @next_page,
-          version: 3
-        )
-        logger.info("Retrieved channel list from #{@next_page}")
-        if response['body']['next_page']
-          @next_page = response['body']['next_page']
-        else
-          @next_page = nil
-        end
-        @channel_list = response['body']['channels']
-        true
+        @data_attribute = 'channels'
       end
     end
 
@@ -83,8 +51,7 @@ module Urbanairship
       def get_feedback(url: required('url'))
         response = @client.send_request(
             method: 'GET',
-            url: url,
-            version: 3
+            url: url
         )
         logger.info("Requested feedback at url #{url}")
         response

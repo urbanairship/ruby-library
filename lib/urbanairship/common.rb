@@ -15,6 +15,8 @@ module Urbanairship
     APID_FEEDBACK_URL = BASE_URL + '/apids/feedback/'
     SCHEDULES_URL = BASE_URL + '/schedules/'
     SEGMENTS_URL = BASE_URL + '/segments/'
+    NAMED_USER_URL = BASE_URL + '/named_users/'
+    REPORTS_URL = BASE_URL + '/reports/'
 
     # Helper method for required keyword args in Ruby 2.0 that is compatible with 2.1+
     # @example
@@ -101,5 +103,42 @@ module Urbanairship
       end
     end
 
+    class PageIterator
+      include Urbanairship::Common
+      include Enumerable
+      attr_accessor :data_attribute
+
+      def initialize(client: required('client'))
+        @client = client
+        @next_page = nil
+        @data_list = nil
+        @data_attribute = nil
+      end
+
+      def load_page
+        unless @next_page
+          return false
+        end
+        response = @client.send_request(
+            method: 'GET',
+            url: @next_page
+        )
+        if response['body']['next_page']
+          @next_page = response['body']['next_page']
+        else
+          @next_page = nil
+        end
+        @data_list = response['body'][@data_attribute]
+        true
+      end
+
+      def each
+        while load_page
+          @data_list.each do | value |
+            yield value
+          end
+        end
+      end
+    end
   end
 end
