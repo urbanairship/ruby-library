@@ -1,9 +1,10 @@
 Urban Airship Ruby Library
-============================
+==========================
 
 ``urbanairship`` is a Ruby library for using the `Urban Airship
 <http://urbanairship.com/>`_ web service API for push notifications and
 rich app pages.
+
 
 Installation
 ------------
@@ -19,6 +20,7 @@ And then execute::
 OR install it yourself as::
 
     >>> gem install urbanairship
+
 
 Using the library
 -----------------
@@ -59,6 +61,7 @@ Contents:
    push.rst
    segment.rst
    devices.rst
+   channel_uninstall.rst
    tags.rst
    named_user.rst
    exceptions.rst

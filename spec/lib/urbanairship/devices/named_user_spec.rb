@@ -13,7 +13,8 @@ describe Urbanairship::Devices do
         },
         'code' => 200
     }
-    named_user = UA::NamedUser.new(client: airship, named_user_id: 'user_id')
+    named_user = UA::NamedUser.new(client: airship)
+    named_user.named_user_id = 'user'
 
     describe '#associate' do
       it 'associates a channel with a named_user' do
