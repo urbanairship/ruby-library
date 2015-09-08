@@ -32,8 +32,7 @@ module Urbanairship
           method: 'POST',
           body: JSON.dump(payload),
           url: SEGMENTS_URL,
-          content_type: 'application/json',
-          version: 3
+          content_type: 'application/json'
         )
         logger.info { "Successful segment creation: #{@display_name}" }
         seg_url = response['headers'][:location]
@@ -49,9 +48,7 @@ module Urbanairship
           'id must be set to a valid string' if id.nil?
         response = @client.send_request(
           method: 'GET',
-          url: SEGMENTS_URL + id,
-          content_type: 'application/json',
-          version: 3
+          url: SEGMENTS_URL + id
         )
         logger.info("Retrieved segment information for #{id}")
         @id = id
@@ -76,8 +73,7 @@ module Urbanairship
           method: 'PUT',
           body: JSON.dump(data),
           url: SEGMENTS_URL + @id,
-          content_type: 'application/json',
-          version: 3
+          content_type: 'application/json'
         )
         logger.info { "Successful segment update: #{@display_name}" }
         response
@@ -93,9 +89,7 @@ module Urbanairship
         url = SEGMENTS_URL + @id
         response = @client.send_request(
           method: 'DELETE',
-          url: url,
-          content_type: 'application/json',
-          version: 3
+          url: url
         )
         logger.info { "Successful segment deletion: #{@display_name}" }
         response
