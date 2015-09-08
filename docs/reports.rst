@@ -8,8 +8,8 @@ Individual Push Response Stats
 Returns detailed report information about a specific push notification.
 Use the push_id, which is the identifier returned by the API that represents a
 specific push message delivery.
-For more information,
-see: http://docs.urbanairship.com/api/ua.html#individual-push-response-statistics
+For more information, see `the API documentation
+<http://docs.urbanairship.com/api/ua.html#individual-push-response-statistics>`_
 
 .. code-block:: ruby
 
@@ -21,11 +21,12 @@ see: http://docs.urbanairship.com/api/ua.html#individual-push-response-statistic
 
 
 Devices Report 
-=================
+==============
 
 Returns an app’s opted-in and installed device counts broken out by device
 type. This endpoint returns the same data that populates the Devices Report.
-For more information, see: http://docs.urbanairship.com/api/ua.html#devices-report-api
+For more information, see `the API documentation
+<http://docs.urbanairship.com/api/ua.html#devices-report-api>`_
 
 .. code-block:: ruby
 
@@ -40,8 +41,8 @@ Push Report
 ===========
 
 Get the number of pushes you have sent within a specified time period.
-For more information, see: 
-http://docs.urbanairship.com/api/ua.html#push-report
+For more information, see `the API documentation
+<http://docs.urbanairship.com/api/ua.html#push-report>`_
 
 .. code-block:: ruby
 
@@ -67,7 +68,8 @@ Per Push Reporting
 ==================
 
 Retrieve data specific to the performance of an individual push.
-For more information, see: http://docs.urbanairship.com/api/ua.html#per-push-reporting
+For more information, see `the API documentation
+<http://docs.urbanairship.com/api/ua.html#per-push-reporting>`_
 
 ---------------
 Per Push Detail
@@ -77,8 +79,9 @@ Per Push Detail
 Single Request
 --------------
 
-Get the analytics detail for a specific Push ID. For more information, see:
-http://docs.urbanairship.com/api/ua.html#single-request
+Get the analytics detail for a specific Push ID. For more information, see `the
+API documentation
+<http://docs.urbanairship.com/api/ua.html#single-request>`_
 
 .. code-block:: ruby
 
@@ -93,7 +96,7 @@ Batch Request
 -------------
 
 Get the analytics details for an array of Push IDs. For more information,
-see: http://docs.urbanairship.com/api/ua.html#batch-request
+see `the API documentation <http://docs.urbanairship.com/api/ua.html#batch-request>`_
 
 .. code-block:: ruby
 
@@ -104,6 +107,7 @@ see: http://docs.urbanairship.com/api/ua.html#batch-request
     details = d.get_batch(push_ids: ['push_id', 'push_id2', 'push_id3'])
 
 .. note::
+
     There is a maximum of 100 Push IDs per request
 
 ---------------
@@ -111,7 +115,8 @@ Per Push Series
 ---------------
 
 Get the default time series data. For more information,
-see: http://docs.urbanairship.com/api/ua.html#per-push-series
+see `the API documentation
+<http://docs.urbanairship.com/api/ua.html#per-push-series>`_
 
 .. code-block:: ruby
 
@@ -127,6 +132,7 @@ see: http://docs.urbanairship.com/api/ua.html#per-push-series
     )
 
 .. note::
+
     precision, start_date, and end_date are optional parameters. However, if specifying
     a date range, precision, start_date and end_date must all be specified. Precision
     can be specified without start_date and end_date but must be a member of
@@ -136,7 +142,8 @@ Response Report
 ===============
 
 Get the number of direct and influenced opens of your app. For more 
-information, see: http://docs.urbanairship.com/api/ua.html#response-report
+information, see `the API documentation
+<http://docs.urbanairship.com/api/ua.html#response-report>`_
 
 .. code-block:: ruby
 
@@ -154,16 +161,18 @@ information, see: http://docs.urbanairship.com/api/ua.html#response-report
     end
 
 .. note::
+
     precision needs to be a member of ['HOURLY', 'DAILY', 'MONTHLY']
 
 
 Response Listing
-==================
+================
+
 Get a listing of all pushes and basic response information in a given
 timeframe by instantiating an iterator object using ResponseList. 
 Start and end date times are required parameters.
-For more information, see:
-http://docs.urbanairship.com/api/ua.html#response-listing
+For more information, see `the API documentation
+<http://docs.urbanairship.com/api/ua.html#response-listing>`_
 
 .. code-block:: ruby
 
@@ -182,6 +191,7 @@ http://docs.urbanairship.com/api/ua.html#response-listing
     end
 
 .. note::
+
     limit (optional) is the number of results desired per page.
     push_id_start (optional) specifies the id of the first response to return.
 
@@ -190,8 +200,8 @@ App Opens Report
 ================
 
 Get the number of users who have opened your app within the specified time 
-period. For more information, see: 
-http://docs.urbanairship.com/api/ua.html#app-opens-report
+period. For more information, see `the API documentation
+<http://docs.urbanairship.com/api/ua.html#app-opens-report>`_
 
 .. code-block:: ruby
 
@@ -208,6 +218,7 @@ http://docs.urbanairship.com/api/ua.html#app-opens-report
     end
 
 .. note::
+
     precision needs to be a member of ['HOURLY', 'DAILY', 'MONTHLY']
 
 
@@ -215,8 +226,8 @@ Time In App Report
 ==================
 
 Get the average amount of time users have spent in your app within the 
-specified time period. For more information, see:
-http://docs.urbanairship.com/api/ua.html#time-in-app-report
+specified time period. For more information, see `the API documentation
+<http://docs.urbanairship.com/api/ua.html#time-in-app-report>`_
 
 .. code-block:: ruby
 
@@ -233,7 +244,8 @@ http://docs.urbanairship.com/api/ua.html#time-in-app-report
     end
 
 .. note::
-precision needs to be a member of ['HOURLY', 'DAILY', 'MONTHLY']
+
+    precision needs to be a member of ['HOURLY', 'DAILY', 'MONTHLY']
 
 
 Opt-In Report
@@ -241,8 +253,8 @@ Opt-In Report
 
 Get the number of opted-in push users who access the app within the specified 
 time period.
-For more information, see:
-http://docs.urbanairship.com/api/ua.html#opt-in-report
+For more information, see `the API documentation
+<http://docs.urbanairship.com/api/ua.html#opt-in-report>`_
 
 .. code-block:: ruby
 
@@ -259,16 +271,17 @@ http://docs.urbanairship.com/api/ua.html#opt-in-report
     end
 
 .. note::
-precision needs to be a member of ['HOURLY', 'DAILY', 'MONTHLY']
+
+    precision needs to be a member of ['HOURLY', 'DAILY', 'MONTHLY']
 
 
 Opt-Out Report
-=============
+==============
 
 Get the number of opted-out push users who access the app within the specified 
 time period.
-For more information, see:
-http://docs.urbanairship.com/api/ua.html#opt-out-report
+For more information, see `the API documentation
+<http://docs.urbanairship.com/api/ua.html#opt-out-report>`_
 
 .. code-block:: ruby
 
@@ -285,5 +298,6 @@ http://docs.urbanairship.com/api/ua.html#opt-out-report
     end
 
 .. note::
-precision needs to be a member of ['HOURLY', 'DAILY', 'MONTHLY']
+
+    precision needs to be a member of ['HOURLY', 'DAILY', 'MONTHLY']
 

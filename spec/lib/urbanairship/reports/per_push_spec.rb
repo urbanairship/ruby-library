@@ -116,12 +116,24 @@ describe Urbanairship::Reports do
         }.to raise_error(ArgumentError)
       end
 
-      it 'fails when start is specified but not end' do
+      it 'fails when end is before the start' do
         expect {
           push_series.get(
             push_id: 'push_id',
             precision: 'HOURLY',
-            start_date: '2015-08-01 00:00:00'
+            start_date: '2015-08-01 00:00:00',
+            end_date: '2015-07-01 00:00:00'
+          )
+        }.to raise_error(ArgumentError)
+      end
+
+      it 'fails when end is equal to start' do
+        expect {
+          push_series.get(
+              push_id: 'push_id',
+              precision: 'HOURLY',
+              start_date: '2015-08-01 00:00:00',
+              end_date: '2015-08-01 00:00:00'
           )
         }.to raise_error(ArgumentError)
       end
@@ -138,7 +150,6 @@ describe Urbanairship::Reports do
       end
 
       it 'returns a correct response with push_id only' do
-
         allow(airship).to receive(:send_request).and_return(expected_response)
         actual_response = push_series.get(push_id: '123')
         expect(actual_response).to eq(expected_response)
@@ -159,16 +170,6 @@ describe Urbanairship::Reports do
           end_date: '03/08/2015'
         )
         expect(actual_response).to eq(expected_response)
-      end
-
-      it 'fails when end is specified but not start' do
-        expect {
-          push_series.get(
-            push_id: 'push_id',
-            precision: 'HOURLY',
-            end_date: '2015-08-01 00:00:00'
-          )
-        }.to raise_error(ArgumentError)
       end
 
       it 'fails when start and end are specified but precision is not' do
