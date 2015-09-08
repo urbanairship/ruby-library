@@ -34,15 +34,15 @@ Upload List
 
 Lists target identifiers are specified or replaced with an upload to this endpoint.
 Uploads must be newline delimited identifiers (text/CSV) as described in RFC 4180,
-with commas as the delimiter.
+with commas as the delimiter. The ``StaticList.upload csvfile`` parameter takes an
+open file descriptor.
 
 The CSV format consists of two columns: 'identifier_type' and 'identifier'.
 'identifier_type' must be one of 'alias', 'named_user', 'ios_channel', 'android_channel',
 or 'amazon_channel'. 'identifier' is the associated identifier you wish to send to.
 
 The maximum number of 'identifier_type,identifier' pairs that may be uploaded to a list
-is 10 million. The csv file is automatically gzipped before it is uploaded to the
-endpoint.
+is 10 million.
 
 .. code-block:: ruby
 
@@ -50,7 +50,9 @@ endpoint.
     UA = Urbanairship
     airship = UA::Client.new(key:'application_key', secret:'master_secret')
     static_list = UA::StaticList.new(client: airship, name: 'list_name')
-    static_list.upload(csv_file: 'csv_file')
+    File.open('csv_file', 'rb') do |csv|
+        static_list.upload(csv_file: csv)
+    end
 
 
 Update List

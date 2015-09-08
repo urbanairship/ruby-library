@@ -31,20 +31,14 @@ module Urbanairship
       end
 
       def upload(csv_file: required('csv_file'))
-        Tempfile.open('ua_upload.gz') do |temp|
-          Zlib::GzipWriter.open(temp) do |gz|
-            gz.write IO.binread(csv_file)
-          end
-          response = @client.send_request(
-            method: 'PUT',
-            body: temp,
-            url: LISTS_URL + @name + '/csv/',
-            content_type: 'text/csv',
-            encoding: 'gzip'
-          )
-          logger.info("Uploading a list for #{@name}")
-          response
-        end
+        response = @client.send_request(
+          method: 'PUT',
+          body: csv_file,
+          url: LISTS_URL + @name + '/csv/',
+          content_type: 'text/csv'
+        )
+        logger.info("Uploading a list for #{@name}")
+        response
       end
 
       def update(description: nil, extras: nil)
