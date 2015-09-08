@@ -30,7 +30,7 @@ module Urbanairship
       # @param [Object] version API Version
       # @return [Object] Push Response
       def send_request(method: required('method'), url: required('url'), body: nil,
-                       content_type: nil, version: 3, encoding: nil)
+                       content_type: nil)
         req_type = case method
           when 'GET'
             :get
@@ -44,13 +44,11 @@ module Urbanairship
             fail 'Method was not "GET" "POST" "PUT" or "DELETE"'
         end
 
-
         headers = {'User-agent' => 'UARubyLib/' + UA::VERSION}
-        headers['Accept'] = 'application/vnd.urbanairship+json; version=' + version.to_s
+        headers['Accept'] = 'application/vnd.urbanairship+json; version=3'
         headers['Content-type'] = content_type unless content_type.nil?
-        headers['Content-Encoding'] = encoding unless encoding.nil?
 
-        logger.debug("Making #{method} request to #{url}. \n\tHeaders:\n\tcontent-type: #{content_type}\n\tversion=#{version.to_s}\nBody:\n\t#{body}")
+        logger.debug("Making #{method} request to #{url}. \n\tHeaders:\n\tcontent-type: #{content_type}\n\tversion=3\nBody:\n\t#{body}")
 
         response = Unirest.method(req_type).call(
           url,
