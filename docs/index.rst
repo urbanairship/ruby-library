@@ -59,6 +59,7 @@ Contents:
    :maxdepth: 2
 
    push.rst
+   segment.rst
    devices.rst
    channel_uninstall.rst
    tags.rst

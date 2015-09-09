@@ -6,10 +6,14 @@ describe Urbanairship::Common do
     expect(Urbanairship::Common::PUSH_URL).not_to be nil
   end
 
+  it 'has a SEGMENTS_URL' do
+    expect(Urbanairship::Common::SEGMENTS_URL).not_to be nil
+  end
+
   it 'has a CHANNEL_URL' do
     expect(Urbanairship::Common::CHANNEL_URL).not_to be nil
   end
-  
+
   describe Urbanairship::Common::PageIterator do
     UA = Urbanairship
     airship = UA::Client.new(key: '123', secret: 'abc')
