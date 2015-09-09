@@ -83,6 +83,7 @@ Delete a static list.
     static_list.delete
 
 .. note::
+
     If you are attempting to update a current list by deleting it
     and then recreating it with new data, stop and go to the upload
     endpoint. There is no need to delete a list before uploading a
@@ -102,6 +103,7 @@ Retrieve information about one static list.
     static_list.lookup
 
 .. note::
+
     When looking up lists, the returned information may actually be a combination
     of values from both the last uploaded list and the last successfully processed
     list. If you create a list successfully, and then you update it and the
@@ -121,7 +123,7 @@ metadata that will not contain the actual lists of users.
     require 'urbanairship'
     UA = Urbanairship
     airship = UA::Client.new(key:'application_key', secret:'master_secret')
-    static_lists = UA::StaticLists(client: airship)
+    static_lists = UA::StaticLists.new(client: airship)
 
     static_lists.each do |static_list|
         puts(static_list)
