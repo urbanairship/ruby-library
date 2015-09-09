@@ -123,7 +123,7 @@ describe Urbanairship::Devices do
                     'device_token' => '43214321',
                     'marked_inactive_on' => '2015-08-03',
                     'alias' => 'alice'
-                },
+                }
             ],
             'code' => '200'
         }
@@ -150,7 +150,7 @@ describe Urbanairship::Devices do
                     'gcm_registration_id' => nil,
                     'marked_inactive_on' => '2015-08-03',
                     'alias' => 'alice'
-                },
+                }
             ],
             'code' => '200'
         }
