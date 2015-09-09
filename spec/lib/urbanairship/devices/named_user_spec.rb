@@ -8,10 +8,10 @@ describe Urbanairship::Devices do
 
   describe Urbanairship::Devices::NamedUser do
     expected_resp = {
-        'body' => {
-            'ok' => true
-        },
-        'code' => 200
+      'body' => {
+        'ok' => true
+      },
+      'code' => 200
     }
     named_user = UA::NamedUser.new(client: airship)
     named_user.named_user_id = 'user'
@@ -159,10 +159,10 @@ describe Urbanairship::Devices do
 
       it 'sends a request correctly' do
         mock_response = {
-            'body' => {
-                'ok' => true
-            },
-            'code' => 200
+          'body' => {
+            'ok' => true
+          },
+          'code' => 200
         }
         named_user_tags.set_audience(user_ids: :user_ids)
         named_user_tags.add(group_name: :group_name, tags: :tag1)

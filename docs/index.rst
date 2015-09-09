@@ -64,6 +64,7 @@ Contents:
    channel_uninstall.rst
    tags.rst
    named_user.rst
+   reports.rst
    exceptions.rst
    examples.rst
 
