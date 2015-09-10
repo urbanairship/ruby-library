@@ -50,10 +50,11 @@ module Urbanairship
         headers['Content-Encoding'] = encoding unless encoding.nil?
 
         debug = "Making #{method} request to #{url}.\n"+
-            "\tHeaders:\n"+
-            "\tcontent-type: #{content_type}\n"
-        debug += "\tcontent-encoding: gzip\n" unless encoding.nil?
-        debug += "\taccept: application/vnd.urbanairship+json; version=3\n\tBody:\n\t#{body}"
+            "\tHeaders:\n"
+        debug += "\t\tcontent-type: #{content_type}\n" unless content_type.nil?
+        debug += "\t\tcontent-encoding: gzip\n" unless encoding.nil?
+        debug += "\t\taccept: application/vnd.urbanairship+json; version=3\n"
+        debug += "\tBody:\n#{body}" unless body.nil?
 
         logger.debug(debug)
 

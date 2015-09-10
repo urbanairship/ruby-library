@@ -6,7 +6,8 @@ lists of devices that are defined in your systems outside of Urban Airship.
 Any list or grouping of devices for which the canonical source of data about
 the members is elsewhere is a good candidate for Static Lists, e.g., members
 of a customer loyalty program.
-For more information, see: http://docs.urbanairship.com/api/ua.html#static-lists
+For more information, see: `the API documentation on Static Lists
+<http://docs.urbanairship.com/api/ua.html#static-lists>`__
 
 
 Create List
