@@ -30,13 +30,23 @@ module Urbanairship
         response
       end
 
-      def upload(csv_file: required('csv_file'))
-        response = @client.send_request(
-          method: 'PUT',
-          body: csv_file,
-          url: LISTS_URL + @name + '/csv/',
-          content_type: 'text/csv'
-        )
+      def upload(csv_file: required('csv_file'), gzip: false)
+        if gzip
+          response = @client.send_request(
+              method: 'PUT',
+              body: csv_file,
+              url: LISTS_URL + @name + '/csv/',
+              content_type: 'text/csv',
+              encoding: gzip
+          )
+        else
+          response = @client.send_request(
+              method: 'PUT',
+              body: csv_file,
+              url: LISTS_URL + @name + '/csv/',
+              content_type: 'text/csv'
+          )
+        end
         logger.info("Uploading a list for #{@name}")
         response
       end

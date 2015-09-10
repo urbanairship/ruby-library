@@ -35,7 +35,8 @@ Upload List
 Lists target identifiers are specified or replaced with an upload to this endpoint.
 Uploads must be newline delimited identifiers (text/CSV) as described in RFC 4180,
 with commas as the delimiter. The ``StaticList.upload csvfile`` parameter takes an
-open file descriptor.
+open file descriptor. A second optional ``gzip`` parameter specifies whether the csvfile
+to be uploaded is gzipped. This parameter defaults to false.
 
 The CSV format consists of two columns: 'identifier_type' and 'identifier'.
 'identifier_type' must be one of 'alias', 'named_user', 'ios_channel', 'android_channel',
@@ -51,7 +52,7 @@ is 10 million.
     airship = UA::Client.new(key:'application_key', secret:'master_secret')
     static_list = UA::StaticList.new(client: airship, name: 'list_name')
     File.open('csv_file', 'rb') do |csv|
-        static_list.upload(csv_file: csv)
+        static_list.upload(csv_file: csv, gzip: false)
     end
 
 
