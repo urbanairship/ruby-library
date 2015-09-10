@@ -49,7 +49,13 @@ module Urbanairship
         headers['Content-type'] = content_type unless content_type.nil?
         headers['Content-Encoding'] = encoding unless encoding.nil?
 
-        logger.debug("Making #{method} request to #{url}. \n\tHeaders:\n\tcontent-type: #{content_type}\n\tversion=3\nBody:\n\t#{body}")
+        debug = "Making #{method} request to #{url}.\n"+
+            "\tHeaders:\n"+
+            "\tcontent-type: #{content_type}\n"
+        debug += "\tcontent-encoding: gzip\n" unless encoding.nil?
+        debug += "\taccept: application/vnd.urbanairship+json; version=3\n\tBody:\n\t#{body}"
+
+        logger.debug(debug)
 
         response = Unirest.method(req_type).call(
           url,
