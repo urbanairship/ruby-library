@@ -26,7 +26,8 @@ string keys to arbitrary JSON values.
     require 'urbanairship'
     UA = Urbanairship
     airship = UA::Client.new(key:'application_key', secret:'master_secret')
-    static_list = UA::StaticList.new(client: airship, name: 'list_name')
+    static_list = UA::StaticList.new(client: airship)
+    static_list.name = 'list_name'
     static_list.create(description: 'description', extras: { 'key' => 'value' })
 
 
@@ -51,7 +52,8 @@ is 10 million.
     require 'urbanairship'
     UA = Urbanairship
     airship = UA::Client.new(key:'application_key', secret:'master_secret')
-    static_list = UA::StaticList.new(client: airship, name: 'list_name')
+    static_list = UA::StaticList.new(client: airship)
+    static_list.name = 'list_name'
     File.open('csv_file', 'rb') do |csv|
         static_list.upload(csv_file: csv, gzip: false)
     end
@@ -67,7 +69,8 @@ Updates the metadata of a static list.
     require 'urbanairship'
     UA = Urbanairship
     airship = UA::Client.new(key:'application_key', secret:'master_secret')
-    static_list = UA::StaticList.new(client: airship, name: 'list_name')
+    static_list = UA::StaticList.new(client: airship)
+    static_list.name = 'list_name'
     static_list.update(description: 'description', { 'key' => 'value' })
 
 
@@ -81,7 +84,8 @@ Delete a static list.
     require 'urbanairship'
     UA = Urbanairship
     airship = UA::Client.new(key:'application_key', secret:'master_secret')
-    static_list = UA::StaticList.new(client: airship, name: 'list_name')
+    static_list = UA::StaticList.new(client: airship)
+    static_list.name = 'list_name'
     static_list.delete
 
 .. note::
@@ -101,7 +105,8 @@ Retrieve information about one static list.
     require 'urbanairship'
     UA = Urbanairship
     airship = UA::Client.new(key:'application_key', secret:'master_secret')
-    static_list = UA::StaticList.new(client: airship, name: 'list_name')
+    static_list = UA::StaticList.new(client: airship)
+    static_list.name = 'list_name'
     static_list.lookup
 
 .. note::
