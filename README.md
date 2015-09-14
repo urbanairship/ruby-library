@@ -71,7 +71,7 @@ The best place to ask questions is our support site: http://support.urbanairship
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
 5. Create a new Pull Request
-6. Sign Urban Airship's [contribution agreement](http://urbanairship.com/legal/contribution-agreement) 
+6. Sign Urban Airship's [contribution agreement](http://docs.urbanairship.com/contribution-agreement.html) 
 Note: Changes will not be approved and merged without a signed contribution agreement
 
 ## Development
