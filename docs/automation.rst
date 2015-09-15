@@ -206,15 +206,15 @@ it, you can use the validate method.
 List Existing Pipelines
 -----------------------
 
-List all existing pipelines. An optional ``start`` parameter specifies the starting
-element. It can be used for paginating results. The optional ``enabled`` parameter can
-be set to ``true`` in order to list only enabled pipelines.
+List all existing pipelines. An optional ``limit`` parameter specifies the maximum number of
+pipelines to be included in the response. The optional ``enabled`` parameter can be set to
+``true`` in order to list only enabled pipelines.
 
 .. code-block:: ruby
 
     airship = UA::Client.new(key:'application_key', secret:'master_secret')
     auto_message = UA::AutomatedMessage.new(client: airship)
-    auto_message.list_existing(enabled: true)
+    auto_message.list_existing(limit: 20, enabled: true)
 
 
 List Deleted Pipelines
