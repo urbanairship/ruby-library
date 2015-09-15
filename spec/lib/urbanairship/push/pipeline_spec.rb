@@ -146,44 +146,40 @@ describe Urbanairship do
 
   describe '#or_condition' do
     it 'sets the or_condition correctly' do
-      expected_or_condition = { 'or' => { 'tag' => { 'tag_name' => 'tag', 'negated' => false }}}
+      expected_or_condition = { :or => [{ 'tag' => { 'tag_name' => 'tag', 'negated' => false }}]}
       condition = UA.tag_condition(tag: 'tag')
-      actual_or_condition = UA.or_condition(cond_array: condition)
+      actual_or_condition = UA.or(condition)
       expect(actual_or_condition).to eq(expected_or_condition)
     end
 
     it 'sets the or_condition correctly with an array' do
       expected_or_condition = {
-          'or' => [
+          :or => [
               { 'tag' => { 'tag_name' => 'tag', 'negated' => false }},
               { 'tag' => { 'tag_name' => 'tag2', 'negated' => false }}
           ]
       }
-      condition_array = [ UA.tag_condition(tag: 'tag') ]
-      condition_array.push(UA.tag_condition(tag: 'tag2'))
-      actual_or_condition = UA.or_condition(cond_array: condition_array)
+      actual_or_condition = UA.or(UA.tag_condition(tag: 'tag'), UA.tag_condition(tag: 'tag2'))
       expect(actual_or_condition).to eq(expected_or_condition)
     end
   end
 
   describe '#and_condition' do
     it 'sets the and_condition correctly' do
-      expected_and_condition = { 'and' => { 'tag' => { 'tag_name' => 'tag', 'negated' => false }}}
+      expected_and_condition = { :and => [{ 'tag' => { 'tag_name' => 'tag', 'negated' => false }}]}
       condition = UA.tag_condition(tag: 'tag')
-      actual_and_condition = UA.and_condition(cond_array: condition)
+      actual_and_condition = UA.and(condition)
       expect(actual_and_condition).to eq(expected_and_condition)
     end
 
     it 'sets the and_condition correctly with an array' do
       expected_and_condition = {
-          'and' => [
+          :and => [
               { 'tag' => { 'tag_name' => 'tag', 'negated' => false }},
               { 'tag' => { 'tag_name' => 'tag2', 'negated' => false }}
           ]
       }
-      condition_array = [ UA.tag_condition(tag: 'tag') ]
-      condition_array.push(UA.tag_condition(tag: 'tag2'))
-      actual_and_condition = UA.and_condition(cond_array: condition_array)
+      actual_and_condition = UA.and(UA.tag_condition(tag: 'tag'), UA.tag_condition(tag: 'tag2'))
       expect(actual_and_condition).to eq(expected_and_condition)
     end
   end
@@ -211,7 +207,7 @@ describe Urbanairship do
         },
         'constraint' => { 'rate' => { 'pushes' => 10, 'days' => 1 }},
         'condition' => {
-          'or' => { 'tag' => { 'tag_name' => 'tag', 'negated' => false }}
+          :or => [{ 'tag' => { 'tag_name' => 'tag', 'negated' => false }}]
         }
       }
       push = airship.create_push
@@ -222,7 +218,7 @@ describe Urbanairship do
       imm_trigger = UA.immediate_trigger(type: 'tag_added', tag: 'tag', group: 'tag_group')
       constraint = UA.rate_constraint(pushes: 10, days: 1)
       condition = UA.tag_condition(tag: 'tag')
-      or_condition = UA.or_condition(cond_array: condition)
+      or_condition = UA.or(condition)
       actual_pipeline = UA.pipeline(name: 'pipeline_name', enabled: true, outcome: outcome,
         constraint: constraint, condition: or_condition, immediate_trigger: imm_trigger)
       expect(actual_pipeline).to eq(expected_pipeline)

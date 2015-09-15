@@ -125,7 +125,7 @@ Tag conditions evaluate for the presence (or absence) of the specified tag. They
 by specifying the tag name. You can check for the absence of the tag by setting the ``negated``
 parameter to true.
 
-Conditions are combined into a condition set using ``or_condition`` or ``and_condition`` and are
+Conditions are combined into a condition set using ``UA.or`` or ``UA.and`` and are
 made up of 1-20 conditions. `Or conditions` and `and conditions` cannot be combined.
 
 .. code-block:: ruby
@@ -133,7 +133,7 @@ made up of 1-20 conditions. `Or conditions` and `and conditions` cannot be combi
     require 'urbanairship'
     UA = Urbanairship
     condition = UA.tag_condition(tag: 'tag_name', negated: false)
-    condition_set = UA.or_condition(cond_array: condition)
+    condition_set = UA.or(condition)
 
 
 Create an Automated Message
@@ -156,7 +156,7 @@ An automated message is created with a pipeline or an array of pipelines.
     )
     constraint = UA.constraint(pushes: 10, days: 1)
     condition = UA.tag_condition(tag: 'tag_name')
-    or_condition = UA.or_condition(condition)
+    or_condition = UA.or(condition)
     pipeline = UA.pipeline(
         name: 'this_pipeline',
         enabled: true,
@@ -190,7 +190,7 @@ it, you can use the validate method.
     )
     constraint = UA.constraint(pushes: 10, days: 1)
     condition = UA.tag_condition(tag: 'tag_name')
-    or_condition = UA.or_condition(condition)
+    or_condition = UA.or(condition)
     pipeline = UA.pipeline(
         name: 'this_pipeline',
         enabled: true,
@@ -262,7 +262,7 @@ Update the state of a single pipeline resource. Partial updates are not permitte
     )
     constraint = UA.constraint(pushes: 10, days: 1)
     condition = UA.tag_condition(tag: 'tag_name')
-    or_condition = UA.or_condition(condition)
+    or_condition = UA.or(condition)
     pipeline = UA.pipeline(
         name: 'this_pipeline',
         enabled: true,

@@ -16,7 +16,7 @@ describe Urbanairship do
       imm_trigger = UA.immediate_trigger(type: 'tag_added', tag: 'tag', group: 'tag_group')
       constraint = UA.rate_constraint(pushes: 10, days: 1)
       condition = UA.tag_condition(tag: 'tag')
-      or_condition = UA.or_condition(cond_array: condition)
+      or_condition = UA.or(condition)
       pipeline = UA.pipeline(
           name: 'pipeline_name',
           enabled: true,
