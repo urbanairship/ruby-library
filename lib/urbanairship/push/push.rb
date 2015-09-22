@@ -162,12 +162,11 @@ module Urbanairship
       include Urbanairship::Common
 
       def initialize(http_response_body: nil, http_response_code: nil)
-        # An empty response body is in the format of an empty string, so check for it first
-        @payload = (http_response_body.empty? ? {} : http_response_body)
-        @ok = @payload['ok'] || nil
-        @push_ids = @payload['push_ids'] || nil
-        @schedule_url = try_helper(:first, @payload['schedule_urls']) || nil
-        @operation_id = @payload['operation_id'] || nil
+        @payload = ((http_response_body.nil? || http_response_body.empty?) ? {} : http_response_body)
+        @ok = @payload['ok']
+        @push_ids = @payload['push_ids']
+        @schedule_url = try_helper(:first, @payload['schedule_urls'])
+        @operation_id = @payload['operation_id']
         @status_code = http_response_code
       end
 
