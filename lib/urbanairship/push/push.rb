@@ -162,11 +162,11 @@ module Urbanairship
       include Urbanairship::Common
 
       def initialize(http_response_body: nil, http_response_code: nil)
-        @payload = http_response_body || "No Content"
-        @ok = @payload['ok'] || "None"
-        @push_ids = @payload['push_ids'] || "None"
-        @schedule_url = try_helper(:first, @payload['schedule_urls']) || "None"
-        @operation_id = @payload['operation_id'] || "None"
+        @payload = ((http_response_body.nil? || http_response_body.empty?) ? {} : http_response_body)
+        @ok = @payload['ok']
+        @push_ids = @payload['push_ids']
+        @schedule_url = try_helper(:first, @payload['schedule_urls'])
+        @operation_id = @payload['operation_id']
         @status_code = http_response_code
       end
 
