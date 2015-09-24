@@ -182,7 +182,7 @@ For more information, see `the API documentation
     response_list = UA::ResponseList.new(
         client: airship,
         start_date: '2015-06-01',
-        end_date: '2015-08-01,
+        end_date: '2015-08-01',
         limit: 20,
         push_id_start: 'start_id'
     )
