@@ -44,8 +44,12 @@ Usage
 =====
 
 Once the gem has been installed you can start sending pushes!
- See `api examples
-<http://docs.urbanairship.com/topic-guides/api-examples.html>`_, for more
+See the `full documentation
+<http://docs.urbanairship.com/reference/libraries/ruby>`_, 
+`api examples
+<http://docs.urbanairship.com/topic-guides/api-examples.html>`_, as well as the
+`Urban Airship API Documentation
+<http://docs.urbanairship.com/api/>`_ for more
 information.
 
 Broadcast to All Devices
