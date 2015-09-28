@@ -8,7 +8,7 @@ Segment Listing
 ***************
 
 Segment lists are fetched by instantiating an iterator object using ``SegmentList``. For more
-information, see `the API documentation <http://docs.urbanairship.com/api/ua.html#segments-information>`__
+information, see `the API documentation <http://docs.urbanairship.com/api/ua.html#segments>`__
 
 .. sourcecode:: ruby
 
@@ -55,7 +55,7 @@ update `API documentation <http://docs.urbanairship.com/api/ua.html#update-segme
    segment.from_id(id: 'segment_id')
    segment.display_name = 'Updated Display Name'
    segment.criteria = { 'tag' => 'updated_tag' }
-   segment.update(airship)
+   segment.update
 
 
 ******************

@@ -82,7 +82,7 @@ describe Urbanairship::Devices do
     channel_list_hash2 = {
       'body' => {
         'channels' => [ channel_list_item, channel_list_item, channel_list_item ],
-        'next_page' => 'next_url'
+        'next_page' => 'next_url2'
       },
       'code' => 200
     }
