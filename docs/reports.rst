@@ -60,6 +60,7 @@ For more information, see `the API documentation
     end
 
 .. note::
+
     precision needs to be a member of ['HOURLY', 'DAILY', 'MONTHLY']
 
 
@@ -300,4 +301,3 @@ For more information, see `the API documentation
 .. note::
 
     precision needs to be a member of ['HOURLY', 'DAILY', 'MONTHLY']
-
