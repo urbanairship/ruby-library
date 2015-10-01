@@ -14,7 +14,6 @@ For more information, see `the API documentation
 .. code-block:: ruby
 
     require 'urbanairship'
-    UA = Urbanairship
     airship = UA::Client.new(key:'application_key', secret:'master_secret')
     d = UA::IndividualResponseStats.new(client: airship)
     statistics = d.get(push_id: 'push_id')
@@ -31,7 +30,6 @@ For more information, see `the API documentation
 .. code-block:: ruby
 
     require 'urbanairship'
-    UA = Urbanairship
     airship = UA::Client.new(key:'application_key', secret:'master_secret')
     d = UA::DevicesReport.new(client: airship)
     devices = d.get(date: '2015/08/01')
@@ -47,7 +45,6 @@ For more information, see `the API documentation
 .. code-block:: ruby
 
     require 'urbanairship'
-    UA = Urbanairship
     airship = UA::Client.new(key:'application_key', secret:'master_secret')
     listing = UA::PushList.new(
         client: airship,
@@ -86,7 +83,6 @@ API documentation
 .. code-block:: ruby
 
     require 'urbanairship'
-    UA = Urbanairship
     airship = UA::Client.new(key:'application_key', secret:'master_secret')
     d = UA::PerPushDetail.new(client: airship)
     details = d.get_single(push_id:'push_id')
@@ -101,7 +97,6 @@ see `the API documentation <http://docs.urbanairship.com/api/ua.html#batch-reque
 .. code-block:: ruby
 
     require 'urbanairship'
-    UA = Urbanairship
     airship = UA::Client.new(key:'application_key', secret:'master_secret')
     d = UA::PerPushDetail.new(client: airship)
     details = d.get_batch(push_ids: ['push_id', 'push_id2', 'push_id3'])
@@ -121,7 +116,6 @@ see `the API documentation
 .. code-block:: ruby
 
     require 'urbanairship'
-    UA = Urbanairship
     airship = UA::Client.new(key:'application_key', secret:'master_secret')
     s = UA::PerPushSeries.new(client: airship)
     series = s.get(
@@ -148,7 +142,6 @@ information, see `the API documentation
 .. code-block:: ruby
 
     require 'urbanairship'
-    UA = Urbanairship
     airship = UA::Client.new(key:'application_key', secret:'master_secret')
     listing = UA::ResponseReportList.new(
         client: airship,
@@ -177,7 +170,6 @@ For more information, see `the API documentation
 .. code-block:: ruby
 
     require 'urbanairship'
-    UA = Urbanairship
     airship = UA::Client.new(key:'application_key', secret:'master_secret')
     response_list = UA::ResponseList.new(
         client: airship,
@@ -206,7 +198,6 @@ period. For more information, see `the API documentation
 .. code-block:: ruby
 
     require 'urbanairship'
-    UA = Urbanairship
     airship = UA::Client.new(key:'application_key', secret:'master_secret')
     listing = UA::AppOpensList.new(
         client: airship,
@@ -232,7 +223,6 @@ specified time period. For more information, see `the API documentation
 .. code-block:: ruby
 
     require 'urbanairship'
-    UA = Urbanairship
     airship = UA::Client.new(key:'application_key', secret:'master_secret')
     listing = UA::TimeInAppList.new(
         client: airship,
@@ -259,7 +249,6 @@ For more information, see `the API documentation
 .. code-block:: ruby
 
     require 'urbanairship'
-    UA = Urbanairship
     airship = UA::Client.new(key:'application_key', secret:'master_secret')
     listing = UA::OptInList.new(
         client: airship,
@@ -286,7 +275,6 @@ For more information, see `the API documentation
 .. code-block:: ruby
 
     require 'urbanairship'
-    UA = Urbanairship
     airship = UA::Client.new(key:'application_key', secret:'master_secret')
     listing = UA::OptOutList.new(
         client: airship,

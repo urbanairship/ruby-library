@@ -35,7 +35,6 @@ Note that channels are preferred over ``device_token`` and ``apid``. See:
 .. code-block:: ruby
 
     require 'urbanairship'
-    UA = Urbanairship
     airship = UA::Client.new(key:'application_key', secret:'master_secret')
     p = airship.create_push
     p.audience = UA.all

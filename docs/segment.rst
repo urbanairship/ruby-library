@@ -13,7 +13,6 @@ information, see `the API documentation <http://docs.urbanairship.com/api/ua.htm
 .. sourcecode:: ruby
 
    require 'urbanairship'
-   UA = Urbanairship
    airship = UA::Client.new(key: 'application_key', secret: 'master_secret')
    segment_list = UA::SegmentList.new(client: airship)
 
@@ -31,7 +30,6 @@ Create a segment for the application. See the segment creation `API documentatio
 .. sourcecode:: ruby
 
    require 'urbanairship'
-   UA = Urbanairship
    airship = UA::Client.new(key: 'application_key', secret: 'master_secret')
    segment = UA::Segment.new(client: airship)
    segment.display_name = 'Display Name'
@@ -49,7 +47,6 @@ update `API documentation <http://docs.urbanairship.com/api/ua.html#update-segme
 .. sourcecode:: ruby
 
    require 'urbanairship'
-   UA = Urbanairship
    airship = UA::Client.new(key: 'application_key', secret: 'master_secret')
    segment = UA::Segment.new(client: airship)
    segment.from_id(id: 'segment_id')
@@ -68,7 +65,6 @@ Delete a segment. For more information, see the segment deletion `API documentat
 .. sourcecode:: ruby
 
    require 'urbanairship'
-   UA = Urbanairship
    airship = UA::Client.new(key: 'application_key', secret: 'master_secret')
    segment = UA::Segment.new(client: airship)
    segment.from_id(id: 'segment_id')
@@ -86,7 +82,6 @@ more information.
 .. sourcecode:: ruby
 
    require 'urbanairship'
-   UA = Urbanairship
    airship = UA::Client.new(key: 'application_key', secret: 'master_secret')
    segment = UA::Segment.new(client: airship)
    segment.from_id(id: 'segment_id')
