@@ -3,7 +3,6 @@ require 'urbanairship'
 
 
 describe Urbanairship do
-  UA = Urbanairship
 
   context 'audience selectors' do
     [

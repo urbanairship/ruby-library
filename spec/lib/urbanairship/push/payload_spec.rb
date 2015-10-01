@@ -3,7 +3,6 @@ require 'urbanairship'
 
 
 describe Urbanairship do
-  UA = Urbanairship
 
   describe '#interactive' do
     it 'must be given a "type"' do

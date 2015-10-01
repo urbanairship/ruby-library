@@ -4,7 +4,6 @@ require 'urbanairship'
 
 describe Urbanairship::Devices do
   describe Urbanairship::Devices::ChannelTags do
-    UA = Urbanairship
     airship = UA::Client.new(key: '123', secret: 'abc')
 
     let(:channel_tags) { UA::ChannelTags.new(client: airship) }

@@ -3,7 +3,6 @@ require 'urbanairship'
 
 
 describe Urbanairship::Push do
-  UA = Urbanairship
 
   let(:some_expiry) { 10_080 }
 

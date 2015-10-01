@@ -15,7 +15,6 @@ describe Urbanairship::Common do
   end
 
   describe Urbanairship::Common::PageIterator do
-    UA = Urbanairship
     airship = UA::Client.new(key: '123', secret: 'abc')
     page_iterator = UA::Common::PageIterator.new(client: airship)
     page_iterator.data_attribute = :data_attr
