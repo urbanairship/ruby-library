@@ -23,3 +23,6 @@ module Urbanairship
   include Urbanairship::Devices
   include Urbanairship::Reports
 end
+
+#Deliberately expose alias we utilize in public API
+UA = Urbanairship

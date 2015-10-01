@@ -16,8 +16,6 @@ and device types:
 .. code-block:: ruby
 
     require 'urbanairship'
-
-    UA = Urbanairship
     airship = UA::Client.new(key:'application_key', secret:'master_secret')
     push = airship.create_push
     push.audience = UA.all

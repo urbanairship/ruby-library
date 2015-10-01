@@ -12,7 +12,6 @@ For more information, see `the API documentation
 .. code-block:: ruby
 
     require 'urbanairship'
-    UA = Urbanairship
     airship = UA::Client.new(key:'application_key', secret:'master_secret')
     named_user_list = UA::NamedUserList.new(client: airship)
 
@@ -30,7 +29,6 @@ Associate a channel with a named user ID. For more information, see
 .. code-block:: ruby
 
     require 'urbanairship'
-    UA = Urbanairship
     airship = UA::Client.new(key:'application_key', secret:'master_secret')
     named_user = UA::NamedUser.new(client: airship)
     named_user.named_user_id = 'named_user'
@@ -50,7 +48,6 @@ For more information, see `the API documentation
 .. code-block:: ruby
 
     require 'urbanairship'
-    UA = Urbanairship
     airship = UA::Client.new(key:'application_key', secret:'master_secret')
     named_user = UA::NamedUser.new(client: airship)
     named_user.disassociate(channel_id: 'channel_id', device_type: 'ios')
@@ -70,7 +67,6 @@ For more information, see `the API documentation
 .. code-block:: ruby
 
     require 'urbanairship'
-    UA = Urbanairship
     airship = UA::Client.new(key:'application_key', secret:'master_secret')
     named_user = UA::NamedUser.new(client: airship)
     named_user.named_user_id = 'named_user'
@@ -86,7 +82,6 @@ see `the API documentation
 .. code-block:: ruby
 
     require 'urbanairship'
-    UA = Urbanairship
     airship = UA::Client.new(key:'application_key', secret:'master_secret')
     named_user_tags = UA::NamedUserTags.new(client: airship)
     named_user_ids = ['named_user_id1', 'named_user_id2', 'named_user_id3']

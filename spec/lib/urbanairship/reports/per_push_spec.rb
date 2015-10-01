@@ -3,7 +3,6 @@ require 'urbanairship'
 
 
 describe Urbanairship::Reports do
-  UA = Urbanairship
   airship = UA::Client.new(key: '123', secret: 'abc')
 
   describe Urbanairship::Reports::PerPushDetail do

@@ -2,8 +2,7 @@ require 'spec_helper'
 require 'urbanairship'
 
 describe Urbanairship::Devices do
-  UA = Urbanairship
-
+  
   # create an array of size n
   def build_array(n)
     dummy_id = { 'device_type' => 'android',

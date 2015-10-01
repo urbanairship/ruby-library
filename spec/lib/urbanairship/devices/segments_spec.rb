@@ -6,7 +6,6 @@ require 'urbanairship/devices/segment'
 
 describe Urbanairship::Devices do
   describe Urbanairship::Devices::Segment do
-    UA = Urbanairship
     test_name = 'Test Segment'
     test_criteria = {
       'and' => [

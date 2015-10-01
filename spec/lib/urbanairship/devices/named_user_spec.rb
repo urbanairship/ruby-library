@@ -3,7 +3,6 @@ require 'urbanairship'
 
 
 describe Urbanairship::Devices do
-  UA = Urbanairship
   airship = UA::Client.new(key: '123', secret: 'abc')
 
   describe Urbanairship::Devices::NamedUser do
