@@ -44,7 +44,7 @@ module Urbanairship
             fail 'Method was not "GET" "POST" "PUT" or "DELETE"'
         end
 
-        headers = {'User-agent' => 'UARubyLib/' + UA::VERSION}
+        headers = {'User-agent' => 'UARubyLib/' + Urbanairship::VERSION}
         headers['Accept'] = 'application/vnd.urbanairship+json; version=3'
         headers['Content-type'] = content_type unless content_type.nil?
         headers['Content-Encoding'] = encoding unless encoding.nil?
