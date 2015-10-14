@@ -1,3 +1,11 @@
+--------------------
+3.1.1
+--------------------
+- Added support for static lists
+
+
+
+--------------------
 3.1.0
 --------------------
 - Added documentation files
@@ -9,7 +17,6 @@
 - Added support for named user
 - Added support for reports
 - Added support for static lists
-- Added support for automation
 
 
 
