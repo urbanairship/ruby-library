@@ -214,13 +214,14 @@ describe Urbanairship do
       push.audience = 'triggered'
       push.device_types = UA.all
       push.notification = { 'alert' => 'hello world' }
-      outcome = UA.outcome(push: push)
       imm_trigger = UA.immediate_trigger(type: 'tag_added', tag: 'tag', group: 'tag_group')
-      constraint = UA.rate_constraint(pushes: 10, days: 1)
-      condition = UA.tag_condition(tag: 'tag')
-      or_condition = UA.or(condition)
-      actual_pipeline = UA.pipeline(name: 'pipeline_name', enabled: true, outcome: outcome,
-        constraint: constraint, condition: or_condition, immediate_trigger: imm_trigger)
+      actual_pipeline = UA.pipeline(
+          name: 'pipeline_name',
+          enabled: true,
+          outcome: UA.outcome(push: push),
+          constraint: UA.rate_constraint(pushes: 10, days: 1),
+          condition: UA.or(UA.tag_condition(tag: 'tag')),
+          immediate_trigger: imm_trigger)
       expect(actual_pipeline).to eq(expected_pipeline)
     end
   end

@@ -182,20 +182,17 @@ it, you can use the validate method.
     p.audience = 'triggered'
     p.notification = UA.notification(alert: 'Hello')
     p.device_types = UA.all
-    outcome = UA.outcome(push: p, delay: 10)
     imm_trigger = UA.immediate_trigger(
         type: 'tag_added',
         tag: 'test_auto',
         group: 'test-group'
     )
-    constraint = UA.constraint(pushes: 10, days: 1)
-    condition = UA.tag_condition(tag: 'tag_name')
-    or_condition = UA.or(condition)
+    or_condition = UA.or(UA.tag_condition(tag: 'tag_name'))
     pipeline = UA.pipeline(
         name: 'this_pipeline',
         enabled: true,
-        outcome: outcome,
-        constraint: constraint,
+        outcome: UA.outcome(push: p, delay: 10),
+        constraint: UA.constraint(pushes: 10, days: 1),
         condition: or_condition,
         immediate_trigger: imm_trigger
     )
