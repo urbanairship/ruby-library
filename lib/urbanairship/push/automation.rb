@@ -35,13 +35,13 @@ module Urbanairship
         resp
       end
 
-      def list_existing(start: nil, enabled: nil)
-        fail ArgumentError, 'start needs to be a string' unless start == nil or start.is_a? String
+      def list_existing(limit: nil, enabled: nil)
+        fail ArgumentError, 'limit needs to be an integer' unless limit == nil or limit.is_a? Integer
         fail ArgumentError,
           'enabled needs to be a boolean' unless enabled == nil or (enabled == true or enabled == false)
         url = PIPELINES_URL
-        if start != nil
-          url += '?start=' + start
+        if limit
+          url += '?limit=' + limit.to_s
           url += '&enabled=' + enabled.to_s unless enabled.nil?
         else
           url += '?enabled=' + enabled.to_s unless enabled.nil?
