@@ -12,17 +12,13 @@ describe Urbanairship do
       push.audience = 'triggered'
       push.device_types = UA.all
       push.notification = { 'alert' => 'hello world' }
-      outcome = UA.outcome(push: push)
       imm_trigger = UA.immediate_trigger(type: 'tag_added', tag: 'tag', group: 'tag_group')
-      constraint = UA.rate_constraint(pushes: 10, days: 1)
-      condition = UA.tag_condition(tag: 'tag')
-      or_condition = UA.or_condition(cond_array: condition)
       pipeline = UA.pipeline(
           name: 'pipeline_name',
           enabled: true,
-          outcome: outcome,
-          constraint: constraint,
-          condition: or_condition,
+          outcome: UA.outcome(push: push),
+          constraint: UA.rate_constraint(pushes: 10, days: 1),
+          condition: UA.or(UA.tag_condition(tag: 'tag')),
           immediate_trigger: imm_trigger
       )
 
@@ -82,7 +78,7 @@ describe Urbanairship do
           expect(actual_response).to eq(expected_response)
         end
 
-        it 'fails if start is not a string' do
+        it 'fails if limit is not an interger' do
           expect {
             auto_message.list_existing(start: 123)
           }.to raise_error(ArgumentError)
@@ -94,16 +90,16 @@ describe Urbanairship do
           }.to raise_error(ArgumentError)
         end
 
-        it 'sets the correct url when start is included' do
+        it 'sets the correct url when limit is included' do
           allow(airship).to receive(:send_request).and_return('')
-          auto_message.list_existing(start: 'abc')
-          expect(auto_message.url).to eq('https://go.urbanairship.com/api/pipelines/?start=abc')
+          auto_message.list_existing(limit: 10)
+          expect(auto_message.url).to eq('https://go.urbanairship.com/api/pipelines/?limit=10')
         end
 
-        it 'sets the correct url when start and enabled are included' do
+        it 'sets the correct url when limit and enabled are included' do
           allow(airship).to receive(:send_request).and_return('')
-          auto_message.list_existing(start: 'abc', enabled: true)
-          expect(auto_message.url).to eq('https://go.urbanairship.com/api/pipelines/?start=abc&enabled=true')
+          auto_message.list_existing(limit: 10, enabled: true)
+          expect(auto_message.url).to eq('https://go.urbanairship.com/api/pipelines/?limit=10&enabled=true')
         end
 
         it 'sets the correct url when enabled is included' do
