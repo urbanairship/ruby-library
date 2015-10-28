@@ -2,6 +2,14 @@
 3.2.0
 --------------------
 - Added support for static lists
+- Added support for automation
+
+
+
+--------------------
+3.1.1
+--------------------
+- Changed UA to Urbanairship in client.rb to fix aliasing issue
 
 
 
@@ -23,6 +31,7 @@
 - Added support for feedback (device token and apid)
 - Added support for named user
 - Added support for reports
+- Added support for static lists
 
 
 

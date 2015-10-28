@@ -10,7 +10,7 @@ module Urbanairship
     class Push
       attr_writer :client, :audience, :notification, :options,
                   :device_types, :message
-      attr_reader :device_types
+      attr_reader :device_types, :audience
       include Urbanairship::Common
       include Urbanairship::Loggable
 

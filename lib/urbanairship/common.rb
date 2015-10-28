@@ -18,6 +18,7 @@ module Urbanairship
     NAMED_USER_URL = BASE_URL + '/named_users/'
     REPORTS_URL = BASE_URL + '/reports/'
     LISTS_URL = BASE_URL + '/lists/'
+    PIPELINES_URL = BASE_URL + '/pipelines/'
 
     # Helper method for required keyword args in Ruby 2.0 that is compatible with 2.1+
     # @example

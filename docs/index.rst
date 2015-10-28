@@ -66,6 +66,7 @@ Contents:
    named_user.rst
    reports.rst
    static_lists.rst
+   automation.rst
    exceptions.rst
    examples.rst
 
