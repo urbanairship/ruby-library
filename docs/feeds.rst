@@ -44,7 +44,8 @@ For details on a particular feed, you need the feed_id:
 Update
 ------
 
-Update a feed:
+To update a feed, you need the feed_id, the url of the feed, and a push object
+containing the update.
 
 .. code-block:: ruby
 
@@ -64,7 +65,7 @@ Update a feed:
 Delete
 ------
 
-Delete a feed:
+To delete a feed, you need the feed_id:
 
 .. code-block:: ruby
 
