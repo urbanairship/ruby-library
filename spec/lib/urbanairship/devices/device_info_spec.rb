@@ -82,7 +82,7 @@ describe Urbanairship::Devices do
     channel_list_hash2 = {
       'body' => {
         'channels' => [ channel_list_item, channel_list_item, channel_list_item ],
-        'next_page' => 'next_url'
+        'next_page' => 'next_url2'
       },
       'code' => 200
     }
@@ -113,19 +113,19 @@ describe Urbanairship::Devices do
     describe '#device_token' do
       it 'can get the device_list' do
         device_response = {
-          'body' => [
-            {
-              'device_token' => '12341234',
-              'marked_inactive_on' => '2015-08-01',
-              'alias' => 'bob'
-            },
-            {
-              'device_token' => '43214321',
-              'marked_inactive_on' => '2015-08-03',
-              'alias' => 'alice'
-            },
-          ],
-          'code' => '200'
+            'body' => [
+                {
+                    'device_token' => '12341234',
+                    'marked_inactive_on' => '2015-08-01',
+                    'alias' => 'bob'
+                },
+                {
+                    'device_token' => '43214321',
+                    'marked_inactive_on' => '2015-08-03',
+                    'alias' => 'alice'
+                }
+            ],
+            'code' => '200'
         }
 
         allow(airship).to receive(:send_request).and_return(device_response)
@@ -138,21 +138,21 @@ describe Urbanairship::Devices do
     describe '#apid' do
       it 'can get the apids' do
         device_response = {
-          'body' => [
-            {
-              'apid' => '12341234',
-              'gcm_registration_id' => nil,
-              'marked_inactive_on' => '2015-08-01',
-              'alias' => 'bob'
-            },
-            {
-              'apid' => '43214321',
-              'gcm_registration_id' => nil,
-              'marked_inactive_on' => '2015-08-03',
-              'alias' => 'alice'
-            },
-          ],
-          'code' => '200'
+            'body' => [
+                {
+                    'apid' => '12341234',
+                    'gcm_registration_id' => nil,
+                    'marked_inactive_on' => '2015-08-01',
+                    'alias' => 'bob'
+                },
+                {
+                    'apid' => '43214321',
+                    'gcm_registration_id' => nil,
+                    'marked_inactive_on' => '2015-08-03',
+                    'alias' => 'alice'
+                }
+            ],
+            'code' => '200'
         }
         allow(airship).to receive(:send_request).and_return(device_response)
         since = (Time.new.utc - 60 * 70 * 24 * 3).iso8601 # Get apids deactivated since 3 days ago

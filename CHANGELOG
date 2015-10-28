@@ -1,15 +1,30 @@
-3.0.3
 --------------------
-- Added documentation files
-- Added support for ChannelInfo and ChannelList
-- Added support for tags
-- Added support for feedback (device token and apid)
-- Added support for named user
-- Added support for reports
+3.2.0
+--------------------
 - Added support for static lists
 - Added support for automation
 - Added support for feeds
 - Added support for device tokens, apids, and blackberry pins
+
+
+--------------------
+3.1.1
+--------------------
+- Changed UA to Urbanairship in client.rb to fix aliasing issue
+
+
+
+--------------------
+3.1.0
+--------------------
+- Added documentation files
+- Added support for ChannelInfo and ChannelList
+- Added support for segments
+- Added support for channel uninstall
+- Added support for tags
+- Added support for feedback (device token and apid)
+- Added support for named user
+- Added support for reports
 
 
 

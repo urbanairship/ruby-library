@@ -37,7 +37,7 @@ describe Urbanairship do
     it 'requires a parameter' do
       expect {
         UA.notification
-      }.to raise_error
+      }.to raise_error ArgumentError
     end
 
     context 'Android' do

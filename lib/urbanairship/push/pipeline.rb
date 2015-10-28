@@ -75,14 +75,6 @@ module Urbanairship
             }
         }
       end
-
-      def or_condition(cond_array: required('cond_array'))
-        { 'or' => cond_array }
-      end
-
-      def and_condition(cond_array: required('cond_array'))
-        { 'and' => cond_array }
-      end
     end
   end
 end

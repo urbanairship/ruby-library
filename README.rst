@@ -44,8 +44,12 @@ Usage
 =====
 
 Once the gem has been installed you can start sending pushes!
- See `api examples
-<http://docs.urbanairship.com/topic-guides/api-examples.html>`_, for more
+See the `full documentation
+<http://docs.urbanairship.com/reference/libraries/ruby>`_, 
+`api examples
+<http://docs.urbanairship.com/topic-guides/api-examples.html>`_, as well as the
+`Urban Airship API Documentation
+<http://docs.urbanairship.com/api/>`_ for more
 information.
 
 Broadcast to All Devices
@@ -86,7 +90,8 @@ Contributing
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
 5. Create a new Pull Request
-6. Sign Urban Airship's [contribution agreement](http://urbanairship.com/legal/contribution-agreement)
+6. Sign Urban Airship's `contribution agreement
+<http://docs.urbanairship.com/contribution-agreement.html>`_.
 Note: Changes will not be approved and merged without a signed contribution agreement
 
 Development
