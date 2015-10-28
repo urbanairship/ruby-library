@@ -8,21 +8,15 @@ describe Urbanairship::Devices do
   airship = UA::Client.new(key: 123, secret: 'abc')
 
   describe Urbanairship::Devices::StaticList do
-    static_list = UA::StaticList.new(client: airship, name: 'test_list')
-
+    static_list = UA::StaticList.new(client: airship)
+    static_list.name = 'test-list'
     expected_response = {
       :ok => true
     }
 
-    it 'will fail when name is set to nil' do
-      expect {
-        UA::StaticList.new(client: airship, name: nil)
-      }.to raise_error(ArgumentError)
-    end
-
     it 'will fail when client is set to nil' do
       expect {
-        UA::StaticList.new(client: nil, name: 'test_list')
+        UA::StaticList.new(client: nil)
       }.to raise_error(ArgumentError)
     end
 
