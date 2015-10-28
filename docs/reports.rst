@@ -98,8 +98,7 @@ For more information, see `the API documentation on push reports
    -------------
 
    Get the analytics details for an array of Push IDs. For more information,
-   see `the API documentation on batch requests
-   <http://docs.urbanairship.com/api/ua.html#batch-request>`_
+   see `the API documentation on batch requests <http://docs.urbanairship.com/api/ua.html#batch-request>`_
 
    .. code-block:: ruby
 
