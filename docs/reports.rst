@@ -20,7 +20,7 @@ For more information, see `the API documentation on individual push statistics
     statistics = d.get(push_id: 'push_id')
 
 
-Devices Report 
+Devices Report
 ==============
 
 Returns an app’s opted-in and installed device counts broken out by device
@@ -63,82 +63,81 @@ For more information, see `the API documentation on push reports
 
     precision needs to be a member of ['HOURLY', 'DAILY', 'MONTHLY']
 
+.. Hiding the perpush endpoints for now per GAG-705 (until rate limiting is in place)
+
+   Per Push Reporting
+   ==================
+
+   Retrieve data specific to the performance of an individual push.
+   For more information, see `the API documentation on per push reporting
+   <http://docs.urbanairship.com/api/ua.html#per-push-reporting>`_
+
+   ---------------
+   Per Push Detail
+   ---------------
 
 
-Per Push Reporting
-==================
+   Single Request
+   --------------
 
-Retrieve data specific to the performance of an individual push.
-For more information, see `the API documentation on per push reporting
-<http://docs.urbanairship.com/api/ua.html#per-push-reporting>`_
+   Get the analytics detail for a specific Push ID. For more information, see `the
+   API documentation on single requests
+   <http://docs.urbanairship.com/api/ua.html#single-request>`_
 
----------------
-Per Push Detail
----------------
+   .. code-block:: ruby
 
-
-Single Request
---------------
-
-Get the analytics detail for a specific Push ID. For more information, see `the
-API documentation on single requests
-<http://docs.urbanairship.com/api/ua.html#single-request>`_
-
-.. code-block:: ruby
-
-    require 'urbanairship'
-    UA = Urbanairship
-    airship = UA::Client.new(key:'application_key', secret:'master_secret')
-    d = UA::PerPushDetail.new(client: airship)
-    details = d.get_single(push_id:'push_id')
+       require 'urbanairship'
+       UA = Urbanairship
+       airship = UA::Client.new(key:'application_key', secret:'master_secret')
+       d = UA::PerPushDetail.new(client: airship)
+       details = d.get_single(push_id:'push_id')
 
 
-Batch Request
--------------
+   Batch Request
+   -------------
 
-Get the analytics details for an array of Push IDs. For more information,
-see `the API documentation on batch requests
-<http://docs.urbanairship.com/api/ua.html#batch-request>`_
+   Get the analytics details for an array of Push IDs. For more information,
+   see `the API documentation on batch requests <http://docs.urbanairship.com/api/ua.html#batch-request>`_
 
-.. code-block:: ruby
+   .. code-block:: ruby
 
-    require 'urbanairship'
-    UA = Urbanairship
-    airship = UA::Client.new(key:'application_key', secret:'master_secret')
-    d = UA::PerPushDetail.new(client: airship)
-    details = d.get_batch(push_ids: ['push_id', 'push_id2', 'push_id3'])
+       require 'urbanairship'
+       UA = Urbanairship
+       airship = UA::Client.new(key:'application_key', secret:'master_secret')
+       d = UA::PerPushDetail.new(client: airship)
+       details = d.get_batch(push_ids: ['push_id', 'push_id2', 'push_id3'])
 
-.. note::
+   .. note::
 
-    There is a maximum of 100 Push IDs per request
+       There is a maximum of 100 Push IDs per request
 
----------------
-Per Push Series
----------------
+   ---------------
+   Per Push Series
+   ---------------
 
-Get the default time series data. For more information,
-see `the API documentation on per push series
-<http://docs.urbanairship.com/api/ua.html#per-push-series>`_
+   Get the default time series data. For more information,
+   see `the API documentation on per push series
+   <http://docs.urbanairship.com/api/ua.html#per-push-series>`_
 
-.. code-block:: ruby
+   .. code-block:: ruby
 
-    require 'urbanairship'
-    UA = Urbanairship
-    airship = UA::Client.new(key:'application_key', secret:'master_secret')
-    s = UA::PerPushSeries.new(client: airship)
-    series = s.get(
-        push_id: 'push_id',
-        precision: 'HOURLY',
-        start_date: '2015-06-01',
-        end_date: '2015-08-01'
-    )
+       require 'urbanairship'
+       UA = Urbanairship
+       airship = UA::Client.new(key:'application_key', secret:'master_secret')
+       s = UA::PerPushSeries.new(client: airship)
+       series = s.get(
+           push_id: 'push_id',
+           precision: 'HOURLY',
+           start_date: '2015-06-01',
+           end_date: '2015-08-01'
+       )
 
-.. note::
+   .. note::
 
-    precision, start_date, and end_date are optional parameters. However, if specifying
-    a date range, precision, start_date and end_date must all be specified. Precision
-    can be specified without start_date and end_date but must be a member of
-    ['HOURLY', 'DAILY', 'MONTHLY'].
+       precision, start_date, and end_date are optional parameters. However, if specifying
+       a date range, precision, start_date and end_date must all be specified. Precision
+       can be specified without start_date and end_date but must be a member of
+       ['HOURLY', 'DAILY', 'MONTHLY'].
 
 Response Report
 ===============
@@ -171,7 +170,7 @@ Response Listing
 ================
 
 Get a listing of all pushes and basic response information in a given
-timeframe by instantiating an iterator object using ResponseList. 
+timeframe by instantiating an iterator object using ResponseList.
 Start and end date times are required parameters.
 For more information, see `the API documentation on response listings
 <http://docs.urbanairship.com/api/ua.html#response-listing>`_
@@ -227,7 +226,7 @@ period. For more information, see `the API documentation on app open reports
 Time In App Report
 ==================
 
-Get the average amount of time users have spent in your app within the 
+Get the average amount of time users have spent in your app within the
 specified time period. For more information, see `the API documentation
 on time-in-app reports
 <http://docs.urbanairship.com/api/ua.html#time-in-app-report>`_
@@ -254,7 +253,7 @@ on time-in-app reports
 Opt-In Report
 =============
 
-Get the number of opted-in push users who access the app within the specified 
+Get the number of opted-in push users who access the app within the specified
 time period.
 For more information, see `the API documentation on opt-in reports
 <http://docs.urbanairship.com/api/ua.html#opt-in-report>`_
@@ -281,7 +280,7 @@ For more information, see `the API documentation on opt-in reports
 Opt-Out Report
 ==============
 
-Get the number of opted-out push users who access the app within the specified 
+Get the number of opted-out push users who access the app within the specified
 time period.
 For more information, see `the API documentation on opt-out reports
 <http://docs.urbanairship.com/api/ua.html#opt-out-report>`_
