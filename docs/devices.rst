@@ -5,8 +5,9 @@ Channel Listing
 ---------------
 
 Device lists are fetched by instantiating an iterator object
-using :rb:class:`ChannelList`. For more information, see:
-http://docs.urbanairship.com/api/ua.html#channels
+using :rb:class:`ChannelList`. For more information, see `the API
+documentation for channels <http://docs.urbanairship.com/api/ua.html#channels>`_.
+The ``count`` method will give you the number of channels over which you have iterated.
 
 .. code-block:: ruby
 
@@ -18,6 +19,8 @@ http://docs.urbanairship.com/api/ua.html#channels
     channel_list.each do |channel|
         puts(channel)
     end
+
+    puts(channel_list.count)
 
 Channel Lookup
 --------------
@@ -39,8 +42,8 @@ Feedback
 
 Feedback returns a list of dictionaries of device tokens/APIDs that the
 respective push provider has told us are uninstalled since the given
-timestamp. For more information, see:
-http://docs.urbanairship.com/api/ua.html#feedback
+timestamp. For more information, see `the API documentation for feedback
+<http://docs.urbanairship.com/api/ua.html#feedback>`_
 
 .. code-block:: ruby
 
@@ -121,7 +124,8 @@ Get information on a particular Android APID:
 APID List
 ---------
 
-List all APIDs for the application:
+List all APIDs for the application. Afterwards, you can get the number of apids
+that have been iterated over by using the ``count`` method.
 
 .. code-block:: ruby
 
@@ -133,6 +137,7 @@ List all APIDs for the application:
     apid_list.each do |apid|
         puts(apid)
     end
+    puts(apid_list.count)
 
 
 Blackberry PIN Lookup
@@ -154,7 +159,9 @@ Get information on a particular BlackBerry PIN:
 Blackberry PIN List
 -------------------
 
-Get a list of all Blackberry PINs registered to the application.
+Get a list of all Blackberry PINs registered to the application. After you
+have iterated over the list, you can get the total count of PINs by using the
+``count`` method.
 
 .. code-block:: ruby
 
@@ -166,3 +173,4 @@ Get a list of all Blackberry PINs registered to the application.
     device_pin_list.each do |pin|
         puts(pin)
     end
+    puts(device_pin_list.count)
