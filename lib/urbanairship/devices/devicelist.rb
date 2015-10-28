@@ -86,7 +86,6 @@ module Urbanairship
         super(client: client)
         @next_page = DEVICE_TOKEN_URL
         @data_attribute = 'device_tokens'
-        load_page
       end
 
       def count
@@ -124,7 +123,6 @@ module Urbanairship
         super(client: client)
         @next_page = APID_URL
         @data_attribute = 'apids'
-        load_page
       end
     end
 
@@ -152,7 +150,6 @@ module Urbanairship
         super(client: client)
         @next_page = DEVICE_PIN_URL
         @data_attribute = 'device_pins'
-        load_page
       end
     end
   end
