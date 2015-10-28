@@ -126,7 +126,8 @@ by specifying the tag name. You can check for the absence of the tag by setting 
 parameter to true.
 
 Conditions are combined into a condition set using ``UA.or`` or ``UA.and`` and are
-made up of 1-20 conditions. `Or conditions` and `and conditions` cannot be combined.
+made up of 1-20 conditions. A condition set can only have an `Or condition` or an `and condition`;
+it cannot contain both.
 
 .. code-block:: ruby
 
