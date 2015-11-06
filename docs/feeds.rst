@@ -2,7 +2,8 @@ Feeds
 =====
 
 The Feed API is used to add and remove RSS or Atom feeds used to trigger push notifications.
-For more information, see: http://docs.urbanairship.com/api/ua.html#feeds
+For more information, see `the API documentation on feeds
+<http://docs.urbanairship.com/api/ua.html#feeds>`_
 
 Create
 ------
@@ -28,7 +29,7 @@ is updated.
 Lookup
 ------
 
-For details on a particular feed, you need the feed_id:
+For details on a particular feed, you need the feed id:
 
 .. code-block:: ruby
 
@@ -44,7 +45,7 @@ For details on a particular feed, you need the feed_id:
 Update
 ------
 
-To update a feed, you need the feed_id, the url of the feed, and a push object
+To update a feed, you need the feed id, the url of the feed, and a push object
 containing the update.
 
 .. code-block:: ruby
@@ -65,7 +66,7 @@ containing the update.
 Delete
 ------
 
-To delete a feed, you need the feed_id:
+To delete a feed, you need the feed id:
 
 .. code-block:: ruby
 
