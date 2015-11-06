@@ -42,8 +42,7 @@ module Urbanairship
           method: 'POST',
           body: JSON.dump(payload),
           url: PUSH_URL,
-          content_type: 'application/json',
-          version: 3
+          content_type: 'application/json'
         )
         pr = PushResponse.new(http_response_body: response['body'], http_response_code: response['code'].to_s)
         logger.info { pr.format }
@@ -84,8 +83,7 @@ module Urbanairship
           method: 'POST',
           body: JSON.dump(payload),
           url: SCHEDULES_URL,
-          content_type: 'application/json',
-          version: 3
+          content_type: 'application/json'
         )
         pr = PushResponse.new(http_response_body: response['body'], http_response_code: response['code'].to_s)
         logger.info { pr.format }
@@ -103,8 +101,7 @@ module Urbanairship
         response_body = client.send_request(
           method: 'GET',
           body: nil,
-          url: url,
-          version: 3
+          url: url
         )
         payload = JSON.load(response_body)
 
@@ -133,8 +130,7 @@ module Urbanairship
           method: 'DELETE',
           body: nil,
           url: @url,
-          content_type: 'application/json',
-          version: 3
+          content_type: 'application/json'
         )
         pr = PushResponse.new(http_response_body: response['body'], http_response_code: response['code'].to_s)
         logger.info { "Result of canceling scheduled push: #{@url} was a: [#{pr.status_code}]" }
@@ -151,8 +147,7 @@ module Urbanairship
           method: 'PUT',
           body: JSON.dump(self.payload),
           url: @url,
-          content_type: 'application/json',
-          version: 3
+          content_type: 'application/json'
         )
         pr = PushResponse.new(http_response_body: response['body'], http_response_code: response['code'].to_s)
         logger.info { pr.format }
@@ -186,11 +181,11 @@ module Urbanairship
       include Urbanairship::Common
 
       def initialize(http_response_body: nil, http_response_code: nil)
-        @payload = http_response_body || "No Content"
-        @ok = @payload['ok'] || "None"
-        @push_ids = @payload['push_ids'] || "None"
-        @schedule_url = try_helper(:first, @payload['schedule_urls']) || "None"
-        @operation_id = @payload['operation_id'] || "None"
+        @payload = ((http_response_body.nil? || http_response_body.empty?) ? {} : http_response_body)
+        @ok = @payload['ok']
+        @push_ids = @payload['push_ids']
+        @schedule_url = try_helper(:first, @payload['schedule_urls'])
+        @operation_id = @payload['operation_id']
         @status_code = http_response_code
       end
 

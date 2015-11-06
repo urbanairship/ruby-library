@@ -118,19 +118,23 @@ module Urbanairship
         @next_page = nil
         @data_list = nil
         @data_attribute = nil
+        @count = 0
       end
 
       def load_page
-        unless @next_page
-          return false
-        end
+        return false unless @next_page
         response = @client.send_request(
             method: 'GET',
             url: @next_page
         )
         logger.info("Retrieving data from: #{@next_page}")
-        if response['body']['next_page']
-          @next_page = response['body']['next_page']
+        check_next_page = response['body']['next_page']
+        if check_next_page != @next_page
+          @next_page = check_next_page
+        elsif check_next_page
+          # if check_page = next_page, we have repeats in the response.
+          # and we don't want to load them
+          return false
         else
           @next_page = nil
         end
@@ -141,9 +145,14 @@ module Urbanairship
       def each
         while load_page
           @data_list.each do | value |
+            @count += 1
             yield value
           end
         end
+      end
+
+      def count
+        @count
       end
     end
   end
