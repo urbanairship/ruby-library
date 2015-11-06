@@ -56,7 +56,7 @@ author = u'Urban Airship'
 # built documents.
 
 # The full version
-file = open('../lib/urbanairship/VERSION.rb', 'r')
+file = open('../lib/urbanairship/version.rb', 'r')
 for line in file:
     line = line.rstrip()
     x = re.findall("VERSION = '([0-9.]+)", line)

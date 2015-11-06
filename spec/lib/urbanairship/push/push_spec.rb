@@ -325,7 +325,12 @@ describe Urbanairship::Push do
           UA::Push::PushResponse.new(http_response_body: '{}', http_response_code: '{}').ok
         }.not_to raise_error
       end
+
+      it 'allows an empty string' do
+        expect {
+          UA::Push::PushResponse.new(http_response_body: '').ok
+        }.not_to raise_error
+      end
     end
   end
-
 end

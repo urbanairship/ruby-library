@@ -125,15 +125,16 @@ Tag conditions evaluate for the presence (or absence) of the specified tag. They
 by specifying the tag name. You can check for the absence of the tag by setting the ``negated``
 parameter to true.
 
-Conditions are combined into a condition set using ``or_condition`` or ``and_condition`` and are
-made up of 1-20 conditions. `Or conditions` and `and conditions` cannot be combined.
+Conditions are combined into a condition set using ``UA.or`` or ``UA.and`` and are
+made up of 1-20 conditions. A condition set can only have an `Or condition` or an `and condition`;
+it cannot contain both.
 
 .. code-block:: ruby
 
     require 'urbanairship'
     UA = Urbanairship
     condition = UA.tag_condition(tag: 'tag_name', negated: false)
-    condition_set = UA.or_condition(cond_array: condition)
+    condition_set = UA.or(condition)
 
 
 Create an Automated Message
@@ -156,7 +157,7 @@ An automated message is created with a pipeline or an array of pipelines.
     )
     constraint = UA.constraint(pushes: 10, days: 1)
     condition = UA.tag_condition(tag: 'tag_name')
-    or_condition = UA.or_condition(condition)
+    or_condition = UA.or(condition)
     pipeline = UA.pipeline(
         name: 'this_pipeline',
         enabled: true,
@@ -182,20 +183,17 @@ it, you can use the validate method.
     p.audience = 'triggered'
     p.notification = UA.notification(alert: 'Hello')
     p.device_types = UA.all
-    outcome = UA.outcome(push: p, delay: 10)
     imm_trigger = UA.immediate_trigger(
         type: 'tag_added',
         tag: 'test_auto',
         group: 'test-group'
     )
-    constraint = UA.constraint(pushes: 10, days: 1)
-    condition = UA.tag_condition(tag: 'tag_name')
-    or_condition = UA.or_condition(condition)
+    or_condition = UA.or(UA.tag_condition(tag: 'tag_name'))
     pipeline = UA.pipeline(
         name: 'this_pipeline',
         enabled: true,
-        outcome: outcome,
-        constraint: constraint,
+        outcome: UA.outcome(push: p, delay: 10),
+        constraint: UA.constraint(pushes: 10, days: 1),
         condition: or_condition,
         immediate_trigger: imm_trigger
     )
@@ -206,15 +204,15 @@ it, you can use the validate method.
 List Existing Pipelines
 -----------------------
 
-List all existing pipelines. An optional ``start`` parameter specifies the starting
-element. It can be used for paginating results. The optional ``enabled`` parameter can
-be set to ``true`` in order to list only enabled pipelines.
+List all existing pipelines. An optional ``limit`` parameter specifies the maximum number of
+pipelines to be included in the response. The optional ``enabled`` parameter can be set to
+``true`` in order to list only enabled pipelines.
 
 .. code-block:: ruby
 
     airship = UA::Client.new(key:'application_key', secret:'master_secret')
     auto_message = UA::AutomatedMessage.new(client: airship)
-    auto_message.list_existing(enabled: true)
+    auto_message.list_existing(limit: 20, enabled: true)
 
 
 List Deleted Pipelines
@@ -262,7 +260,7 @@ Update the state of a single pipeline resource. Partial updates are not permitte
     )
     constraint = UA.constraint(pushes: 10, days: 1)
     condition = UA.tag_condition(tag: 'tag_name')
-    or_condition = UA.or_condition(condition)
+    or_condition = UA.or(condition)
     pipeline = UA.pipeline(
         name: 'this_pipeline',
         enabled: true,
