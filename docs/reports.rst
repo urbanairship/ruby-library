@@ -69,7 +69,8 @@ For more information, see `the API documentation on push reports
    ==================
 
    Retrieve data specific to the performance of an individual push.
-   For more information, see `the API documentation on per push reporting
+   For more information, see `the API documentationa on per push
+   reporting
    <http://docs.urbanairship.com/api/ua.html#per-push-reporting>`_
 
    ---------------
@@ -226,7 +227,7 @@ period. For more information, see `the API documentation on app open reports
 Time In App Report
 ==================
 
-Get the average amount of time users have spent in your app within the
+Get the average amount of time users have spent in your app within the 
 specified time period. For more information, see `the API documentation
 on time-in-app reports
 <http://docs.urbanairship.com/api/ua.html#time-in-app-report>`_
@@ -253,7 +254,7 @@ on time-in-app reports
 Opt-In Report
 =============
 
-Get the number of opted-in push users who access the app within the specified
+Get the number of opted-in push users who access the app within the specified 
 time period.
 For more information, see `the API documentation on opt-in reports
 <http://docs.urbanairship.com/api/ua.html#opt-in-report>`_

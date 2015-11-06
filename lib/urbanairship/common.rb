@@ -118,6 +118,7 @@ module Urbanairship
         @next_page = nil
         @data_list = nil
         @data_attribute = nil
+        @count = 0
       end
 
       def load_page
@@ -144,9 +145,14 @@ module Urbanairship
       def each
         while load_page
           @data_list.each do | value |
+            @count += 1
             yield value
           end
         end
+      end
+
+      def count
+        @count
       end
     end
   end

@@ -239,10 +239,17 @@ describe Urbanairship::Devices do
     end
 
     it 'can return the list count' do
-      allow(airship).to receive(:send_request).and_return(expected_resp, 23)
+      expected_resp = {
+          'body' => {
+              'active_device_tokens_count' => 100,
+              'device_tokens_count' => 140
+          },
+          'code' => 200
+      }
+      allow(airship).to receive(:send_request).and_return(expected_resp)
       device_token_list = UA::DeviceTokenList.new(client: airship)
       count = device_token_list.count
-      expect(count).to eq(23)
+      expect(count).to eq(expected_resp)
     end
   end
 
