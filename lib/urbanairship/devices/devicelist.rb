@@ -143,6 +143,32 @@ module Urbanairship
         logger.info("Retrieved info on device pin #{pin}")
         resp
       end
+
+      def register(pin: required('pin'), pin_alias: nil, tags: nil)
+        fail ArgumentError, 'Device pin must be an 8 digit hex string' if pin[/\H/] or pin.length != 8
+        payload = {}
+        payload['alias'] = pin_alias unless pin_alias.nil?
+        payload['tags'] = tags unless tags.nil?
+
+        resp = @client.send_request(
+          method: 'PUT',
+          url: DEVICE_PIN_URL + pin,
+          body: JSON.dump(payload),
+          content_type: 'application/json'
+        )
+        logger.info("Registered device pin #{pin}")
+        resp
+      end
+
+      def deactivate(pin: required('pin'))
+        fail ArgumentError, 'Device pin must be an 8 digit hex string' if pin[/\H/] or pin.length != 8
+        resp = @client.send_request(
+          method: 'DELETE',
+          url: DEVICE_PIN_URL + pin
+        )
+        logger.info("Deactivated device pin #{pin}")
+        resp
+      end
     end
 
     class DevicePinList < Urbanairship::Common::PageIterator

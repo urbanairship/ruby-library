@@ -353,6 +353,54 @@ describe Urbanairship::Devices do
         expect(actual_response).to eq(expected_resp)
       end
     end
+
+    describe '#register' do
+      it 'fails when a 7-digit hex string is given' do
+        expect {
+          device_pin.register(pin: '1234567')
+        }.to raise_error(ArgumentError)
+      end
+
+      it 'fails when a non-hex string is given' do
+        expect {
+          device_pin.register(pin: '1234568Z')
+        }.to raise_error(ArgumentError)
+      end
+
+      it 'registers a pin successfully' do
+        expected_resp = {
+          'body' => { 'ok' => true },
+          'code' => 200
+        }
+        allow(airship).to receive(:send_request).and_return(expected_resp)
+        actual_response = device_pin.register(pin: '12345678')
+        expect(actual_response).to eq(expected_resp)
+      end
+    end
+
+    describe '#deactivate' do
+      it 'fails when a 7-digit hex string is given' do
+        expect {
+          device_pin.deactivate(pin: '1234567')
+        }.to raise_error(ArgumentError)
+      end
+
+      it 'fails when a non-hex string is given' do
+        expect {
+          device_pin.deactivate(pin: '1234568Z')
+        }.to raise_error(ArgumentError)
+      end
+
+      it 'deactivates a pin successfully' do
+        expected_resp = {
+          'body' => {},
+          'code' => 204
+        }
+        allow(airship).to receive(:send_request).and_return(expected_resp)
+        actual_response = device_pin.deactivate(pin: '12345678')
+        expect(actual_response).to eq(expected_resp)
+      end
+    end
   end
 
   describe Urbanairship::Devices::DevicePinList do
