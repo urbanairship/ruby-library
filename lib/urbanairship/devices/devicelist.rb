@@ -57,5 +57,100 @@ module Urbanairship
         response
       end
     end
+
+    class DeviceToken
+      include Urbanairship::Common
+      include Urbanairship::Loggable
+
+      def initialize(client: required('client'))
+        @client = client
+      end
+
+      def lookup(token: required('token'))
+        fail ArgumentError, 'token needs to be a string' unless token.is_a? String
+
+        resp = @client.send_request(
+          method: 'GET',
+          url: DEVICE_TOKEN_URL + token
+        )
+        logger.info("Looking up info on device token #{token}")
+        resp
+      end
+    end
+
+    class DeviceTokenList < Urbanairship::Common::PageIterator
+      include Urbanairship::Common
+      include Urbanairship::Loggable
+
+      def initialize(client: required('client'))
+        super(client: client)
+        @next_page = DEVICE_TOKEN_URL
+        @data_attribute = 'device_tokens'
+      end
+
+      def count
+        resp = @client.send_request(
+          method: 'GET',
+          url: DEVICE_TOKEN_URL + 'count/'
+        )
+        logger.info("Retrieved count of Device Token List.")
+        resp
+      end
+    end
+
+    class APID
+      include Urbanairship::Common
+      include Urbanairship::Loggable
+
+      def initialize(client: required('client'))
+        @client = client
+      end
+
+      def lookup(apid: required('apid'))
+        fail ArgumentError, 'apid needs to be a string' unless apid.is_a? String
+
+        resp = @client.send_request(
+          method: 'GET',
+          url: APID_URL + apid
+        )
+        logger.info("Retrieved info on apid #{apid}")
+        resp
+      end
+    end
+
+    class APIDList < Urbanairship::Common::PageIterator
+      def initialize(client: required('client'))
+        super(client: client)
+        @next_page = APID_URL
+        @data_attribute = 'apids'
+      end
+    end
+
+    class DevicePin
+      include Urbanairship::Common
+      include Urbanairship::Loggable
+
+      def initialize(client: required('client'))
+        @client = client
+      end
+
+      def lookup(pin: required('pin'))
+        fail ArgumentError, 'Device pin must be an 8 digit hex string' if pin[/\H/] or pin.length != 8
+        resp = @client.send_request(
+          method: 'GET',
+          url: DEVICE_PIN_URL + pin
+        )
+        logger.info("Retrieved info on device pin #{pin}")
+        resp
+      end
+    end
+
+    class DevicePinList < Urbanairship::Common::PageIterator
+      def initialize(client: required('client'))
+        super(client: client)
+        @next_page = DEVICE_PIN_URL
+        @data_attribute = 'device_pins'
+      end
+    end
   end
 end
