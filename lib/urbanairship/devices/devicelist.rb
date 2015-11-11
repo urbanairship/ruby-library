@@ -166,7 +166,7 @@ module Urbanairship
           method: 'DELETE',
           url: DEVICE_PIN_URL + pin
         )
-        logger.info("Deactived device pin #{pin}")
+        logger.info("Deactivated device pin #{pin}")
         resp
       end
     end
