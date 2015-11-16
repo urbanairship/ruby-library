@@ -13,7 +13,7 @@ module Urbanairship
 
       def name_lookup(name: required('name'), type: nil)
         fail ArgumentError, 'name needs to be a string' unless name.is_a? String
-        fail ArgumentError, 'type needs to be a string' unless type == nil or type.is_a? String
+        fail ArgumentError, 'type needs to be a string' unless type.nil? or type.is_a? String
         url = LOCATION_URL + '?q=' + name
         url += '&type=' + type unless type.nil?
         resp = @client.send_request(
@@ -27,7 +27,7 @@ module Urbanairship
       def coordinates_lookup(latitude: required('latitude'), longitude: required('longitude'), type: nil)
         fail ArgumentError,
           'latitude and longitude need to be numbers' unless latitude.is_a? Numeric and longitude.is_a? Numeric
-        fail ArgumentError, 'type needs to be a string' unless type == nil or type.is_a? String
+        fail ArgumentError, 'type needs to be a string' unless type.nil? or type.is_a? String
         url = LOCATION_URL + latitude.to_s + ',' + longitude.to_s
         url += '?type=' + type unless type.nil?
         resp = @client.send_request(
@@ -44,7 +44,7 @@ module Urbanairship
         fail ArgumentError,
            'lat1, long1, lat2, and long2 need to be numbers' unless lat1.is_a? Numeric and long2.is_a? Numeric\
            and lat2.is_a? Numeric and long2.is_a? Numeric
-        fail ArgumentError, 'type needs to be a string' unless type == nil or type.is_a? String
+        fail ArgumentError, 'type needs to be a string' unless type.nil? or type.is_a? String
         url = LOCATION_URL + lat1.to_s + ',' + long1.to_s + ',' + lat2.to_s + ',' + long2.to_s
         url += '?type=' + type unless type.nil?
         resp = @client.send_request(
@@ -57,10 +57,11 @@ module Urbanairship
       end
 
       def alias_lookup(from_alias: required('from_alias'))
-        fail ArgumentError, 'from_alias needs to be a string' unless from_alias.is_a? String or from_alias.kind_of? Array
+        fail ArgumentError, 'from_alias needs to be a string or an array of strings' unless from_alias.is_a? String or from_alias.is_a? Array
         url = LOCATION_URL + 'from-alias?'
-        if from_alias.kind_of? Array
+        if from_alias.is_a? Array
           from_alias.each do |a|
+            fail ArgumentError, 'from_alias needs to be a string or an array of strings' unless a.is_a? String
             url += a + '&'
           end
           url = url.chop

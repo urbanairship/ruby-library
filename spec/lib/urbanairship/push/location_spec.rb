@@ -114,6 +114,12 @@ describe Urbanairship do
           }.to raise_error(ArgumentError)
         end
 
+        it 'fails if alias is not an array of strings' do
+          expect {
+            location.alias_lookup(from_alias: [123,456])
+          }.to raise_error(ArgumentError)
+        end
+
         it 'returns location by alias successfully' do
           allow(airship).to receive(:send_request).and_return(expected_resp)
           actual_resp = location.alias_lookup(from_alias: 'alias=alias')

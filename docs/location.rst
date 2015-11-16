@@ -10,7 +10,8 @@ Name Lookup
 
 Search for a location boundary by name. The search primarily
 uses the location names, but you can also filter the results
-by boundary type. See http://docs.urbanairship.com/api/ua.html#location
+by boundary type. See `the API documentation on location
+<http://docs.urbanairship.com/api/ua.html#location>`_
 for more information.
 
 .. code-block:: ruby
@@ -23,14 +24,15 @@ for more information.
 
 .. note::
 
-    name is a required parameter, but type is optional
+    ``name`` is a required parameter, but ``type`` is optional
 
 
 Coordinates Lookup
 ------------------
 
 Search for a location by latitude and longitude coordinates. Type is
-an optional parameter. See http://docs.urbanairship.com/api/ua.html#lat-long-lookup
+an optional parameter. See `the API documentation on coordinates lookup
+<http://docs.urbanairship.com/api/ua.html#lat-long-lookup>`_
 for more information.
 
 .. code-block:: ruby
@@ -43,15 +45,16 @@ for more information.
 
 .. note::
 
-    longitude and latitude are required parameters that must be numbers.
-    Type is an optional parameter.
+    ``longitude`` and ``latitude`` are required parameters that must be numbers.
+    ``Type`` is an optional parameter.
 
 
 Bounding Box Lookup
 -------------------
 
-Search for location using a bounding box. See:
-http://docs.urbanairship.com/api/ua.html#bounding-box-lookup
+Search for location using a bounding box. See `the documentation on
+bounding box lookup
+<http://docs.urbanairship.com/api/ua.html#bounding-box-lookup>`_
 for more information.
 
 .. code-block:: ruby
@@ -65,15 +68,15 @@ for more information.
 
 .. note::
 
-    lat1, long1, lat2, and long2 and are required parameters that must be numbers.
-    Type is an optional parameter.
+    ``lat1``, ``long1``, ``lat2``, and ``long2`` and are required parameters that must be numbers.
+    ``Type`` is an optional parameter.
 
 
 Alias Lookup
 ------------
 
-Search for location by alias. See
-http://docs.urbanairship.com/api/ua.html#alias-lookup
+Search for location by alias. See `the documentation on alias lookup
+<http://docs.urbanairship.com/api/ua.html#alias-lookup>`_
 
 .. code-block:: ruby
 
@@ -85,14 +88,15 @@ http://docs.urbanairship.com/api/ua.html#alias-lookup
 
 .. note::
 
-    from_alias can either be a single alias or an array of aliases.
+    ``from_alias`` can either be a single alias or an array of aliases.
 
 
 Polygon Lookup
 --------------
 
-Search for location by polygon id. See:
-http://docs.urbanairship.com/api/ua.html#polygon-lookup for more information.
+Search for location by polygon id. See `the documentation on polygon
+lookup <http://docs.urbanairship.com/api/ua.html#polygon-lookup>`_
+for more information.
 
 .. code-block:: ruby
 
@@ -104,4 +108,4 @@ http://docs.urbanairship.com/api/ua.html#polygon-lookup for more information.
 
 .. note::
 
-    polygon_id needs to be a string. Zoom is a number ranging 1-20.
+    ``polygon_id`` needs to be a string. ``Zoom`` is a number ranging from 1-20.
