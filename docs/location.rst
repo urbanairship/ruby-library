@@ -84,7 +84,7 @@ Search for location by alias. See `the documentation on alias lookup
     UA = Urbanairship
     airship = UA::Client.new(key:'application_key', secret:'master_secret')
     location = UA::Location.new(client: airship)
-    location.alias_lookup(from_alias: 'ua_state=CA')
+    location.alias_lookup(from_alias: 'us_state=CA')
 
 .. note::
 
