@@ -89,6 +89,15 @@ module Urbanairship
         logger.info("Retrieved location info for polygon #{polygon_id} and zoom level #{zoom}")
         resp
       end
+
+      def date_ranges
+        resp = @client.send_request(
+          method: 'GET',
+          url: SEGMENTS_URL + 'dates/'
+        )
+        logger.info('Retrieved location date ranges')
+        resp
+      end
     end
   end
 end

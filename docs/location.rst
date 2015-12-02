@@ -109,3 +109,19 @@ for more information.
 .. note::
 
     ``polygon_id`` needs to be a string. ``Zoom`` is a number ranging from 1-20.
+
+
+Location Date Ranges
+--------------------
+
+Get the possible date ranges that can be used with location endpoints. See `the documentation
+on location date ranges <http://docs.urbanairship.com/api/ua.html#location-date-ranges>`__
+for more information.
+
+.. code-block:: ruby
+
+    require 'urbanairship'
+    UA = Urbanairship
+    airship = UA::Client.new(key:'application_key', secret:'master_secret')
+    l = UA::Location.new(client: airship)
+    l.date_ranges
