@@ -1,9 +1,20 @@
+--------------------
+3.2.0
+--------------------
+- Added support for static lists
+- Added support for device tokens, apids, and blackberry pins
+- Added support for locations
+
+
+
+--------------------
 3.1.1
 --------------------
 - Changed UA to Urbanairship in client.rb to fix aliasing issue
 
 
 
+--------------------
 3.1.0
 --------------------
 - Added documentation files

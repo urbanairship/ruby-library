@@ -414,3 +414,34 @@ notification, you can update or cancel it before it's sent.
 
    # Cancel
    schedule.cancel
+
+
+Listing a Particular Schedule
+-----------------------------
+
+If you have the schedule id, you can use it to list the details of a
+particular schedule.
+
+.. code-block:: ruby
+
+    airship = UA::Client.new(key: '123', secret: 'abc')
+    scheduled_push = UA::ScheduledPush.new(airship)
+    schedule_details = scheduled_push.list(schedule_id: 'id')
+    puts(schedule_details)
+
+.. note::
+    The schedule_id can be obtained from the url of the schedule.
+
+
+Listing all Schedules
+---------------------
+
+You can list all schedules with the ``ScheduledPushList`` class:
+
+.. code-block:: ruby
+
+    airship = UA::Client.new(key: '123', secret: 'abc')
+    scheduled_push_list = UA::ScheduledPushList.new(client: airship)
+    scheduled_push_list.each do |schedule|
+        puts(schedule)
+    end

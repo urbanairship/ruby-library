@@ -17,6 +17,10 @@ module Urbanairship
     SEGMENTS_URL = BASE_URL + '/segments/'
     NAMED_USER_URL = BASE_URL + '/named_users/'
     REPORTS_URL = BASE_URL + '/reports/'
+    LISTS_URL = BASE_URL + '/lists/'
+    PIPELINES_URL = BASE_URL + '/pipelines/'
+    FEEDS_URL = BASE_URL + '/feeds/'
+    LOCATION_URL = BASE_URL + '/location/'
 
     # Helper method for required keyword args in Ruby 2.0 that is compatible with 2.1+
     # @example
@@ -114,6 +118,7 @@ module Urbanairship
         @next_page = nil
         @data_list = nil
         @data_attribute = nil
+        @count = 0
       end
 
       def load_page
@@ -140,9 +145,14 @@ module Urbanairship
       def each
         while load_page
           @data_list.each do | value |
+            @count += 1
             yield value
           end
         end
+      end
+
+      def count
+        @count
       end
     end
   end

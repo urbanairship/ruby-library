@@ -14,6 +14,8 @@ require 'urbanairship/devices/channel_tags'
 require 'urbanairship/devices/named_user'
 require 'urbanairship/reports/per_push'
 require 'urbanairship/reports/response_statistics'
+require 'urbanairship/devices/static_lists'
+require 'urbanairship/push/location'
 
 module Urbanairship
   extend Urbanairship::Push::Audience
@@ -22,4 +24,5 @@ module Urbanairship
   extend Urbanairship::Push
   include Urbanairship::Devices
   include Urbanairship::Reports
+  include Urbanairship::Push
 end

@@ -10,7 +10,7 @@ module Urbanairship
     class Push
       attr_writer :client, :audience, :notification, :options,
                   :device_types, :message
-      attr_reader :device_types
+      attr_reader :device_types, :audience
       include Urbanairship::Common
       include Urbanairship::Loggable
 
@@ -124,7 +124,7 @@ module Urbanairship
       # @return [Object] Push Response
       def cancel
         fail ArgumentError,
-             'Cannot cancel ScheduledPush without a url.' if @url.nil?
+           'Cannot cancel ScheduledPush without a url.' if @url.nil?
 
         response = @client.send_request(
           method: 'DELETE',
@@ -142,7 +142,7 @@ module Urbanairship
       # @return [Object]
       def update
         fail ArgumentError,
-             'Cannot update a ScheduledPush without a url.' if @url.nil?
+           'Cannot update a ScheduledPush without a url.' if @url.nil?
         response = @client.send_request(
           method: 'PUT',
           body: JSON.dump(self.payload),
@@ -153,8 +153,27 @@ module Urbanairship
         logger.info { pr.format }
         pr
       end
+
+      def list(schedule_id: required('schedule_id'))
+        fail ArgumentError,
+           'schedule_id must be a string' unless schedule_id.is_a? String
+        resp = @client.send_request(
+          method: 'GET',
+          url: SCHEDULES_URL + schedule_id
+        )
+        logger.info("Retrieved info for schedule_id #{schedule_id}")
+        resp
+      end
     end
 
+
+    class ScheduledPushList < Urbanairship::Common::PageIterator
+      def initialize(client: required('client'))
+        super(client: client)
+        @next_page = SCHEDULES_URL
+        @data_attribute = 'schedules'
+      end
+    end
 
     # Response to a successful push notification send or schedule.
     class PushResponse

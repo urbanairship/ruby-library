@@ -65,6 +65,10 @@ Contents:
    tags.rst
    named_user.rst
    reports.rst
+   static_lists.rst
+   automation.rst
+   feeds.rst
+   location.rst
    exceptions.rst
    examples.rst
 
