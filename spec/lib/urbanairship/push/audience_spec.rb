@@ -58,6 +58,11 @@ describe Urbanairship do
         { tag: 'test' }
       ],
       [
+        :tag,
+        ['test', group: 'test-group'],
+        { tag: 'test', group: 'test-group' }
+      ],
+      [
         :alias,
         'test',
         { alias: 'test' }
@@ -69,7 +74,7 @@ describe Urbanairship do
       ]
     ].each do |selector, value, expected_result|
       it "can filter for '#{selector}'" do
-        actual_payload = UA.send(selector, value)
+        actual_payload = UA.send(selector, *value)
         expect(actual_payload).to eq expected_result
       end
     end
