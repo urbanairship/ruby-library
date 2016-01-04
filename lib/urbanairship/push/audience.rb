@@ -37,8 +37,10 @@ module Urbanairship
       end
 
       # Select a single tag
-      def tag(tag)
-        { tag: tag }
+      def tag(tag, group: nil)
+        tag_params = { tag: tag }
+        tag_params[:group] = group unless group.nil?
+        tag_params
       end
 
       # Select a single alias
