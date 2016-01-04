@@ -1,4 +1,10 @@
 --------------------
+3.2.1
+--------------------
+- Bug fix: allow audience tag selector to specify tag group if desired
+
+
+--------------------
 3.2.0
 --------------------
 - Added support for static lists

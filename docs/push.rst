@@ -95,6 +95,12 @@ Select a single tag:
 
     push.audience = UA.tag(tag)
 
+Select a single tag with a specified tag group (Note: defaults to ``device`` tag group when one is not provided):
+
+.. code-block:: ruby
+
+    push.audience = UA.tag(tag, group:'tag-group')
+
 Select a single alias:
 
 .. code-block:: ruby
