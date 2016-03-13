@@ -53,6 +53,11 @@ module Urbanairship
         { segment: segment }
       end
 
+      # Select a single named user
+      def named_user(named_user)
+        { named_user: named_user }
+      end
+
       # Select devices that match at least one of the given selectors.
       #
       # @example

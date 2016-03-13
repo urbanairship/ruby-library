@@ -71,6 +71,11 @@ describe Urbanairship do
         :segment,
         'test',
         { segment: 'test' }
+      ],
+      [
+        :named_user,
+        'test',
+        { named_user: 'test' }
       ]
     ].each do |selector, value, expected_result|
       it "can filter for '#{selector}'" do

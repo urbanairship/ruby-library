@@ -113,6 +113,12 @@ Select a single segment:
 
     push.audience = UA.segment(segment)
 
+Select a single named user:
+
+.. code-block:: ruby
+
+    push.audience = UA.named_user(named_user)
+
 Select devices that match at least one of the given selectors:
 
 .. code-block:: ruby
