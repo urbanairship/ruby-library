@@ -1,5 +1,5 @@
 require 'urbanairship'
-
+require 'urbanairship/http_client'
 
 module Urbanairship
     class Client
@@ -28,15 +28,8 @@ module Urbanairship
       def send_request(method: required('method'), url: required('url'), body: nil,
                        content_type: nil, encoding: nil)
 
-        uri       = URI(url)
-        http      = Net::HTTP.new(uri.host, uri.port)
-        request   = nil
-
-        http.use_ssl = true
-        http.read_timeout = 5
-
-        headers = {'User-agent' => 'UARubyLib/' + Urbanairship::VERSION}
-        headers['Accept'] = 'application/vnd.urbanairship+json; version=3'
+        headers = { "User-Agent"  => "UARubyLib/" + Urbanairship::VERSION }
+        headers["Accept"] = "application/vnd.urbanairship+json; version=3"
         headers['Content-type'] = content_type unless content_type.nil?
         headers['Content-Encoding'] = encoding unless encoding.nil?
 
@@ -49,36 +42,21 @@ module Urbanairship
 
         logger.debug(debug)
 
-        case method
-        when :get, "GET"
-          uri.query = URI.encode_www_form(body)
-          request = Net::HTTP::Get.new(uri, headers)
-        when :post, "POST"
-          request = Net::HTTP::Post.new(uri, headers)
-          request.body = body
-        when :put, "PUT"
-          request = Net::HTTP::Put.new(uri, headers)
-          request.body = body
-        when :delete, "DELETE"
-          request = Net::HTTP::Delete.new(uri, headers)
-          request.body = body
-        else
-          fail 'Method was not "GET" "POST" "PUT" or "DELETE"'
-        end
+        response = HttpClient.request(method, {
+          uri: url,
+          headers: headers,
+          auth: {
+            username: @key,
+            password: @secret,
+          },
+          parameters: body
+        })
 
-        request.basic_auth(@key, @secret)
+        logger.debug("Received #{response.code} response. Headers:\n\t#{response.headers}\nBody:\n\t#{response.body}")
 
-        response = http.request(request)
+        Response.check_code(response.code, response)
 
-        response_body     = JSON.parse(response.body)
-        response_code     = response.code.to_i
-        response_headers  = Hash[response.each_header.to_a]
-
-        logger.debug("Received #{response_code} response. Headers:\n\t#{response_headers}\nBody:\n\t#{response_body}")
-
-        Response.check_code(response_code, response)
-
-        {'body'=>response_body, 'code'=>response_code, 'headers'=>response_headers}
+        response
       end
 
       # Create a Push Object
