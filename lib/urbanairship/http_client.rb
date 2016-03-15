@@ -31,11 +31,11 @@ module Urbanairship
     class Request
       attr_reader :method, :uri, :headers, :parameters, :auth
 
-      def initialize(method, uri:, headers: {}, parameters: nil, auth: nil)
+      def initialize(method, uri:, headers: {}, parameters: {}, auth: nil)
         @method     = method.downcase.to_sym
         @uri        = URI(uri)
         @headers    = headers
-        @parameters = parameters
+        @parameters = parameters || {}
         @auth       = auth
         @request    = build_request
       end
@@ -67,7 +67,10 @@ module Urbanairship
       def build_request
         case method
         when :get
-          uri.query = URI.encode_www_form(parameters)
+          if parameters.any?
+            uri.query = URI.encode_www_form(parameters)
+          end
+
           Net::HTTP::Get.new(uri, headers)
         when :post
           req = Net::HTTP::Post.new(uri, headers)
