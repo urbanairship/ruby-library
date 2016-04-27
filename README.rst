@@ -86,13 +86,13 @@ Contributing
 ============
 
 1. Fork it ( https://github.com/urbanairship/ruby-library )
-2. Create your feature branch (`git checkout -b my-new-feature`)
-3. Commit your changes (`git commit -am 'Add some feature'`)
-4. Push to the branch (`git push origin my-new-feature`)
+2. Create your feature branch: ``git checkout -b my-new-feature``
+3. Commit your changes ``git commit -am 'Add some feature'``
+4. Push to the branch ``git push origin my-new-feature``
 5. Create a new Pull Request
-6. Sign Urban Airship's `contribution agreement
-<http://docs.urbanairship.com/contribution-agreement.html>`_.
-Note: Changes will not be approved and merged without a signed contribution agreement
+6. Sign Urban Airship's `contribution agreement <http://docs.urbanairship.com/contribution-agreement.html>`_.
+
+**Note**: Changes will not be approved and merged without a signed contribution agreement
 
 Development
 ===========
