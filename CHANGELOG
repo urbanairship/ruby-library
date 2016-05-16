@@ -1,4 +1,10 @@
 --------------------
+3.2.3
+--------------------
+- Added support for named user audience selector
+
+
+--------------------
 3.2.2
 --------------------
 - Bug fix: only open a single copy of the log file
