@@ -195,75 +195,121 @@ single piece of text:
 
 .. code-block:: ruby
 
-    push.notification = UA.notification(alert="Hello, world!")
+    push.notification = UA.notification(alert: "Hello, world!")
 
-You can override the payload with platform-specific values as well.
+You can override the notification payload with one of the following platform
+keys::
+
+   ios, amazon, android, blackberry, wns, mpns
+
+In the examples below, we override the general ``'Hello World!'`` alert with
+platform-specific alerts, and we set a number of other platform-specific options.
+
+**Example iOS Override**
 
 .. code-block:: ruby
 
-    push.notification = UA.ios(
-        alert: 'hello world',
-        badge: 123,
-        sound: 'sound file',
-        extra: { 'key' => 'value', 'key2' => 'value2' }
-        expiry: '2012-01-01 12:45',
-        category: 'category_name',
-        interactive: UA.interactive(
-            type: 'ua_share',
-            button_actions: {
-                share: { share: 'Sharing is caring!' }
-            }
-        ),
-        content_available: true
-    )
-
-    push.notification = UA.amazon(
-        alert: 'hello world',
-        consolidation_key: 'key',
-        expires_after: '2012-01-01 12:45',
-        extra: { 'key' => 'value', 'key2' => 'value2' },
-        title: 'title',
-        summary: 'summary',
-        interactive: UA.interactive(
-            type: 'ua_share',
-            button_actions: {
-                share: { share: 'Sharing is caring!' }
-            }
+    push.notification = UA.notification(
+        alert: 'Hello World!',
+        ios: UA.ios(
+            alert: 'Hello iOS!',
+            badge: 123,
+            sound: 'sound file',
+            extra: { 'key' => 'value', 'key2' => 'value2' }
+            expiry: '2012-01-01 12:45',
+            category: 'category_name',
+            interactive: UA.interactive(
+                type: 'ua_share',
+                button_actions: {
+                    share: { share: 'Sharing is caring!' }
+                }
+            ),
+            content_available: true
         )
     )
 
-    push.notification = UA.android(
-        alert: 'hello world',
-        collapse_key: 'key',
-        time_to_live: 123,
-        extra: { 'key' => 'value', 'key2' => 'value2' },
-        delay_while_idle: false,
-        interactive: UA.interactive(
-            type: 'ua_share',
-            button_actions: {
-                share: { share: 'Sharing is caring!' }
-            }
+**Example Amazon Override**
+
+.. code-block:: ruby
+
+    push.notification = UA.notification(
+        alert: 'Hello World!',
+        amazon: UA.amazon(
+            alert: 'Hello Amazon!',
+            consolidation_key: 'key',
+            expires_after: '2012-01-01 12:45',
+            extra: { 'key' => 'value', 'key2' => 'value2' },
+            title: 'title',
+            summary: 'summary',
+            interactive: UA.interactive(
+                type: 'ua_share',
+                button_actions: {
+                    share: { share: 'Sharing is caring!' }
+                }
+            )
         )
     )
 
-    push.notification = UA.blackberry(
-        alert: 'hello world',
-        body: 'body',
-        content_type: 'text/plain'
+**Example Android Override**
+
+.. code-block:: ruby
+
+    push.notification = UA.notification(
+        alert: 'Hello World!',
+        android: UA.android(
+            alert: 'Hello Android!',
+            collapse_key: 'key',
+            time_to_live: 123,
+            extra: { 'key' => 'value', 'key2' => 'value2' },
+            delay_while_idle: false,
+            interactive: UA.interactive(
+                type: 'ua_share',
+                button_actions: {
+                    share: { share: 'Sharing is caring!' }
+                }
+            )
+        )
     )
 
-    push.notification = UA.wns_payload(
-        alert: 'hello world',
-        tile: nil,
-        toast: nil,
-        badge: nil
+**Example BlackBerry Override**
+
+.. code-block:: ruby
+
+    push.notification = UA.notification(
+        alert: 'Hello World!',
+        blackberry: UA.blackberry(
+            alert: 'Hello BlackBerry!',
+            body: 'body',
+            content_type: 'text/plain'
+        )
     )
 
-    push.notification = UA.mpns_payload(
-        alert: 'hello world',
-        tile: nil,
-        toast: nil,
-        badge: nil
+**Example WNS Override**
+
+.. code-block:: ruby
+
+    push.notification = UA.notification(
+        alert: 'Hello World!',
+        wns: UA.wns_payload(
+            alert: 'Hello WNS!',
+            tile: nil,
+            toast: nil,
+            badge: nil
+        )
+    )
+
+**Example MPNS Override**
+
+.. code-block:: ruby
+
+    push.notification = UA.notification(
+        alert: 'Hello World!',
+        mpns: UA.mpns_payload(
+            alert: 'Hello MPNS!',
+            tile: nil,
+            toast: nil,
+            badge: nil
+        )
     )
 
 .. note::
@@ -311,8 +357,8 @@ Example:
 .. code-block:: ruby
 
     push.notification = UA.notification(
-        alert="Hello, world!",
-        interactive=UA.interactive(
+        alert: "Hello, world!",
+        interactive: UA.interactive(
             type: "ua_share",
             button_actions: {
                 share: {share: "Sharing is caring!"}
@@ -324,12 +370,12 @@ Button actions can also be mapped to *actions* objects as shown below:
 
 .. code-block:: ruby
 
-    shared = ua.actions(share="Sharing is caring!")
+    shared = ua.actions(share: "Sharing is caring!")
     push.notification = ua.notification(
-        alert="Hello, world!",
-        interactive=ua.interactive(
-            type = "ua_share",
-            button_actions = {
+        alert: "Hello, world!",
+        interactive: ua.interactive(
+            type: "ua_share",
+            button_actions: {
                     "share" : shared
             }
         )
