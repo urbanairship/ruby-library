@@ -1,15 +1,11 @@
-require 'unirest'
 require 'urbanairship'
-
+require 'urbanairship/http_client'
 
 module Urbanairship
     class Client
       attr_accessor :key, :secret
       include Urbanairship::Common
       include Urbanairship::Loggable
-
-      # set default client timeout to 5 seconds
-      Unirest.timeout(5)
 
       # Initialize the Client
       #
@@ -31,21 +27,9 @@ module Urbanairship
       # @return [Object] Push Response
       def send_request(method: required('method'), url: required('url'), body: nil,
                        content_type: nil, encoding: nil)
-        req_type = case method
-          when 'GET'
-            :get
-          when 'POST'
-            :post
-          when 'PUT'
-            :put
-          when 'DELETE'
-            :delete
-          else
-            fail 'Method was not "GET" "POST" "PUT" or "DELETE"'
-        end
 
-        headers = {'User-agent' => 'UARubyLib/' + Urbanairship::VERSION}
-        headers['Accept'] = 'application/vnd.urbanairship+json; version=3'
+        headers = { "User-Agent"  => "UARubyLib/" + Urbanairship::VERSION }
+        headers["Accept"] = "application/vnd.urbanairship+json; version=3"
         headers['Content-type'] = content_type unless content_type.nil?
         headers['Content-Encoding'] = encoding unless encoding.nil?
 
@@ -58,21 +42,21 @@ module Urbanairship
 
         logger.debug(debug)
 
-        response = Unirest.method(req_type).call(
-          url,
+        response = HttpClient.request(method, {
+          uri: url,
           headers: headers,
-          auth:{
-            :user=>@key,
-            :password=>@secret
+          auth: {
+            username: @key,
+            password: @secret,
           },
           parameters: body
-        )
+        })
 
         logger.debug("Received #{response.code} response. Headers:\n\t#{response.headers}\nBody:\n\t#{response.body}")
 
         Response.check_code(response.code, response)
 
-        {'body'=>response.body, 'code'=>response.code, 'headers'=>response.headers}
+        response
       end
 
       # Create a Push Object
@@ -89,4 +73,4 @@ module Urbanairship
         Push::ScheduledPush.new(self)
       end
     end
-  end
+end

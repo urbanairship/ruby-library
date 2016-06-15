@@ -43,8 +43,6 @@ Note that channels are preferred over ``device_token`` and ``apid``. See:
     p.device_types = UA.all
     p.send_push
 
-The library uses `unirest`_ for communication with the UA API.
-
 
 Development
 -----------
@@ -80,6 +78,5 @@ Indices and tables
 
 
 .. _channels: http://docs.urbanairship.com/topic-guides/channels.html
-.. _unirest: http://unirest.io/ruby.html
 .. _github: https://github.com/urbanairship/ruby-library
 .. _rspec: https://nose.readthedocs.org/en/latest/
