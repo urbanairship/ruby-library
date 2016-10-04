@@ -21,7 +21,7 @@ module Urbanairship
       body = parse_register_options(options).to_json
 
       if ((options[:provider] || @provider) == :android) || ((options[:provider] || @provider) == 'android')
-        do_request(:put, "/api/apids/#{device_token}", body: body, authenticate_with: :application_secret)
+        create_android_channel(device_token)
       else
         do_request(:put, "/api/device_tokens/#{device_token}", body: body, authenticate_with: :application_secret)
       end
@@ -141,6 +141,7 @@ module Urbanairship
       request.basic_auth @application_key, instance_variable_get("@#{options[:authenticate_with]}")
       request.add_field 'Content-Type', options[:content_type] || 'application/json'
       request.body = options[:body] if options[:body]
+
       request['Accept'] = "application/vnd.urbanairship+json; version=#{options[:version]};"  if options[:version]
 
       Timer.timeout(request_timeout) do
@@ -154,6 +155,11 @@ module Urbanairship
         logger.error "Urbanairship request timed out after #{request_timeout} seconds: [#{http_method} #{request.path} #{request.body}]"
       end
       Urbanairship::Response.wrap(nil, body: { 'error' => 'Request timeout' }, code: '503')
+    end
+
+    def create_android_channel(gcm)
+      body = { "channel" => { "device_type" => "android", "opt_in" => true, "push_address" => gcm, "background" => false } }
+      response = do_request(:post, "/api/channels", body: body.to_json, authenticate_with: :application_secret)
     end
 
     def verify_configuration_values(*symbols)
