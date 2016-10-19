@@ -62,8 +62,7 @@ module Urbanairship
           user: @key,
           password: @secret,
           payload: body,
-          timeout: 5,
-          verify_ssl: false
+          timeout: 5
         )
 
         logger.debug("Received #{response.code} response. Headers:\n\t#{response.headers}\nBody:\n\t#{response.body}")
