@@ -1,4 +1,4 @@
-require 'unirest'
+require 'rest-client'
 require 'urbanairship'
 
 
@@ -7,9 +7,6 @@ module Urbanairship
       attr_accessor :key, :secret
       include Urbanairship::Common
       include Urbanairship::Loggable
-
-      # set default client timeout to 5 seconds
-      Unirest.timeout(5)
 
       # Initialize the Client
       #
@@ -58,14 +55,15 @@ module Urbanairship
 
         logger.debug(debug)
 
-        response = Unirest.method(req_type).call(
-          url,
+        response = RestClient::Request.execute(
+          method: method,
+          url: url,
           headers: headers,
-          auth:{
-            :user=>@key,
-            :password=>@secret
-          },
-          parameters: body
+          user: @key,
+          password: @secret,
+          payload: body,
+          timeout: 5,
+          verify_ssl: false
         )
 
         logger.debug("Received #{response.code} response. Headers:\n\t#{response.headers}\nBody:\n\t#{response.body}")
