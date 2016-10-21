@@ -8,12 +8,24 @@ describe Urbanairship::Push do
   let(:some_expiry) { 10_080 }
 
   example_hash = {
-    "body" => '{
-      "ok": "true",
-      "push_ids": ["04fca66c-f33a-11e4-9c82-5ff5f086852f"],
-      "schedule_urls": ["https://go.urbanairship.com/api/schedules/0492662a-1b52-4343-a1f9-c6b0c72931c0"]
-    }',
-    "code" => 200
+    "body" => {
+      "ok" => "true",
+      "push_ids" => ["04fca66c-f33a-11e4-9c82-5ff5f086852f"],
+      "schedule_urls" => ["https://go.urbanairship.com/api/schedules/0492662a-1b52-4343-a1f9-c6b0c72931c0"]
+    },
+    "code" => "200",
+    "headers" => {
+      "content_type"=>"application/vnd.urbanairship+json;version=3",
+      "data_attribute"=>"named_user",
+      "cache_control"=>"max-age=0",
+      "expires"=>"Fri, 21 Oct 2016 17:52:29 GMT",
+      "last_modified"=>"Fri, 21 Oct 2016 17:52:29 GMT",
+      "vary"=>"Accept-Encoding, User-Agent",
+      "content_encoding"=>"gzip",
+      "content_length"=>"802",
+      "date"=>"Fri, 21 Oct 2016 17:52:29 GMT",
+      "connection"=>"keep-alive"
+    }
   }
 
   let(:simple_http_response) { example_hash }

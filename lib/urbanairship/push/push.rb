@@ -181,7 +181,7 @@ module Urbanairship
       include Urbanairship::Common
 
       def initialize(http_response_body: nil, http_response_code: nil)
-        @payload = ((http_response_body.nil? || http_response_body.empty?) ? {} : JSON.parse(http_response_body))
+        @payload = ((http_response_body.nil? || http_response_body.empty?) ? {} : http_response_body)
         @ok = @payload['ok']
         @push_ids = @payload['push_ids']
         @schedule_url = try_helper(:first, @payload['schedule_urls'])
