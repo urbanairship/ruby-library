@@ -1,4 +1,5 @@
-require 'unirest'
+require 'json'
+require 'rest-client'
 require 'urbanairship'
 
 
@@ -7,9 +8,6 @@ module Urbanairship
       attr_accessor :key, :secret
       include Urbanairship::Common
       include Urbanairship::Loggable
-
-      # set default client timeout to 5 seconds
-      Unirest.timeout(5)
 
       # Initialize the Client
       #
@@ -58,21 +56,20 @@ module Urbanairship
 
         logger.debug(debug)
 
-        response = Unirest.method(req_type).call(
-          url,
+        response = RestClient::Request.execute(
+          method: method,
+          url: url,
           headers: headers,
-          auth:{
-            :user=>@key,
-            :password=>@secret
-          },
-          parameters: body
+          user: @key,
+          password: @secret,
+          payload: body,
+          timeout: 5
         )
 
         logger.debug("Received #{response.code} response. Headers:\n\t#{response.headers}\nBody:\n\t#{response.body}")
-
         Response.check_code(response.code, response)
 
-        {'body'=>response.body, 'code'=>response.code, 'headers'=>response.headers}
+        self.class.build_response(response)
       end
 
       # Create a Push Object
@@ -87,6 +84,27 @@ module Urbanairship
       # @return [Object] Scheduled Push Object
       def create_scheduled_push
         Push::ScheduledPush.new(self)
+      end
+
+      # Build a hash from the response object
+      #
+      # @return [Hash] The response body.
+      def self.build_response(response)
+        response_hash = {'code'=>response.code.to_s, 'headers'=>response.headers}
+
+        begin
+          body = JSON.parse(response.body)
+        rescue JSON::ParserError
+          if response.body.nil? || response.body.empty?
+            body = {}
+          else
+            body = response.body
+            response_hash['error'] = 'could not parse response JSON'
+          end
+        end
+
+        response_hash['body'] = body
+        response_hash
       end
     end
   end

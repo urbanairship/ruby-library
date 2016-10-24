@@ -1,4 +1,10 @@
 --------------------
+3.2.4
+--------------------
+- Replace unirest dependency with rest-client
+
+
+--------------------
 3.2.3
 --------------------
 - Added support for named user audience selector
