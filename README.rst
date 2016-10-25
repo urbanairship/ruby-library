@@ -14,7 +14,6 @@ Requirements
 
 We officially support the following Ruby versions::
 
-   2.1.10
    2.2.5
    2.3.1
 
