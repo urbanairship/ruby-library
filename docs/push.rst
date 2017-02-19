@@ -65,12 +65,6 @@ Select a single iOS device token:
 
     push.audience = UA.device_token(token)
 
-Select a single BlackBerry PIN:
-
-.. code-block:: ruby
-
-    push.audience = UA.device_pin(pin)
-
 Select a single Android APID:
 
 .. code-block:: ruby
@@ -200,7 +194,7 @@ single piece of text:
 You can override the notification payload with one of the following platform
 keys::
 
-   ios, amazon, android, blackberry, wns, mpns
+   ios, amazon, android, wns, mpns
 
 In the examples below, we override the general ``'Hello World!'`` alert with
 platform-specific alerts, and we set a number of other platform-specific options.
@@ -268,19 +262,6 @@ platform-specific alerts, and we set a number of other platform-specific options
                     share: { share: 'Sharing is caring!' }
                 }
             )
-        )
-    )
-
-**Example BlackBerry Override**
-
-.. code-block:: ruby
-
-    push.notification = UA.notification(
-        alert: 'Hello World!',
-        blackberry: UA.blackberry(
-            alert: 'Hello BlackBerry!',
-            body: 'body',
-            content_type: 'text/plain'
         )
     )
 
@@ -390,7 +371,7 @@ types you wish to target with a list of strings:
 
 .. code-block:: ruby
 
-    push.device_types = UA.device_types(['ios', 'blackberry'])
+    push.device_types = UA.device_types(['ios', 'android'])
 
 or with the ``all`` shortcut.
 
