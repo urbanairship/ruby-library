@@ -7,15 +7,13 @@ module Urbanairship
 
       # Notification Object for a Push Payload
       def notification(alert: nil, ios: nil, android: nil, amazon: nil,
-                       blackberry: nil, wns: nil, mpns: nil, actions: nil,
-                       interactive: nil)
+                       wns: nil, mpns: nil, actions: nil, interactive: nil)
         payload = compact_helper({
           alert: alert,
           actions: actions,
           ios: ios,
           android: android,
           amazon: amazon,
-          blackberry: blackberry,
           wns: wns,
           mpns: mpns,
           interactive: interactive
@@ -64,11 +62,6 @@ module Urbanairship
           delay_while_idle: delay_while_idle,
           interactive: interactive
         })
-      end
-
-      # BlackBerry specific portion of Push Notification Object
-      def blackberry(alert: nil, body: nil, content_type: 'text/plain')
-        { body: alert || body, content_type: content_type }
       end
 
       # WNS specific portion of Push Notification Object

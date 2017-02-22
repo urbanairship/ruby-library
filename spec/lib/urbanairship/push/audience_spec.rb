@@ -33,11 +33,6 @@ describe Urbanairship do
         { device_token: '0' * 64 }
       ],
       [
-        :device_pin,
-        '12345678',
-        { device_pin: '12345678' }
-      ],
-      [
         :apid,
         '074e84a2-9ed9-4eee-9ca4-cc597bfdbef3',
         { apid: '074e84a2-9ed9-4eee-9ca4-cc597bfdbef3' }
@@ -92,8 +87,6 @@ describe Urbanairship do
       [:device_token, 'f' * 65],
       [:device_token, '0123'],
       [:device_token, 'X' * 64],
-      [:device_pin, '1234567'],
-      [:device_pin, 'x' * 8],
       [:apid, 'foobar'],
       [:apid, '074e84a2-9ed9-4eee-9ca4-cc597bfdbef33'],
       [:apid, '074e84a2-9ed9-4eee-9ca4-cc597bfdbef'],

@@ -30,12 +30,6 @@ module Urbanairship
         { device_token: token.upcase.strip }
       end
 
-      # Select a single BlackBerry PIN
-      def device_pin(pin)
-        Util.validate(pin, 'pin', DEVICE_PIN_PATTERN)
-        { device_pin: pin.downcase.strip }
-      end
-
       # Select a single tag
       def tag(tag, group: nil)
         tag_params = { tag: tag }

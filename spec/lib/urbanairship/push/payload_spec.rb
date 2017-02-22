@@ -180,25 +180,6 @@ describe Urbanairship do
       end
     end
 
-
-    context 'Blackberry' do
-      it 'sends "alerts" as plain text' do
-        payload = UA.notification(blackberry: UA.blackberry(alert: 'Hello'))
-        expect(payload)
-          .to eq blackberry: { body: 'Hello', content_type: 'text/plain' }
-      end
-
-      it 'can send html' do
-        payload = UA.notification(blackberry: UA.blackberry(
-          body: 'Hello',
-          content_type: 'text/html'
-        ))
-        expect(payload)
-          .to eq blackberry: { body: 'Hello', content_type: 'text/html' }
-      end
-    end
-
-
     context 'WNS' do
       it 'can send a simple text "alert"' do
         payload = UA.notification(wns: UA.wns_payload(alert: 'Hello'))
