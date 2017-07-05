@@ -50,6 +50,23 @@ OR install it yourself as::
     >>> gem install urbanairship
 
 
+Configuration
+=============
+
+In your app initialization, just create a file with a code something like this:
+
+    >>> require 'urbanairship'
+    >>> Urbanairship.configure do |config|
+    >>>   config.log_path = '/path/to/your/logfile'
+    >>> end
+
+
+Available Configurations
+========================
+
+- **log_path**: Allows to define the folder where the log file will be created (the default is nil).
+
+
 Usage
 =====
 
