@@ -6,6 +6,7 @@ require 'urbanairship/devices/segment'
 require 'urbanairship/devices/channel_uninstall'
 require 'urbanairship/client'
 require 'urbanairship/common'
+require 'urbanairship/configuration'
 require 'urbanairship/loggable'
 require 'urbanairship/util'
 require 'urbanairship/version'
@@ -25,4 +26,16 @@ module Urbanairship
   include Urbanairship::Devices
   include Urbanairship::Reports
   include Urbanairship::Push
+
+  class << self
+    attr_accessor :configuration
+  end
+
+  def self.configuration
+    @configuration ||= Configuration.new
+  end
+
+  def self.configure
+    yield(configuration)
+  end
 end
