@@ -1,6 +1,5 @@
 require 'logger'
 
-
 module Urbanairship
   module Loggable
 
@@ -13,9 +12,13 @@ module Urbanairship
     end
 
     def self.create_logger
-      logger = Logger.new('urbanairship.log')
+      log_filename = ENV.fetch('URBANAIRSHIP_LOG_FILENAME', 'urbanairship.log')
+      log_level = ENV.fetch('URBANAIRSHIP_LOG_LEVEL', Logger::INFO)
+
+      logger = Logger.new(log_filename)
       logger.datetime_format = '%Y-%m-%d %H:%M:%S'
       logger.progname = 'Urbanairship'
+      logger.level = log_level
       logger
     end
   end
