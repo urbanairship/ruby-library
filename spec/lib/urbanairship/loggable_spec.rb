@@ -30,5 +30,23 @@ describe Urbanairship::Loggable do
         expect(logger.instance_variable_get(:@logdev).filename).to eq('/tmp/urbanairship.log')
       end
     end
+
+    context 'when no log level is informed' do
+      it 'defines the log level with the default logger log level' do
+        expect(logger.level).to eq(Logger::DEBUG)
+      end
+    end
+
+    context 'when a log path is informed' do
+      before do
+        Urbanairship.configure do |config|
+          config.log_level = Logger::WARN
+        end
+      end
+
+      it 'defines the log level with the passed value' do
+        expect(logger.level).to eq(Logger::WARN)
+      end
+    end
   end
 end

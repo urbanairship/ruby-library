@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'logger'
 require 'urbanairship/configuration'
 
 describe Urbanairship::Configuration do
@@ -11,6 +12,16 @@ describe Urbanairship::Configuration do
 
     it 'sets the path as is informed' do
       expect { config.log_path = '/tmp' }.to change(config, :log_path).from(nil).to('/tmp')
+    end
+  end
+
+  describe '#log_level' do
+    it 'initializes with the original value "debug level"' do
+      expect(config.log_level).to eq(Logger::DEBUG)
+    end
+
+    it 'sets the level as is informed' do
+      expect { config.log_level = Logger::INFO }.to change(config, :log_level).from(Logger::DEBUG).to(Logger::INFO)
     end
   end
 end

@@ -17,6 +17,7 @@ module Urbanairship
       logger = Logger.new(File.join(*log_uri))
       logger.datetime_format = '%Y-%m-%d %H:%M:%S'
       logger.progname = 'Urbanairship'
+      logger.level = Urbanairship.configuration.log_level
       logger
     end
   end
