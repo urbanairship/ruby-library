@@ -33,7 +33,7 @@ describe Urbanairship::Loggable do
 
     context 'when no log level is informed' do
       it 'defines the log level with the default logger log level' do
-        expect(logger.level).to eq(Logger::DEBUG)
+        expect(logger.level).to eq(Logger::INFO)
       end
     end
 

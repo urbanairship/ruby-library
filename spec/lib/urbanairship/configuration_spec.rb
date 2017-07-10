@@ -16,12 +16,12 @@ describe Urbanairship::Configuration do
   end
 
   describe '#log_level' do
-    it 'initializes with the original value "debug level"' do
-      expect(config.log_level).to eq(Logger::DEBUG)
+    it 'initializes with the original value "info level"' do
+      expect(config.log_level).to eq(Logger::INFO)
     end
 
     it 'sets the level as is informed' do
-      expect { config.log_level = Logger::INFO }.to change(config, :log_level).from(Logger::DEBUG).to(Logger::INFO)
+      expect { config.log_level = Logger::WARN }.to change(config, :log_level).from(Logger::INFO).to(Logger::WARN)
     end
   end
 end

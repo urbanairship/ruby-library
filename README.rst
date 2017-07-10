@@ -58,7 +58,7 @@ In your app initialization, just create a file with a code something like this:
     >>> require 'urbanairship'
     >>> Urbanairship.configure do |config|
     >>>   config.log_path = '/path/to/your/logfile'
-    >>>   config.log_level = Logger::INFO
+    >>>   config.log_level = Logger::WARN
     >>> end
 
 
@@ -66,7 +66,7 @@ Available Configurations
 ========================
 
 - **log_path**: Allows to define the folder where the log file will be created (the default is nil).
-- **log_level**: Allows to define the log level and only messages at that level or higher will be printed.
+- **log_level**: Allows to define the log level and only messages at that level or higher will be printed (the default is INFO).
 
 Usage
 =====

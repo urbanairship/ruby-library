@@ -4,7 +4,7 @@ module Urbanairship
 
     def initialize
       @log_path = nil
-      @log_level = Logger::DEBUG
+      @log_level = Logger::INFO
     end
   end
 end
