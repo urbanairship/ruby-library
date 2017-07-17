@@ -102,6 +102,20 @@ module Urbanairship
         })
       end
 
+      # In-app message specific portion of Push Notification Object
+      def in_app(alert: nil, display_type: nil, display: nil, expiry: nil,
+                 actions: nil, interactive: nil, extra: nil)
+        compact_helper({
+          alert: alert,
+          display_type: display_type,
+          display: display,
+          expiry: expiry,
+          actions: actions,
+          interactive: interactive,
+          extra: extra
+        })
+      end
+
       # Interactive Notification portion of Push Notification Object
       def interactive(type: required('type'), button_actions: nil)
         fail ArgumentError, 'type must not be nil' if type.nil?

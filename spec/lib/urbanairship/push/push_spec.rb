@@ -30,7 +30,7 @@ describe Urbanairship::Push do
 
   let(:simple_http_response) { example_hash }
 
-  let!(:a_push) {
+  let(:a_push) {
     p = UA::Push::Push.new(nil)
     p.audience = UA.all
     p.options = UA.options(expiry: some_expiry)
@@ -45,7 +45,20 @@ describe Urbanairship::Push do
       icons: { list_icon: 'http://cdn.example.com/message.png' },
       options: { some_delivery_option: true }
     )
-    p
+    p.in_app = UA.in_app(
+      alert: 'Hello',
+      display_type: 'banner',
+      display: 'top',
+      expiry: 0,
+      actions: { add_tag: 'in_app' }, 
+        interactive: {
+          type: 'a_type',
+          button_actions: {
+            yes: { add_tag: 'clicked_yes' },
+            no: { add_tag: 'clicked_no' }
+          }},
+      extra: { more: 'stuff' }
+    )
   }
 
   let(:default_expected_payload) {
@@ -62,6 +75,20 @@ describe Urbanairship::Push do
         expiry: some_expiry,
         icons: { list_icon: 'http://cdn.example.com/message.png' },
         options: { some_delivery_option: true }
+      },
+      in_app: {
+        alert: 'Hello',
+        display_type: 'banner',
+        display: 'top',
+        expiry: 0,
+        actions: { add_tag: 'in_app' }, 
+        interactive: {
+          type: 'a_type',
+          button_actions: {
+            yes: { add_tag: 'clicked_yes' },
+            no: { add_tag: 'clicked_no' }
+          }},
+        extra: { more: 'stuff' }
       }
     }
   }

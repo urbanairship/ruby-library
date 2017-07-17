@@ -9,7 +9,7 @@ module Urbanairship
     # A Push Notification.
     class Push
       attr_writer :client, :audience, :notification, :options,
-                  :device_types, :message
+                  :device_types, :message, :in_app
       attr_reader :device_types, :audience
       include Urbanairship::Common
       include Urbanairship::Loggable
@@ -27,7 +27,8 @@ module Urbanairship
           notification: @notification,
           options: @options,
           device_types: @device_types,
-          message: @message
+          message: @message,
+          in_app: @in_app
         })
       end
 

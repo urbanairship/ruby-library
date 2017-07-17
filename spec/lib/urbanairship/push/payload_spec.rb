@@ -265,5 +265,38 @@ describe Urbanairship do
       end
     end
 
+    context 'In-App Message' do
+    it 'builds an in-app text alert' do
+      payload = UA.in_app(
+        alert: 'Hello',
+        display_type: 'banner',
+        display: 'top',
+        expiry: 0,
+        actions: { add_tag: 'in_app' }, 
+        interactive: {
+            type: 'a_type',
+            button_actions: {
+              yes: { add_tag: 'clicked_yes' },
+              no: { add_tag: 'clicked_no' }
+            }},
+        extra: { more: 'stuff' }
+      )
+      expect(payload).to eq(
+        alert: 'Hello',
+        display_type: 'banner',
+        display: 'top',
+        expiry: 0,
+        actions: { add_tag: 'in_app' }, 
+        interactive: {
+            type: 'a_type',
+            button_actions: {
+              yes: { add_tag: 'clicked_yes' },
+              no: { add_tag: 'clicked_no' }
+            }},
+        extra: { more: 'stuff' }
+      )
+      end 
+    end 
+
   end
 end
