@@ -8,7 +8,6 @@ module Urbanairship
       include Urbanairship::Common
       UUID_PATTERN = /^\h{8}-\h{4}-\h{4}-\h{4}-\h{12}$/
       DEVICE_TOKEN_PATTERN = /^\h{64}$/
-      DEVICE_PIN_PATTERN = /^\h{8}$/
       DATE_TERMS = %i(minutes hours days weeks months years)
 
 
