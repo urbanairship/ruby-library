@@ -76,17 +76,6 @@ module Urbanairship
         payload
       end
 
-      # MPNS specific portion of Push Notification Object
-      def mpns_payload(alert: nil, toast: nil, tile: nil)
-        payload = compact_helper({
-          alert: alert,
-          toast: toast,
-          tile: tile
-        })
-        fail ArgumentError, 'Must specify one message type' if payload.size != 1
-        payload
-      end
-
       # Rich Message specific portion of Push Notification Object
       def message(title: required('title'), body: required('body'), content_type: nil, content_encoding: nil,
                   extra: nil, expiry: nil, icons: nil, options: nil)
