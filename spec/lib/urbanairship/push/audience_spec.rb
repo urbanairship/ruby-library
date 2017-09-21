@@ -43,11 +43,6 @@ describe Urbanairship do
         { wns: '074e84a2-9ed9-4eee-9ca4-cc597bfdbef3' }
       ],
       [
-        :mpns,
-        '074e84a2-9ed9-4eee-9ca4-cc597bfdbef3',
-        { mpns: '074e84a2-9ed9-4eee-9ca4-cc597bfdbef3' }
-      ],
-      [
         :tag,
         'test',
         { tag: 'test' }
@@ -90,8 +85,7 @@ describe Urbanairship do
       [:apid, 'foobar'],
       [:apid, '074e84a2-9ed9-4eee-9ca4-cc597bfdbef33'],
       [:apid, '074e84a2-9ed9-4eee-9ca4-cc597bfdbef'],
-      [:wns, '074e84a2-9ed9-4eee-9ca4-cc597bfdbef'],
-      [:mpns, '074e84a2-9ed9-4eee-9ca4-cc597bfdbef']
+      [:wns, '074e84a2-9ed9-4eee-9ca4-cc597bfdbef']
     ].each do |selector, value|
       it "raise an error if ##{selector}'s parameter is invalid" do
         expect { UA.send(selector, value) }.to raise_error ArgumentError

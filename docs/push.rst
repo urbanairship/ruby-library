@@ -77,12 +77,6 @@ Select a single Windows 8 APID:
 
     push.audience = UA.wns(uuid)
 
-Select a single Windows Phone 8 APID:
-
-.. code-block:: ruby
-
-    push.audience = UA.mpns(uuid)
-
 Select a single tag:
 
 .. code-block:: ruby

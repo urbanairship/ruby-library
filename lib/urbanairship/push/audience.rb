@@ -8,7 +8,6 @@ module Urbanairship
       include Urbanairship::Common
       UUID_PATTERN = /^\h{8}-\h{4}-\h{4}-\h{4}-\h{12}$/
       DEVICE_TOKEN_PATTERN = /^\h{64}$/
-      DEVICE_PIN_PATTERN = /^\h{8}$/
       DATE_TERMS = %i(minutes hours days weeks months years)
 
 
@@ -18,7 +17,7 @@ module Urbanairship
       # @example
       #   ios_channel(<channel>) # ==>
       #     {:ios_channel=>"<channel>"}
-      %w(ios_channel android_channel amazon_channel apid wns mpns).each do |name|
+      %w(ios_channel android_channel amazon_channel apid wns).each do |name|
         define_method(name) do |uuid|
           { name.to_sym => cleanup(uuid) }
         end
