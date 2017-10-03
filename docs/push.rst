@@ -77,12 +77,6 @@ Select a single Windows 8 APID:
 
     push.audience = UA.wns(uuid)
 
-Select a single Windows Phone 8 APID:
-
-.. code-block:: ruby
-
-    push.audience = UA.mpns(uuid)
-
 Select a single tag:
 
 .. code-block:: ruby
@@ -194,7 +188,7 @@ single piece of text:
 You can override the notification payload with one of the following platform
 keys::
 
-   ios, amazon, android, wns, mpns
+   ios, amazon, android, wns
 
 In the examples below, we override the general ``'Hello World!'`` alert with
 platform-specific alerts, and we set a number of other platform-specific options.
@@ -279,26 +273,11 @@ platform-specific alerts, and we set a number of other platform-specific options
         )
     )
 
-**Example MPNS Override**
-
-.. code-block:: ruby
-
-    push.notification = UA.notification(
-        alert: 'Hello World!',
-        mpns: UA.mpns_payload(
-            alert: 'Hello MPNS!',
-            tile: nil,
-            toast: nil,
-            badge: nil
-        )
-    )
 
 .. note::
     The input for wns_payload must include exactly one of
     alert, toast, tile, or badge.
 
-    The input for mpns_payload must include exactly one of
-    alert, toast, or tile.
 
 Actions
 -------

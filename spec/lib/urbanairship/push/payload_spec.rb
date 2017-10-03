@@ -208,31 +208,6 @@ describe Urbanairship do
       end
     end
 
-
-    context 'MPNS' do
-      it 'can send a simple text "alert"' do
-        payload = UA.notification(mpns: UA.mpns_payload(alert: 'Hello'))
-        expect(payload).to eq mpns: { alert: 'Hello' }
-      end
-
-      it 'can send a key/value "toast"' do
-        payload = UA.notification(mpns: UA.mpns_payload(toast: { a_key: 'a_value' }))
-        expect(payload).to eq mpns: { toast: { a_key: 'a_value' } }
-      end
-
-      it 'can send a key/value "tile"' do
-        payload = UA.notification(mpns: UA.mpns_payload(tile: { a_key: 'a_value' }))
-        expect(payload).to eq mpns: { tile: { a_key: 'a_value' } }
-      end
-
-      it 'will only send one kind of notification at a time' do
-        expect {
-          UA.mpns_payload(alert: 'Hello', tile: 'Foo')
-        }.to raise_error ArgumentError
-      end
-    end
-
-
     context 'Rich Push' do
       it 'can send UTF-8 HTML' do
         payload = UA.message(

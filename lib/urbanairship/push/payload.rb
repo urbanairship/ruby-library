@@ -7,7 +7,7 @@ module Urbanairship
 
       # Notification Object for a Push Payload
       def notification(alert: nil, ios: nil, android: nil, amazon: nil,
-                       wns: nil, mpns: nil, actions: nil, interactive: nil)
+                       wns: nil, actions: nil, interactive: nil)
         payload = compact_helper({
           alert: alert,
           actions: actions,
@@ -15,7 +15,6 @@ module Urbanairship
           android: android,
           amazon: amazon,
           wns: wns,
-          mpns: mpns,
           interactive: interactive
         })
         fail ArgumentError, 'Notification body is empty' if payload.empty?
@@ -71,17 +70,6 @@ module Urbanairship
           toast: toast,
           tile: tile,
           badge: badge
-        })
-        fail ArgumentError, 'Must specify one message type' if payload.size != 1
-        payload
-      end
-
-      # MPNS specific portion of Push Notification Object
-      def mpns_payload(alert: nil, toast: nil, tile: nil)
-        payload = compact_helper({
-          alert: alert,
-          toast: toast,
-          tile: tile
         })
         fail ArgumentError, 'Must specify one message type' if payload.size != 1
         payload
