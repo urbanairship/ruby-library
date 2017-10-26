@@ -23,23 +23,31 @@ module Urbanairship
       end
 
       # iOS specific portion of Push Notification Object
-      def ios(alert: nil, badge: nil, sound: nil, extra: nil, expiry: nil,
-              category: nil, interactive: nil, content_available: nil)
+      def ios(alert: nil, badge: nil, sound: nil, content_available: nil,
+              extra: nil, expiry: nil, priority: nil, category: nil,
+              interactive: nil, mutable_content: nil, media_attachment: nil,
+              title: nil, subtitle: nil, collapse_id: nil)
         compact_helper({
           alert: alert,
           badge: badge,
           sound: sound,
+          'content-available' => content_available,
           extra: extra,
           expiry: expiry,
+          priority: priority,
           category: category,
           interactive: interactive,
-          'content-available' => content_available
+          'mutable-content' => mutable_content,
+          media_attachment: media_attachment,
+          title: title,
+          subtitle: subtitle,
+          collapse_id: collapse_id
         })
       end
 
       # Amazon specific portion of Push Notification Object
       def amazon(alert: nil, consolidation_key: nil, expires_after: nil,
-                 extra: nil, title: nil, summary: nil, interactive: nil)
+                 extra: nil, title: nil, summary: nil, style: nil, sound: nil)
         compact_helper({
           alert: alert,
           consolidation_key: consolidation_key,
@@ -47,19 +55,42 @@ module Urbanairship
           extra: extra,
           title: title,
           summary: summary,
-          interactive: interactive
+          style: style,
+          sound: sound
         })
       end
 
       # Android specific portion of Push Notification Object
-      def android(alert: nil, collapse_key: nil, time_to_live: nil,
-                  extra: nil, delay_while_idle: nil, interactive: nil)
+      def android(title: nil, alert: nil, summary: nil, extra: nil,
+                  style: nil, icon: nil, icon_color: nil, notification_tag: nil,
+                  notification_channel: nil, category: nil, visibility: nil,
+                  public_notification: nil, sound: nil, priority: nil, collapse_key: nil,
+                  time_to_live: nil, delivery_priority: nil, delay_while_idle: nil,
+                  local_only: nil, wearable: nil, background_image: nil, extra_pages: nil,
+                  interactive: nil)
         compact_helper({
+          title: title,
           alert: alert,
+          summary: summary,
+          extra: extra,
+          style: style,
+          icon: icon,
+          icon_color: icon_color,
+          notification_tag: notification_tag,
+          notification_channel: notification_channel,
+          category: category,
+          visibility: visibility,
+          public_notification: public_notification,
+          sound: sound,
+          priority: priority,
           collapse_key: collapse_key,
           time_to_live: time_to_live,
-          extra: extra,
+          delivery_priority: delivery_priority,
           delay_while_idle: delay_while_idle,
+          local_only: local_only,
+          wearable: wearable,
+          background_image: background_image,
+          extra_pages: extra_pages,
           interactive: interactive
         })
       end
