@@ -23,7 +23,7 @@ module Urbanairship
 
       # iOS specific portion of Push Notification Object
       def ios(alert: nil, badge: nil, sound: nil, extra: nil, expiry: nil,
-              category: nil, interactive: nil, content_available: nil)
+              category: nil, interactive: nil, content_available: nil, priority: nil)
         compact_helper({
           alert: alert,
           badge: badge,
@@ -32,6 +32,7 @@ module Urbanairship
           expiry: expiry,
           category: category,
           interactive: interactive,
+          priority: priority,
           'content-available' => content_available
         })
       end
