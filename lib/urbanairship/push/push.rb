@@ -91,7 +91,7 @@ module Urbanairship
         pr
       end
 
-      # Build a Scheduled Push Notification object its existing Scheduled Push URL
+      # Build a Scheduled Push Notification object from its existing Scheduled Push URL
       #
       # @param [Object] client The Client
       # @param [Object] url The existing Scheduled Push URL
