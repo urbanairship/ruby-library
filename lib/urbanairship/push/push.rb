@@ -98,12 +98,14 @@ module Urbanairship
       # @return [Object] Scheduled Push Object
       def self.from_url(client: required('client'), url: required('url'))
         scheduled_push = ScheduledPush.new(client)
-        response_body = client.send_request(
+        response_payload = client.send_request(
           method: 'GET',
           body: nil,
           url: url
         )
-        payload = JSON.load(response_body)
+
+        response_json = JSON.load(response_payload.to_json)
+        payload = response_json['body']
 
         p = Push.new(client)
         p.audience = payload['push']['audience']
