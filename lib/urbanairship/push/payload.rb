@@ -32,8 +32,8 @@ module Urbanairship
           expiry: expiry,
           category: category,
           interactive: interactive,
-          priority: priority,
-          'content-available' => content_available
+          'content-available' => content_available,
+          priority: priority
         })
       end
 

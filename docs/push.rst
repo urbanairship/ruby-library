@@ -203,8 +203,8 @@ platform-specific alerts, and we set a number of other platform-specific options
             alert: 'Hello iOS!',
             badge: 123,
             sound: 'sound file',
-            extra: { 'key' => 'value', 'key2' => 'value2' }
-            expiry: '2012-01-01 12:45',
+            extra: { 'key' => 'value', 'key2' => 'value2' },
+            expiry: '2012-01-01 12:45:00',
             category: 'category_name',
             interactive: UA.interactive(
                 type: 'ua_share',
@@ -212,6 +212,7 @@ platform-specific alerts, and we set a number of other platform-specific options
                     share: { share: 'Sharing is caring!' }
                 }
             ),
+            priority: 5,
             content_available: true
         )
     )
@@ -225,7 +226,7 @@ platform-specific alerts, and we set a number of other platform-specific options
         amazon: UA.amazon(
             alert: 'Hello Amazon!',
             consolidation_key: 'key',
-            expires_after: '2012-01-01 12:45',
+            expires_after: '2012-01-01 12:45:00',
             extra: { 'key' => 'value', 'key2' => 'value2' },
             title: 'title',
             summary: 'summary',
