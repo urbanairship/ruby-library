@@ -7,7 +7,7 @@ Please include link to open issue if applicable.
 ### Testing
 - [ ] I wrote tests covering these changes
 
-* I've tested for ruby versions:
+* I've tested for Ruby versions:
 
 - [ ] 2.2.5
 - [ ] 2.3.1
