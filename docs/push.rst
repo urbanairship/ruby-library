@@ -297,7 +297,7 @@ http://docs.urbanairship.com/api/ua.html#actions, example:
         share: 'Check out Urban Airship!',
         open_: {
             type: 'url',
-            content: 'http://www.urbanairship.com'
+            content: 'http://www.example.com'
         },
         app_defined: {
             some_app_defined_action: 'some_values'
@@ -425,7 +425,7 @@ notification, you can update or cancel it before it's sent.
 
 .. code-block:: ruby
 
-   schedule = UA::ScheduledPush.from_url(client: airship, url: 'url')
+   schedule = UA::ScheduledPush.from_url(client: airship, url: 'http://www.example.com')
    # change scheduled time to tomorrow
    schedule.schedule = UA.scheduled_time(Time.now.utc + (60 * 60 * 24))
    schedule.update
