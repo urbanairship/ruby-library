@@ -81,6 +81,7 @@ describe Urbanairship do
           extra: { more: 'stuff' },
           expiry: 'time',
           category: 'test',
+          priority: 5,
           interactive: {
             type: 'a_type',
             button_actions: {
@@ -95,6 +96,7 @@ describe Urbanairship do
                                 extra: { more: 'stuff' },
                                 expiry: 'time',
                                 category: 'test',
+                                priority: 5,
                                 interactive: {
                                   type: 'a_type',
                                   button_actions: {
