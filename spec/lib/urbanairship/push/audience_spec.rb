@@ -33,11 +33,6 @@ describe Urbanairship do
         { device_token: '0' * 64 }
       ],
       [
-        :device_pin,
-        '12345678',
-        { device_pin: '12345678' }
-      ],
-      [
         :apid,
         '074e84a2-9ed9-4eee-9ca4-cc597bfdbef3',
         { apid: '074e84a2-9ed9-4eee-9ca4-cc597bfdbef3' }
@@ -46,11 +41,6 @@ describe Urbanairship do
         :wns,
         '074e84a2-9ed9-4eee-9ca4-cc597bfdbef3',
         { wns: '074e84a2-9ed9-4eee-9ca4-cc597bfdbef3' }
-      ],
-      [
-        :mpns,
-        '074e84a2-9ed9-4eee-9ca4-cc597bfdbef3',
-        { mpns: '074e84a2-9ed9-4eee-9ca4-cc597bfdbef3' }
       ],
       [
         :tag,
@@ -92,13 +82,10 @@ describe Urbanairship do
       [:device_token, 'f' * 65],
       [:device_token, '0123'],
       [:device_token, 'X' * 64],
-      [:device_pin, '1234567'],
-      [:device_pin, 'x' * 8],
       [:apid, 'foobar'],
       [:apid, '074e84a2-9ed9-4eee-9ca4-cc597bfdbef33'],
       [:apid, '074e84a2-9ed9-4eee-9ca4-cc597bfdbef'],
-      [:wns, '074e84a2-9ed9-4eee-9ca4-cc597bfdbef'],
-      [:mpns, '074e84a2-9ed9-4eee-9ca4-cc597bfdbef']
+      [:wns, '074e84a2-9ed9-4eee-9ca4-cc597bfdbef']
     ].each do |selector, value|
       it "raise an error if ##{selector}'s parameter is invalid" do
         expect { UA.send(selector, value) }.to raise_error ArgumentError

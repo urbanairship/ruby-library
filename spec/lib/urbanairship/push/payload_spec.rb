@@ -81,6 +81,7 @@ describe Urbanairship do
           extra: { more: 'stuff' },
           expiry: 'time',
           category: 'test',
+          priority: 5,
           interactive: {
             type: 'a_type',
             button_actions: {
@@ -95,6 +96,7 @@ describe Urbanairship do
                                 extra: { more: 'stuff' },
                                 expiry: 'time',
                                 category: 'test',
+                                priority: 5,
                                 interactive: {
                                   type: 'a_type',
                                   button_actions: {
@@ -180,25 +182,6 @@ describe Urbanairship do
       end
     end
 
-
-    context 'Blackberry' do
-      it 'sends "alerts" as plain text' do
-        payload = UA.notification(blackberry: UA.blackberry(alert: 'Hello'))
-        expect(payload)
-          .to eq blackberry: { body: 'Hello', content_type: 'text/plain' }
-      end
-
-      it 'can send html' do
-        payload = UA.notification(blackberry: UA.blackberry(
-          body: 'Hello',
-          content_type: 'text/html'
-        ))
-        expect(payload)
-          .to eq blackberry: { body: 'Hello', content_type: 'text/html' }
-      end
-    end
-
-
     context 'WNS' do
       it 'can send a simple text "alert"' do
         payload = UA.notification(wns: UA.wns_payload(alert: 'Hello'))
@@ -226,31 +209,6 @@ describe Urbanairship do
         }.to raise_error ArgumentError
       end
     end
-
-
-    context 'MPNS' do
-      it 'can send a simple text "alert"' do
-        payload = UA.notification(mpns: UA.mpns_payload(alert: 'Hello'))
-        expect(payload).to eq mpns: { alert: 'Hello' }
-      end
-
-      it 'can send a key/value "toast"' do
-        payload = UA.notification(mpns: UA.mpns_payload(toast: { a_key: 'a_value' }))
-        expect(payload).to eq mpns: { toast: { a_key: 'a_value' } }
-      end
-
-      it 'can send a key/value "tile"' do
-        payload = UA.notification(mpns: UA.mpns_payload(tile: { a_key: 'a_value' }))
-        expect(payload).to eq mpns: { tile: { a_key: 'a_value' } }
-      end
-
-      it 'will only send one kind of notification at a time' do
-        expect {
-          UA.mpns_payload(alert: 'Hello', tile: 'Foo')
-        }.to raise_error ArgumentError
-      end
-    end
-
 
     context 'Rich Push' do
       it 'can send UTF-8 HTML' do
@@ -283,6 +241,39 @@ describe Urbanairship do
         expect(UA.device_types(UA.all)).to eq 'all'
       end
     end
+
+    context 'In-App Message' do
+    it 'builds an in-app text alert' do
+      payload = UA.in_app(
+        alert: 'Hello',
+        display_type: 'banner',
+        display: 'top',
+        expiry: 0,
+        actions: { add_tag: 'in_app' }, 
+        interactive: {
+            type: 'a_type',
+            button_actions: {
+              yes: { add_tag: 'clicked_yes' },
+              no: { add_tag: 'clicked_no' }
+            }},
+        extra: { more: 'stuff' }
+      )
+      expect(payload).to eq(
+        alert: 'Hello',
+        display_type: 'banner',
+        display: 'top',
+        expiry: 0,
+        actions: { add_tag: 'in_app' }, 
+        interactive: {
+            type: 'a_type',
+            button_actions: {
+              yes: { add_tag: 'clicked_yes' },
+              no: { add_tag: 'clicked_no' }
+            }},
+        extra: { more: 'stuff' }
+      )
+      end 
+    end 
 
   end
 end

@@ -7,17 +7,14 @@ module Urbanairship
 
       # Notification Object for a Push Payload
       def notification(alert: nil, ios: nil, android: nil, amazon: nil,
-                       blackberry: nil, wns: nil, mpns: nil, actions: nil,
-                       interactive: nil)
+                       wns: nil, actions: nil, interactive: nil)
         payload = compact_helper({
           alert: alert,
           actions: actions,
           ios: ios,
           android: android,
           amazon: amazon,
-          blackberry: blackberry,
           wns: wns,
-          mpns: mpns,
           interactive: interactive
         })
         fail ArgumentError, 'Notification body is empty' if payload.empty?
@@ -35,8 +32,8 @@ module Urbanairship
           expiry: expiry,
           category: category,
           interactive: interactive,
-          priority: priority,
-          'content-available' => content_available
+          'content-available' => content_available,
+          priority: priority
         })
       end
 
@@ -67,11 +64,6 @@ module Urbanairship
         })
       end
 
-      # BlackBerry specific portion of Push Notification Object
-      def blackberry(alert: nil, body: nil, content_type: 'text/plain')
-        { body: alert || body, content_type: content_type }
-      end
-
       # WNS specific portion of Push Notification Object
       def wns_payload(alert: nil, toast: nil, tile: nil, badge: nil)
         payload = compact_helper({
@@ -79,17 +71,6 @@ module Urbanairship
           toast: toast,
           tile: tile,
           badge: badge
-        })
-        fail ArgumentError, 'Must specify one message type' if payload.size != 1
-        payload
-      end
-
-      # MPNS specific portion of Push Notification Object
-      def mpns_payload(alert: nil, toast: nil, tile: nil)
-        payload = compact_helper({
-          alert: alert,
-          toast: toast,
-          tile: tile
         })
         fail ArgumentError, 'Must specify one message type' if payload.size != 1
         payload
@@ -107,6 +88,20 @@ module Urbanairship
           expiry: expiry,
           icons: icons,
           options: options
+        })
+      end
+
+      # In-app message specific portion of Push Notification Object
+      def in_app(alert: nil, display_type: nil, display: nil, expiry: nil,
+                 actions: nil, interactive: nil, extra: nil)
+        compact_helper({
+          alert: alert,
+          display_type: display_type,
+          display: display,
+          expiry: expiry,
+          actions: actions,
+          interactive: interactive,
+          extra: extra
         })
       end
 

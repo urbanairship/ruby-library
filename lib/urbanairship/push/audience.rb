@@ -8,7 +8,6 @@ module Urbanairship
       include Urbanairship::Common
       UUID_PATTERN = /^\h{8}-\h{4}-\h{4}-\h{4}-\h{12}$/
       DEVICE_TOKEN_PATTERN = /^\h{64}$/
-      DEVICE_PIN_PATTERN = /^\h{8}$/
       DATE_TERMS = %i(minutes hours days weeks months years)
 
 
@@ -18,7 +17,7 @@ module Urbanairship
       # @example
       #   ios_channel(<channel>) # ==>
       #     {:ios_channel=>"<channel>"}
-      %w(ios_channel android_channel amazon_channel apid wns mpns).each do |name|
+      %w(ios_channel android_channel amazon_channel apid wns).each do |name|
         define_method(name) do |uuid|
           { name.to_sym => cleanup(uuid) }
         end
@@ -28,12 +27,6 @@ module Urbanairship
       def device_token(token)
         Util.validate(token, 'device_token', DEVICE_TOKEN_PATTERN)
         { device_token: token.upcase.strip }
-      end
-
-      # Select a single BlackBerry PIN
-      def device_pin(pin)
-        Util.validate(pin, 'pin', DEVICE_PIN_PATTERN)
-        { device_pin: pin.downcase.strip }
       end
 
       # Select a single tag
