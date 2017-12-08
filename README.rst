@@ -17,19 +17,13 @@ We officially support the following Ruby versions::
    2.2.5
    2.3.1
 
+Newer versions should work as well.
+
 
 Functionality
 =============
 
-Version 3.0 is a major upgrade and backwards incompatible with earlier
-versions.
-
-To encourage the use of our SDK, which takes care of proper channel
-registration, support for device token registration has been removed.
-Support for v1 endpoints will also be removed and transitioned to their
-v3 equivalents where possible.
-
-A more detailed list of changes can be found in the CHANGELOG.
+Version 4.0 is a major upgrade, as some features have been removed that were present in earlier versions. A more detailed list of changes can be found in the CHANGELOG.
 
 
 Installation
