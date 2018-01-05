@@ -3,7 +3,15 @@ require 'urbanairship'
 
 describe Urbanairship::Devices do
   UA = Urbanairship
-
+  
+  expected_resp = {
+    :body => {
+      :ok => 'true'
+    },
+    :code => '202'
+  }
+  let(:simple_http_response) { expected_resp }
+  
   # create an array of size n
   def build_array(n)
     dummy_id = { 'device_type' => 'android',
@@ -12,14 +20,6 @@ describe Urbanairship::Devices do
   end
 
   describe Urbanairship::Devices::ChannelUninstall do
-    example_hash = {
-      :body => {
-        :ok => 'true'
-      },
-      :code => '202'
-    }
-    let(:simple_http_response) { example_hash }
-
     describe '#uninstall' do
       it 'can be invoked and parse the "ok" value' do
         airship = UA::Client.new(key: '123', secret: 'abc')
@@ -42,6 +42,27 @@ describe Urbanairship::Devices do
         expect {
           cu.uninstall(channels: build_array(201))
         }.to raise_error(ArgumentError)
+      end
+    end
+  end
+  
+  describe Urbanairship::Devices::OpenChannelUninstall do
+    describe '#uninstall' do
+      airship = UA::Client.new(key: '123', secret: 'abc')
+      it 'can uninstall an open channel' do
+        allow(airship)
+          .to receive(:send_request)
+          .and_return(simple_http_response)
+        ocu = UA::OpenChannelUninstall.new(client: airship)
+        
+        resp = ocu.uninstall(address: '+1 5555555', open_platform: 'sms')
+        ok = resp[:body][:ok] || 'None'
+        expect(ok).to eq 'true'
+      end
+      
+      it 'fails without address or open_platform set' do
+        ocu = UA::OpenChannelUninstall.new(client: airship)
+        expect{ocu.uninstall(address: '+1 5555555')}.to raise_error(ArgumentError)
       end
     end
   end
