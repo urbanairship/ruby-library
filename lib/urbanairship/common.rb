@@ -7,6 +7,7 @@ module Urbanairship
     SERVER = 'go.urbanairship.com'
     BASE_URL = 'https://go.urbanairship.com/api'
     CHANNEL_URL = BASE_URL + '/channels/'
+    OPEN_CHANNEL_URL = BASE_URL + '/channels/open/'
     DEVICE_TOKEN_URL = BASE_URL + '/device_tokens/'
     APID_URL = BASE_URL + '/apids/'
     PUSH_URL = BASE_URL + '/push/'
