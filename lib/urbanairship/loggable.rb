@@ -13,9 +13,11 @@ module Urbanairship
     end
 
     def self.create_logger
-      logger = Logger.new('urbanairship.log')
+      log_uri = [Urbanairship.configuration.log_path, 'urbanairship.log'].compact
+      logger = Logger.new(File.join(*log_uri))
       logger.datetime_format = '%Y-%m-%d %H:%M:%S'
       logger.progname = 'Urbanairship'
+      logger.level = Urbanairship.configuration.log_level
       logger
     end
   end

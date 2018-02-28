@@ -31,5 +31,35 @@ module Urbanairship
         response
       end
     end
+    
+    
+    class OpenChannelUninstall
+      include Urbanairship::Common
+      include Urbanairship::Loggable
+      attr_reader :client
+      
+      def initialize(client: required('client'))
+        @client = client
+      end
+      
+      def uninstall(address: required('address'),
+                    open_platform: required('open_platform'))
+        
+        body = {
+          address: address,
+          open_platform_name: open_platform
+        }
+        
+        response = @client.send_request(
+          method: 'POST',
+          body: JSON.dump(body),
+          url: OPEN_CHANNEL_URL + 'uninstall/',
+          content_type: 'application/json'
+        )
+        
+        logger.info { "Successfully unintalled open channel with address: #{address}"}
+        response
+      end
+    end
   end
 end

@@ -77,12 +77,6 @@ Select a single Windows 8 APID:
 
     push.audience = UA.wns(uuid)
 
-Select a single Windows Phone 8 APID:
-
-.. code-block:: ruby
-
-    push.audience = UA.mpns(uuid)
-
 Select a single tag:
 
 .. code-block:: ruby
@@ -194,7 +188,7 @@ single piece of text:
 You can override the notification payload with one of the following platform
 keys::
 
-   ios, amazon, android, wns, mpns
+   ios, amazon, android, wns
 
 In the examples below, we override the general ``'Hello World!'`` alert with
 platform-specific alerts, and we set a number of other platform-specific options.
@@ -209,8 +203,8 @@ platform-specific alerts, and we set a number of other platform-specific options
             alert: 'Hello iOS!',
             badge: 123,
             sound: 'sound file',
-            extra: { 'key' => 'value', 'key2' => 'value2' }
-            expiry: '2012-01-01 12:45',
+            extra: { 'key' => 'value', 'key2' => 'value2' },
+            expiry: '2012-01-01 12:45:00',
             category: 'category_name',
             interactive: UA.interactive(
                 type: 'ua_share',
@@ -218,6 +212,7 @@ platform-specific alerts, and we set a number of other platform-specific options
                     share: { share: 'Sharing is caring!' }
                 }
             ),
+            priority: 5,
             content_available: true
         )
     )
@@ -231,7 +226,7 @@ platform-specific alerts, and we set a number of other platform-specific options
         amazon: UA.amazon(
             alert: 'Hello Amazon!',
             consolidation_key: 'key',
-            expires_after: '2012-01-01 12:45',
+            expires_after: '2012-01-01 12:45:00',
             extra: { 'key' => 'value', 'key2' => 'value2' },
             title: 'title',
             summary: 'summary',
@@ -279,26 +274,11 @@ platform-specific alerts, and we set a number of other platform-specific options
         )
     )
 
-**Example MPNS Override**
-
-.. code-block:: ruby
-
-    push.notification = UA.notification(
-        alert: 'Hello World!',
-        mpns: UA.mpns_payload(
-            alert: 'Hello MPNS!',
-            tile: nil,
-            toast: nil,
-            badge: nil
-        )
-    )
 
 .. note::
     The input for wns_payload must include exactly one of
     alert, toast, tile, or badge.
 
-    The input for mpns_payload must include exactly one of
-    alert, toast, or tile.
 
 Actions
 -------
@@ -318,7 +298,7 @@ http://docs.urbanairship.com/api/ua.html#actions, example:
         share: 'Check out Urban Airship!',
         open_: {
             type: 'url',
-            content: 'http://www.urbanairship.com'
+            content: 'http://www.example.com'
         },
         app_defined: {
             some_app_defined_action: 'some_values'
@@ -446,7 +426,7 @@ notification, you can update or cancel it before it's sent.
 
 .. code-block:: ruby
 
-   schedule = UA.ScheduledPush.from_url(airship, url)
+   schedule = UA::ScheduledPush.from_url(client: airship, url: 'http://www.example.com')
    # change scheduled time to tomorrow
    schedule.schedule = UA.scheduled_time(Time.now.utc + (60 * 60 * 24))
    schedule.update

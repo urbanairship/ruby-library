@@ -17,19 +17,13 @@ We officially support the following Ruby versions::
    2.2.5
    2.3.1
 
+Newer versions should work as well.
+
 
 Functionality
 =============
 
-Version 3.0 is a major upgrade and backwards incompatible with earlier
-versions.
-
-To encourage the use of our SDK, which takes care of proper channel
-registration, support for device token registration has been removed.
-Support for v1 endpoints will also be removed and transitioned to their
-v3 equivalents where possible.
-
-A more detailed list of changes can be found in the CHANGELOG.
+Version 4.0 is a major upgrade, as some features have been removed that were present in earlier versions. A more detailed list of changes can be found in the CHANGELOG.
 
 
 Installation
@@ -48,6 +42,25 @@ And then execute::
 OR install it yourself as::
 
     >>> gem install urbanairship
+
+
+Configuration
+=============
+
+In your app initialization, you can do something like the following:
+
+    >>> require 'urbanairship'
+    >>> Urbanairship.configure do |config|
+    >>>   config.log_path = '/path/to/your/logfile'
+    >>>   config.log_level = Logger::WARN
+    >>> end
+
+
+Available Configurations
+------------------------
+
+- **log_path**: Allows to define the folder where the log file will be created (the default is nil).
+- **log_level**: Allows to define the log level and only messages at that level or higher will be printed (the default is INFO).
 
 
 Usage

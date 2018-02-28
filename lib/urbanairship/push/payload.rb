@@ -7,7 +7,7 @@ module Urbanairship
 
       # Notification Object for a Push Payload
       def notification(alert: nil, ios: nil, android: nil, amazon: nil,
-                       wns: nil, mpns: nil, actions: nil, interactive: nil)
+                       wns: nil, actions: nil, interactive: nil)
         payload = compact_helper({
           alert: alert,
           actions: actions,
@@ -15,7 +15,6 @@ module Urbanairship
           android: android,
           amazon: amazon,
           wns: wns,
-          mpns: mpns,
           interactive: interactive
         })
         fail ArgumentError, 'Notification body is empty' if payload.empty?
@@ -105,17 +104,6 @@ module Urbanairship
         payload
       end
 
-      # MPNS specific portion of Push Notification Object
-      def mpns_payload(alert: nil, toast: nil, tile: nil)
-        payload = compact_helper({
-          alert: alert,
-          toast: toast,
-          tile: tile
-        })
-        fail ArgumentError, 'Must specify one message type' if payload.size != 1
-        payload
-      end
-
       # Rich Message specific portion of Push Notification Object
       def message(title: required('title'), body: required('body'), content_type: nil, content_encoding: nil,
                   extra: nil, expiry: nil, icons: nil, options: nil)
@@ -128,6 +116,20 @@ module Urbanairship
           expiry: expiry,
           icons: icons,
           options: options
+        })
+      end
+
+      # In-app message specific portion of Push Notification Object
+      def in_app(alert: nil, display_type: nil, display: nil, expiry: nil,
+                 actions: nil, interactive: nil, extra: nil)
+        compact_helper({
+          alert: alert,
+          display_type: display_type,
+          display: display,
+          expiry: expiry,
+          actions: actions,
+          interactive: interactive,
+          extra: extra
         })
       end
 

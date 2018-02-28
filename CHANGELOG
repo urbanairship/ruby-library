@@ -1,4 +1,23 @@
 --------------------
+4.1.0
+--------------------
+- Added support for Open Channels
+
+
+--------------------
+4.0.0
+--------------------
+- Added support for in-app messages
+- Added support for iOS priority
+- Added config class, allowing you to define log level and log location
+- Added templates for Github pull requests and issues, contribution information
+- Fixed ability to create a new scheduled push from an existing scheduled push URL
+- Various docs and tests fixes
+- Removed support for Blackberry and MPNS platforms
+- Removed support for per-push reports
+
+
+--------------------
 3.2.4
 --------------------
 - Replace unirest dependency with rest-client
