@@ -58,15 +58,15 @@ describe Urbanairship do
           time_to_live: 100,
           extra: { more: 'stuff' },
           style: {
-              big_picture: 'http://pic.com/photo',
-              big_text: 'This is big text.'
+              type: 'big_picture',
+              big_picture: 'http://pic.com/photo'
           },
           interactive: {
             type: 'a_type',
             button_actions: {
               yes: { add_tag: 'clicked_yes' },
               no: { add_tag: 'clicked_no' }
-            } }))
+            }}))
         expect(payload).to eq(android: {
                                 alert: 'Hello',
                                 title: 'My title',
@@ -83,8 +83,8 @@ describe Urbanairship do
                                 time_to_live: 100,
                                 extra: { more: 'stuff' },
                                 style: {
-                                    big_picture: 'http://pic.com/photo',
-                                    big_text: 'This is big text.'
+                                    type: 'big_picture',
+                                    big_picture: 'http://pic.com/photo'
                                 },
                                 interactive: {
                                   type: 'a_type',
@@ -94,6 +94,19 @@ describe Urbanairship do
                                   }
                                 }
                               })
+      end
+
+      it 'builds a style object' do
+        message = UA.notification(android: UA.android(style: {
+            type: 'big_picture',
+            content: 'http://pic.com/photo',
+            summary: 'the subtext'
+        }))
+        expect(message).to eq android: { 'style': {
+            type: 'big_picture',
+            content: 'http://pic.com/photo',
+            summary: 'the subtext'
+        }}
       end
 
       it 'builds a public notification' do
@@ -231,6 +244,33 @@ describe Urbanairship do
                                 subtitle: 'iOS subtitle',
                                 collapse_id: 'test'
                               })
+      end
+
+      it 'builds a media attachment' do
+        message = UA.notification(ios: UA.ios(media_attachment: {
+            url: 'https://media.giphy.com/media/JYsWwF82EGnpC/giphy.gif',
+            title: "title",
+            body: 'body',
+            options: {
+              crop: UA.crop(
+                height: 0.5,
+                width: 0.5
+                ),
+              time: 15
+            }
+        }))
+        expect(message).to eq ios: { 'media_attachment': {
+            url: 'https://media.giphy.com/media/JYsWwF82EGnpC/giphy.gif',
+            title: "title",
+            body: 'body',
+            options: {
+              crop: UA.crop(
+                height: 0.5,
+                width: 0.5
+                ),
+              time: 15
+            }
+        }}
       end
 
       it 'can handle Unicode' do

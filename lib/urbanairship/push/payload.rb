@@ -89,8 +89,6 @@ module Urbanairship
           delay_while_idle: delay_while_idle,
           local_only: local_only,
           wearable: wearable,
-          background_image: background_image,
-          extra_pages: extra_pages,
           interactive: interactive
         })
       end
@@ -162,6 +160,71 @@ module Urbanairship
           open: open_,
           share: share,
           app_defined: app_defined
+        })
+      end
+
+      # iOS Media Attachment builder
+      def media_attachment(url: required('url'), content: nil, options: nil)
+        fail ArgumentError, 'url must not be nil' if url.nil?
+        compact_helper({
+          url: url,
+          content: content,
+          options: options
+        })
+      end
+
+      # iOS Content builder. Each argument describes the portions of the
+      # notification that should be modified if the media_attachment succeeds.
+      def content(title: nil, subtitle: nil, body: nil)
+        compact_helper({
+          title: title,
+          subtitle: subtitle,
+          body: body
+        })
+      end
+
+      # iOS crop builder.
+      def crop(x: nil, y: nil, width: nil, height: nil)
+        compact_helper({
+          x: x,
+          y: y,
+          width: width,
+          height: height
+        })
+      end
+
+      # Android/Amazon style builder.
+      def style(type: required('type'), content: required('content'),
+                title: nil, summary: nil)
+        fail ArgumentError, 'type must not be nil' if type.nil?
+
+        mapping = {
+          big_picture: 'big_picture', big_text: 'big_text', inbox: 'lines' 
+        }
+        
+        compact_helper({
+          type: type,
+          mapping[type.to_sym] => content,
+          title: title,
+          summary: summary
+        })
+      end
+
+      # Android L public notification payload builder.
+      def public_notification(title: nil, alert: nil, summary: nil)
+        compact_helper({
+          title: title,
+          alert: alert,
+          summary: summary
+        })
+      end
+
+      # Android wearable payload builder.
+      def wearable(background_image: nil, extra_pages: nil, interactive: nil)
+        compact_helper({
+          background_image: background_image,
+          extra_pages: extra_pages,
+          interactive: interactive,
         })
       end
     end
