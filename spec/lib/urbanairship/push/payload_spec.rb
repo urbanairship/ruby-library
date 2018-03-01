@@ -301,6 +301,17 @@ describe Urbanairship do
           expires_after: 100,
           summary: 'Summary of the message',
           extra: { more: 'stuff' },
+          interactive:{  
+             type:'a_type',
+             button_actions:{  
+                yes:{  
+                   add_tag:'clicked_yes'
+                },
+                no:{  
+                   add_tag:'clicked_no'
+                }
+             }
+          },
           style: {
             big_picture: 'http://pic.com/photo',
             big_text: 'This is big text.'
@@ -313,6 +324,17 @@ describe Urbanairship do
                                 expires_after: 100,
                                 summary: 'Summary of the message',
                                 extra: { more: 'stuff' },
+                                interactive:{  
+                                   type:'a_type',
+                                   button_actions:{  
+                                      yes:{  
+                                         add_tag:'clicked_yes'
+                                      },
+                                      no:{  
+                                         add_tag:'clicked_no'
+                                      }
+                                   }
+                                },
                                 style: {
                                     big_picture: 'http://pic.com/photo',
                                     big_text: 'This is big text.'

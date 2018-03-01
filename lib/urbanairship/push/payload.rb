@@ -46,7 +46,7 @@ module Urbanairship
 
       # Amazon specific portion of Push Notification Object
       def amazon(alert: nil, consolidation_key: nil, expires_after: nil,
-                 extra: nil, title: nil, summary: nil, style: nil, sound: nil)
+                 extra: nil, title: nil, summary: nil, interactive: nil, style: nil, sound: nil)
         compact_helper({
           alert: alert,
           consolidation_key: consolidation_key,
@@ -54,6 +54,7 @@ module Urbanairship
           extra: extra,
           title: title,
           summary: summary,
+          interactive: interactive,
           style: style,
           sound: sound
         })
