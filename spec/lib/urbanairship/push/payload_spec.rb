@@ -44,22 +44,48 @@ describe Urbanairship do
       it 'builds a notification' do
         payload = UA.notification(android: UA.android(
           alert: 'Hello',
+          title: 'My title',
+          summary: 'My summary',
+          icon: 'icon',
+          icon_color: '#111111',
+          notification_tag: 'tag',
+          category: 'alarm',
+          visibility: 1,
+          sound: 'default',
+          priority: 0,
           delay_while_idle: true,
           collapse_key: '123456',
           time_to_live: 100,
           extra: { more: 'stuff' },
+          style: {
+              type: 'big_picture',
+              big_picture: 'http://pic.com/photo'
+          },
           interactive: {
             type: 'a_type',
             button_actions: {
               yes: { add_tag: 'clicked_yes' },
               no: { add_tag: 'clicked_no' }
-            } }))
+            }}))
         expect(payload).to eq(android: {
                                 alert: 'Hello',
+                                title: 'My title',
+                                summary: 'My summary',
+                                icon: 'icon',
+                                icon_color: '#111111',
+                                notification_tag: 'tag',
+                                category: 'alarm',
+                                visibility: 1,
+                                sound: 'default',
+                                priority: 0,
                                 delay_while_idle: true,
                                 collapse_key: '123456',
                                 time_to_live: 100,
                                 extra: { more: 'stuff' },
+                                style: {
+                                    type: 'big_picture',
+                                    big_picture: 'http://pic.com/photo'
+                                },
                                 interactive: {
                                   type: 'a_type',
                                   button_actions: {
@@ -68,6 +94,75 @@ describe Urbanairship do
                                   }
                                 }
                               })
+      end
+
+      it 'builds a style object' do
+        message = UA.notification(android: UA.android(style: {
+            type: 'big_picture',
+            content: 'http://pic.com/photo',
+            summary: 'the subtext'
+        }))
+        expect(message).to eq android: { 'style': {
+            type: 'big_picture',
+            content: 'http://pic.com/photo',
+            summary: 'the subtext'
+        }}
+      end
+
+      it 'builds a public notification' do
+        message = UA.notification(android: UA.android(public_notification: {
+            title: 'the title',
+            alert: 'hello, there',
+            summary: 'the subtext'
+        }))
+        expect(message).to eq android: { 'public_notification': {
+            title: 'the title',
+            alert: 'hello, there',
+            summary: 'the subtext'
+        }}
+      end
+
+      it 'builds a wearable object' do
+        message = UA.notification(android: UA.android(wearable: {
+            background_image: 'http://example.com/background.png',
+            extra_pages: [
+                {
+                    title: 'Page 1 title - optional title',
+                    alert: 'Page 1 title - optional alert'
+                },
+                {
+                    title: 'Page 2 title - optional title',
+                    alert: 'Page 2 title - optional alert'
+                }
+            ],
+            interactive: {
+                type: 'a_type',
+                button_actions: {
+                    yes: { add_tag: 'clicked_yes' },
+                    no: { add_tag: 'clicked_no' }
+                }
+            }
+        }))
+        expect(message).to eq android: { 'wearable': {
+            background_image: 'http://example.com/background.png',
+            extra_pages: [
+                {
+                    title: 'Page 1 title - optional title',
+                    alert: 'Page 1 title - optional alert'
+                },
+                {
+                    title: 'Page 2 title - optional title',
+                    alert: 'Page 2 title - optional alert'
+                }
+            ],
+            interactive: {
+                type: 'a_type',
+                button_actions: {
+                    yes: { add_tag: 'clicked_yes' },
+                    no: { add_tag: 'clicked_no' }
+                }
+            }
+          }}
       end
     end
 
@@ -114,6 +209,7 @@ describe Urbanairship do
           sound: 'cat.caf',
           extra: { more: 'stuff' },
           expiry: 'time',
+          priority: 10,
           category: 'test',
           interactive: {
             type: 'a_type',
@@ -121,13 +217,20 @@ describe Urbanairship do
               yes: { add_tag: 'clicked_yes' },
               no: { add_tag: 'clicked_no' }
             }
-          }))
+          },
+          media_attachment: {
+              url: 'https://media.giphy.com/media/JYsWwF82EGnpC/giphy.gif'
+          },
+          title: 'iOS title',
+          subtitle: 'iOS subtitle',
+          collapse_id: 'test'))
         expect(payload).to eq(ios: {
                                 alert: { foo: 'bar' },
                                 badge: '+1',
                                 sound: 'cat.caf',
                                 extra: { more: 'stuff' },
                                 expiry: 'time',
+                                priority: 10,
                                 category: 'test',
                                 interactive: {
                                   type: 'a_type',
@@ -135,8 +238,41 @@ describe Urbanairship do
                                     yes: { add_tag: 'clicked_yes' },
                                     no: { add_tag: 'clicked_no' }
                                   }
-                                }
+                                },
+                                media_attachment: {
+                                    url: 'https://media.giphy.com/media/JYsWwF82EGnpC/giphy.gif'
+                                },
+                                title: 'iOS title',
+                                subtitle: 'iOS subtitle',
+                                collapse_id: 'test'
                               })
+      end
+
+      it 'builds a media attachment' do
+        message = UA.notification(ios: UA.ios(media_attachment: {
+            url: 'https://media.giphy.com/media/JYsWwF82EGnpC/giphy.gif',
+            title: "title",
+            body: 'body',
+            options: {
+              crop: UA.crop(
+                height: 0.5,
+                width: 0.5
+                ),
+              time: 15
+            }
+        }))
+        expect(message).to eq ios: { 'media_attachment': {
+            url: 'https://media.giphy.com/media/JYsWwF82EGnpC/giphy.gif',
+            title: "title",
+            body: 'body',
+            options: {
+              crop: UA.crop(
+                height: 0.5,
+                width: 0.5
+                ),
+              time: 15
+            }
+        }}
       end
 
       it 'can handle Unicode' do
@@ -147,6 +283,11 @@ describe Urbanairship do
       it 'handles the "content-available" attribute properly' do
         message = UA.notification(ios: UA.ios(content_available: true))
         expect(message).to eq ios: { 'content-available' => true }
+      end
+
+      it 'handles the "mutable-content" attribute properly' do
+        message = UA.notification(ios: UA.ios(mutable_content: true))
+        expect(message).to eq ios: { 'mutable-content' => true }
       end
     end
 
@@ -160,12 +301,22 @@ describe Urbanairship do
           expires_after: 100,
           summary: 'Summary of the message',
           extra: { more: 'stuff' },
-          interactive: {
-            type: 'a_type',
-            button_actions: {
-              yes: { add_tag: 'clicked_yes' },
-              no: { add_tag: 'clicked_no' }
-            } }))
+          interactive:{  
+             type:'a_type',
+             button_actions:{  
+                yes:{  
+                   add_tag:'clicked_yes'
+                },
+                no:{  
+                   add_tag:'clicked_no'
+                }
+             }
+          },
+          style: {
+            big_picture: 'http://pic.com/photo',
+            big_text: 'This is big text.'
+          },
+          sound: 'default'))
         expect(payload).to eq(amazon: {
                                 alert: 'Hello',
                                 title: 'My Title',
@@ -173,12 +324,22 @@ describe Urbanairship do
                                 expires_after: 100,
                                 summary: 'Summary of the message',
                                 extra: { more: 'stuff' },
-                                interactive: {
-                                  type: 'a_type',
-                                  button_actions: {
-                                    yes: { add_tag: 'clicked_yes' },
-                                    no: { add_tag: 'clicked_no' }
-                                  } } })
+                                interactive:{  
+                                   type:'a_type',
+                                   button_actions:{  
+                                      yes:{  
+                                         add_tag:'clicked_yes'
+                                      },
+                                      no:{  
+                                         add_tag:'clicked_no'
+                                      }
+                                   }
+                                },
+                                style: {
+                                    big_picture: 'http://pic.com/photo',
+                                    big_text: 'This is big text.'
+                                },
+                                sound: 'default'})
       end
     end
 
