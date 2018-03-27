@@ -118,7 +118,7 @@ Contributing
 4. Push to the branch ``git push origin my-new-feature``
 5. Create a new Pull Request
 6. Sign Urban Airship's `contribution agreement
-   <http://docs.urbanairship.com/contribution-agreement.html>`_.
+   <https://docs.google.com/forms/d/e/1FAIpQLScErfiz-fXSPpVZ9r8Di2Tr2xDFxt5MgzUel0__9vqUgvko7Q/viewform>`_.
 
 **Note**: Changes will not be approved and merged without a signed
 contribution agreement.
