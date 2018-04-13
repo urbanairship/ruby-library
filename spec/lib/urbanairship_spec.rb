@@ -18,6 +18,14 @@ describe Urbanairship do
 
       expect(Urbanairship.configuration.log_level).to eq(Logger::WARN)
     end
+
+    it 'defines the request timeout' do
+      Urbanairship.configure do |config|
+        config.timeout = 60
+      end
+
+      expect(Urbanairship.configuration.timeout).to eq(60)
+    end
   end
 end
 
