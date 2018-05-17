@@ -24,4 +24,14 @@ describe Urbanairship::Configuration do
       expect { config.log_level = Logger::WARN }.to change(config, :log_level).from(Logger::INFO).to(Logger::WARN)
     end
   end
+
+  describe '#timeout' do
+    it 'initializes with the original value "5"' do
+      expect(config.timeout).to eq(5)
+    end
+
+    it 'sets the request timeout as is informed' do
+      expect { config.timeout = 60 }.to change(config, :timeout).from(5).to(60)
+    end
+  end
 end
