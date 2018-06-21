@@ -71,7 +71,7 @@ Select a single Android APID:
 
     push.audience = UA.apid(uuid)
 
-Select a single Windows 8 APID:
+Select a single Windows APID:
 
 .. code-block:: ruby
 
