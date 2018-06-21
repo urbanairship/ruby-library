@@ -30,34 +30,6 @@ module Urbanairship
       end
     end
 
-    class Feedback
-      include Urbanairship::Common
-      include Urbanairship::Loggable
-
-      def initialize(client: required('client'))
-        @client = client
-      end
-
-      def device_token(since: required('device token'))
-        url = DT_FEEDBACK_URL + '?since=' + since
-        get_feedback(url: url)
-      end
-
-      def apid(since: required('since'))
-        url = APID_FEEDBACK_URL + '?since=' + since
-        get_feedback(url: url)
-      end
-
-      def get_feedback(url: required('url'))
-        response = @client.send_request(
-            method: 'GET',
-            url: url
-        )
-        logger.info("Requested feedback at url #{url}")
-        response
-      end
-    end
-
     class DeviceToken
       include Urbanairship::Common
       include Urbanairship::Loggable
@@ -86,15 +58,6 @@ module Urbanairship
         super(client: client)
         @next_page = DEVICE_TOKEN_URL
         @data_attribute = 'device_tokens'
-      end
-
-      def count
-        resp = @client.send_request(
-          method: 'GET',
-          url: DEVICE_TOKEN_URL + 'count/'
-        )
-        logger.info("Retrieved count of Device Token List.")
-        resp
       end
     end
 
