@@ -1,4 +1,10 @@
 --------------------
+5.0.0
+--------------------
+- Removing support for Feedback API (EOL July 2018)
+- Removing support for Device Token Count (also EOL in 2018)
+
+--------------------
 4.1.1
 --------------------
 - Added configuration value for timeout.

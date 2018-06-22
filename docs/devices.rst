@@ -37,26 +37,6 @@ Device metadata is fetched for a specific channel by using
     channel_info = channel_client.lookup(uuid: 'uuid')
     puts(channel_info)
 
-Feedback
---------
-
-Feedback returns a list of dictionaries of device tokens/APIDs that the
-respective push provider has told us are uninstalled since the given
-timestamp. For more information, see `the API documentation for feedback
-<http://docs.urbanairship.com/api/ua.html#feedback>`_
-
-.. code-block:: ruby
-
-    require 'urbanairship'
-    require 'time'
-    UA = Urbanairship
-    airship = UA::Client.new(key:'application_key', secret:'master_secret')
-    since = (Time.now.utc - (60 * 60 * 24 * 3)).iso8601
-    feedback = UA::Feedback.new(client: airship)
-    tokens = feedback.device_token(since: since)
-    apids = feedback.apid(since: since)
-
-
 Device Token Lookup
 -------------------
 
@@ -88,21 +68,6 @@ Get a list of iOS device tokens for the application:
     device_token_list.each do |token|
         puts(token)
     end
-
-
-Device Token Count
-------------------
-
-Get the total iOS device tokens registered to the application.
-
-.. code-block:: ruby
-
-    require 'urbanairship'
-
-    UA = Urbanairship
-    airship = UA::Client.new(key:'application_key', secret:'master_secret')
-    device_token_list = UA::DeviceTokenList.new(client: airship)
-    puts(device_token_list.count)
 
 
 APID Lookup
