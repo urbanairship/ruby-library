@@ -12,7 +12,7 @@ module Urbanairship
 
 
       # Methods to select a single iOS Channel, Android Channel, Amazon Channel,
-      # Android APID, Windows 8 APID, or Windows Phone 8 APID respectively.
+      # Android APID, or Windows APID respectively.
       #
       # @example
       #   ios_channel(<channel>) # ==>
