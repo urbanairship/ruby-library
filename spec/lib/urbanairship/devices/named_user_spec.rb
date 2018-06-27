@@ -23,6 +23,12 @@ describe Urbanairship::Devices do
         expect(actual_resp).to eq(expected_resp)
       end
 
+      it 'associates a web channel with a named_user without a device_type' do
+        allow(airship).to receive(:send_request).and_return(expected_resp)
+        actual_resp = named_user.associate(channel_id:'123')
+        expect(actual_resp).to eq(expected_resp)
+      end
+
       it 'fails when the user_id is not set' do
         named_user_without_id = UA::NamedUser.new(client: airship)
         expect {
@@ -32,9 +38,15 @@ describe Urbanairship::Devices do
     end
 
     describe '#disassociate' do
-      it 'disassociates a channel with a named_user' do
+      it 'disassociates a channel from a named_user' do
         allow(airship).to receive(:send_request).and_return(expected_resp)
         actual_resp = named_user.disassociate(channel_id:'123', device_type:'android')
+        expect(actual_resp).to eq(expected_resp)
+      end
+
+      it 'disassociates a web channel from a named_user without a device_type' do
+        allow(airship).to receive(:send_request).and_return(expected_resp)
+        actual_resp = named_user.disassociate(channel_id:'123')
         expect(actual_resp).to eq(expected_resp)
       end
     end

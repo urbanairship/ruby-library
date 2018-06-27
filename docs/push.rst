@@ -59,6 +59,18 @@ Select a single Amazon Channel:
 
     push.audience = UA.amazon_channel(uuid)
 
+Select a single Web Channel:
+
+.. code-block:: ruby
+
+    push.audience = UA.channel(uuid)
+
+Select a single Open Channel:
+
+.. code-block:: ruby
+
+    push.audience = UA.open_channel(uuid)
+
 Select a single iOS device token:
 
 .. code-block:: ruby
@@ -204,7 +216,7 @@ platform-specific alerts, and we set a number of other platform-specific options
             badge: 123,
             sound: 'sound file',
             extra: { 'key' => 'value', 'key2' => 'value2' },
-            expiry: '2012-01-01 12:45:00',
+            expiry: '2019-01-01 12:45:00',
             category: 'category_name',
             interactive: UA.interactive(
                 type: 'ua_share',
@@ -226,7 +238,7 @@ platform-specific alerts, and we set a number of other platform-specific options
         amazon: UA.amazon(
             alert: 'Hello Amazon!',
             consolidation_key: 'key',
-            expires_after: '2012-01-01 12:45:00',
+            expires_after: '2019-01-01 12:45:00',
             extra: { 'key' => 'value', 'key2' => 'value2' },
             title: 'title',
             summary: 'summary',
@@ -258,6 +270,47 @@ platform-specific alerts, and we set a number of other platform-specific options
                 }
             )
         )
+    )
+
+**Example Web Override**
+
+.. code-block:: ruby
+
+    push.notification = UA.notification(
+        alert: 'Hello World!',
+        web: UA.web(
+            alert: 'Hello Web!',
+            title: 'My Title',
+            extra: { 'key' => 'value', 'key2' => 'value2' },
+            require_interaction: true,
+            icon: { 'url' => 'https://www.urbanairship.com'}
+        )
+    )
+
+**Example Open Platform Override**
+
+.. code-block:: ruby
+
+    push.notification = UA.notification(
+        alert: 'Hello World!',
+        open_platforms: {
+            'open::toaster': UA.open_platform(
+                alert: 'Hello Toaster',
+                title: 'My Title',
+                summary: 'My Summary',
+                extra: { 'key' => 'value', 'key2' => 'value2' },
+                media_attachment: 'https://media.giphy.com/media/JYsWwF82EGnpC/giphy.gif',
+                interactive: UA.interactive(
+                    type: 'ua_share',
+                    button_actions: {
+                        share: { share: 'Sharing is caring!' }
+                    }
+                )
+            ),
+            'open::refrigerator': UA.open_platform(
+                alert: 'Hello Fridge'
+            )
+        }
     )
 
 **Example WNS Override**
@@ -351,7 +404,7 @@ types you wish to target with a list of strings:
 
 .. code-block:: ruby
 
-    push.device_types = UA.device_types(['ios', 'android'])
+    push.device_types = UA.device_types(['ios', 'android', 'web', 'open::example'])
 
 or with the ``all`` shortcut.
 

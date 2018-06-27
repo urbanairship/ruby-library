@@ -13,13 +13,13 @@ module Urbanairship
         @named_user_id =  nil
       end
 
-      def associate(channel_id: required('channel_id'), device_type: required('device_type'))
+      def associate(channel_id: required('channel_id'), device_type: nil)
         fail ArgumentError,
              'named_user_id is required for association' if @named_user_id.nil?
 
         payload = {}
         payload['channel_id'] = channel_id
-        payload['device_type'] = device_type
+        payload['device_type'] = @device_type unless @device_type.nil?
         payload['named_user_id'] = @named_user_id
 
         response = @client.send_request(
@@ -32,10 +32,10 @@ module Urbanairship
         response
       end
 
-      def disassociate(channel_id: required('channel_id'), device_type: required('device_type'))
+      def disassociate(channel_id: required('channel_id'), device_type: nil)
         payload = {}
         payload['channel_id'] = channel_id
-        payload['device_type'] = device_type
+        payload['device_type'] = @device_type unless @device_type.nil?
         payload['named_user_id'] = @named_user_id unless @named_user_id.nil?
         response = @client.send_request(
           method: 'POST',

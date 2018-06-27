@@ -12,12 +12,12 @@ module Urbanairship
 
 
       # Methods to select a single iOS Channel, Android Channel, Amazon Channel,
-      # Android APID, or Windows APID respectively.
+      # Web Channel, Open Channel, Android APID, or Windows APID respectively.
       #
       # @example
       #   ios_channel(<channel>) # ==>
       #     {:ios_channel=>"<channel>"}
-      %w(ios_channel android_channel amazon_channel apid wns).each do |name|
+      %w(ios_channel android_channel amazon_channel channel open_channel apid wns).each do |name|
         define_method(name) do |uuid|
           { name.to_sym => cleanup(uuid) }
         end

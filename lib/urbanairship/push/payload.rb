@@ -7,16 +7,23 @@ module Urbanairship
 
       # Notification Object for a Push Payload
       def notification(alert: nil, ios: nil, android: nil, amazon: nil,
-                       wns: nil, actions: nil, interactive: nil)
+                       web: nil, wns: nil, open_platforms: nil,
+                       actions: nil, interactive: nil)
         payload = compact_helper({
           alert: alert,
-          actions: actions,
           ios: ios,
           android: android,
           amazon: amazon,
+          web: web,
           wns: wns,
+          actions: actions,
           interactive: interactive
         })
+        if open_platforms
+          open_platforms.each {|platform, overrides| 
+            payload[platform] = overrides
+          }
+        end
         fail ArgumentError, 'Notification body is empty' if payload.empty?
         payload
       end
@@ -93,6 +100,17 @@ module Urbanairship
         })
       end
 
+      # Web Notify specific portion of Push Notification Object
+      def web(alert: nil, title: nil, extra: nil, require_interaction: nil, icon: nil)
+        compact_helper({
+          alert: alert,
+          title: title,
+          extra: extra,
+          require_interaction: require_interaction,
+          icon: icon
+        })
+      end
+
       # WNS specific portion of Push Notification Object
       def wns_payload(alert: nil, toast: nil, tile: nil, badge: nil)
         payload = compact_helper({
@@ -103,6 +121,19 @@ module Urbanairship
         })
         fail ArgumentError, 'Must specify one message type' if payload.size != 1
         payload
+      end
+
+      # Open Platform specific portion of Push Notification Object.
+      def open_platform(alert: nil, title: nil, summary: nil, 
+                        extra: nil, media_attachment: nil, interactive: nil)
+        compact_helper({
+          alert: alert,
+          title: title,
+          summary: summary,
+          extra: extra,
+          media_attachment: media_attachment,
+          interactive: interactive
+        })
       end
 
       # Rich Message specific portion of Push Notification Object

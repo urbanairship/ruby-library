@@ -291,7 +291,6 @@ describe Urbanairship do
       end
     end
 
-
     context 'Amazon' do
       it 'builds a notification' do
         payload = UA.notification(amazon: UA.amazon(
@@ -340,6 +339,62 @@ describe Urbanairship do
                                     big_text: 'This is big text.'
                                 },
                                 sound: 'default'})
+      end
+    end
+
+    context 'Web' do
+      it 'builds a notification' do
+        payload = UA.notification(web: UA.web(
+          alert: 'Hello',
+          title: 'My Title',
+          extra: { more: 'stuff' },
+          require_interaction: true, 
+          icon: { url: 'http://www.example.com' }))
+        expect(payload).to eq(web: {
+                                alert: 'Hello',
+                                title: 'My Title',
+                                extra: { more: 'stuff' },
+                                require_interaction: true,
+                                icon: { url: 'http://www.example.com' }})
+      end
+    end
+
+    context 'Open Platform' do
+      it 'builds a notification' do
+        payload = UA.notification(
+          open_platforms: {'open::toaster':
+            UA.open_platform(
+              alert: 'Hello Toaster',
+              title: 'My Title',
+              summary: 'My Summary',
+              extra: { more: 'stuff' },
+              media_attachment: 'https://media.giphy.com/media/JYsWwF82EGnpC/giphy.gif',
+              interactive: {
+                type: 'a_type',
+                button_actions: {
+                  yes: { add_tag: 'clicked_yes' },
+                  no: { add_tag: 'clicked_no' }
+                }
+              }
+            )
+          }
+        )
+        expect(payload).to eq(
+          'open::toaster': {
+            alert: 'Hello Toaster',
+            title: 'My Title',
+            summary: 'My Summary',
+            extra: { more: 'stuff' },
+            media_attachment: 'https://media.giphy.com/media/JYsWwF82EGnpC/giphy.gif',
+            interactive: {
+              type: 'a_type',
+              button_actions: {
+                yes: { add_tag: 'clicked_yes' },
+                no: { add_tag: 'clicked_no' }
+              }
+            }
+          }
+        )
       end
     end
 

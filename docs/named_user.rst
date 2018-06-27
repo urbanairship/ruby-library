@@ -31,14 +31,14 @@ Associate a channel with a named user ID. For more information, see
 
     require 'urbanairship'
     UA = Urbanairship
-    airship = UA::Client.new(key:'application_key', secret:'master_secret')
+    airship = UA::Client.new(key:'application_key', secret:'app_or_master_secret')
     named_user = UA::NamedUser.new(client: airship)
     named_user.named_user_id = 'named_user'
     named_user.associate(channel_id: 'channel_id', device_type: 'ios')
 
 .. note::
 
-    You may only associate up to 20 channels to a Named User.
+    Do not include a ``device_type`` for Web and Open platform associations.
 
 Disassociation
 --------------
@@ -51,7 +51,7 @@ For more information, see `the API documentation
 
     require 'urbanairship'
     UA = Urbanairship
-    airship = UA::Client.new(key:'application_key', secret:'master_secret')
+    airship = UA::Client.new(key:'application_key', secret:'app_or_master_secret')
     named_user = UA::NamedUser.new(client: airship)
     named_user.disassociate(channel_id: 'channel_id', device_type: 'ios')
 
@@ -59,6 +59,7 @@ For more information, see `the API documentation
 
     ``named_user_id`` does not have to be set on the named_user object for this
     method call since ``channel_id`` can only be associated with one named user.
+    Do not include a ``device_type`` for Web and Open platform disassociations.
 
 Lookup
 ------

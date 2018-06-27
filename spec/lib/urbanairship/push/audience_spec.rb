@@ -23,6 +23,11 @@ describe Urbanairship do
         { amazon_channel: '074e84a2-9ed9-4eee-9ca4-cc597bfdbef3' }
       ],
       [
+        :channel,
+        '074e84a2-9ed9-4eee-9ca4-cc597bfdbef3',
+        { channel: '074e84a2-9ed9-4eee-9ca4-cc597bfdbef3' }
+      ],
+      [
         :device_token,
         'f' * 64,
         { device_token: 'F' * 64 }
@@ -78,6 +83,7 @@ describe Urbanairship do
       [:ios_channel, '074e84a2-9ed9-4eee-9ca4-cc597bfdbef34'],
       [:android_channel, '074e84a2-9ed9-Beee-9ca4-ccc597bfdbef3'],
       [:amazon_channel, '074e84a2-Red9-5eee-0ca4-cc597bfdbef3'],
+      [:channel, '074e84a2-Red9-5eee-0ca4-cc597bfdbef3'],
       [:device_token, 'f' * 63],
       [:device_token, 'f' * 65],
       [:device_token, '0123'],

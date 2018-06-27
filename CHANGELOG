@@ -1,6 +1,7 @@
 --------------------
 5.0.0
 --------------------
+- Add support for Web Notify, expand Open Platform support
 - Removing support for Feedback API (EOL July 2018)
 - Removing support for Device Token Count (also EOL in 2018)
 
@@ -9,12 +10,10 @@
 --------------------
 - Added configuration value for timeout.
 
-
 --------------------
 4.1.0
 --------------------
 - Added support for Open Channels
-
 
 --------------------
 4.0.0
@@ -28,46 +27,37 @@
 - Removed support for Blackberry and MPNS platforms
 - Removed support for per-push reports
 
-
 --------------------
 3.2.4
 --------------------
 - Replace unirest dependency with rest-client
-
 
 --------------------
 3.2.3
 --------------------
 - Added support for named user audience selector
 
-
 --------------------
 3.2.2
 --------------------
 - Bug fix: only open a single copy of the log file
-
 
 --------------------
 3.2.1
 --------------------
 - Bug fix: allow audience tag selector to specify tag group if desired
 
-
 --------------------
 3.2.0
 --------------------
 - Added support for static lists
-- Added support for device tokens, apids, and blackberry pins
+- Added support for device tokens, APIDs, and Blackberry PINs
 - Added support for locations
-
-
 
 --------------------
 3.1.1
 --------------------
 - Changed UA to Urbanairship in client.rb to fix aliasing issue
-
-
 
 --------------------
 3.1.0
@@ -81,21 +71,15 @@
 - Added support for named user
 - Added support for reports
 
-
-
 --------------------
 3.0.2
 --------------------
 - Resolve compatibility issues with Rails ActiveSupport
 
-
-
 --------------------
 3.0.1
 --------------------
 - Updating Gemspec to show required Ruby Version correctly
-
-
 
 --------------------
 3.0.0
