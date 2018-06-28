@@ -23,7 +23,7 @@ Newer versions should work as well.
 Functionality
 =============
 
-Version 4.0 is a major upgrade, as some features have been removed that were present in earlier versions. A more detailed list of changes can be found in the CHANGELOG.
+Version 5.0 is a major upgrade, as some features have been removed that were present in earlier versions. A more detailed list of changes can be found in the CHANGELOG.
 
 
 Installation
