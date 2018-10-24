@@ -1,4 +1,9 @@
 --------------------
+5.0.1
+--------------------
+- Fix bug with named user association/disassociation
+
+--------------------
 5.0.0
 --------------------
 - Add support for Web Notify, expand Open Platform support
