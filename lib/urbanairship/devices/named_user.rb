@@ -19,7 +19,7 @@ module Urbanairship
 
         payload = {}
         payload['channel_id'] = channel_id
-        payload['device_type'] = @device_type unless @device_type.nil?
+        payload['device_type'] = device_type unless device_type.nil?
         payload['named_user_id'] = @named_user_id
 
         response = @client.send_request(
@@ -35,7 +35,7 @@ module Urbanairship
       def disassociate(channel_id: required('channel_id'), device_type: nil)
         payload = {}
         payload['channel_id'] = channel_id
-        payload['device_type'] = @device_type unless @device_type.nil?
+        payload['device_type'] = device_type unless device_type.nil?
         payload['named_user_id'] = @named_user_id unless @named_user_id.nil?
         response = @client.send_request(
           method: 'POST',
