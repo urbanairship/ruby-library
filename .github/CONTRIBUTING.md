@@ -8,4 +8,4 @@ Please read through the agreement at the URL below.
 
 If you have questions about this agreement or why we need it please contact us at https://support.urbanairship.com/.
 
-[Contribution Agreement](https://docs.urbanairship.com/contribution-agreement/)
+[Contribution Agreement](https://docs.google.com/forms/d/e/1FAIpQLScErfiz-fXSPpVZ9r8Di2Tr2xDFxt5MgzUel0__9vqUgvko7Q/viewform)
