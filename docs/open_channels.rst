@@ -16,6 +16,11 @@ updating an open channel.
     open_channel.opt_in = true
     open_channel.address = 'address'
     open_channel.open_platform = 'sms'
+    open_channel.create()
+
+.. note::
+
+    The creation of an open channel should yield a 200 response.
 
 Update Open Channel
 -------------------
@@ -34,10 +39,22 @@ Updating an open channel is done by updating the attributes on the open channel.
     open_channel.tags= ['tag1', 'tag2']
     open_channel.identifiers = 'identifiers'
 
+    #creates the open_channel with all the listed attributes
+    open_channel.create()
+
+    #updates open_channel tags
+    open_channel.tags = ['tag3', 'tag4']
+    open_channel.update(set_tags: true)
+
+.. note::
+
+    Not all of the attributes listed above have to be present to update an open
+    channel.
+
 Lookup Open Channel
 -------------------
 Looking up an open channel is done by passing the channel_id in question to
-the lookup method. 
+the lookup method.
 
 .. code-block:: ruby
 
