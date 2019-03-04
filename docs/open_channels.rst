@@ -36,3 +36,13 @@ Updating an open channel is done by updating the attributes on the open channel.
 
 Lookup Open Channel
 -------------------
+Looking up an open channel is done by passing the channel_id in question to
+the lookup method. 
+
+.. code-block:: ruby
+
+    require 'urbanairship'
+    UA = Urbanairship
+    airship = UA::Client.new(key:'application_key', secret:'master_secret')
+    open_channel = UA::OpenChannel.new(client: airship)
+    open_channel.lookup(channel_id: 'channel_id')
