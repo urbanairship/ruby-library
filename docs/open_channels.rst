@@ -15,12 +15,12 @@ updating an open channel.
     open_channel = UA::OpenChannel.new(client: airship)
     open_channel.opt_in = true
     open_channel.address = 'address'
-    open_channel.open_platform = 'sms'
+    open_channel.open_platform = 'open channel platform'
     open_channel.create()
 
 .. note::
 
-    The creation of an open channel should yield a 200 response. This is the minimum
+    The creation of an open channel should yield a 201 response. This is the minimum
     required to create an open channel. `opt_in` must be a boolean, `address` and
     `open_platform` must be strings.
 
@@ -36,7 +36,7 @@ Updating an open channel is done by updating the attributes on the open channel.
     open_channel = UA::OpenChannel.new(client: airship)
     open_channel.opt_in = true
     open_channel.address = 'address'
-    open_channel.open_platform = 'sms'
+    open_channel.open_platform = 'open channel platform'
     open_channel.channel_id = 'channel_id'
     open_channel.tags= ['tag1', 'tag2']
     open_channel.identifiers = 'identifiers'
