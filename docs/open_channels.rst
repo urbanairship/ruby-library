@@ -20,7 +20,9 @@ updating an open channel.
 
 .. note::
 
-    The creation of an open channel should yield a 200 response.
+    The creation of an open channel should yield a 200 response. This is the minimum
+    required to create an open channel. `opt_in` must be a boolean, `address` and
+    `open_platform` must be strings.
 
 Update Open Channel
 -------------------
