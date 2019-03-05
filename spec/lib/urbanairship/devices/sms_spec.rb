@@ -24,7 +24,7 @@ describe Urbanairship::Devices do
 
     describe '#register' do
       it 'can register an opted in sms channel' do
-        sms_channel = UA::OpenChannel.new(client: airship)
+        sms_channel = UA::Sms.new(client: airship)
         sms_channel.msisdn = '15035556789'
         sms_channel.sender = '12345'
         sms.opted_in = '2018-02-13T11:58:59'
@@ -35,7 +35,7 @@ describe Urbanairship::Devices do
       end
 
       it 'can register an opted in sms channel' do
-        sms_channel = UA::OpenChannel.new(client: airship)
+        sms_channel = UA::Sms.new(client: airship)
         sms_channel.msisdn = '15035556789'
         sms_channel.sender = '12345'
 
@@ -45,30 +45,12 @@ describe Urbanairship::Devices do
       end
 
       it 'fails when not configured with a sender' do
-        sms_channel = UA::OpenChannel.new(client: airship)
+        sms_channel = UA::Sms.new(client: airship)
         sms_channel.msisdn = '15035556789'
 
         expect{sms_channel.register()}.to raise_error(TypeError)
       end
+
     end
   end
-
-
-  # HTTP/1.1 400 Bad Request
-  # Content-Type: application/json
-  #
-  # {
-  #     "ok": false,
-  #     "errors": "Unable to retrieve details for sender 12345 with app_key <application key>"
-  # }
-  #request
-  # POST /api/channels/sms HTTP/1.1
-  # Authorization: Basic <application authorization string>
-  # Accept: application/vnd.urbanairship+json; version=3;
-  # Content-type: application/json
-  #
-  # {
-  #     "msisdn" : "15035556789",
-  #     "sender": "12345",
-  #     "opted_in": "2018-02-13T11:58:59"
-  # }
+end
