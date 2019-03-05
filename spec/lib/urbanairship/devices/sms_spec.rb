@@ -45,7 +45,10 @@ describe Urbanairship::Devices do
       end
 
       it 'fails when not configured with a sender' do
+        sms_channel = UA::OpenChannel.new(client: airship)
+        sms_channel.msisdn = '15035556789'
 
+        expect{sms_channel.register()}.to raise_error(TypeError)
       end
     end
   end
