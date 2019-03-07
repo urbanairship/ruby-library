@@ -7,7 +7,8 @@ module Urbanairship
       include Urbanairship::Loggable
       attr_accessor :sender
 
-      def initialize(sender: required('sender'))
+      def initialize(client: required('client'))
+        @client = client
         @sender = sender
       end
     end
