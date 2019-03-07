@@ -14,8 +14,9 @@ module Urbanairship
         @opted_in = nil
       end
 
-      def register
-        
+      def register()
+        fail ArgumentError, 'sender must be set to register sms channel' if @sender == nil
+
       end
     end
   end
