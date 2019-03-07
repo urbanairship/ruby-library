@@ -5,14 +5,17 @@ module Urbanairship
     class Sms
       include Urbanairship::Common
       include Urbanairship::Loggable
-      attr_reader :msisdn, :sender, :opted_in
-      attr_accessor :sender
+      attr_accessor :msisdn, :sender, :opted_in, :sender
 
       def initialize(client: required('client'))
         @client = client
-        @sender = sender
+        @sender = nil
         @msisdn = nil
         @opted_in = nil
+      end
+
+      def register
+        
       end
     end
   end
