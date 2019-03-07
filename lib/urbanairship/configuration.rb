@@ -5,7 +5,7 @@ module Urbanairship
     def initialize
       @log_path = nil
       @log_level = Logger::INFO
-      @timeout = 5
+      @timeout = 60
     end
   end
 end
