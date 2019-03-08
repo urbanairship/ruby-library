@@ -18,8 +18,8 @@ module Urbanairship
         fail ArgumentError, 'sender must be set to register sms channel' if @sender == nil
 
         payload = {
-          'msisdn': @msisdn
-          'sender': @sender
+          'msisdn': @msisdn,
+          'sender': @sender,
           'opted_in': @opted_in
         }
 
@@ -29,7 +29,7 @@ module Urbanairship
           response = @client.send_request(
             method: 'POST',
             body: JSON.dump(payload),
-            url: CHANNEL_URL + '/sms'
+            url: CHANNEL_URL + '/sms',
             content_type: 'application/json'
           )
           logger.info("Registering SMS channel with msisdn #{@msisdn}")

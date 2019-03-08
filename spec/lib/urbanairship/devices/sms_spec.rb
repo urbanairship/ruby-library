@@ -1,5 +1,7 @@
 require 'spec_helper'
+
 require 'urbanairship'
+require 'urbanairship/devices/sms'
 
 describe Urbanairship::Devices do
   UA = Urbanairship
@@ -27,7 +29,7 @@ describe Urbanairship::Devices do
         sms_channel = UA::Sms.new(client: airship)
         sms_channel.msisdn = '15035556789'
         sms_channel.sender = '12345'
-        sms.opted_in = '2018-02-13T11:58:59'
+        sms_channel.opted_in = '2018-02-13T11:58:59'
 
         allow(airship).to receive(:send_request).and_return(opt_in_resp)
         actual_resp = sms_channel.register()
@@ -48,7 +50,7 @@ describe Urbanairship::Devices do
         sms_channel = UA::Sms.new(client: airship)
         sms_channel.msisdn = '15035556789'
 
-        expect{sms_channel.register()}.to raise_error(TypeError)
+        expect{sms_channel.register()}.to raise_error(ArgumentError)
       end
 
     end
