@@ -16,6 +16,7 @@ module Urbanairship
 
       def register()
         fail ArgumentError, 'sender must be set to register sms channel' if @sender.nil?
+        fail ArgumentError, 'msisdn must be set to register sms channel' if @msisdn.nil?
 
         payload = {
           'msisdn': @msisdn,
