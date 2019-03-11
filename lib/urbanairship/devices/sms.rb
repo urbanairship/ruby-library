@@ -86,4 +86,4 @@ module Urbanairship
       end
     end
   end
-end
+end 
