@@ -66,7 +66,7 @@ describe Urbanairship::Devices do
         sms_channel.opted_in = '2018-02-13T11:58:59'
 
         allow(airship).to receive(:send_request).and_return(opt_in_resp)
-        actual_resp = sms_channel.register()
+        actual_resp = sms_channel.register
         expect(actual_resp).to eq(opt_in_resp)
       end
 
@@ -76,7 +76,7 @@ describe Urbanairship::Devices do
         sms_channel.sender = '12345'
 
         allow(airship).to receive(:send_request).and_return(without_opt_in_resp)
-        actual_resp = sms_channel.register()
+        actual_resp = sms_channel.register
         expect(actual_resp).to eq(without_opt_in_resp)
       end
 
@@ -84,7 +84,7 @@ describe Urbanairship::Devices do
         sms_channel = UA::Sms.new(client: airship)
         sms_channel.msisdn = '15035556789'
 
-        expect{sms_channel.register()}.to raise_error(ArgumentError)
+        expect{sms_channel.register}.to raise_error(ArgumentError)
       end
 
       it 'fails when not configured with a sender' do
@@ -103,7 +103,7 @@ describe Urbanairship::Devices do
         sms_channel.opted_in = '2018-02-13T11:58:59'
 
         allow(airship).to receive(:send_request).and_return(sms_accepted_resp)
-        actual_resp = sms_channel.opt_out()
+        actual_resp = sms_channel.opt_out
         expect(actual_resp).to eq(sms_accepted_resp)
       end
 
@@ -112,7 +112,7 @@ describe Urbanairship::Devices do
         sms_channel.msisdn = '15035556789'
         sms_channel.opted_in = '2018-02-13T11:58:59'
 
-        expect{sms_channel.opt_out()}.to raise_error(ArgumentError)
+        expect{sms_channel.opt_out}.to raise_error(ArgumentError)
       end
 
       it 'fails when not configured with a msisdn' do
@@ -120,7 +120,7 @@ describe Urbanairship::Devices do
         sms_channel.sender = '12345'
         sms_channel.opted_in = '2018-02-13T11:58:59'
 
-        expect{sms_channel.opt_out()}.to raise_error(ArgumentError)
+        expect{sms_channel.opt_out}.to raise_error(ArgumentError)
       end
     end
 
@@ -132,7 +132,7 @@ describe Urbanairship::Devices do
         sms_channel.opted_in = '2018-02-13T11:58:59'
 
         allow(airship).to receive(:send_request).and_return(sms_accepted_resp)
-        actual_resp = sms_channel.uninstall()
+        actual_resp = sms_channel.uninstall
         expect(actual_resp).to eq(sms_accepted_resp)
       end
 
@@ -140,14 +140,14 @@ describe Urbanairship::Devices do
         sms_channel = UA::Sms.new(client: airship)
         sms_channel.sender = '12345'
 
-        expect{sms_channel.uninstall()}.to raise_error(ArgumentError)
+        expect{sms_channel.uninstall}.to raise_error(ArgumentError)
       end
 
       it 'fails when sender is not set' do
         sms_channel = UA::Sms.new(client: airship)
         sms_channel.msisdn = '15035556789'
 
-        expect{sms_channel.uninstall()}.to raise_error(ArgumentError)
+        expect{sms_channel.uninstall}.to raise_error(ArgumentError)
       end
     end
 
