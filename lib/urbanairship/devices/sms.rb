@@ -23,18 +23,14 @@ module Urbanairship
           'opted_in': @opted_in
         }
 
-        if @opted_in == nil
-          #set status to pending
-        else
-          response = @client.send_request(
-            method: 'POST',
-            body: JSON.dump(payload),
-            url: CHANNEL_URL + '/sms',
-            content_type: 'application/json'
-          )
-          logger.info("Registering SMS channel with msisdn #{@msisdn}")
-          response
-        end
+        response = @client.send_request(
+          method: 'POST',
+          body: JSON.dump(payload),
+          url: CHANNEL_URL + '/sms',
+          content_type: 'application/json'
+        )
+        logger.info("Registering SMS channel with msisdn #{@msisdn}")
+        response
       end
     end
   end
