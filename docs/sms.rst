@@ -22,8 +22,44 @@ is optional. The following is an example of a request with an opted_in value.
 Opt-Out of SMS Messages
 -----------------------
 
+Opting out of SMS messaging requires a sender and a msisdn to be set.
+
+.. code-block:: ruby
+
+    require 'urbanairship'
+    UA = Urbanairship
+    airship = UA::Client.new(key:'application_key', secret:'master_secret')
+    sms_channel = UA::Sms.new(client: airship)
+    sms_channel.msisdn = '15035556789'
+    sms_channel.sender = '12345'
+    sms_channel.opt_out()
+
 Uninstall SMS Channel
 ---------------------
 
+Uninstalling SMS messaging requires a sender and a msisdn to be set.
+
+.. code-block:: ruby
+
+    require 'urbanairship'
+    UA = Urbanairship
+    airship = UA::Client.new(key:'application_key', secret:'master_secret')
+    sms_channel = UA::Sms.new(client: airship)
+    sms_channel.msisdn = '15035556789'
+    sms_channel.sender = '12345'
+    sms_channel.uninstall()
+
 SMS Channel Lookup
 ------------------
+
+Looking up an SMS channel requires a sender and an msisdn to be set. 
+
+.. code-block:: ruby
+
+    require 'urbanairship'
+    UA = Urbanairship
+    airship = UA::Client.new(key:'application_key', secret:'master_secret')
+    sms_channel = UA::Sms.new(client: airship)
+    sms_channel.msisdn = '15035556789'
+    sms_channel.sender = '12345'
+    sms_channel.lookup
