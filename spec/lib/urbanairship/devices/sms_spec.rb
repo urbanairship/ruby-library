@@ -31,6 +31,33 @@ describe Urbanairship::Devices do
       'code'=> 202
     }
 
+    sms_lookup_resp = {
+       "ok": true,
+       "channel": {
+          "channel_id": "84e36d69-873b-4ffe-81cd-e74c9f002057",
+          "device_type": "sms",
+          "installed": true,
+          "push_address": nil,
+          "named_user_id": nil,
+          "alias": nil,
+          "tags": [],
+          "tag_groups": {
+             "ua_channel_type": [
+                "sms"
+             ],
+             "ua_sender_id": [
+                "12345"
+             ],
+             "ua_opt_in": [
+                "true"
+             ]
+          },
+          "created": "2018-04-27T22:06:21",
+          "opt_in": true,
+          "last_registration": "2018-05-14T19:51:38"
+       }
+    }
+
     describe '#register' do
       it 'can register an opted in sms channel' do
         sms_channel = UA::Sms.new(client: airship)
@@ -121,6 +148,16 @@ describe Urbanairship::Devices do
         sms_channel.msisdn = '15035556789'
 
         expect{sms_channel.uninstall()}.to raise_error(ArgumentError)
+      end
+    end
+
+    describe '#Lookup' do
+      it 'can get correct data from looking up a channel' do
+        sms_channel = UA::Sms.new(client: airship)
+
+        allow(airship).to receive(:send_request).and_return(sms_lookup_resp)
+        actual_resp = sms_channel.lookup()
+        expect(actual_resp). to eq(sms_lookup_resp)
       end
     end
   end

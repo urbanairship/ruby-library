@@ -24,3 +24,6 @@ Opt-Out of SMS Messages
 
 Uninstall SMS Channel
 ---------------------
+
+SMS Channel Lookup
+------------------
