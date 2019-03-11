@@ -15,7 +15,7 @@ module Urbanairship
         @opted_in = nil
       end
 
-      def register()
+      def register
         fail ArgumentError, 'sender must be set to register sms channel' if @sender.nil?
         fail ArgumentError, 'msisdn must be set to register sms channel' if @msisdn.nil?
 
@@ -35,7 +35,7 @@ module Urbanairship
         response
       end
 
-      def opt_out()
+      def opt_out
         fail ArgumentError, 'sender must be set to register sms channel' if @sender.nil?
         fail ArgumentError, 'msisdn must be set to register sms channel' if @msisdn.nil?
 
@@ -54,7 +54,7 @@ module Urbanairship
         response
       end
 
-      def uninstall()
+      def uninstall
         fail ArgumentError, 'sender must be set to register sms channel' if @sender.nil?
         fail ArgumentError, 'msisdn must be set to register sms channel' if @msisdn.nil?
 
