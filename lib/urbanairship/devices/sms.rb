@@ -1,4 +1,5 @@
 require 'urbanairship'
+require 'pry'
 
 module Urbanairship
   module Devices
@@ -69,6 +70,18 @@ module Urbanairship
           content_type: 'application/json'
         )
         logger.info("Uninstalling SMS channel for #{@msisdn}")
+        response
+      end
+
+      def lookup
+        fail ArgumentError,'msisdn is required for lookup' if @msisdn.nil?
+        fail ArgumentError,'sender is required for lookup' if @sender.nil?
+
+        response = @client.send_request(
+            method: 'GET',
+            url: NAMED_USER_URL + 'sms/' + @msisdn + '/' + @sender
+        )
+        logger.info { "Retrieved information on named_user_id #{@named_user_id}" }
         response
       end
     end

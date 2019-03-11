@@ -154,10 +154,28 @@ describe Urbanairship::Devices do
     describe '#Lookup' do
       it 'can get correct data from looking up a channel' do
         sms_channel = UA::Sms.new(client: airship)
+        sms_channel.msisdn = '15035556789'
+        sms_channel.sender = '12345'
 
         allow(airship).to receive(:send_request).and_return(sms_lookup_resp)
-        actual_resp = sms_channel.lookup()
+        actual_resp = sms_channel.lookup
         expect(actual_resp). to eq(sms_lookup_resp)
+      end
+
+      it 'fails when sender is not set' do
+        sms_channel = UA::Sms.new(client: airship)
+        sms_channel.msisdn = '15035556789'
+
+        allow(airship).to receive(:send_request).and_return(sms_lookup_resp)
+        expect{sms_channel.lookup}.to raise_error(ArgumentError)
+      end
+
+      it 'fails when sender is not set' do
+        sms_channel = UA::Sms.new(client: airship)
+        sms_channel.sender = '12345'
+
+        allow(airship).to receive(:send_request).and_return(sms_lookup_resp)
+        expect{sms_channel.lookup}.to raise_error(ArgumentError)
       end
     end
   end
