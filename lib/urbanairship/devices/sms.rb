@@ -50,6 +50,26 @@ module Urbanairship
           content_type: 'application/json'
         )
         logger.info("Opting Out of SMS messages for #{@msisdn}")
+        response
+      end
+
+      def uninstall()
+        fail ArgumentError, 'sender must be set to register sms channel' if @sender.nil?
+        fail ArgumentError, 'msisdn must be set to register sms channel' if @msisdn.nil?
+
+        payload = {
+          'msisdn': @msisdn,
+          'sender': @sender,
+        }
+
+        response = @client.send_request(
+          method: 'POST',
+          body: JSON.dump(payload),
+          url: CHANNEL_URL + '/sms/uninstall',
+          content_type: 'application/json'
+        )
+        logger.info("Uninstalling SMS channel for #{@msisdn}")
+        response
       end
     end
   end
