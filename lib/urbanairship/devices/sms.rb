@@ -79,11 +79,11 @@ module Urbanairship
 
         response = @client.send_request(
             method: 'GET',
-            url: NAMED_USER_URL + 'sms/' + @msisdn + '/' + @sender
+            url: CHANNEL_URL + 'sms/' + @msisdn + '/' + @sender
         )
-        logger.info { "Retrieved information on named_user_id #{@named_user_id}" }
+        logger.info { "Retrieved information for msisdn #{@msisdn}" }
         response
       end
     end
   end
-end 
+end
