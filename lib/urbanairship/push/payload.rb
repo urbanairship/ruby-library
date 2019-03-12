@@ -8,7 +8,7 @@ module Urbanairship
       # Notification Object for a Push Payload
       def notification(alert: nil, ios: nil, android: nil, amazon: nil,
                        web: nil, wns: nil, open_platforms: nil,
-                       actions: nil, interactive: nil)
+                       actions: nil, interactive: nil, sms: nil)
         payload = compact_helper({
           alert: alert,
           ios: ios,
@@ -17,10 +17,11 @@ module Urbanairship
           web: web,
           wns: wns,
           actions: actions,
-          interactive: interactive
+          interactive: interactive,
+          sms: sms
         })
         if open_platforms
-          open_platforms.each {|platform, overrides| 
+          open_platforms.each {|platform, overrides|
             payload[platform] = overrides
           }
         end
@@ -111,6 +112,15 @@ module Urbanairship
         })
       end
 
+      #SMS specific portion of Push Notification Object
+      def sms(alert: nil, sms: nil, device_types: nil)
+          compact_helper({
+            alert: alert,
+            sms: sms,
+            device_types: device_types
+          })
+      end
+
       # WNS specific portion of Push Notification Object
       def wns_payload(alert: nil, toast: nil, tile: nil, badge: nil)
         payload = compact_helper({
@@ -124,7 +134,7 @@ module Urbanairship
       end
 
       # Open Platform specific portion of Push Notification Object.
-      def open_platform(alert: nil, title: nil, summary: nil, 
+      def open_platform(alert: nil, title: nil, summary: nil,
                         extra: nil, media_attachment: nil, interactive: nil)
         compact_helper({
           alert: alert,
@@ -233,9 +243,9 @@ module Urbanairship
         fail ArgumentError, 'type must not be nil' if type.nil?
 
         mapping = {
-          big_picture: 'big_picture', big_text: 'big_text', inbox: 'lines' 
+          big_picture: 'big_picture', big_text: 'big_text', inbox: 'lines'
         }
-        
+
         compact_helper({
           type: type,
           mapping[type.to_sym] => content,
