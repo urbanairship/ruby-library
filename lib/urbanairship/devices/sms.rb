@@ -28,10 +28,10 @@ module Urbanairship
         response = @client.send_request(
           method: 'POST',
           body: JSON.dump(payload),
-          url: CHANNEL_URL + 'sms/',
+          url: CHANNEL_URL + 'sms',
           content_type: 'application/json'
         )
-        binding.pry
+        # binding.pry
         logger.info("Registering SMS channel with msisdn #{@msisdn}")
         response
       end
@@ -48,7 +48,7 @@ module Urbanairship
         response = @client.send_request(
           method: 'POST',
           body: JSON.dump(payload),
-          url: CHANNEL_URL + 'sms/opt-out/',
+          url: CHANNEL_URL + 'sms/opt-out',
           content_type: 'application/json'
         )
         logger.info("Opting Out of SMS messages for #{@msisdn}")
@@ -67,7 +67,7 @@ module Urbanairship
         response = @client.send_request(
           method: 'POST',
           body: JSON.dump(payload),
-          url: CHANNEL_URL + 'sms/uninstall/',
+          url: CHANNEL_URL + 'sms/uninstall',
           content_type: 'application/json'
         )
         logger.info("Uninstalling SMS channel for #{@msisdn}")
@@ -80,7 +80,7 @@ module Urbanairship
 
         response = @client.send_request(
             method: 'GET',
-            url: CHANNEL_URL + 'sms/' + @msisdn + '/' + @sender + '/'
+            url: CHANNEL_URL + 'sms/' + @msisdn + '/' + @sender
         )
         logger.info { "Retrieved information for msisdn #{@msisdn}" }
         response
