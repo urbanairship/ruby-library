@@ -112,15 +112,6 @@ module Urbanairship
         })
       end
 
-      #SMS specific portion of Push Notification Object
-      def sms(alert: nil, sms: nil, device_types: nil)
-          compact_helper({
-            alert: alert,
-            sms: sms,
-            device_types: device_types
-          })
-      end
-
       # WNS specific portion of Push Notification Object
       def wns_payload(alert: nil, toast: nil, tile: nil, badge: nil)
         payload = compact_helper({
