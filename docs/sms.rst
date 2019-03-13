@@ -4,8 +4,8 @@ SMS Channel
 Register SMS Channel
 --------------------
 
-SMS channels need a sender, and MSISDN, upon registration. The opted_in value
-is optional. The following is an example of a request with an opted_in value.
+SMS channels need a sender, and MSISDN, upon registration. The opted_in key
+is optional. The opted_in key represents the time when explicit permission was received from the user to receive messages. The following is an example of a request with an opted_in key.
 
 
 .. code-block:: ruby
