@@ -5,7 +5,9 @@ Register SMS Channel
 --------------------
 
 SMS channels need a sender, and MSISDN, upon registration. The opted_in key
-is optional. The opted_in key represents the time when explicit permission was received from the user to receive messages. The following is an example of a request with an opted_in key.
+is optional. The opted_in key represents the time when explicit permission was 
+received from the user to receive messages. The following is an example of a 
+request with an opted_in key.
 
 
 .. code-block:: ruby
@@ -22,7 +24,7 @@ is optional. The opted_in key represents the time when explicit permission was r
 Opt-Out of SMS Messages
 -----------------------
 
-Opting out of SMS messaging requires a sender and a MSISDN to be set.
+Opting out of SMS messaging requires a sender key and a MSISDN key to be set.
 
 .. code-block:: ruby
 
@@ -37,7 +39,7 @@ Opting out of SMS messaging requires a sender and a MSISDN to be set.
 Uninstall SMS Channel
 ---------------------
 
-Uninstalling SMS messaging requires a sender and a MSISDN to be set.
+Uninstalling SMS messaging requires a sender key and a MSISDN key to be set.
 
 .. code-block:: ruby
 
@@ -52,7 +54,7 @@ Uninstalling SMS messaging requires a sender and a MSISDN to be set.
 SMS Channel Lookup
 ------------------
 
-Looking up an SMS channel requires a sender and an MSISDN to be set.
+Looking up an SMS channel requires a sender key and an MSISDN key to be set.
 
 .. code-block:: ruby
 
