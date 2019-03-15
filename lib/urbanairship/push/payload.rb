@@ -20,7 +20,7 @@ module Urbanairship
           interactive: interactive
         })
         if open_platforms
-          open_platforms.each {|platform, overrides| 
+          open_platforms.each {|platform, overrides|
             payload[platform] = overrides
           }
         end
@@ -235,7 +235,7 @@ module Urbanairship
         mapping = {
           big_picture: 'big_picture', big_text: 'big_text', inbox: 'lines'
         }
-
+        
         compact_helper({
           type: type,
           mapping[type.to_sym] => content,
