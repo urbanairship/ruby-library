@@ -491,26 +491,5 @@ describe Urbanairship do
       end
     end
 
-    context 'SMS' do
-      it 'build an sms alert' do
-        payload = UA.notification(sms: UA.sms(
-          alert: 'Hello',
-          sms: {
-            'alert': 'Alerts sure are cool',
-            'expiry': '2018-04-01T12:00:00'
-          },
-          'device_types': ['sms', 'ios']
-        ))
-        expect(payload).to eq(
-          alert: 'Hello',
-          sms: {
-            'alert': 'Alerts sure are cool',
-            'expiry': '2018-04-01T12:00:00'
-          },
-          'device_types': ['sms', 'ios']
-        )
-      end
-    end
-
   end
 end
