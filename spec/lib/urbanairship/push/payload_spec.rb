@@ -300,13 +300,13 @@ describe Urbanairship do
           expires_after: 100,
           summary: 'Summary of the message',
           extra: { more: 'stuff' },
-          interactive:{
+          interactive:{  
              type:'a_type',
-             button_actions:{
-                yes:{
+             button_actions:{  
+                yes:{  
                    add_tag:'clicked_yes'
                 },
-                no:{
+                no:{  
                    add_tag:'clicked_no'
                 }
              }
@@ -323,13 +323,13 @@ describe Urbanairship do
                                 expires_after: 100,
                                 summary: 'Summary of the message',
                                 extra: { more: 'stuff' },
-                                interactive:{
+                                interactive:{  
                                    type:'a_type',
-                                   button_actions:{
-                                      yes:{
+                                   button_actions:{  
+                                      yes:{  
                                          add_tag:'clicked_yes'
                                       },
-                                      no:{
+                                      no:{  
                                          add_tag:'clicked_no'
                                       }
                                    }
@@ -348,7 +348,7 @@ describe Urbanairship do
           alert: 'Hello',
           title: 'My Title',
           extra: { more: 'stuff' },
-          require_interaction: true,
+          require_interaction: true, 
           icon: { url: 'http://www.example.com' }))
         expect(payload).to eq(web: {
                                 alert: 'Hello',
@@ -465,7 +465,7 @@ describe Urbanairship do
         display_type: 'banner',
         display: 'top',
         expiry: 0,
-        actions: { add_tag: 'in_app' },
+        actions: { add_tag: 'in_app' }, 
         interactive: {
             type: 'a_type',
             button_actions: {
@@ -479,7 +479,7 @@ describe Urbanairship do
         display_type: 'banner',
         display: 'top',
         expiry: 0,
-        actions: { add_tag: 'in_app' },
+        actions: { add_tag: 'in_app' }, 
         interactive: {
             type: 'a_type',
             button_actions: {
@@ -488,8 +488,8 @@ describe Urbanairship do
             }},
         extra: { more: 'stuff' }
       )
-      end
-    end
+      end 
+    end 
 
   end
 end
