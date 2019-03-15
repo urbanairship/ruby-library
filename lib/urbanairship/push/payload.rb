@@ -20,7 +20,7 @@ module Urbanairship
           interactive: interactive
         })
         if open_platforms
-          open_platforms.each {|platform, overrides|
+          open_platforms.each {|platform, overrides| 
             payload[platform] = overrides
           }
         end
@@ -124,7 +124,7 @@ module Urbanairship
       end
 
       # Open Platform specific portion of Push Notification Object.
-      def open_platform(alert: nil, title: nil, summary: nil,
+      def open_platform(alert: nil, title: nil, summary: nil, 
                         extra: nil, media_attachment: nil, interactive: nil)
         compact_helper({
           alert: alert,
@@ -233,9 +233,9 @@ module Urbanairship
         fail ArgumentError, 'type must not be nil' if type.nil?
 
         mapping = {
-          big_picture: 'big_picture', big_text: 'big_text', inbox: 'lines'
+          big_picture: 'big_picture', big_text: 'big_text', inbox: 'lines' 
         }
-
+        
         compact_helper({
           type: type,
           mapping[type.to_sym] => content,
