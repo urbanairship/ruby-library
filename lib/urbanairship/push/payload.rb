@@ -173,7 +173,7 @@ module Urbanairship
       end
 
       #SMS specific portion of Push Notification Object
-      def sms(alert: nil, expiry:nil)
+      def sms(alert: nil, expiry: nil)
         compact_helper({
           alert: alert,
           expiry: expiry
@@ -242,7 +242,7 @@ module Urbanairship
         fail ArgumentError, 'type must not be nil' if type.nil?
 
         mapping = {
-          big_picture: 'big_picture', big_text: 'big_text', inbox: 'lines' 
+          big_picture: 'big_picture', big_text: 'big_text', inbox: 'lines'
         }
 
         compact_helper({
