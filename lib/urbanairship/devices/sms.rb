@@ -1,5 +1,4 @@
 require 'urbanairship'
-require 'pry'
 
 module Urbanairship
   module Devices
@@ -31,7 +30,6 @@ module Urbanairship
           url: CHANNEL_URL + 'sms',
           content_type: 'application/json'
         )
-        # binding.pry
         logger.info("Registering SMS channel with msisdn #{@msisdn}")
         response
       end
