@@ -11,7 +11,7 @@ describe Urbanairship::Devices do
     opt_in_resp = {
       'body' => {
         'ok' => true,
-        'channel_id' => '123'
+        'channel_id' => '84e36d69-873b-4ffe-81cd-e74c9f002057'
       },
       'code'=> 201
     }
