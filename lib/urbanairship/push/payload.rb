@@ -244,7 +244,7 @@ module Urbanairship
         mapping = {
           big_picture: 'big_picture', big_text: 'big_text', inbox: 'lines'
         }
-
+        
         compact_helper({
           type: type,
           mapping[type.to_sym] => content,
