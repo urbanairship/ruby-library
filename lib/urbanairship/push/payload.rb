@@ -8,7 +8,7 @@ module Urbanairship
       # Notification Object for a Push Payload
       def notification(alert: nil, ios: nil, android: nil, amazon: nil,
                        web: nil, wns: nil, open_platforms: nil,
-                       actions: nil, interactive: nil)
+                       actions: nil, interactive: nil, sms: nil)
         payload = compact_helper({
           alert: alert,
           ios: ios,
