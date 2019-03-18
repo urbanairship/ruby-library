@@ -242,9 +242,9 @@ module Urbanairship
         fail ArgumentError, 'type must not be nil' if type.nil?
 
         mapping = {
-          big_picture: 'big_picture', big_text: 'big_text', inbox: 'lines'
+          big_picture: 'big_picture', big_text: 'big_text', inbox: 'lines' 
         }
-        
+
         compact_helper({
           type: type,
           mapping[type.to_sym] => content,
