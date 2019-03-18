@@ -26,12 +26,12 @@ describe Urbanairship::Configuration do
   end
 
   describe '#timeout' do
-    it 'initializes with the original value "5"' do
-      expect(config.timeout).to eq(5)
+    it 'initializes with the original value "60"' do
+      expect(config.timeout).to eq(60)
     end
 
     it 'sets the request timeout as is informed' do
-      expect { config.timeout = 60 }.to change(config, :timeout).from(5).to(60)
+      expect { config.timeout = 120 }.to change(config, :timeout).from(60).to(120)
     end
   end
 end
