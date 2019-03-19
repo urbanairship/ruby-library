@@ -21,13 +21,13 @@ module Urbanairship
         fail ArgumentError, 'address must be set to register email channel' if @address.nil?
 
         payload = {
-          'channel' : {
-            'type' = @type,
-            'commercial_opted_in' = @commercial_opted_in,
-            'address' = @address,
-            'timezone' = @timezone,
-            'locale_country' = @locale_country,
-            'locale_language' = @locale_language
+          'channel': {
+            'type': @type,
+            'commercial_opted_in': @commercial_opted_in,
+            'address': @address,
+            'timezone': @timezone,
+            'locale_country': @locale_country,
+            'locale_language': @locale_language
           }
         }
 
