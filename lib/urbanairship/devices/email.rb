@@ -56,5 +56,19 @@ module Urbanairship
       end
 
     end
+
+    class EmailTags < ChannelTags
+      include Urbanairship::Common
+
+      def initialize(client: required('client'))
+        super(client: client)
+        @url = CHANNEL_URL + 'email/tags'
+      end
+
+      def set_audience(email_address: required('email_address'))
+        @audience['email_address'] = email_address
+      end
+    end
+
   end
 end

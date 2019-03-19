@@ -12,6 +12,13 @@ describe Urbanairship::Devices do
       "channel_id": "251d3318-b3cb-4e9f-876a-ea3bfa6e47bd"
     }
 
+    email_success_resp = {
+      'body' => {
+        'ok' => true,
+      },
+      'code'=> 200
+    }
+
     describe '#register' do
       it 'can register email channel' do
         email_channel = UA::Email.new(client: airship)
