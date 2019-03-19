@@ -5,16 +5,27 @@ module Urbanairship
     class Email
       include Urbanairship::Common
       include Urbanairship::Loggable
-      attr_accessor :type, :commercial_opted_in, :address, :timezone, :locale_country, :locale_language
+      attr_accessor :address,
+                    :commercial_opted_in,
+                    :commercial_opted_out,
+                    :locale_country,
+                    :locale_language,
+                    :timezone,
+                    :transactional_opted_in,
+                    :transactional_opted_out,
+                    :type,
 
       def initialize(client: required('client'))
         @client = client
-        @type = nil
-        @commercial_opted_in = nil
         @address = nil
-        @timezone = nil
+        @commercial_opted_in = nil
+        @commercial_opted_out = nil
         @locale_country = nil
         @locale_language = nil
+        @timezone = nil
+        @transactional_opted_in = nil
+        @transactional_opted_out = nil
+        @type = nil
       end
 
       def register
@@ -22,12 +33,15 @@ module Urbanairship
 
         payload = {
           'channel': {
-            'type': @type,
-            'commercial_opted_in': @commercial_opted_in,
             'address': @address,
-            'timezone': @timezone,
+            'commercial_opted_in': @commercial_opted_in,
+            'commercial_opted_out': @commercial_opted_out,
             'locale_country': @locale_country,
-            'locale_language': @locale_language
+            'locale_language': @locale_language,
+            'timezone': @timezone,
+            'transactional_opted_in': @transactional_opted_in,
+            'transactional_opted_out': @transactional_opted_out,
+            'type': @type
           }
         }
 
