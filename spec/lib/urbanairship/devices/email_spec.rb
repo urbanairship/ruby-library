@@ -26,6 +26,17 @@ describe Urbanairship::Devices do
         actual_resp = email_channel.register
         expect(actual_resp).to eq(register_response)
       end
+
+      it 'fails when address is not set' do
+        email_channel = UA::Email.new(client: airship)
+        email_channel.type = 'email'
+        email_channel.commercial_opted_in = '2018-10-28T10:34:22'
+        email_channel.timezone = 'America/Los_Angeles'
+        email_channel.locale_country = 'US'
+        email_channel.locale_language = 'en'
+
+        expect{email_channel.register()}.to raise_error(ArgumentError)
+      end
     end
   end
 end

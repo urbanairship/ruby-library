@@ -13,7 +13,7 @@ module Urbanairship
                     :timezone,
                     :transactional_opted_in,
                     :transactional_opted_out,
-                    :type,
+                    :type
 
       def initialize(client: required('client'))
         @client = client
