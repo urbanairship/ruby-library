@@ -18,7 +18,27 @@ module Urbanairship
       end
 
       def register
-         
+        fail ArgumentError, 'address must be set to register email channel' if @address.nil?
+
+        payload = {
+          'channel' : {
+            'type' = @type,
+            'commercial_opted_in' = @commercial_opted_in,
+            'address' = @address,
+            'timezone' = @timezone,
+            'locale_country' = @locale_country,
+            'locale_language' = @locale_language
+          }
+        }
+
+        response = @client.send_request(
+          method: 'POST',
+          body: JSON.dump(payload),
+          url: CHANNEL_URL + 'email',
+          content_type: 'application.json'
+        )
+        logger.info("Registering email channel with address #{@address}")
+        response
       end
 
     end
