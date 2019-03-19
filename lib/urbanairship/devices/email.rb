@@ -55,6 +55,22 @@ module Urbanairship
         response
       end
 
+      def uninstall
+        fail ArgumentError, 'address must be set to register email channel' if @address.nil?
+
+        payload = {
+          'email_address': @email_address
+        }
+
+        response = @client.send_request(
+          method: 'POST',
+          body: JSON.dump(payload),
+          url: CHANNEL_URL + 'email/uninstall',
+          content_type: 'application.json'
+        )
+        logger.info("Uninstalling email channel with address #{@address}")
+        response
+      end
     end
 
     class EmailTags < ChannelTags

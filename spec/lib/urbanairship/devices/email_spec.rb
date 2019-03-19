@@ -19,6 +19,13 @@ describe Urbanairship::Devices do
       'code'=> 200
     }
 
+    email_accepted_resp = {
+      'body' => {
+        'ok' => true,
+      },
+      'code'=> 202
+    }
+
     describe '#register' do
       it 'can register email channel' do
         email_channel = UA::Email.new(client: airship)
@@ -42,7 +49,23 @@ describe Urbanairship::Devices do
         email_channel.locale_country = 'US'
         email_channel.locale_language = 'en'
 
-        expect{email_channel.register()}.to raise_error(ArgumentError)
+        expect{email_channel.register}.to raise_error(ArgumentError)
+      end
+    end
+
+    describe '#uninstall' do
+      it 'can uninstall an email channel' do
+        email_channel = UA::Email.new(client: airship)
+        email_channel.address = 'finnthehuman@adventure.com'
+
+        allow(airship).to receive(:send_request).and_return(email_accepted_resp)
+        actual_resp = email_channel.uninstall
+        expect(actual_resp).to eq(email_accepted_resp)
+      end
+
+      it 'fails when address is not set' do
+        email_channel = UA::Email.new(client: airship)
+        expect{email_channel.register}.to raise_error(ArgumentError)
       end
     end
   end
