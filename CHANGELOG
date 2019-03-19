@@ -4,6 +4,7 @@
 - Updates automatic timeout for API request from 5 seconds to 60
 - Adds SMS Register implementation. Register, Opt-out, Uninstall, Lookup
 - Adds SMS Send functionality for Notification object
+- Updates named_user.rb to include NamedUserUninstaller class
 
 --------------------
 5.0.1
