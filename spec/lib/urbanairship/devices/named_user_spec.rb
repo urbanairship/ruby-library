@@ -235,4 +235,27 @@ describe Urbanairship::Devices do
     end
   end
 
+  describe Urbanairship::Devices::NamedUserUninstaller do
+    let(:expected_resp) do
+      {
+        'body' => {
+          'ok' => true
+        },
+        'code' => 200
+      }
+    end
+    let(:named_user_uninstaller) { described_class.new(client: airship) }
+    subject { named_user_uninstaller.uninstall }
+
+    describe '#uninstall' do
+      before do
+        named_user_uninstaller.named_user_ids = ['user']
+        allow(airship).to receive(:send_request).and_return(expected_resp)
+      end
+
+      it 'uninstall named_users' do
+        expect(subject).to eq(expected_resp)
+      end
+    end
+  end
 end
