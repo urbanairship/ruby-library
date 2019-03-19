@@ -83,5 +83,30 @@ module Urbanairship
         @data_attribute = 'named_users'
       end
     end
+
+    class NamedUserUninstaller
+      include Urbanairship::Common
+      include Urbanairship::Loggable
+      attr_accessor :named_user_ids
+
+      def initialize(client: required('client'))
+        @client = client
+        @named_user_ids =  nil
+      end
+
+      def uninstall
+        payload = {}
+        payload['named_user_id'] = @named_user_ids
+
+        response = @client.send_request(
+          method: 'POST',
+          body: JSON.dump(payload),
+          url: NAMED_USER_URL + '/uninstall',
+          content_type: 'application/json'
+        )
+        logger.info { "Uninstalled named_user_ids #{@named_user_ids} " }
+        response
+      end
+    end
   end
 end
