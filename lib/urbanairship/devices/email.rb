@@ -73,7 +73,7 @@ module Urbanairship
       end
 
       def lookup
-        fail ArgumentError 'address is required for lookup' if @address.nil?
+        fail ArgumentError, 'address must be set to lookup email channel' if @address.nil?
 
         response = @client.send_request(
           method: 'GET',

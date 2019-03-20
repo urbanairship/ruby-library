@@ -99,6 +99,27 @@ describe Urbanairship::Devices do
         actual_resp = email_channel.lookup
         expect(actual_resp).to eq(email_lookup_resp)
       end
+
+      it 'fails when address is not set' do
+        email_channel = UA::Email.new(client: airship)
+        expect{email_channel.lookup}.to raise_error(ArgumentError)
+      end
+    end
+
+    describe '#update' do
+      it 'can update an existing email address' do
+        email_channel = UA::Email.new(client: airship)
+        email_channel.type = 'email'
+        email_channel.commercial_opted_in = '2018-10-28T10:34:22'
+        email_channel.address = 'finnthehuman@adventure.com'
+        email_channel.timezone = 'America/Los_Angeles'
+        email_channel.locale_country = 'US'
+        email_channel.locale_language = 'en'
+
+        allow(airship).to receive(:send_request).and_return(register_resp)
+        actual_resp = email_channel.update
+        expect(actual_resp).to eq(register_resp)
+      end
     end
   end
 
