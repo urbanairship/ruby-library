@@ -93,7 +93,7 @@ describe Urbanairship::Devices do
     describe '#lookup' do
       it 'can lookup an email address' do
         email_channel = UA::Email.new(client: airship)
-        id = email_channel.address
+        email_channel.address = 'finnthehuman@adventure.com'
 
         allow(airship).to receive(:send_request).and_return(email_lookup_resp)
         actual_resp = email_channel.lookup

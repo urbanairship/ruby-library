@@ -71,6 +71,17 @@ module Urbanairship
         logger.info("Uninstalling email channel with address #{@address}")
         response
       end
+
+      def lookup
+        fail ArgumentError 'address is required for lookup' if @address.nil?
+
+        response = @client.send_request(
+          method: 'GET',
+          url: CHANNEL_URL + 'email/' + @address
+        )
+        logger.info("Looking up email channel with address #{@address}")
+        response
+      end
     end
 
     class EmailTags < ChannelTags
