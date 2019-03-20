@@ -26,6 +26,27 @@ describe Urbanairship::Devices do
       'code'=> 202
     }
 
+    email_lookup_resp = {
+      "ok": true,
+      "channel": {
+        "channel_id": "01234567-890a-bcde-f012-3456789abc0",
+        "device_type": "email",
+        "installed": true,
+        "created": "2013-08-08T20:41:06",
+        "named_user_id": "some_id_that_maps_to_your_systems",
+        "tag_groups": {
+           "tag_group_1": ["tag1", "tag2"],
+           "tag_group_2": ["tag1", "tag2"]
+        },
+        "address": nil,
+        "opt_in": true,
+        "commercial_opted_in": "2018-10-28T10:34:22",
+        "commercial_opted_out": "2018-06-03T09:15:00",
+        "transactional_opted_in": "2018-10-28T10:34:22",
+        "last_registration": "2014-05-01T18:00:27"
+      }
+    }
+
     describe '#register' do
       it 'can register email channel' do
         email_channel = UA::Email.new(client: airship)
@@ -66,6 +87,17 @@ describe Urbanairship::Devices do
       it 'fails when address is not set' do
         email_channel = UA::Email.new(client: airship)
         expect{email_channel.register}.to raise_error(ArgumentError)
+      end
+    end
+
+    describe '#lookup' do
+      it 'can lookup an email address' do
+        email_channel = UA::Email.new(client: airship)
+        id = email_channel.address
+
+        allow(airship).to receive(:send_request).and_return(email_lookup_resp)
+        actual_resp = email_channel.lookup
+        expect(actual_resp).to eq(email_lookup_resp)
       end
     end
   end
