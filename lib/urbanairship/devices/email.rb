@@ -13,7 +13,8 @@ module Urbanairship
                     :timezone,
                     :transactional_opted_in,
                     :transactional_opted_out,
-                    :type
+                    :type,
+                    :channel_id
 
       def initialize(client: required('client'))
         @client = client
@@ -26,6 +27,7 @@ module Urbanairship
         @transactional_opted_in = nil
         @transactional_opted_out = nil
         @type = nil
+        @channel_id = nil
       end
 
       def register
@@ -81,6 +83,10 @@ module Urbanairship
         )
         logger.info("Looking up email channel with address #{@address}")
         response
+      end
+
+      def update
+        fail ArgumentError, 'address must be set to update email channel' if @channel_id.nil?
       end
     end
 

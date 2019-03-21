@@ -109,6 +109,7 @@ describe Urbanairship::Devices do
     describe '#update' do
       it 'can update an existing email address' do
         email_channel = UA::Email.new(client: airship)
+        email_channel.channel_id = '01234567-890a-bcde-f012-3456789abc0'
         email_channel.type = 'email'
         email_channel.commercial_opted_in = '2018-10-28T10:34:22'
         email_channel.address = 'finnthehuman@adventure.com'
@@ -116,9 +117,9 @@ describe Urbanairship::Devices do
         email_channel.locale_country = 'US'
         email_channel.locale_language = 'en'
 
-        allow(airship).to receive(:send_request).and_return(register_resp)
+        allow(airship).to receive(:send_request).and_return(register_response)
         actual_resp = email_channel.update
-        expect(actual_resp).to eq(register_resp)
+        expect(actual_resp).to eq(register_response)
       end
     end
   end
