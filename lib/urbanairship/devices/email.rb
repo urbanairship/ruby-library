@@ -87,6 +87,29 @@ module Urbanairship
 
       def update
         fail ArgumentError, 'address must be set to update email channel' if @channel_id.nil?
+
+        channel_data =  {}
+
+        channel_data['address'] = @address if @address
+        channel_data['commercial_opted_in'] = @commercial_opted_in if @commercial_opted_in
+        channel_data['commercial_opted_out'] = @commercial_opted_out if @commercial_opted_out
+        channel_data['locale_country'] = @locale_country if @locale_country
+        channel_data['locale_language'] = @locale_language if @locale_language
+        channel_data['timezone'] = @timezone if @timezone
+        channel_data['transactional_opted_in'] = @transactional_opted_in if @transactional_opted_in
+        channel_data['transactional_opted_out'] = @transactional_opted_out if @transactional_opted_out
+        channel_data['type'] = @type if @type
+
+        payload = {channel: channel_data}
+
+        response = @client.send_request(
+          method: 'PUT',
+          url: CHANNEL_URL + 'email/' + @channel_id,
+          body: JSON.dump(payload),
+          content_type: 'application/json'
+        )
+        logger.info("Updating email channel with address #{@address}")
+        response
       end
     end
 
