@@ -1,4 +1,5 @@
 require 'urbanairship'
+require 'urbanairship/devices/channel_tags'
 
 module Urbanairship
   module  Devices
