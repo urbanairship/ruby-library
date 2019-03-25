@@ -16,6 +16,7 @@ Register Email Channel
     email_channel.timezone = 'America/Los_Angeles'
     email_channel.locale_country = 'US'
     email_channel.locale_language = 'en'
+    email_channel.register
 
 .. note::
 
