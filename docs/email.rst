@@ -12,7 +12,7 @@ Register Email Channel
     email_channel = UA::Email.new(client: airship)
     email_channel.type = 'email'
     email_channel.commercial_opted_in = '2018-10-28T10:34:22'
-    email_channel.address = 'finnthehuman@adventure.com'
+    email_channel.address = 'new.name@new.domain.com'
     email_channel.timezone = 'America/Los_Angeles'
     email_channel.locale_country = 'US'
     email_channel.locale_language = 'en'
@@ -25,7 +25,6 @@ Register Email Channel
   There are a few more fields listed on the email object that can be set as well
   such as transactional_opted_in.
 
-
 Uninstall Email Channel
 -----------------------
 
@@ -35,7 +34,7 @@ Uninstall Email Channel
     UA = Urbanairship
     airship = UA::Client.new(key:'application_key', secret:'master_secret')
     email_channel = UA::Email.new(client: airship)
-    email_channel.address = 'finnthehuman@adventure.com'
+    email_channel.address = 'new.name@new.domain.com'
     email_channel.uninstall
 
 .. note::
@@ -52,7 +51,7 @@ Lookup Email Channel
     UA = Urbanairship
     airship = UA::Client.new(key:'application_key', secret:'master_secret')
     email_channel = UA::Email.new(client: airship)
-    email_channel.address = 'finnthehuman@adventure.com'
+    email_channel.address = 'new.name@new.domain.com'
     email_channel.lookup
 
 Update Email Channel
@@ -67,7 +66,7 @@ Update Email Channel
     email_channel.channel_id = '01234567-890a-bcde-f012-3456789abc0'
     email_channel.type = 'email'
     email_channel.commercial_opted_in = '2018-10-28T10:34:22'
-    email_channel.address = 'finnthehuman@adventure.com'
+    email_channel.address = 'new.name@new.domain.com'
     email_channel.timezone = 'America/Los_Angeles'
     email_channel.locale_country = 'US'
     email_channel.locale_language = 'en'
@@ -76,7 +75,7 @@ Update Email Channel
 .. note::
 
   The only thing required to make a request is the channel_id. However, anything
-  that needs to be updated must also be included. 
+  that needs to be updated must also be included.
 
 Email Tags
 ----------
@@ -91,7 +90,7 @@ removed, or set for a single email channel.
     airship = UA::Client.new(key:'application_key', secret:'master_secret')
     email_tags = UA::EmailTags.new(client: airship)
     #set an audience
-    email_tags.set_audience(email_address: 'finnthehuman@adventure.com')
+    email_tags.set_audience(email_address: 'new.name@new.domain.com')
     #add a tag
     email_tags.add(group_name: :group_name, tags: :tag1)
     #remove a tag

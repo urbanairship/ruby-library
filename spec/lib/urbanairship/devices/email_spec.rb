@@ -8,8 +8,11 @@ describe Urbanairship::Devices do
 
   describe Urbanairship::Devices::Email do
     register_response = {
-      "ok": true,
-      "channel_id": "251d3318-b3cb-4e9f-876a-ea3bfa6e47bd"
+      'body' => {
+        "ok": true,
+        "channel_id": "251d3318-b3cb-4e9f-876a-ea3bfa6e47bd"
+      },
+      'code'=> 201
     }
 
     email_success_resp = {
@@ -52,7 +55,7 @@ describe Urbanairship::Devices do
         email_channel = UA::Email.new(client: airship)
         email_channel.type = 'email'
         email_channel.commercial_opted_in = '2018-10-28T10:34:22'
-        email_channel.address = 'finnthehuman@adventure.com'
+        email_channel.address = 'new.name@new.domain.com'
         email_channel.timezone = 'America/Los_Angeles'
         email_channel.locale_country = 'US'
         email_channel.locale_language = 'en'
@@ -77,7 +80,7 @@ describe Urbanairship::Devices do
     describe '#uninstall' do
       it 'can uninstall an email channel' do
         email_channel = UA::Email.new(client: airship)
-        email_channel.address = 'finnthehuman@adventure.com'
+        email_channel.address = 'new.name@new.domain.com'
 
         allow(airship).to receive(:send_request).and_return(email_accepted_resp)
         actual_resp = email_channel.uninstall
@@ -93,7 +96,7 @@ describe Urbanairship::Devices do
     describe '#lookup' do
       it 'can lookup an email address' do
         email_channel = UA::Email.new(client: airship)
-        email_channel.address = 'finnthehuman@adventure.com'
+        email_channel.address = 'new.name@new.domain.com'
 
         allow(airship).to receive(:send_request).and_return(email_lookup_resp)
         actual_resp = email_channel.lookup
@@ -112,7 +115,7 @@ describe Urbanairship::Devices do
         email_channel.channel_id = '01234567-890a-bcde-f012-3456789abc0'
         email_channel.type = 'email'
         email_channel.commercial_opted_in = '2018-10-28T10:34:22'
-        email_channel.address = 'finnthehuman@adventure.com'
+        email_channel.address = 'new.name@new.domain.com'
         email_channel.timezone = 'America/Los_Angeles'
         email_channel.locale_country = 'US'
         email_channel.locale_language = 'en'
@@ -125,7 +128,7 @@ describe Urbanairship::Devices do
   end
 
   describe Urbanairship::EmailTags do
-    email_list = %w(finnthehuman@adventure.com jakethedog@adventure.com lumpyspaceprincess@adventure.com)
+    email_list = %w(new.name@new.domain.com new.another@new.domain.com onemore.name@new.domain.com)
     let(:email_tags) { UA::EmailTags.new(client: airship) }
 
     describe '#set_audience' do
