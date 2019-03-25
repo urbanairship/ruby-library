@@ -62,7 +62,7 @@ module Urbanairship
         fail ArgumentError, 'address must be set to register email channel' if @address.nil?
 
         payload = {
-          'email_address': @email_address
+          'email_address': @address
         }
 
         response = @client.send_request(
