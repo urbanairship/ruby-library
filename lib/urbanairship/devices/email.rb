@@ -52,7 +52,7 @@ module Urbanairship
           method: 'POST',
           body: JSON.dump(payload),
           url: CHANNEL_URL + 'email',
-          content_type: 'application.json'
+          content_type: 'application/json'
         )
         logger.info("Registering email channel with address #{@address}")
         response
@@ -69,7 +69,7 @@ module Urbanairship
           method: 'POST',
           body: JSON.dump(payload),
           url: CHANNEL_URL + 'email/uninstall',
-          content_type: 'application.json'
+          content_type: 'application/json'
         )
         logger.info("Uninstalling email channel with address #{@address}")
         response
