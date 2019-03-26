@@ -465,7 +465,7 @@ describe Urbanairship do
         display_type: 'banner',
         display: 'top',
         expiry: 0,
-        actions: { add_tag: 'in_app' }, 
+        actions: { add_tag: 'in_app' },
         interactive: {
             type: 'a_type',
             button_actions: {
@@ -501,6 +501,12 @@ describe Urbanairship do
           alert: 'a shorter alert for sms users',
           expiry: '2020-04-01T12:00:00'
         )
+      end
+    end
+
+    context 'Email Message' do
+      it 'builds an email notificaiton' do
+        
       end
     end
 

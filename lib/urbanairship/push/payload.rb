@@ -8,7 +8,7 @@ module Urbanairship
       # Notification Object for a Push Payload
       def notification(alert: nil, ios: nil, android: nil, amazon: nil,
                        web: nil, wns: nil, open_platforms: nil,
-                       actions: nil, interactive: nil, sms: nil)
+                       actions: nil, interactive: nil, sms: nil, email: nil)
         payload = compact_helper({
           alert: alert,
           ios: ios,
@@ -18,7 +18,8 @@ module Urbanairship
           wns: wns,
           actions: actions,
           interactive: interactive,
-          sms: sms
+          sms: sms,
+          email: email
         })
         if open_platforms
           open_platforms.each {|platform, overrides|
@@ -178,6 +179,10 @@ module Urbanairship
           alert: alert,
           expiry: expiry
           })
+      end
+
+      def email()
+        
       end
 
       def all
