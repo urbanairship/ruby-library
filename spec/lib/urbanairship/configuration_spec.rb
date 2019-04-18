@@ -5,6 +5,16 @@ require 'urbanairship/configuration'
 describe Urbanairship::Configuration do
   subject(:config) { described_class.new }
 
+  describe '#custom_logger' do
+    it 'initializes with the original value "nil"' do
+      expect(config.custom_logger).to be_nil
+    end
+
+    it 'sets the lib logger as the custom logger' do
+      expect { config.custom_logger = Logger.new(STDOUT) }.to change(config, :custom_logger).from(nil).to(an_instance_of(Logger))
+    end
+  end
+
   describe '#log_path' do
     it 'initializes with the original value "nil"' do
       expect(config.log_path).to be_nil

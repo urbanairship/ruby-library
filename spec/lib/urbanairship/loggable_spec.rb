@@ -2,6 +2,33 @@ require 'spec_helper'
 require 'urbanairship'
 
 describe Urbanairship::Loggable do
+  describe '.logger' do
+    before do
+      described_class.instance_variable_set(:@logger, nil)
+      Urbanairship.configure do |config|
+        config.custom_logger = custom_logger
+      end
+    end
+
+    context 'when there is a custom_logger' do
+      let(:custom_logger) { Logger.new(STDOUT) }
+
+      it 'uses the custom_logger' do
+        expect(described_class).not_to receive(:create_logger)
+        expect(described_class.logger).to eq(Urbanairship.configuration.custom_logger)
+      end
+    end
+
+    context 'when there is no custom_logger' do
+      let(:custom_logger) { nil }
+
+      it 'uses the default lib logger' do
+        expect(described_class).to receive(:create_logger).and_call_original
+        expect(described_class.logger.instance_variable_get(:@logdev).filename).to eq('urbanairship.log')
+      end
+    end
+  end
+
   describe '.create_logger' do
     subject(:logger) { described_class.create_logger }
 
