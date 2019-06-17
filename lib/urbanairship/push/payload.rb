@@ -187,6 +187,12 @@ module Urbanairship
                 plaintext_body: required('plaintext_body'), reply_to: required('reply_to'),
                 sender_address: required('sender_address'), sender_name: required('sender_name'),
                 subject: required('subject'))
+        fail ArgumentError, 'Message type must not be nil' if message_type.nil?
+        fail ArgumentError, 'Plaintext Body must not be nil' if plaintext_body.nil?
+        fail ArgumentError, 'Reply To must not be nil' if reply_to.nil?
+        fail ArgumentError, 'Sender address must not be nil' if sender_address.nil?
+        fail ArgumentError, 'Sender name must not be nil' if sender_name.nil?
+        fail ArgumentError, 'Subject must not be nil' if subject.nil?
         compact_helper({
             bypass_opt_in_level: bypass_opt_in_level,
             html_body: html_body,
