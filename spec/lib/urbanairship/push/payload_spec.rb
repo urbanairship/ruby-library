@@ -523,6 +523,36 @@ describe Urbanairship do
           UA.email(message_type: nil)
         }.to raise_error ArgumentError
       end
+
+      it 'fails when plaintext_body is not set' do
+        expect {
+          UA.email(plaintext_body: nil)
+        }.to raise_error ArgumentError
+      end
+
+      it 'fails when reply_to is not set' do
+        expect {
+          UA.email(reply_to: nil)
+        }.to raise_error ArgumentError
+      end
+
+      it 'fails when sender_address is not set' do
+        expect {
+          UA.email(sender_address: nil)
+        }.to raise_error ArgumentError
+      end
+
+      it 'fails when sender_name is not set' do
+        expect {
+          UA.email(sender_name: nil)
+        }.to raise_error ArgumentError
+      end
+
+      it 'fails when subject is not set' do
+        expect {
+          UA.email(subject: nil)
+        }.to raise_error ArgumentError
+      end
     end
 
   end
