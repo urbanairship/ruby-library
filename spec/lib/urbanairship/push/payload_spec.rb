@@ -517,6 +517,12 @@ describe Urbanairship do
           subject: "Did you get that thing I sent you?"
         )
       end
+
+      it 'fails when message_type is not set' do
+        expect {
+          UA.email(message_type: nil)
+        }.to raise_error ArgumentError
+      end
     end
 
   end
