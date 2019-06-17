@@ -183,8 +183,10 @@ module Urbanairship
 
 
       #Email specific portion of Push Notification Object
-      def email(bypass_opt_in_level: nil, html_body: nil, message_type: nil, plaintext_body: nil,
-                reply_to: nil, sender_address: nil, sender_name: nil, subject: nil)
+      def email(bypass_opt_in_level: nil, html_body: nil, message_type: required('message_type'),
+                plaintext_body: required('plaintext_body'), reply_to: required('reply_to'),
+                sender_address: required('sender_address'), sender_name: required('sender_name'),
+                subject: required('subject'))
         compact_helper({
             bypass_opt_in_level: bypass_opt_in_level,
             html_body: html_body,
