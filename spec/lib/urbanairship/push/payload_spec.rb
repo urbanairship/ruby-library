@@ -506,7 +506,16 @@ describe Urbanairship do
 
     context 'Email Message' do
       it 'builds an email notificaiton' do
-        
+        payload = UA.email(
+          bypass_opt_in_level: false,
+          html_body: "<h2>Richtext body goes here</h2><p>Wow!</p><p><a data-ua-unsubscribe=\"1\" title=\"unsubscribe\" href=\"http://unsubscribe.urbanairship.com/email/success.html\">Unsubscribe</a></p>",
+          message_type: "commercial",
+          plaintext_body: "Plaintext version goes here [[ua-unsubscribe href=\"http://unsubscribe.urbanairship.com/email/success.html\"]]",
+          reply_to: "no-reply@urbanairship.com",
+          sender_address: "team@urbanairship.com",
+          sender_name: "Airship",
+          subject: "Did you get that thing I sent you?"
+        )
       end
     end
 
