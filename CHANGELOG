@@ -6,6 +6,7 @@
 - Adds SMS Send functionality for Notification object
 - Updates named_user.rb to include NamedUserUninstaller class
 - Adds Email Send and Registration support to Payload class
+- Adds functionality for custom logger
 
 --------------------
 5.0.1
