@@ -287,6 +287,18 @@ platform-specific alerts, and we set a number of other platform-specific options
         )
     )
 
+**Example SMS Override**
+
+.. code-block:: ruby
+
+    push.notification = UA.notification(
+        alert: 'Hello World!',
+        sms: UA.sms(
+            alert: 'Hello SMS!',
+            expiry: '2018-04-01T12:00:00'
+        )
+    )
+
 **Example Open Platform Override**
 
 .. code-block:: ruby
