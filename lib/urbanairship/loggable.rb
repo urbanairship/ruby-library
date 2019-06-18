@@ -1,15 +1,13 @@
 require 'logger'
 
-
 module Urbanairship
   module Loggable
-
     def logger
       Loggable.logger
     end
 
     def self.logger
-      @logger ||= Loggable.create_logger
+      @logger ||= Urbanairship.configuration.custom_logger || Loggable.create_logger
     end
 
     def self.create_logger

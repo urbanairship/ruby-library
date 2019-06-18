@@ -56,6 +56,14 @@ In your app initialization, you can do something like the following:
     >>>   config.timeout = 60
     >>> end
 
+If you want to use a custom logger (e.g Rails.logger), you can do:
+
+    >>> require 'urbanairship'
+    >>> Urbanairship.configure do |config|
+    >>>   config.custom_logger = Rails.logger
+    >>>   config.log_level = Logger::WARN
+    >>>   config.timeout = 60
+    >>> end
 
 Available Configurations
 ------------------------
