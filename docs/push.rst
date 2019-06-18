@@ -287,6 +287,23 @@ platform-specific alerts, and we set a number of other platform-specific options
         )
     )
 
+**Example Email Override**
+
+.. code-block:: ruby
+
+    push.notification = UA.notification(
+        alert: 'Hello World!',
+        email: UA.email(
+            subject: 'Hello Inbox!',
+            html_body: '<h2>Richtext body goes here</h2><p>Wow!</p><p><a data-ua-unsubscribe=\"1\" title=\"unsubscribe\" href=\"http://unsubscribe.urbanairship.com/email/success.html\">Unsubscribe</a></p>',
+            plaintext_body: 'Plaintext version goes here [[ua-unsubscribe href=\"http://unsubscribe.urbanairship.com/email/success.html\"]]',
+            message_type: 'commercial',
+            sender_name: 'Airship',
+            sender_address: 'team@urbanairship.com',
+            reply_to: 'no-reply@urbanairship.com'
+        )
+    )
+
 **Example SMS Override**
 
 .. code-block:: ruby
