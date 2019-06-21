@@ -5,7 +5,8 @@
 - Adds SMS Register implementation. Register, Opt-out, Uninstall, Lookup
 - Adds SMS Send functionality for Notification object
 - Updates named_user.rb to include NamedUserUninstaller class
-- Adds Email Send and Registration support to Payload class
+- Adds Email Send support
+- Adds Email Registration support
 - Adds functionality for custom logger
 
 --------------------
