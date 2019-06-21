@@ -304,6 +304,10 @@ platform-specific alerts, and we set a number of other platform-specific options
         )
     )
 
+.. note::
+
+  Email override MUST be used for sending emails.
+
 **Example SMS Override**
 
 .. code-block:: ruby
@@ -315,6 +319,10 @@ platform-specific alerts, and we set a number of other platform-specific options
             expiry: '2018-04-01T12:00:00'
         )
     )
+
+.. note::
+
+  SMS override MUST be used for sending SMS messages. 
 
 **Example Open Platform Override**
 
