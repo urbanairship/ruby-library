@@ -200,7 +200,7 @@ single piece of text:
 You can override the notification payload with one of the following platform
 keys::
 
-   ios, amazon, android, wns, web, open_platforms, actions, interactive, sms, email
+   ios, amazon, android, wns
 
 In the examples below, we override the general ``'Hello World!'`` alert with
 platform-specific alerts, and we set a number of other platform-specific options.
