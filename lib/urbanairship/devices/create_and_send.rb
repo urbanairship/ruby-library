@@ -8,7 +8,17 @@ module Urbanairship
       attr_accessor :
 
       def initialize(client: required('client'))
-        
+
       end
 
       def create_and_send
+
+      end
+
+      def validate
+
+      end
+
+      def operation
+        
+      end
