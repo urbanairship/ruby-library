@@ -5,7 +5,7 @@ module Urbanairship
     class CreateAndSend
       include Urbanairship::Common
       include Urbanairship::Loggable
-      attr_accessor :create_and_send,
+      attr_accessor :addresses,
                     :ua_address,
                     :ua_commercial_opeted_in,
                     :ua_transactional_opted_in,
@@ -16,7 +16,7 @@ module Urbanairship
 
       def initialize(client: required('client'))
         @client = client
-        @create_and_send = nil
+        @addresses = nil
         @ua_address = nil
         @ua_commercial_opeted_in = nil
         @ua_transactional_opted_in = nil
@@ -26,7 +26,10 @@ module Urbanairship
         @email = nil
       end
 
-      def create_and_send()
+      def create_and_send
+        @addresses.each do |address|
+          fail ArgumentError, 'each create_and_send object must have a ua_address' if address[:ua_address].nil?
+        end
         #need ua_address
         #need ua_commercial_opeted_in
         #need ua_transactional_opted_in
@@ -34,9 +37,9 @@ module Urbanairship
       end
 
       def email_channel
-        fail ArgumentError, 'address must be set to register email channel' if @create_and_send.nil?
-        fail ArgumentError, 'address must be set to register email channel' if @device_types.nil?
-        fail ArgumentError, 'address must be set to register email channel' if @notification.nil?
+        fail ArgumentError, 'create and send object must be set for email channel' if @create_and_send.nil?
+        fail ArgumentError, 'device type array must be set for email channel' if @device_types.nil?
+        fail ArgumentError, 'notification object must be set for email channel' if @notification.nil?
 
         payload = {
           'audience': {
@@ -53,7 +56,8 @@ module Urbanairship
           url: CREATE_AND_SEND_URL
           content_type: 'application/json'
         )
-        logger.info("Registering email channel with address #{@address}")
+        logger.info("Doing create and send for email channel")
+        # logger.info("Registering email channel with address #{@address}")
         response
       end
 
@@ -76,3 +80,7 @@ module Urbanairship
       def operation
 
       end
+
+    end
+  end
+end
