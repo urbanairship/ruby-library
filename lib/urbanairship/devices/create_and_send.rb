@@ -5,8 +5,7 @@ module Urbanairship
     class CreateAndSend
       include Urbanairship::Common
       include Urbanairship::Loggable
-      attr_accessor :audience,
-                    :create_and_send,
+      attr_accessor :create_and_send,
                     :ua_address,
                     :ua_commercial_opeted_in,
                     :ua_transactional_opted_in,
@@ -17,7 +16,6 @@ module Urbanairship
 
       def initialize(client: required('client'))
         @client = client
-        @audience = nil
         @create_and_send = nil
         @ua_address = nil
         @ua_commercial_opeted_in = nil
@@ -29,18 +27,34 @@ module Urbanairship
       end
 
       def create_and_send()
-
+        #need ua_address
+        #need ua_commercial_opeted_in
+        #need ua_transactional_opted_in
+        #need need "substitutions"
       end
 
       def email_channel
-        fail ArgumentError, 'address must be set to register email channel' if @audience.nil?
         fail ArgumentError, 'address must be set to register email channel' if @create_and_send.nil?
         fail ArgumentError, 'address must be set to register email channel' if @device_types.nil?
         fail ArgumentError, 'address must be set to register email channel' if @notification.nil?
 
         payload = {
-          
+          'audience': {
+            'create_and_send': @audience
+          },
+          'device_types': @device_type,
+          'notification': @notification,
+          'campaigns': @campaigns
         }
+
+        response = @client.send_request(
+          method: 'POST',
+          body: JSON.dump(payload),
+          url: CREATE_AND_SEND_URL
+          content_type: 'application/json'
+        )
+        logger.info("Registering email channel with address #{@address}")
+        response
       end
 
       def sms_channel
