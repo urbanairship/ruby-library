@@ -26,7 +26,7 @@ describe Urbanairship::Devices do
         "ua_commercial_opted_in": "2018-11-29T10:34:22",
       },
       {
-        "ua_address" : "ben@icetown.com",
+        "ua_address": "ben@icetown.com",
         "ua_commercial_opted_in": "2018-11-29T12:45:10",
       }
     ]
@@ -52,7 +52,7 @@ describe Urbanairship::Devices do
         cns_email = UA::CreateAndSend.new(client: airship)
         cns_email.addresses = addresses
         cns_email.create_and_send
-        cns_email.campagins = campaigns
+        cns_email.campaigns = campaigns
         cns_email.device_types = ['email']
         cns_email.notification = notification
 
@@ -60,5 +60,8 @@ describe Urbanairship::Devices do
         actual_resp = cns_email.email_channel
         expect(actual_resp).to eq(email_response)
       end
+
+    end
+
   end
 end

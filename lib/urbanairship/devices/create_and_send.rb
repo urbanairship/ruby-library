@@ -1,4 +1,5 @@
 require 'urbanairship'
+require 'pry'
 
 module Urbanairship
   module Devices
@@ -28,7 +29,7 @@ module Urbanairship
 
       def create_and_send
         @addresses.each do |address|
-          fail ArgumentError, 'each create_and_send object must have a ua_address' if address[:ua_address].nil?
+          fail ArgumentError, 'each create_and_send object must have a ua_address' if !address[:ua_address]
         end
         #need ua_address
         #need ua_commercial_opeted_in
@@ -37,13 +38,15 @@ module Urbanairship
       end
 
       def email_channel
-        fail ArgumentError, 'create and send object must be set for email channel' if @create_and_send.nil?
+        fail ArgumentError, 'create and send object must be set for email channel' if @addresses.nil?
         fail ArgumentError, 'device type array must be set for email channel' if @device_types.nil?
         fail ArgumentError, 'notification object must be set for email channel' if @notification.nil?
 
+        create_and_send
+
         payload = {
           'audience': {
-            'create_and_send': @audience
+            'create_and_send': @addresses
           },
           'device_types': @device_type,
           'notification': @notification,
@@ -53,7 +56,7 @@ module Urbanairship
         response = @client.send_request(
           method: 'POST',
           body: JSON.dump(payload),
-          url: CREATE_AND_SEND_URL
+          url: CREATE_AND_SEND_URL,
           content_type: 'application/json'
         )
         logger.info("Doing create and send for email channel")
