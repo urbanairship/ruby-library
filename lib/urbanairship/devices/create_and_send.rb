@@ -1,5 +1,4 @@
 require 'urbanairship'
-require 'pry'
 
 module Urbanairship
   module Devices
