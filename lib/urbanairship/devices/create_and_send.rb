@@ -27,9 +27,9 @@ module Urbanairship
         @email = nil
       end
 
-      def create_and_send
+      def validate_address
         @addresses.each do |address|
-          fail ArgumentError, 'each create_and_send object must have a ua_address' if !address[:ua_address]
+          fail ArgumentError, 'each address component must have a ua_address' if !address[:ua_address]
         end
         #need ua_address
         #need ua_commercial_opeted_in
@@ -42,7 +42,7 @@ module Urbanairship
         fail ArgumentError, 'device type array must be set for email channel' if @device_types.nil?
         fail ArgumentError, 'notification object must be set for email channel' if @notification.nil?
 
-        create_and_send
+        validate_address
 
         payload = {
           'audience': {
@@ -77,7 +77,24 @@ module Urbanairship
       end
 
       def validate
+        payload = {
+          'audience': {
+            'create_and_send': @addresses
+          },
+          'device_types': @device_type,
+          'notification': @notification,
+          'campaigns': @campaigns
+        }
 
+        response = @client.send_request(
+          method: 'POST',
+          body: JSON.dump(payload),
+          url: CREATE_AND_SEND_URL + 'validate',
+          content_type: 'application/json'
+        )
+        logger.info("Validating payload for create and send")
+        # logger.info("Registering email channel with address #{@address}")
+        response
       end
 
       def operation

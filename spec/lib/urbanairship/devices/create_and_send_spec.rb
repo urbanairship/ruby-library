@@ -51,7 +51,6 @@ describe Urbanairship::Devices do
       it 'creates and sends to email channels' do
         cns_email = UA::CreateAndSend.new(client: airship)
         cns_email.addresses = addresses
-        cns_email.create_and_send
         cns_email.campaigns = campaigns
         cns_email.device_types = ['email']
         cns_email.notification = notification
