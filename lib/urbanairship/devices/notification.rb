@@ -29,6 +29,25 @@ module Urbanairship
       end
 
       def email_override
+        fail ArgumentError, 'message_type is needed for email override' if @message_type.nil?
+        fail ArgumentError, 'plaintext_body is needed for email override' if @plaintext_body.nil?
+        fail ArgumentError, 'reply_to is needed for email override' if @reply_to.nil?
+        fail ArgumentError, 'sender_address is needed for email override' if @sender_address.nil?
+        fail ArgumentError, 'sender_name is needed for email override' if @sender_name.nil?
+        fail ArgumentError, 'subject is needed for email override' if @subject.nil?
+
+        override = {'email': {
+          'bcc': @bcc,
+          'bypass_opt_in_level': @bypass_opt_in_level,
+          'html_body': @html_body,
+          'message_type': @message_type,
+          'plaintext_body': @plaintext_body,
+          'reply-to': @reply_to,
+          'sender_address': @sender_address,
+          'sender_name': @sender_name,
+          'subject': @subject
+        }}
+        override
       end
 
       def email_with_inline_template
