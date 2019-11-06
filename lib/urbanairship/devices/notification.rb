@@ -2,7 +2,7 @@ require 'urbanairship'
 
 module Urbanairship
   module Devices
-    class CreateAndSend
+    class Notification
       include Urbanairship::Common
       include Urbanairship::Loggable
       attr_accessor :bcc,
