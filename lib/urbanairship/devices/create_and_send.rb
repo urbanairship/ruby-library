@@ -1,4 +1,5 @@
 require 'urbanairship'
+require 'urbanairship/devices/notification'
 
 module Urbanairship
   module Devices
@@ -6,24 +7,16 @@ module Urbanairship
       include Urbanairship::Common
       include Urbanairship::Loggable
       attr_accessor :addresses,
-                    :ua_address,
-                    :ua_commercial_opeted_in,
-                    :ua_transactional_opted_in,
                     :device_types,
                     :notification,
                     :campaigns,
-                    :email
 
       def initialize(client: required('client'))
         @client = client
         @addresses = nil
-        @ua_address = nil
-        @ua_commercial_opeted_in = nil
-        @ua_transactional_opted_in = nil
         @device_types = nil
         @notification = nil
         @campaigns = nil
-        @email = nil
       end
 
       def validate_address
@@ -34,6 +27,10 @@ module Urbanairship
         #need ua_commercial_opeted_in
         #need ua_transactional_opted_in
         #need need "substitutions"
+      end
+
+      def create_and_send(notification)
+
       end
 
       def email_channel

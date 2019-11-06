@@ -1,8 +1,7 @@
 require 'spec_helper'
 require 'urbanairship'
 require 'urbanairship/devices/create_and_send'
-require 'urbanairship/devices/email'
-require 'urbanairship/devices/sms'
+require 'urbanairship/devices/notification'
 
 describe Urbanairship::Devices do
   UA = Urbanairship
