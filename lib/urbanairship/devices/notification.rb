@@ -1,4 +1,5 @@
 require 'urbanairship'
+require 'json'
 
 module Urbanairship
   module Devices
