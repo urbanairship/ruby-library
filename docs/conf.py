@@ -50,9 +50,11 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
+year = datetime.now().year
 project = u'ruby-library'
-copyright = u'2015, Urban Airship Ruby Library'
-author = u'Urban Airship'
+author = u'Airship'
+copyright = u'%d, %s' % (year, author)
+
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
