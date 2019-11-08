@@ -38,5 +38,10 @@ email_override_payload = {"email": {
       end
     end
 
+    describe '#email_with_inline_template' do
+      it 'can format email with inline template correctly' do
+        notification = UA::Notification.new(client: airship)
+      end
+    end
   end
 end
