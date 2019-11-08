@@ -1,8 +1,8 @@
-Urban Airship Ruby Library
+Airship Ruby Library
 ==========================
 
-``urbanairship`` is a Ruby library for using the `Urban Airship
-<http://urbanairship.com/>`_ web service API for push notifications and
+``urbanairship`` is a Ruby library for using the `Airship
+<http://airship.com/>`_ web service API for push notifications and
 rich app pages.
 
 
@@ -79,7 +79,7 @@ Indices and tables
 * :ref:`search`
 
 
-.. _channels: http://docs.urbanairship.com/topic-guides/channels.html
+.. _channels: http://docs.airship.com/topic-guides/channels.html
 .. _unirest: http://unirest.io/ruby.html
 .. _github: https://github.com/urbanairship/ruby-library
 .. _rspec: https://nose.readthedocs.org/en/latest/

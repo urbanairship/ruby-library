@@ -11,7 +11,7 @@ describe Urbanairship::Push do
       "body" => {
           "ok" => "true",
           "push_ids" => ["04fca66c-f33a-11e4-9c82-5ff5f086852f"],
-          "schedule_urls" => ["https://go.urbanairship.com/api/schedules/0492662a-1b52-4343-a1f9-c6b0c72931c0"]
+          "schedule_urls" => ["https://go.airship.com/api/schedules/0492662a-1b52-4343-a1f9-c6b0c72931c0"]
       },
       "code" => "200",
       "headers" => {
@@ -118,10 +118,10 @@ describe Urbanairship::Push do
             actions: UA.actions(
                 add_tag: 'new_tag',
                 remove_tag: 'old_tag',
-                share: 'Check out Urban Airship!',
+                share: 'Check out Airship!',
                 open_: {
                     type: 'url',
-                    content: 'http://www.urbanairship.com'
+                    content: 'http://www.airship.com'
                 },
                 app_defined: { some_app_defined_action: 'some_values' }
             )
@@ -132,10 +132,10 @@ describe Urbanairship::Push do
                 actions: {
                     add_tag: 'new_tag',
                     remove_tag: 'old_tag',
-                    share: 'Check out Urban Airship!',
+                    share: 'Check out Airship!',
                     open: {
                         type: 'url',
-                        content: 'http://www.urbanairship.com'
+                        content: 'http://www.airship.com'
                     },
                     app_defined: {
                         some_app_defined_action: 'some_values'
@@ -155,7 +155,7 @@ describe Urbanairship::Push do
                         remove_tag: 'never_clicked_yes',
                         open: {
                             type: 'url',
-                            content: 'http://www.urbanairship.com'
+                            content: 'http://www.airship.com'
                         }
                     },
                     no: {
@@ -174,7 +174,7 @@ describe Urbanairship::Push do
                             remove_tag: 'never_clicked_yes',
                             open: {
                                 type: 'url',
-                                content: 'http://www.urbanairship.com'
+                                content: 'http://www.airship.com'
                             }
                         },
                         no: {
@@ -227,7 +227,7 @@ describe Urbanairship::Push do
       end
 
       it 'sends a scheduled push' do
-        SCHEDULE_URL = 'https://go.urbanairship.com/api/schedules/0492662a-1b52-4343-a1f9-c6b0c72931c0'
+        SCHEDULE_URL = 'https://go.airship.com/api/schedules/0492662a-1b52-4343-a1f9-c6b0c72931c0'
         airship = UA::Client.new(key: '123', secret: 'abc')
         allow(airship)
             .to receive(:send_request)
@@ -273,7 +273,7 @@ describe Urbanairship::Push do
                     .and_return(mock_response)
         a_push.client = airship
 
-        lookup_url = 'https://go.urbanairship.com/api/schedules/0492662a-1b52-4343-a1f9-c6b0c72931c0'
+        lookup_url = 'https://go.airship.com/api/schedules/0492662a-1b52-4343-a1f9-c6b0c72931c0'
         scheduled_push = UA::Push::ScheduledPush.from_url(
             client: airship,
             url: lookup_url
@@ -292,7 +292,7 @@ describe Urbanairship::Push do
       end
 
       it 'succeeds with a URL' do
-        lookup_url = 'https://go.urbanairship.com/api/schedules/0492662a-1b52-4343-a1f9-c6b0c72931c0'
+        lookup_url = 'https://go.airship.com/api/schedules/0492662a-1b52-4343-a1f9-c6b0c72931c0'
         airship = UA::Client.new(key: '123', secret: 'abc')
         allow(airship)
             .to receive(:send_request)

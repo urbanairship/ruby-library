@@ -1,7 +1,7 @@
 Defining and Sending Push Notifications
 =======================================
 
-The Urban Airship Ruby Library strives to match the standard Urban
+The Airship Ruby Library strives to match the standard Urban
 Airship JSON format for specifying push notifications. When creating a
 push notification, you:
 
@@ -140,7 +140,7 @@ Select devices that do not match the given selectors:
 Select a location expression. Location selectors are made up of either an id or
 an alias and a date period specifier. Use a date specification function to
 generate the time period specifier. Location aliases can be found here:
-http://docs.urbanairship.com/reference/location_boundary_catalog.html
+http://docs.airship.com/reference/location_boundary_catalog.html
 
 ID location example:
 
@@ -283,7 +283,7 @@ platform-specific alerts, and we set a number of other platform-specific options
             title: 'My Title',
             extra: { 'key' => 'value', 'key2' => 'value2' },
             require_interaction: true,
-            icon: { 'url' => 'https://www.urbanairship.com'}
+            icon: { 'url' => 'https://www.airship.com'}
         )
     )
 
@@ -295,12 +295,12 @@ platform-specific alerts, and we set a number of other platform-specific options
         alert: 'Hello World!',
         email: UA.email(
             subject: 'Hello Inbox!',
-            html_body: '<h2>Richtext body goes here</h2><p>Wow!</p><p><a data-ua-unsubscribe=\"1\" title=\"unsubscribe\" href=\"http://unsubscribe.urbanairship.com/email/success.html\">Unsubscribe</a></p>',
-            plaintext_body: 'Plaintext version goes here [[ua-unsubscribe href=\"http://unsubscribe.urbanairship.com/email/success.html\"]]',
+            html_body: '<h2>Richtext body goes here</h2><p>Wow!</p><p><a data-ua-unsubscribe=\"1\" title=\"unsubscribe\" href=\"http://unsubscribe.airship.com/email/success.html\">Unsubscribe</a></p>',
+            plaintext_body: 'Plaintext version goes here [[ua-unsubscribe href=\"http://unsubscribe.airship.com/email/success.html\"]]',
             message_type: 'commercial',
             sender_name: 'Airship',
-            sender_address: 'team@urbanairship.com',
-            reply_to: 'no-reply@urbanairship.com'
+            sender_address: 'team@airship.com',
+            reply_to: 'no-reply@airship.com'
         )
     )
 
@@ -373,10 +373,10 @@ platform-specific alerts, and we set a number of other platform-specific options
 Actions
 -------
 
-Urban Airship Actions provides a convenient way to automatically
+Airship Actions provides a convenient way to automatically
 perform tasks by name in response to push notifications,
 Rich App Page interactions and JavaScript. More information at
-http://docs.urbanairship.com/api/ua.html#actions, example:
+http://docs.airship.com/api/ua.html#actions, example:
 
 .. code-block:: ruby
 
@@ -385,7 +385,7 @@ http://docs.urbanairship.com/api/ua.html#actions, example:
     actions: UA.actions(
         add_tag: 'new_tag',
         remove_old: 'old_tag',
-        share: 'Check out Urban Airship!',
+        share: 'Check out Airship!',
         open_: {
             type: 'url',
             content: 'http://www.example.com'
@@ -402,7 +402,7 @@ Interactive Notifications
 The interactive notification payload determines the ways you can interact
 with a notification. It contains two attributes: "type" (mandatory) and
 "button_actions" (optional). More information at
-http://docs.urbanairship.com/api/ua.html#interactive-notifications
+http://docs.airship.com/api/ua.html#interactive-notifications
 Example:
 
 .. code-block:: ruby

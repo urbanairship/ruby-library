@@ -3,7 +3,7 @@ Tags
 
 This reference covers tag operations on channels.
 
-For more information, see: http://docs.urbanairship.com/api/ua.html#tags.
+For more information, see: http://docs.airship.com/api/ua.html#tags.
 
 
 ChannelTags

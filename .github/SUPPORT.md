@@ -1,10 +1,10 @@
 # Support Requests
 
-All requests for support including implementation support and feature requests are made to the Urban Airship support team. 
+All requests for support including implementation support and feature requests are made to the Airship support team. 
 
-You can contact them by visiting https://support.urbanairship.com/
+You can contact them by visiting https://support.airship.com/
 
 # Documentation
 
 Documentation for the library can be found here:
-https://docs.urbanairship.com/reference/libraries/ruby/
+https://docs.airship.com/reference/libraries/ruby/

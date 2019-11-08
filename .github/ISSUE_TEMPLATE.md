@@ -1,6 +1,6 @@
 We only accept issues for bug reporting purposes. 
 
-**All feature requests, implementation concerns or general queries should be sent to our [support team](https://support.urbanairship.com/).**
+**All feature requests, implementation concerns or general queries should be sent to our [support team](https://support.airship.com/).**
 
 Before completing the form below, please check the following:
 
