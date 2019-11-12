@@ -2,12 +2,12 @@ Static Lists
 ============
 
 With the Static List endpoint, you can easily target and manage
-lists of devices that are defined in your systems outside of Urban Airship.
+lists of devices that are defined in your systems outside of Airship.
 Any list or grouping of devices for which the canonical source of data about
 the members is elsewhere is a good candidate for Static Lists, e.g., members
 of a customer loyalty program.
 For more information, see: `the API documentation on Static Lists
-<http://docs.urbanairship.com/api/ua.html#static-lists>`__
+<http://docs.airship.com/api/ua.html#static-lists>`__
 
 
 Create List

@@ -9,7 +9,7 @@ Returns detailed report information about a specific push notification.
 Use the push_id, which is the identifier returned by the API that represents a
 specific push message delivery.
 For more information, see `the API documentation on individual push statistics
-<http://docs.urbanairship.com/api/ua.html#individual-push-response-statistics>`_
+<http://docs.airship.com/api/ua.html#individual-push-response-statistics>`_
 
 .. code-block:: ruby
 
@@ -26,7 +26,7 @@ Devices Report
 Returns an app’s opted-in and installed device counts broken out by device
 type. This endpoint returns the same data that populates the Devices Report.
 For more information, see `the API documentation on device reports
-<http://docs.urbanairship.com/api/ua.html#devices-report-api>`_
+<http://docs.airship.com/api/ua.html#devices-report-api>`_
 
 .. code-block:: ruby
 
@@ -42,7 +42,7 @@ Push Report
 
 Get the number of pushes you have sent within a specified time period.
 For more information, see `the API documentation on push reports
-<http://docs.urbanairship.com/api/ua.html#push-report>`_
+<http://docs.airship.com/api/ua.html#push-report>`_
 
 .. code-block:: ruby
 
@@ -69,7 +69,7 @@ Response Report
 
 Get the number of direct and influenced opens of your app. For more 
 information, see `the API documentation on reponse reports
-<http://docs.urbanairship.com/api/ua.html#response-report>`_
+<http://docs.airship.com/api/ua.html#response-report>`_
 
 .. code-block:: ruby
 
@@ -98,7 +98,7 @@ Get a listing of all pushes and basic response information in a given
 timeframe by instantiating an iterator object using ResponseList.
 Start and end date times are required parameters.
 For more information, see `the API documentation on response listings
-<http://docs.urbanairship.com/api/ua.html#response-listing>`_
+<http://docs.airship.com/api/ua.html#response-listing>`_
 
 .. code-block:: ruby
 
@@ -127,7 +127,7 @@ App Opens Report
 
 Get the number of users who have opened your app within the specified time 
 period. For more information, see `the API documentation on app open reports
-<http://docs.urbanairship.com/api/ua.html#app-opens-report>`_
+<http://docs.airship.com/api/ua.html#app-opens-report>`_
 
 .. code-block:: ruby
 
@@ -154,7 +154,7 @@ Time In App Report
 Get the average amount of time users have spent in your app within the 
 specified time period. For more information, see `the API documentation
 on time-in-app reports
-<http://docs.urbanairship.com/api/ua.html#time-in-app-report>`_
+<http://docs.airship.com/api/ua.html#time-in-app-report>`_
 
 .. code-block:: ruby
 
@@ -181,7 +181,7 @@ Opt-In Report
 Get the number of opted-in push users who access the app within the specified 
 time period.
 For more information, see `the API documentation on opt-in reports
-<http://docs.urbanairship.com/api/ua.html#opt-in-report>`_
+<http://docs.airship.com/api/ua.html#opt-in-report>`_
 
 .. code-block:: ruby
 
@@ -208,7 +208,7 @@ Opt-Out Report
 Get the number of opted-out push users who access the app within the specified
 time period.
 For more information, see `the API documentation on opt-out reports
-<http://docs.urbanairship.com/api/ua.html#opt-out-report>`_
+<http://docs.airship.com/api/ua.html#opt-out-report>`_
 
 .. code-block:: ruby
 

@@ -7,7 +7,7 @@ Named User Listing
 Named User lists are fetched by instantiating an iterator object
 using :rb:class:`NamedUserList`.
 For more information, see `the API documentation
-<http://docs.urbanairship.com/api/ua.html#listing>`__
+<http://docs.airship.com/api/ua.html#listing>`__
 
 .. code-block:: ruby
 
@@ -25,7 +25,7 @@ Association
 
 Associate a channel with a named user ID. For more information, see
 `the API documentation
-<http://docs.urbanairship.com/api/ua.html#association>`__
+<http://docs.airship.com/api/ua.html#association>`__
 
 .. code-block:: ruby
 
@@ -45,7 +45,7 @@ Disassociation
 
 Remove a channel from the list of associated channels for a named user.
 For more information, see `the API documentation
-<http://docs.urbanairship.com/api/ua.html#disassociation>`__
+<http://docs.airship.com/api/ua.html#disassociation>`__
 
 .. code-block:: ruby
 
@@ -66,7 +66,7 @@ Lookup
 
 Look up a single named user.
 For more information, see `the API documentation
-<http://docs.urbanairship.com/api/ua.html#lookup>`__
+<http://docs.airship.com/api/ua.html#lookup>`__
 
 .. code-block:: ruby
 
@@ -82,7 +82,7 @@ Tags
 
 Add, remove, or set tags on a named user. For more information,
 see `the API documentation
-<http://docs.urbanairship.com/api/ua.html#tags-named-users>`__
+<http://docs.airship.com/api/ua.html#tags-named-users>`__
 
 .. code-block:: ruby
 

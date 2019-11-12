@@ -19,7 +19,7 @@ module Urbanairship
         @secret = secret
       end
 
-      # Send a request to Urban Airship's API
+      # Send a request to Airship's API
       #
       # @param [Object] method HTTP Method
       # @param [Object] body Request Body
