@@ -1,4 +1,11 @@
 --------------------
+5.3.0
+--------------------
+- Updates Sphinx version on Ruby Lib docs
+- Fixes date in footer
+- Updates instances of 'Urbain Airship' to 'Airship' excluding method names
+
+--------------------
 5.2.0
 --------------------
 - Updates automatic timeout for API request from 5 seconds to 60
