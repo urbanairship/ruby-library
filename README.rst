@@ -5,8 +5,8 @@ About
 =====
 
 ``urbanairship`` is a Ruby library for using the `Airship
-<http://airship.com/>`_ web service API for push notifications
-and rich app pages.
+<http://airship.com/>`_ REST API for push notifications, message
+center messages, email, and SMS.
 
 
 Requirements
@@ -24,6 +24,13 @@ Functionality
 =============
 
 Version 5.0 is a major upgrade, as some features have been removed that were present in earlier versions. A more detailed list of changes can be found in the CHANGELOG.
+
+
+Questions
+=========
+
+The best place to ask questions or report a problem is our support site:
+http://support.airship.com/
 
 
 Installation
@@ -112,13 +119,6 @@ Simple Tag Push
     >>> p.send_push
 
 
-Questions
-=========
-
-The best place to ask questions is our support site:
-http://support.airship.com/
-
-
 Contributing
 ============
 
@@ -128,7 +128,9 @@ Contributing
 4. Push to the branch ``git push origin my-new-feature``
 5. Create a new Pull Request
 6. Sign Airship's `contribution agreement
-   <http://docs.airship.com/contribution-agreement.html>`_.
+   <https://docs.google.com/forms/d/e/1FAIpQLScErfiz-fXSPpVZ9r8Di2Tr2xDFxt5MgzUel0__9vqUgvko7Q/viewform>`_.
+7. Reach out to our support team at https://support.airship.com to let
+us know about your PR and your urgency level.
 
 **Note**: Changes will not be approved and merged without a signed
 contribution agreement.
