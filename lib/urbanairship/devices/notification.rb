@@ -3,7 +3,7 @@ require 'json'
 
 module Urbanairship
   module Devices
-    class Notification
+    class Notification < CreateAndSend
       include Urbanairship::Common
       include Urbanairship::Loggable
       attr_accessor :bcc,

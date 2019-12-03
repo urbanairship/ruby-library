@@ -19,6 +19,27 @@ email_override_payload = {"email": {
         'subject': "Did you get that thing I sent you?"
       }}
 
+inline_template_payload = {"email": {
+        'bcc': "example@fakeemail.com",
+        'message_type': "commercial",
+        'reply-to': "another_fake_email@domain.com",
+        'sender_address': "team@urbanairship.com",
+        'sender_name': "Airship",
+        'subject': "Did you get that thing I sent you?",
+        'template': inline_template
+      }}
+
+inline_template = "template": {
+        'template_id': "9335bb2a-2a45-456c-8b53-42af7898236a"
+        "fields": {
+          'plaintext_body': "Plaintext version goes here [[ua-unsubscribe href=\\\"http://unsubscribe.urbanairship.com/email/success.html\\\"]]",
+          'subject': "Did you get that thing I sent you?"
+        }
+        variable_details: [
+          'default_value': 'here is a default value'
+        ]
+      }
+
   describe Urbanairship::Devices::Notification do
 
     describe '#email_override' do
@@ -41,6 +62,14 @@ email_override_payload = {"email": {
     describe '#email_with_inline_template' do
       it 'can format email with inline template correctly' do
         notification = UA::Notification.new(client: airship)
+        notification.bcc = "example@fakeemail.com"
+        notification.message_type = 'commercial'
+        notification.reply_to = 'another_fake_email@domain.com'
+        notification.sender_address = 'team@urbanairship.com'
+        notification.sender_name = 'Airship'
+        notification.template = inline_template
+        result = notification.email_with_inline_template
+        expect(result).to eq(inline_template_payload)
       end
     end
   end
