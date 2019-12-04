@@ -3,7 +3,7 @@ require 'json'
 
 module Urbanairship
   module Devices
-    class Notification < CreateAndSend
+    class Notification
       include Urbanairship::Common
       include Urbanairship::Loggable
       attr_accessor :bcc,
@@ -27,6 +27,10 @@ module Urbanairship
         @sender_address = nil
         @sender_name = nil
         @subject = nil
+      end
+
+      def add_template
+        "strings"
       end
 
       def email_override

@@ -47,17 +47,17 @@ describe Urbanairship::Devices do
     }
 
     describe '#email_channel' do
-      it 'creates and sends to email channels' do
-        cns_email = UA::CreateAndSend.new(client: airship)
-        cns_email.addresses = addresses
-        cns_email.campaigns = campaigns
-        cns_email.device_types = ['email']
-        cns_email.notification = notification
-
-        allow(airship).to receive(:send_request).and_return(email_response)
-        actual_resp = cns_email.email_channel
-        expect(actual_resp).to eq(email_response)
-      end
+      # it 'creates and sends to email channels' do
+      #   cns_email = UA::CreateAndSend.new(client: airship)
+      #   cns_email.addresses = addresses
+      #   cns_email.campaigns = campaigns
+      #   cns_email.device_types = ['email']
+      #   cns_email.notification = notification
+      #
+      #   allow(airship).to receive(:send_request).and_return(email_response)
+      #   actual_resp = cns_email.email_channel
+      #   expect(actual_resp).to eq(email_response)
+      # end
 
     end
 

@@ -7,38 +7,38 @@ describe Urbanairship::Devices do
   UA = Urbanairship
   airship = UA::Client.new(key: '123', secret: 'abc')
 
-email_override_payload = {"email": {
-        'bcc': "example@fakeemail.com",
-        'bypass_opt_in_level': false,
-        'html_body': "<h2>Richtext body goes here</h2><p>Wow!</p><p><a data-ua-unsubscribe=\"1\" title=\"unsubscribe\" href=\"http://unsubscribe.urbanairship.com/email/success.html\">Unsubscribe</a></p>",
-        'message_type': "commercial",
-        'plaintext_body': "Plaintext version goes here [[ua-unsubscribe href=\\\"http://unsubscribe.urbanairship.com/email/success.html\\\"]]",
-        'reply-to': "another_fake_email@domain.com",
-        'sender_address': "team@urbanairship.com",
-        'sender_name': "Airship",
-        'subject': "Did you get that thing I sent you?"
-      }}
+    email_override_payload = {"email": {
+            'bcc': "example@fakeemail.com",
+            'bypass_opt_in_level': false,
+            'html_body': "<h2>Richtext body goes here</h2><p>Wow!</p><p><a data-ua-unsubscribe=\"1\" title=\"unsubscribe\" href=\"http://unsubscribe.urbanairship.com/email/success.html\">Unsubscribe</a></p>",
+            'message_type': "commercial",
+            'plaintext_body': "Plaintext version goes here [[ua-unsubscribe href=\\\"http://unsubscribe.urbanairship.com/email/success.html\\\"]]",
+            'reply-to': "another_fake_email@domain.com",
+            'sender_address': "team@urbanairship.com",
+            'sender_name': "Airship",
+            'subject': "Did you get that thing I sent you?"
+          }}
 
-inline_template_payload = {"email": {
-        'bcc': "example@fakeemail.com",
-        'message_type': "commercial",
-        'reply-to': "another_fake_email@domain.com",
-        'sender_address': "team@urbanairship.com",
-        'sender_name': "Airship",
-        'subject': "Did you get that thing I sent you?",
-        'template': inline_template
-      }}
+    inline_template = {
+            'template_id': "9335bb2a-2a45-456c-8b53-42af7898236a",
+            "fields": {
+              'plaintext_body': "Plaintext version goes here [[ua-unsubscribe href=\\\"http://unsubscribe.urbanairship.com/email/success.html\\\"]]",
+              'subject': "Did you get that thing I sent you?"
+            },
+            variable_details: [
+              'default_value': 'here is a default value'
+            ]
+          }
 
-inline_template = "template": {
-        'template_id': "9335bb2a-2a45-456c-8b53-42af7898236a"
-        "fields": {
-          'plaintext_body': "Plaintext version goes here [[ua-unsubscribe href=\\\"http://unsubscribe.urbanairship.com/email/success.html\\\"]]",
-          'subject': "Did you get that thing I sent you?"
-        }
-        variable_details: [
-          'default_value': 'here is a default value'
-        ]
-      }
+    inline_template_payload = {"email": {
+            'bcc': "example@fakeemail.com",
+            'message_type': "commercial",
+            'reply-to': "another_fake_email@domain.com",
+            'sender_address': "team@urbanairship.com",
+            'sender_name': "Airship",
+            'subject': "Did you get that thing I sent you?",
+            'template': inline_template
+          }}
 
   describe Urbanairship::Devices::Notification do
 
@@ -67,7 +67,7 @@ inline_template = "template": {
         notification.reply_to = 'another_fake_email@domain.com'
         notification.sender_address = 'team@urbanairship.com'
         notification.sender_name = 'Airship'
-        notification.template = inline_template
+        notification.add_template
         result = notification.email_with_inline_template
         expect(result).to eq(inline_template_payload)
       end
