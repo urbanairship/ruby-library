@@ -19,26 +19,30 @@ describe Urbanairship::Devices do
             'subject': "Did you get that thing I sent you?"
           }}
 
-    inline_template = {
-            'template_id': "9335bb2a-2a45-456c-8b53-42af7898236a",
-            "fields": {
-              'plaintext_body': "Plaintext version goes here [[ua-unsubscribe href=\\\"http://unsubscribe.urbanairship.com/email/success.html\\\"]]",
-              'subject': "Did you get that thing I sent you?"
-            },
-            variable_details: [
-              'default_value': 'here is a default value'
-            ]
-          }
-
     inline_template_payload = {"email": {
             'bcc': "example@fakeemail.com",
             'message_type': "commercial",
             'reply-to': "another_fake_email@domain.com",
             'sender_address': "team@urbanairship.com",
             'sender_name': "Airship",
-            'subject': "Did you get that thing I sent you?",
-            'template': inline_template
-          }}
+            'template': {
+                    'template_id': "9335bb2a-2a45-456c-8b53-42af7898236a",
+                    "fields": {
+                      'plaintext_body': "Plaintext version goes here [[ua-unsubscribe href=\\\"http://unsubscribe.urbanairship.com/email/success.html\\\"]]",
+                      'subject': "Did you get that thing I sent you?"
+                    },
+                    'variable_details': [
+                      {
+                          'key': 'name',
+                          'default_value': 'hello'
+                      },
+                      {
+                          'key': 'event',
+                          'default_value': 'event'
+                      }
+                    ]
+                  }
+            }}
 
   describe Urbanairship::Devices::Notification do
 
@@ -67,7 +71,19 @@ describe Urbanairship::Devices do
         notification.reply_to = 'another_fake_email@domain.com'
         notification.sender_address = 'team@urbanairship.com'
         notification.sender_name = 'Airship'
-        notification.add_template
+        notification.template_id = "9335bb2a-2a45-456c-8b53-42af7898236a"
+        notification.plaintext_body = 'Plaintext version goes here [[ua-unsubscribe href=\"http://unsubscribe.urbanairship.com/email/success.html\"]]'
+        notification.subject = 'Did you get that thing I sent you?'
+        notification.variable_details = [
+          {
+              'key': 'name',
+              'default_value': 'hello'
+          },
+          {
+              'key': 'event',
+              'default_value': 'event'
+          }
+        ]
         result = notification.email_with_inline_template
         expect(result).to eq(inline_template_payload)
       end

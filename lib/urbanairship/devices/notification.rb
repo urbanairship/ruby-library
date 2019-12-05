@@ -14,7 +14,9 @@ module Urbanairship
                     :reply_to,
                     :sender_address,
                     :sender_name,
-                    :subject
+                    :subject,
+                    :template_id,
+                    :variable_details
 
       def initialize(client: required('client'))
         @client = client
@@ -27,10 +29,8 @@ module Urbanairship
         @sender_address = nil
         @sender_name = nil
         @subject = nil
-      end
-
-      def add_template
-        "strings"
+        @template_id = nil
+        @variable_details = nil
       end
 
       def email_override
@@ -56,6 +56,31 @@ module Urbanairship
       end
 
       def email_with_inline_template
+        fail ArgumentError, 'message_type is needed for email with inline template' if @message_type.nil?
+        fail ArgumentError, 'reply_to is needed for email with inline template' if @reply_to.nil?
+        fail ArgumentError, 'sender_address is needed for email with inline template' if @sender_address.nil?
+        fail ArgumentError, 'sender_name is needed for email with inline template' if @sender_name.nil?
+        fail ArgumentError, 'template_id is needed for email with inline template' if @template_id.nil?
+        fail ArgumentError, 'plaintext_body is needed for email with inline template' if @plaintext_body.nil?
+        fail ArgumentError, 'subject is needed for email with inline template' if @subject.nil?
+
+        inline_template = {'email': {
+          'bcc': @bcc,
+          'message_type': @message_type,
+          'reply-to': @reply_to,
+          'sender_address': @sender_address,
+          'sender_name': @sender_name,
+          'template': {
+            'template_id': @template_id,
+            "fields": {
+              'plaintext_body': @plaintext_body,
+              'subject': @subject
+            },
+            'variable_details': @variable_details
+            }
+          }
+        }
+        inline_template
       end
 
       def mms_platform_override
