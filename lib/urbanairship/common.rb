@@ -4,8 +4,8 @@ require 'urbanairship/loggable'
 module Urbanairship
   # Features mixed in to all classes
   module Common
-    SERVER = 'go.airship.com'
-    BASE_URL = 'https://go.airship.com/api'
+    SERVER = 'go.urbanairship.com'
+    BASE_URL = 'https://go.urbanairship.com/api'
     CHANNEL_URL = BASE_URL + '/channels/'
     OPEN_CHANNEL_URL = BASE_URL + '/channels/open/'
     DEVICE_TOKEN_URL = BASE_URL + '/device_tokens/'
