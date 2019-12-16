@@ -1,3 +1,3 @@
 module Urbanairship
-  VERSION = '5.0.1'
+  VERSION = '5.3.0'
 end

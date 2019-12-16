@@ -16,6 +16,8 @@ import sys
 import os
 import shlex
 import re
+import sphinx_rtd_theme
+from datetime import datetime
 
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
@@ -25,12 +27,13 @@ import re
 # -- General configuration ------------------------------------------------
 
 # If your documentation needs a minimal Sphinx version, state it here.
-needs_sphinx = '1.0'
+needs_sphinx = '1.6.7'
 
 # Add any Sphinx extension module names here, as strings. They can be
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
-extensions = ['sphinxcontrib.rubydomain']
+
+extensions = ['sphinxcontrib.rubydomain','sphinx.ext.autodoc', 'sphinx.ext.napoleon', 'sphinx_rtd_theme']
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
@@ -47,9 +50,11 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
+year = datetime.now().year
 project = u'ruby-library'
-copyright = u'2015, Urban Airship Ruby Library'
-author = u'Urban Airship'
+author = u'Airship'
+copyright = u'%d, %s' % (year, author)
+
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -116,7 +121,7 @@ pygments_style = 'sphinx'
 
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
-html_theme = 'urbanairship'
+html_theme = 'sphinx_rtd_theme'
 
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
@@ -232,7 +237,7 @@ latex_elements = {
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
   (master_doc, 'ruby-library.tex', u'ruby-library Documentation',
-   u'Urban Airship', 'manual'),
+   u'Airship', 'manual'),
 ]
 
 # The name of an image file (relative to this directory) to place at the top of

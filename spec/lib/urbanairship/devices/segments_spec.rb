@@ -22,7 +22,7 @@ describe Urbanairship::Devices do
     example_hash_create = {
       'body' => '',
       'code' => '200',
-      'headers' => {:location => "https://go.urbanairship.com/api/segments/1234"}
+      'headers' => {:location => "https://go.airship.com/api/segments/1234"}
     }
     example_hash_lookup = {
       'body' => data,

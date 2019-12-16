@@ -8,7 +8,7 @@ Segment Listing
 ***************
 
 Segment lists are fetched by instantiating an iterator object using ``SegmentList``. For more
-information, see `the API documentation <http://docs.urbanairship.com/api/ua.html#segments>`__
+information, see `the API documentation <http://docs.airship.com/api/ua.html#segments>`__
 
 .. sourcecode:: ruby
 
@@ -26,7 +26,7 @@ Creating a Segment
 ******************
 
 Create a segment for the application. See the segment creation `API documentation
-<http://docs.urbanairship.com/api/ua.html#segment-creation>`__ for more information.
+<http://docs.airship.com/api/ua.html#segment-creation>`__ for more information.
 
 .. sourcecode:: ruby
 
@@ -44,7 +44,7 @@ Modifying a Segment
 *******************
 
 Change the display name and/or criteria of a segment. For more information, see the segment
-update `API documentation <http://docs.urbanairship.com/api/ua.html#update-segment>`__.
+update `API documentation <http://docs.airship.com/api/ua.html#update-segment>`__.
 
 .. sourcecode:: ruby
 
@@ -63,7 +63,7 @@ Deleting a Segment
 ******************
 
 Delete a segment. For more information, see the segment deletion `API documentation
-<http://docs.urbanairship.com/api/ua.html#delete-segment>`__.
+<http://docs.airship.com/api/ua.html#delete-segment>`__.
 
 .. sourcecode:: ruby
 
@@ -80,7 +80,7 @@ Segment Lookup
 **************
 
 Fetch a particular segment's display name and criteria. See the individual segment lookup
-`API documentation <http://docs.urbanairship.com/api/ua.html#individual-segment-lookup>`__ for
+`API documentation <http://docs.airship.com/api/ua.html#individual-segment-lookup>`__ for
 more information.
 
 .. sourcecode:: ruby

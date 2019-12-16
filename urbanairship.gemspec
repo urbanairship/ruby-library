@@ -6,12 +6,12 @@ require 'urbanairship/version'
 Gem::Specification.new do |spec|
   spec.name          = 'urbanairship'
   spec.version       = Urbanairship::VERSION
-  spec.authors       = ['Urban Airship']
-  spec.email         = ['support@urbanairship.com']
+  spec.authors       = ['Airship']
+  spec.email         = ['support@airship.com']
   spec.licenses      = ['Apache-2.0']
 
-  spec.summary       = 'Ruby Gem for using the Urban Airship API'
-  spec.description   = 'A Ruby Library for using the Urban Airship web service API for push notifications and rich app pages.'
+  spec.summary       = 'Ruby Gem for using the Airship API'
+  spec.description   = 'A Ruby Library for using the Airship web service API for push notifications and rich app pages.'
   spec.homepage      = 'https://github.com/urbanairship/ruby-library'
 
   spec.required_ruby_version = '>= 2.0.0'

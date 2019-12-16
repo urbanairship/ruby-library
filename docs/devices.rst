@@ -6,7 +6,7 @@ Channel Listing
 
 Device lists are fetched by instantiating an iterator object
 using :rb:class:`ChannelList`. For more information, see `the API
-documentation for channels <http://docs.urbanairship.com/api/ua.html#channels>`_.
+documentation for channels <http://docs.airship.com/api/ua.html#channels>`_.
 The ``count`` method will give you the number of channels over which you have iterated.
 
 .. code-block:: ruby

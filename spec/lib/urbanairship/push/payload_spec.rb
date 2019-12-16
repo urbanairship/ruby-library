@@ -465,7 +465,7 @@ describe Urbanairship do
         display_type: 'banner',
         display: 'top',
         expiry: 0,
-        actions: { add_tag: 'in_app' }, 
+        actions: { add_tag: 'in_app' },
         interactive: {
             type: 'a_type',
             button_actions: {
@@ -501,6 +501,57 @@ describe Urbanairship do
           alert: 'a shorter alert for sms users',
           expiry: '2020-04-01T12:00:00'
         )
+      end
+    end
+
+    context 'Email Message' do
+      it 'builds an email notificaiton' do
+        payload = UA.email(
+          bypass_opt_in_level: false,
+          html_body: "<h2>Richtext body goes here</h2><p>Wow!</p><p><a data-ua-unsubscribe=\"1\" title=\"unsubscribe\" href=\"http://unsubscribe.airship.com/email/success.html\">Unsubscribe</a></p>",
+          message_type: "commercial",
+          plaintext_body: "Plaintext version goes here [[ua-unsubscribe href=\"http://unsubscribe.airship.com/email/success.html\"]]",
+          reply_to: "no-reply@airship.com",
+          sender_address: "team@airship.com",
+          sender_name: "Airship",
+          subject: "Did you get that thing I sent you?"
+        )
+      end
+
+      it 'fails when message_type is not set' do
+        expect {
+          UA.email(message_type: nil)
+        }.to raise_error ArgumentError
+      end
+
+      it 'fails when plaintext_body is not set' do
+        expect {
+          UA.email(plaintext_body: nil)
+        }.to raise_error ArgumentError
+      end
+
+      it 'fails when reply_to is not set' do
+        expect {
+          UA.email(reply_to: nil)
+        }.to raise_error ArgumentError
+      end
+
+      it 'fails when sender_address is not set' do
+        expect {
+          UA.email(sender_address: nil)
+        }.to raise_error ArgumentError
+      end
+
+      it 'fails when sender_name is not set' do
+        expect {
+          UA.email(sender_name: nil)
+        }.to raise_error ArgumentError
+      end
+
+      it 'fails when subject is not set' do
+        expect {
+          UA.email(subject: nil)
+        }.to raise_error ArgumentError
       end
     end
 

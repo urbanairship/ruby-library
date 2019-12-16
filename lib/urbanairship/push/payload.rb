@@ -8,7 +8,7 @@ module Urbanairship
       # Notification Object for a Push Payload
       def notification(alert: nil, ios: nil, android: nil, amazon: nil,
                        web: nil, wns: nil, open_platforms: nil,
-                       actions: nil, interactive: nil, sms: nil)
+                       actions: nil, interactive: nil, sms: nil, email: nil)
         payload = compact_helper({
           alert: alert,
           ios: ios,
@@ -18,7 +18,8 @@ module Urbanairship
           wns: wns,
           actions: actions,
           interactive: interactive,
-          sms: sms
+          sms: sms,
+          email: email
         })
         if open_platforms
           open_platforms.each {|platform, overrides|
@@ -177,6 +178,30 @@ module Urbanairship
         compact_helper({
           alert: alert,
           expiry: expiry
+          })
+      end
+
+
+      #Email specific portion of Push Notification Object
+      def email(bypass_opt_in_level: nil, html_body: nil, message_type: required('message_type'),
+                plaintext_body: required('plaintext_body'), reply_to: required('reply_to'),
+                sender_address: required('sender_address'), sender_name: required('sender_name'),
+                subject: required('subject'))
+        fail ArgumentError, 'Message type must not be nil' if message_type.nil?
+        fail ArgumentError, 'Plaintext Body must not be nil' if plaintext_body.nil?
+        fail ArgumentError, 'Reply To must not be nil' if reply_to.nil?
+        fail ArgumentError, 'Sender address must not be nil' if sender_address.nil?
+        fail ArgumentError, 'Sender name must not be nil' if sender_name.nil?
+        fail ArgumentError, 'Subject must not be nil' if subject.nil?
+        compact_helper({
+            bypass_opt_in_level: bypass_opt_in_level,
+            html_body: html_body,
+            message_type: message_type,
+            plaintext_body: plaintext_body,
+            reply_to: reply_to,
+            sender_address: sender_address,
+            sender_name: sender_name,
+            subject: subject
           })
       end
 
