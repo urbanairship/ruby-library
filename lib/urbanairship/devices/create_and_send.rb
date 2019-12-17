@@ -78,7 +78,24 @@ module Urbanairship
       end
 
       def operation
+        payload = {
+          'audience': {
+            'create_and_send': @addresses
+          },
+          'device_types': @device_type,
+          'notification': @notification,
+          'campaigns': @campaigns
+        }
 
+        response = @client.send_request(
+          method: 'POST',
+          body: JSON.dump(payload),
+          url: SCHEDULES_URL + 'create_and_send',
+          content_type: 'application/json'
+        )
+        logger.info("Validating payload for create and send")
+        # logger.info("Registering email channel with address #{@address}")
+        response
       end
 
     end
