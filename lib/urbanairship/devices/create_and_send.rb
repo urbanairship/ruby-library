@@ -29,7 +29,7 @@ module Urbanairship
         #need need "substitutions"
       end
 
-      def create_and_send(notification)
+      def create_and_send
 
       end
 

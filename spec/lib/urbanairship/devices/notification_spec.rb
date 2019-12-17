@@ -88,5 +88,6 @@ describe Urbanairship::Devices do
         expect(result).to eq(inline_template_payload)
       end
     end
+
   end
 end
