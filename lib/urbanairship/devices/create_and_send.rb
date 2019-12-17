@@ -1,5 +1,5 @@
 require 'urbanairship'
-require 'urbanairship/devices/notification'
+require 'urbanairship/devices/email_notification'
 
 module Urbanairship
   module Devices

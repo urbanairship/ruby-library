@@ -1,7 +1,7 @@
 require 'spec_helper'
 require 'urbanairship'
 require 'urbanairship/devices/create_and_send'
-require 'urbanairship/devices/notification'
+require 'urbanairship/devices/email_notification'
 
 describe Urbanairship::Devices do
   UA = Urbanairship
@@ -49,7 +49,7 @@ describe Urbanairship::Devices do
 
     describe '#create_and_send' do
       it 'creates and sends for email override' do
-        notification = UA::Notification.new(client: airship)
+        notification = UA::EmailNotification.new(client: airship)
         notification.bcc = "example@fakeemail.com"
         notification.bypass_opt_in_level = false
         notification.html_body = "<h2>Richtext body goes here</h2><p>Wow!</p><p><a data-ua-unsubscribe=\"1\" title=\"unsubscribe\" href=\"http://unsubscribe.urbanairship.com/email/success.html\">Unsubscribe</a></p>"
@@ -82,7 +82,7 @@ describe Urbanairship::Devices do
       end
 
       it 'creates and sends for email inline template' do
-        notification = UA::Notification.new(client: airship)
+        notification = UA::EmailNotification.new(client: airship)
         notification.bcc = "example@fakeemail.com"
         notification.message_type = 'commercial'
         notification.reply_to = 'another_fake_email@domain.com'
