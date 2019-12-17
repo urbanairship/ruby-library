@@ -9,7 +9,7 @@ module Urbanairship
       attr_accessor :addresses,
                     :device_types,
                     :notification,
-                    :campaigns,
+                    :campaigns
 
       def initialize(client: required('client'))
         @client = client
@@ -30,10 +30,6 @@ module Urbanairship
       end
 
       def create_and_send
-
-      end
-
-      def email_channel
         fail ArgumentError, 'create and send object must be set for email channel' if @addresses.nil?
         fail ArgumentError, 'device type array must be set for email channel' if @device_types.nil?
         fail ArgumentError, 'notification object must be set for email channel' if @notification.nil?
@@ -58,18 +54,6 @@ module Urbanairship
         logger.info("Doing create and send for email channel")
         # logger.info("Registering email channel with address #{@address}")
         response
-      end
-
-      def sms_channel
-
-      end
-
-      def mms_notification
-
-      end
-
-      def open_channels
-
       end
 
       def validate

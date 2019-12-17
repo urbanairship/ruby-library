@@ -7,7 +7,6 @@ describe Urbanairship::Devices do
   UA = Urbanairship
   airship = UA::Client.new(key: '123', secret: 'abc')
 
-  describe Urbanairship::Devices::CreateAndSend do
 
     email_response = {
         "ok": true,
@@ -46,6 +45,8 @@ describe Urbanairship::Devices do
             'subject': "Did you get that thing I sent you?"
           }}
 
+  describe Urbanairship::Devices::CreateAndSend do
+
     describe '#create_and_send' do
       it 'creates and sends for email override' do
         notification = UA::Notification.new(client: airship)
@@ -60,26 +61,68 @@ describe Urbanairship::Devices do
         notification.subject = 'Did you get that thing I sent you?'
         override = notification.email_override
 
-        create_and_send = US::CreateAndSend.new(client: airship)
+        create_and_send = UA::CreateAndSend.new(client: airship)
         create_and_send.addresses = [
           {
             "ua_address": "new@email.com",
             "ua_commercial_opted_in": "2018-11-29T10:34:22",
           },
           {
-            "ua_address" : "ben@icetown.com",
+            "ua_address": "ben@icetown.com",
             "ua_commercial_opted_in": "2018-11-29T12:45:10",
           }
         ]
         create_and_send.device_types = [ "email" ]
         create_and_send.campaigns = ["winter sale", "west coast"]
         create_and_send.notification = override
+
         allow(airship).to receive(:send_request).and_return(email_response)
         actual_resp = create_and_send.create_and_send
         expect(actual_resp).to eq(email_response)
       end
 
-    end
+      it 'creates and sends for email inline template' do
+        notification = UA::Notification.new(client: airship)
+        notification.bcc = "example@fakeemail.com"
+        notification.message_type = 'commercial'
+        notification.reply_to = 'another_fake_email@domain.com'
+        notification.sender_address = 'team@urbanairship.com'
+        notification.sender_name = 'Airship'
+        notification.template_id = "9335bb2a-2a45-456c-8b53-42af7898236a"
+        notification.plaintext_body = 'Plaintext version goes here [[ua-unsubscribe href=\"http://unsubscribe.urbanairship.com/email/success.html\"]]'
+        notification.subject = 'Did you get that thing I sent you?'
+        notification.variable_details = [
+          {
+              'key': 'name',
+              'default_value': 'hello'
+          },
+          {
+              'key': 'event',
+              'default_value': 'event'
+          }
+        ]
+        inline_template = notification.email_with_inline_template
 
+        create_and_send = UA::CreateAndSend.new(client: airship)
+        create_and_send.device_types = [ "email" ]
+        create_and_send.addresses = [
+          {
+            "ua_address": "new@email.com",
+            "ua_commercial_opted_in": "2018-11-29T10:34:22",
+          },
+          {
+            "ua_address": "ben@icetown.com",
+            "ua_commercial_opted_in": "2018-11-29T12:45:10",
+          }
+        ]
+        create_and_send.campaigns = ["winter sale", "west coast"]
+        create_and_send.notification = inline_template
+
+        allow(airship).to receive(:send_request).and_return(email_response)
+        actual_resp = create_and_send.create_and_send
+        expect(actual_resp).to eq(email_response)
+      end
+    end
   end
+
 end
