@@ -42,7 +42,6 @@ module Urbanairship
         fail ArgumentError, 'subject is needed for email override' if @subject.nil?
 
         override = {'email': {
-          'bcc': @bcc,
           'bypass_opt_in_level': @bypass_opt_in_level,
           'html_body': @html_body,
           'message_type': @message_type,
@@ -52,6 +51,11 @@ module Urbanairship
           'sender_name': @sender_name,
           'subject': @subject
         }}
+
+        if @bcc
+          override[:email][:bcc] = @bcc
+        end
+        
         override
       end
 

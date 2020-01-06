@@ -42,7 +42,9 @@ module Urbanairship
           },
           'device_types': @device_type,
           'notification': @notification,
-          'campaigns': @campaigns
+          'campaigns': {
+              'categories': @campaigns
+            }
         }
 
         response = @client.send_request(
