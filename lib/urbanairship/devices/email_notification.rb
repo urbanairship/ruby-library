@@ -46,7 +46,7 @@ module Urbanairship
           'html_body': @html_body,
           'message_type': @message_type,
           'plaintext_body': @plaintext_body,
-          'reply-to': @reply_to,
+          'reply_to': @reply_to,
           'sender_address': @sender_address,
           'sender_name': @sender_name,
           'subject': @subject
@@ -55,7 +55,7 @@ module Urbanairship
         if @bcc
           override[:email][:bcc] = @bcc
         end
-        
+
         override
       end
 

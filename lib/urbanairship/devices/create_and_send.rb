@@ -29,23 +29,25 @@ module Urbanairship
         #need need "substitutions"
       end
 
-      def create_and_send
-        fail ArgumentError, 'create and send object must be set for email channel' if @addresses.nil?
-        fail ArgumentError, 'device type array must be set for email channel' if @device_types.nil?
-        fail ArgumentError, 'notification object must be set for email channel' if @notification.nil?
-
-        validate_address
-
-        payload = {
+      def payload
+        {
           'audience': {
             'create_and_send': @addresses
           },
-          'device_types': @device_type,
+          'device_types': @device_types,
           'notification': @notification,
           'campaigns': {
               'categories': @campaigns
             }
         }
+      end
+
+      def create_and_send
+        fail ArgumentError, 'create and send object must be set for email channel' if @addresses.nil?
+        fail ArgumentError, 'device type array must be set for email channel' if @device_types.nil?
+        fail ArgumentError, 'notification object must be set for email channel' if @notification.nil?
+
+        # validate_address
 
         response = @client.send_request(
           method: 'POST',
@@ -59,14 +61,6 @@ module Urbanairship
       end
 
       def validate
-        payload = {
-          'audience': {
-            'create_and_send': @addresses
-          },
-          'device_types': @device_type,
-          'notification': @notification,
-          'campaigns': @campaigns
-        }
 
         response = @client.send_request(
           method: 'POST',
@@ -80,14 +74,6 @@ module Urbanairship
       end
 
       def operation
-        payload = {
-          'audience': {
-            'create_and_send': @addresses
-          },
-          'device_types': @device_type,
-          'notification': @notification,
-          'campaigns': @campaigns
-        }
 
         response = @client.send_request(
           method: 'POST',
