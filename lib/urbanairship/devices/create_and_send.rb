@@ -59,13 +59,11 @@ module Urbanairship
           url: CREATE_AND_SEND_URL,
           content_type: 'application/json'
         )
-        logger.info("Doing create and send for email channel")
-        # logger.info("Registering email channel with address #{@address}")
+        logger.info("Running create and send for addresses #{@addresses}")
         response
       end
 
       def validate
-
         response = @client.send_request(
           method: 'POST',
           body: JSON.dump(payload),
@@ -73,7 +71,6 @@ module Urbanairship
           content_type: 'application/json'
         )
         logger.info("Validating payload for create and send")
-        # logger.info("Registering email channel with address #{@address}")
         response
       end
 
@@ -91,11 +88,10 @@ module Urbanairship
         response = @client.send_request(
           method: 'POST',
           body: JSON.dump(scheduled_payload),
-          url: SCHEDULES_URL + 'create_and_send',
+          url: SCHEDULES_URL + 'create-and-send',
           content_type: 'application/json'
         )
-        logger.info("Scheduling create and send operation")
-        # logger.info("Registering email channel with address #{@address}")
+        logger.info("Scheduling create and send operation with name #{@name}")
         response
       end
 
