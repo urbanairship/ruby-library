@@ -9,7 +9,9 @@ module Urbanairship
       attr_accessor :addresses,
                     :device_types,
                     :notification,
-                    :campaigns
+                    :campaigns,
+                    :name,
+                    :scheduled_time
 
       def initialize(client: required('client'))
         @client = client
@@ -17,6 +19,8 @@ module Urbanairship
         @device_types = nil
         @notification = nil
         @campaigns = nil
+        @name = nil
+        @scheduled_time = nil
       end
 
       def validate_address
@@ -30,6 +34,10 @@ module Urbanairship
       end
 
       def payload
+        fail ArgumentError, 'addresses must be set for defining payload' if @addresses.nil?
+        fail ArgumentError, 'device type array must be set for defining payload' if @device_types.nil?
+        fail ArgumentError, 'notification object must be set for defining payload' if @notification.nil?
+
         {
           'audience': {
             'create_and_send': @addresses
@@ -43,10 +51,6 @@ module Urbanairship
       end
 
       def create_and_send
-        fail ArgumentError, 'create and send object must be set for email channel' if @addresses.nil?
-        fail ArgumentError, 'device type array must be set for email channel' if @device_types.nil?
-        fail ArgumentError, 'notification object must be set for email channel' if @notification.nil?
-
         # validate_address
 
         response = @client.send_request(
@@ -74,14 +78,23 @@ module Urbanairship
       end
 
       def operation
+        fail ArgumentError, 'scheduled time must be set to run an operation' if @scheduled_time.nil?
+
+        scheduled_payload = {
+          "schedule": {
+            "scheduled_time": @scheduled_time
+          },
+          "name": @name,
+          "push": payload
+        }
 
         response = @client.send_request(
           method: 'POST',
-          body: JSON.dump(payload),
+          body: JSON.dump(scheduled_payload),
           url: SCHEDULES_URL + 'create_and_send',
           content_type: 'application/json'
         )
-        logger.info("Validating payload for create and send")
+        logger.info("Scheduling create and send operation")
         # logger.info("Registering email channel with address #{@address}")
         response
       end

@@ -12,7 +12,7 @@ describe Urbanairship::Devices do
             'html_body': "<h2>Richtext body goes here</h2><p>Wow!</p><p><a data-ua-unsubscribe=\"1\" title=\"unsubscribe\" href=\"http://unsubscribe.urbanairship.com/email/success.html\">Unsubscribe</a></p>",
             'message_type': "commercial",
             'plaintext_body': "Plaintext version goes here [[ua-unsubscribe href=\\\"http://unsubscribe.urbanairship.com/email/success.html\\\"]]",
-            'reply-to': "another_fake_email@domain.com",
+            'reply_to': "another_fake_email@domain.com",
             'sender_address': "team@urbanairship.com",
             'sender_name': "Airship",
             'subject': "Did you get that thing I sent you?"

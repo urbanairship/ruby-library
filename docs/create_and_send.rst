@@ -20,33 +20,28 @@ Create and Send with Email Override
 
     require 'urbanairship'
     UA = Urbanairship
-    airship = UA::Client.new(key:'application_key', secret:'master_secret')
+    airship = UA::Client.new(key:'<app_key>', secret:'<secret_key>')
     email_notification = UA::EmailNotification.new(client: airship)
-    email_notification.bcc = "example@fakeemail.com"
     email_notification.bypass_opt_in_level = false
     email_notification.html_body = "<h2>Richtext body goes here</h2><p>Wow!</p><p><a data-ua-unsubscribe=\"1\" title=\"unsubscribe\" href=\"http://unsubscribe.urbanairship.com/email/success.html\">Unsubscribe</a></p>"
-    email_notification.message_type = 'commercial'
+    email_notification.message_type = 'transactional'
     email_notification.plaintext_body = 'Plaintext version goes here [[ua-unsubscribe href=\"http://unsubscribe.urbanairship.com/email/success.html\"]]'
-    email_notification.reply_to = 'another_fake_email@domain.com'
-    email_notification.sender_address = 'team@urbanairship.com'
-    email_notification.sender_name = 'Airship'
-    email_notification.subject = 'Did you get that thing I sent you?'
+    email_notification.reply_to = '<reply_to address>'
+    email_notification.sender_address = '<sender_address>'
+    email_notification.sender_name = 'Sender Name'
+    email_notification.subject = 'Subject Line'
     override = email_notification.email_override
-
-    create_and_send = UA::CreateAndSend.new(client: airship)
-    create_and_send.addresses = [
+    send_it = UA::CreateAndSend.new(client: airship)
+    send_it.addresses = [
       {
-        "ua_address": "new@email.com",
-        "ua_commercial_opted_in": "2018-11-29T10:34:22",
-      },
-      {
-        "ua_address": "ben@icetown.com",
-        "ua_commercial_opted_in": "2018-11-29T12:45:10",
+        "ua_address": "test@example.com",
+        "ua_commercial_opted_in": "2019-12-29T10:34:22"
       }
     ]
-    create_and_send.device_types = [ "email" ]
-    create_and_send.campaigns = ["winter sale", "west coast"]
-    create_and_send.notification = email_notification
+    send_it.device_types = [ "email" ]
+    send_it.campaigns = ["winter sale", "west coast"]
+    send_it.notification = email_notification.email_override
+    send_it.create_and_send
 
 .. note::
 
