@@ -38,16 +38,20 @@ module Urbanairship
         fail ArgumentError, 'device type array must be set for defining payload' if @device_types.nil?
         fail ArgumentError, 'notification object must be set for defining payload' if @notification.nil?
 
-        {
+        full_payload = {
           'audience': {
             'create_and_send': @addresses
           },
           'device_types': @device_types,
           'notification': @notification,
-          'campaigns': {
-              'categories': @campaigns
-            }
         }
+
+        if @campaigns
+          campaign_object = {'categories': '@campaigns'}
+          full_payload[:campaigns] = campaign_object
+        end
+
+        full_payload
       end
 
       def create_and_send

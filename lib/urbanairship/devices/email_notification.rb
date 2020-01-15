@@ -64,26 +64,43 @@ module Urbanairship
         fail ArgumentError, 'reply_to is needed for email with inline template' if @reply_to.nil?
         fail ArgumentError, 'sender_address is needed for email with inline template' if @sender_address.nil?
         fail ArgumentError, 'sender_name is needed for email with inline template' if @sender_name.nil?
-        fail ArgumentError, 'template_id is needed for email with inline template' if @template_id.nil?
-        fail ArgumentError, 'plaintext_body is needed for email with inline template' if @plaintext_body.nil?
-        fail ArgumentError, 'subject is needed for email with inline template' if @subject.nil?
+        # fail ArgumentError, 'template_id is needed for email with inline template' if @template_id.nil?
+        # fail ArgumentError, 'plaintext_body is needed for email with inline template' if @plaintext_body.nil?
+        # fail ArgumentError, 'subject is needed for email with inline template' if @subject.nil?
 
         inline_template = {'email': {
-          'bcc': @bcc,
           'message_type': @message_type,
           'reply-to': @reply_to,
           'sender_address': @sender_address,
           'sender_name': @sender_name,
           'template': {
             'template_id': @template_id,
-            "fields": {
-              'plaintext_body': @plaintext_body,
-              'subject': @subject
-            },
-            'variable_details': @variable_details
             }
           }
         }
+        # inline_template = {'email': {
+        #   'message_type': @message_type,
+        #   'reply-to': @reply_to,
+        #   'sender_address': @sender_address,
+        #   'sender_name': @sender_name,
+        #   'template': {
+        #     'template_id': @template_id,
+        #     "fields": {
+        #       'plaintext_body': @plaintext_body,
+        #       'subject': @subject
+        #     }
+        #     }
+        #   }
+        # }
+
+        if @bcc
+          inline_template[:email][:bcc] = @bcc
+        end
+
+        if @variable_details
+          inline_template[:email][:template][:variable_details] = @variable_details
+        end
+
         inline_template
       end
 
