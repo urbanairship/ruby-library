@@ -185,3 +185,6 @@ send_it.create_and_send
 .. note::
 
   Should return a 202 Accepted HTTP response.
+
+  Create and Send to SMS Channels
+  ================================
