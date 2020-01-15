@@ -70,7 +70,7 @@ module Urbanairship
 
         inline_template = {'email': {
           'message_type': @message_type,
-          'reply-to': @reply_to,
+          'reply_to': @reply_to,
           'sender_address': @sender_address,
           'sender_name': @sender_name,
           'template': {
