@@ -10,7 +10,6 @@
 /spec/reports/
 /tmp/
 /csv_file
-/test.rb
 
 # App
 urbanairship.log
