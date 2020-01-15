@@ -27,16 +27,14 @@ module Urbanairship
         @addresses.each do |address|
           fail ArgumentError, 'each address component must have a ua_address' if !address[:ua_address]
         end
-        #need ua_address
-        #need ua_commercial_opeted_in
-        #need ua_transactional_opted_in
-        #need need "substitutions"
       end
 
       def payload
         fail ArgumentError, 'addresses must be set for defining payload' if @addresses.nil?
         fail ArgumentError, 'device type array must be set for defining payload' if @device_types.nil?
         fail ArgumentError, 'notification object must be set for defining payload' if @notification.nil?
+
+        validate_address
 
         full_payload = {
           'audience': {
@@ -55,8 +53,6 @@ module Urbanairship
       end
 
       def create_and_send
-        # validate_address
-
         response = @client.send_request(
           method: 'POST',
           body: JSON.dump(payload),

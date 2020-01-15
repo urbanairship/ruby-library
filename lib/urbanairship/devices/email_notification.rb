@@ -64,34 +64,20 @@ module Urbanairship
         fail ArgumentError, 'reply_to is needed for email with inline template' if @reply_to.nil?
         fail ArgumentError, 'sender_address is needed for email with inline template' if @sender_address.nil?
         fail ArgumentError, 'sender_name is needed for email with inline template' if @sender_name.nil?
-        # fail ArgumentError, 'template_id is needed for email with inline template' if @template_id.nil?
-        # fail ArgumentError, 'plaintext_body is needed for email with inline template' if @plaintext_body.nil?
-        # fail ArgumentError, 'subject is needed for email with inline template' if @subject.nil?
 
         inline_template = {'email': {
           'message_type': @message_type,
           'reply_to': @reply_to,
           'sender_address': @sender_address,
           'sender_name': @sender_name,
-          'template': {
-            'template_id': @template_id,
-            }
+          'template': {}
           }
         }
-        # inline_template = {'email': {
-        #   'message_type': @message_type,
-        #   'reply-to': @reply_to,
-        #   'sender_address': @sender_address,
-        #   'sender_name': @sender_name,
-        #   'template': {
-        #     'template_id': @template_id,
-        #     "fields": {
-        #       'plaintext_body': @plaintext_body,
-        #       'subject': @subject
-        #     }
-        #     }
-        #   }
-        # }
+
+        if @subject and @plaintext_body
+          fields_object = {'plaintext_body': @plaintext_body, 'subject': @subject}
+          inline_template[:email][:template][:fields] = fields_object
+        end
 
         if @bcc
           inline_template[:email][:bcc] = @bcc
@@ -99,6 +85,10 @@ module Urbanairship
 
         if @variable_details
           inline_template[:email][:template][:variable_details] = @variable_details
+        end
+
+        if @template_id
+          inline_template[:email][:template][:template_id] = @template_id
         end
 
         inline_template

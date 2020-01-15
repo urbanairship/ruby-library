@@ -123,49 +123,64 @@ Create and Send with Email Override
 
   Should return a 202 Accepted HTTP response.
 
-Create and Send with Email Inline Template
-------------------------------------------
+Create and Send with Email Inline Template/Template ID
+------------------------------------------------------
 
 .. code-block:: ruby
 
-    require 'urbanairship'
-    UA = Urbanairship
-    airship = UA::Client.new(key:'application_key', secret:'master_secret')
-    email_notification = UA::EmailNotification.new(client: airship)
-    notification.bcc = "example@fakeemail.com"
-    notification.message_type = 'commercial'
-    notification.reply_to = 'another_fake_email@domain.com'
-    notification.sender_address = 'team@urbanairship.com'
-    notification.sender_name = 'Airship'
-    notification.template_id = "9335bb2a-2a45-456c-8b53-42af7898236a"
-    notification.plaintext_body = 'Plaintext version goes here [[ua-unsubscribe href=\"http://unsubscribe.urbanairship.com/email/success.html\"]]'
-    notification.subject = 'Did you get that thing I sent you?'
-    notification.variable_details = [
-      {
-          'key': 'name',
-          'default_value': 'hello'
-      },
-      {
-          'key': 'event',
-          'default_value': 'event'
-      }
-    ]
-    inline_template = notification.email_with_inline_template
+require 'urbanairship'
+UA = Urbanairship
+airship = UA::Client.new(key:'<app_key>', secret:'<secret_key>')
+email_notification = UA::EmailNotification.new(client: airship)
+email_notification.message_type = 'transactional'
+email_notification.reply_to = 'reply_to_this@email.com'
+email_notification.sender_address = 'sends_from_this@email.com'
+email_notification.sender_name = 'Sender Name'
+email_notification.template_id = "<template_id>"
+inline_template = email_notification.email_with_inline_template
+send_it = UA::CreateAndSend.new(client: airship)
+send_it.addresses = [
+  {
+    "ua_address": "test@example.com",
+    "ua_commercial_opted_in": "2019-12-29T10:34:22"
+  }
+]
+send_it.device_types = [ "email" ]
+send_it.campaigns = ["winter sale", "west coast"]
+send_it.notification = inline_template
+send_it.create_and_send
 
-    create_and_send = UA::CreateAndSend.new(client: airship)
-    create_and_send.device_types = [ "email" ]
-    create_and_send.addresses = [
-      {
-        "ua_address": "new@email.com",
-        "ua_commercial_opted_in": "2018-11-29T10:34:22",
-      },
-      {
-        "ua_address": "ben@icetown.com",
-        "ua_commercial_opted_in": "2018-11-29T12:45:10",
-      }
-    ]
-    create_and_send.campaigns = ["winter sale", "west coast"]
-    create_and_send.notification = inline_template
+.. note::
+
+  Should return a 202 Accepted HTTP response.
+
+Create and Send with Email Inline Template/Fields
+------------------------------------------------------
+
+.. code-block:: ruby
+
+require 'urbanairship'
+UA = Urbanairship
+airship = UA::Client.new(key:'<app_key>', secret:'<secret_key>')
+email_notification = UA::EmailNotification.new(client: airship)
+email_notification.message_type = 'transactional'
+email_notification.reply_to = 'reply_to_this@email.com'
+email_notification.sender_address = 'sends_from_this@email.com'
+email_notification.sender_name = 'Sender Name''
+email_notification.subject= "I'm sending some stuff"
+email_notification.plaintext_body = 'Plaintext version goes here [[ua-unsubscribe href=\"http://unsubscribe.urbanairship.com/email/success.html\"]]'
+inline_template = email_notification.email_with_inline_template
+send_it = UA::CreateAndSend.new(client: airship)
+send_it.addresses = [
+  {
+    "ua_address": "example@test.com",
+    "ua_commercial_opted_in": "2019-12-29T10:34:22"
+  }
+]
+send_it.device_types = [ "email" ]
+send_it.campaigns = ["winter sale", "west coast"]
+send_it.notification = inline_template
+send_it.create_and_send
 
 .. note::
 
