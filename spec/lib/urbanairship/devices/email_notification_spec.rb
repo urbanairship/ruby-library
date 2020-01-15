@@ -21,7 +21,7 @@ describe Urbanairship::Devices do
     inline_template_payload = {"email": {
             'bcc': "example@fakeemail.com",
             'message_type': "commercial",
-            'reply-to': "another_fake_email@domain.com",
+            'reply_to': "another_fake_email@domain.com",
             'sender_address': "team@urbanairship.com",
             'sender_name': "Airship",
             'template': {
