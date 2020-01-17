@@ -2,6 +2,7 @@
 5.5.0
 --------------------
 - Add Create and Send Functionality for Email
+- Add endpoints for Create and Send Validation and Scheduling
 
 --------------------
 5.4.0

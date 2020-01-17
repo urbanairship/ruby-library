@@ -74,7 +74,7 @@ module Urbanairship
         response
       end
 
-      def operation
+      def schedule
         fail ArgumentError, 'scheduled time must be set to run an operation' if @scheduled_time.nil?
 
         scheduled_payload = {

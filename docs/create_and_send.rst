@@ -44,8 +44,8 @@ However, this validation method should work on any other create and send notific
 
   Should return a 200 HTTP status code.
 
-Create and Send Operation
--------------------------
+Schedule Create and Send Operation
+----------------------------------
 
 Here, the payload that is being scheduled is one that would be used for email override.
 However, this operation method should schedule any other create and send notification objects.
@@ -77,7 +77,7 @@ However, this operation method should schedule any other create and send notific
     send_it.notification = email_notification.email_override
     send_it.name = 'Name for scheduled create and send'
     send_it.scheduled_time =  "2019-13-29T10:34:22"
-    send_it.operation
+    send_it.schedule
 
 .. note::
 
