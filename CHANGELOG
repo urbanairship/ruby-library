@@ -1,4 +1,9 @@
 --------------------
+5.5.0
+--------------------
+- Add Create and Send Functionality for Email
+
+--------------------
 5.4.0
 --------------------
 - Change BASE_URL to go.airship.com
