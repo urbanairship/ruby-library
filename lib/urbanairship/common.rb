@@ -19,6 +19,7 @@ module Urbanairship
     PIPELINES_URL = BASE_URL + '/pipelines/'
     FEEDS_URL = BASE_URL + '/feeds/'
     LOCATION_URL = BASE_URL + '/location/'
+    CREATE_AND_SEND_URL = BASE_URL + '/create-and-send/'
 
     # Helper method for required keyword args in Ruby 2.0 that is compatible with 2.1+
     # @example

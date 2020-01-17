@@ -9,7 +9,7 @@
 /pkg/
 /spec/reports/
 /tmp/
-csv_file
+/csv_file
 
 # App
 urbanairship.log
