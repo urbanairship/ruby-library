@@ -170,6 +170,46 @@ describe Urbanairship::Devices do
         expect(actual_resp).to eq(email_response)
       end
 
+      it 'creates and sends for sms notification with inline template' do
+        notification = UA::SmsNotification.new(client: airship)
+        notification.sms_alert = "Hi, {{customer.first_name}}, your {{#each cart}}{{this.name}}{{/each}} are ready to pickup at our {{customer.location}} location!"
+        inline_template = notification.sms_inline_template
+        send_it = UA::CreateAndSend.new(client: airship)
+        send_it.addresses = [
+          {
+            "ua_msisdn": "15558675309",
+            "ua_sender": "12345",
+            "ua_opted_in": "2018-11-11T18:45:30"
+          }
+        ]
+        send_it.device_types = [ "sms" ]
+        send_it.notification = inline_template
+        send_it.campaigns = ["winter sale", "west coast"]
+        allow(airship).to receive(:send_request).and_return(email_response)
+        actual_resp = send_it.create_and_send
+        expect(actual_resp).to eq(email_response)
+      end
+
+      it 'creates and sends for sms notification with inline template' do
+        notification = UA::SmsNotification.new(client: airship)
+        notification.template_id = "9335bb2a-2a45-456c-8b53-42af7898236a"
+        inline_template = notification.sms_inline_template
+        send_it = UA::CreateAndSend.new(client: airship)
+        send_it.addresses = [
+          {
+            "ua_msisdn": "15558675309",
+            "ua_sender": "12345",
+            "ua_opted_in": "2018-11-11T18:45:30"
+          }
+        ]
+        send_it.device_types = [ "sms" ]
+        send_it.notification = inline_template
+        send_it.campaigns = ["winter sale", "west coast"]
+        allow(airship).to receive(:send_request).and_return(email_response)
+        actual_resp = send_it.create_and_send
+        expect(actual_resp).to eq(email_response)
+      end
+
     end
   end
 
