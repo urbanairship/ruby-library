@@ -19,8 +19,8 @@ module Urbanairship
         @device_types = nil
         @notification = nil
         @campaigns = nil
-        @name = nil
-        @scheduled_time = nil
+        # @name = nil
+        # @scheduled_time = nil
       end
 
       def validate_address
@@ -47,7 +47,7 @@ module Urbanairship
         }
 
         if @campaigns
-          campaign_object = {'categories': '@campaigns'}
+          campaign_object = {'categories': @campaigns}
           full_payload[:campaigns] = campaign_object
         end
 
