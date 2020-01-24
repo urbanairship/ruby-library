@@ -128,27 +128,27 @@ Create and Send with Email Inline Template/Template ID
 
 .. code-block:: ruby
 
-require 'urbanairship'
-UA = Urbanairship
-airship = UA::Client.new(key:'<app_key>', secret:'<secret_key>')
-email_notification = UA::EmailNotification.new(client: airship)
-email_notification.message_type = 'transactional'
-email_notification.reply_to = 'reply_to_this@email.com'
-email_notification.sender_address = 'sends_from_this@email.com'
-email_notification.sender_name = 'Sender Name'
-email_notification.template_id = "<template_id>"
-inline_template = email_notification.email_with_inline_template
-send_it = UA::CreateAndSend.new(client: airship)
-send_it.addresses = [
-  {
-    "ua_address": "test@example.com",
-    "ua_commercial_opted_in": "2019-12-29T10:34:22"
-  }
-]
-send_it.device_types = [ "email" ]
-send_it.campaigns = ["winter sale", "west coast"]
-send_it.notification = inline_template
-send_it.create_and_send
+  require 'urbanairship'
+  UA = Urbanairship
+  airship = UA::Client.new(key:'<app_key>', secret:'<secret_key>')
+  email_notification = UA::EmailNotification.new(client: airship)
+  email_notification.message_type = 'transactional'
+  email_notification.reply_to = 'reply_to_this@email.com'
+  email_notification.sender_address = 'sends_from_this@email.com'
+  email_notification.sender_name = 'Sender Name'
+  email_notification.template_id = "<template_id>"
+  inline_template = email_notification.email_with_inline_template
+  send_it = UA::CreateAndSend.new(client: airship)
+  send_it.addresses = [
+    {
+      "ua_address": "test@example.com",
+      "ua_commercial_opted_in": "2019-12-29T10:34:22"
+    }
+  ]
+  send_it.device_types = [ "email" ]
+  send_it.campaigns = ["winter sale", "west coast"]
+  send_it.notification = inline_template
+  send_it.create_and_send
 
 .. note::
 
@@ -159,32 +159,63 @@ Create and Send with Email Inline Template/Fields
 
 .. code-block:: ruby
 
-require 'urbanairship'
-UA = Urbanairship
-airship = UA::Client.new(key:'<app_key>', secret:'<secret_key>')
-email_notification = UA::EmailNotification.new(client: airship)
-email_notification.message_type = 'transactional'
-email_notification.reply_to = 'reply_to_this@email.com'
-email_notification.sender_address = 'sends_from_this@email.com'
-email_notification.sender_name = 'Sender Name''
-email_notification.subject= "I'm sending some stuff"
-email_notification.plaintext_body = 'Plaintext version goes here [[ua-unsubscribe href=\"http://unsubscribe.urbanairship.com/email/success.html\"]]'
-inline_template = email_notification.email_with_inline_template
-send_it = UA::CreateAndSend.new(client: airship)
-send_it.addresses = [
-  {
-    "ua_address": "example@test.com",
-    "ua_commercial_opted_in": "2019-12-29T10:34:22"
-  }
-]
-send_it.device_types = [ "email" ]
-send_it.campaigns = ["winter sale", "west coast"]
-send_it.notification = inline_template
-send_it.create_and_send
+    require 'urbanairship'
+    UA = Urbanairship
+    airship = UA::Client.new(key:'<app_key>', secret:'<secret_key>')
+    email_notification = UA::EmailNotification.new(client: airship)
+    email_notification.message_type = 'transactional'
+    email_notification.reply_to = 'reply_to_this@email.com'
+    email_notification.sender_address = 'sends_from_this@email.com'
+    email_notification.sender_name = 'Sender Name''
+    email_notification.subject= "I'm sending some stuff"
+    email_notification.plaintext_body = 'Plaintext version goes here [[ua-unsubscribe href=\"http://unsubscribe.urbanairship.com/email/success.html\"]]'
+    inline_template = email_notification.email_with_inline_template
+    send_it = UA::CreateAndSend.new(client: airship)
+    send_it.addresses = [
+      {
+        "ua_address": "example@test.com",
+        "ua_commercial_opted_in": "2019-12-29T10:34:22"
+      }
+    ]
+    send_it.device_types = [ "email" ]
+    send_it.campaigns = ["winter sale", "west coast"]
+    send_it.notification = inline_template
+    send_it.create_and_send
 
 .. note::
 
   Should return a 202 Accepted HTTP response.
 
-  Create and Send to SMS Channels
-  ================================
+Create and Send to SMS Channels
+================================
+
+Create and Send to SMS Override
+-------------------------------
+
+.. code-block:: ruby
+
+  require 'urbanairship'
+  UA = Urbanairship
+  airship = UA::Client.new(key:'<app_key>', secret:'<secret_key>')
+  notification = UA::SmsNotification.new(client: airship)
+  notification.sms_alert = "A shorter alert with a link for SMS users to click https://www.mysite.com/amazingly/long/url-that-takes-up-lots-of-characters"
+  notification.generic_alert = "A generic alert sent to all platforms without overrides in device_types"
+  notification.expiry = 172800
+  notification.shorten_links = true
+  override = notification.sms_notification_override
+  send_it = UA::CreateAndSend.new(client: airship)
+  send_it.addresses = [
+    {
+      "ua_msisdn": "15558675309",
+      "ua_sender": "12345",
+      "ua_opted_in": "2018-11-11T18:45:30"
+    }
+  ]
+  send_it.device_types = [ "sms" ]
+  send_it.notification = override
+  send_it.campaigns = ["winter sale", "west coast"]
+  send_it.create_and_send
+
+.. note::
+
+  Should return a 202 Accepted HTTP response.

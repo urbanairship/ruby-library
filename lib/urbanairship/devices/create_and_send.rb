@@ -19,8 +19,8 @@ module Urbanairship
         @device_types = nil
         @notification = nil
         @campaigns = nil
-        # @name = nil
-        # @scheduled_time = nil
+        @name = nil
+        @scheduled_time = nil
       end
 
       def validate_address
