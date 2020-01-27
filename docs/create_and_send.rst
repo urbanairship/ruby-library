@@ -219,3 +219,58 @@ Create and Send to SMS Override
 .. note::
 
   Should return a 202 Accepted HTTP response.
+
+Create and Send to SMS With Inline Template
+-------------------------------------------
+
+.. code-block:: ruby
+
+  require 'urbanairship'
+  UA = Urbanairship
+  airship = UA::Client.new(key:'<app_key>', secret:'<secret_key>')
+  notification = UA::SmsNotification.new(client: airship)
+  notification.sms_alert = "Hi, {{customer.first_name}}, your {{#each cart}}{{this.name}}{{/each}} are ready to pickup at our {{customer.location}} location!"
+  notification.expiry = 172800
+  notification.shorten_links = true
+  override = notification.sms_inline_template
+  send_it = UA::CreateAndSend.new(client: airship)
+  send_it.addresses = [
+    {
+      "ua_msisdn": "<your phone number",
+      "ua_sender": "18587323363",
+      "ua_opted_in": "2020-01-23T18:45:30",
+      "customer": {
+          "first_name": "Your Name",
+          "last_name": "Last Name",
+          "location": "Your Location",
+      },
+      "cart": [
+        {
+          "name": "Robot Unicorn",
+          "qty": 1
+        },
+        {
+          "name": "Holy Hand Grenade of Antioch",
+          "qty": 1
+        }
+      ]
+    }
+  ]
+  send_it.device_types = [ "sms" ]
+  send_it.notification = override
+  send_it.campaigns = [ "order-pickup" ]
+  send_it.create_and_send
+
+.. note::
+
+  Should return a 202 Accepted HTTP response.
+
+Create and Send to SMS With Template ID
+---------------------------------------
+
+.. code-block:: ruby
+
+
+.. note::
+
+  Should return a 202 Accepted HTTP response.
