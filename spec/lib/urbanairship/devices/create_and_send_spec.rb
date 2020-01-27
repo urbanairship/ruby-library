@@ -72,53 +72,6 @@ describe Urbanairship::Devices do
        "ok": true
     }
 
-    # schedule_operation_response = {
-    #   "ok": true,
-    #   "operation_id": "67c65146-c27f-431f-b54a-83aca694fdd3",
-    #   "schedule_urls": [
-    #       "http://go.urbanairship/api/schedules/2d69320c-3c91-5241-fac4-248269eed109"
-    #   ],
-    #   "schedules": [
-    #     {
-    #       "url": "http://go.urbanairship/api/schedules/2d69320c-3c91-5241-fac4-248269eed109",
-    #       "schedule": {
-    #           "scheduled_time": "2018-11-11T12:00:00"
-    #       },
-    #       "push": {
-    #         "audience": {
-    #           "create_and_send": [
-    #             {
-    #               "ua_address": "new@email.com",
-    #               "ua_commercial_opted_in": "2018-11-29T10:34:22",
-    #             },
-    #             {
-    #               "ua_address": "ben@icetown.com",
-    #               "ua_commercial_opted_in": "2018-11-29T12:45:10",
-    #             }
-    #           ]
-    #         },
-    #         "device_types": [ "email" ],
-    #         "notification": {
-    #           "email": {
-    #             "subject": "Welcome to the Winter Sale! ",
-    #             "html_body": "<h1>Seasons Greetings</h1><p>Check out our winter deals!</p><p><a data-ua-unsubscribe=\"1\" title=\"unsubscribe\" href=\"http://unsubscribe.urbanairship.com/email/success.html\">Unsubscribe</a></p>",
-    #             "plaintext_body": "Greetings! Check out our latest winter deals! [[ua-unsubscribe href=\"http://unsubscribe.urbanairship.com/email/success.html\"]]",
-    #             "message_type": "commercial",
-    #             "sender_name": "Airship",
-    #             "sender_address": "team@urbanairship.com",
-    #             "reply_to": "no-reply@urbanairship.com"
-    #         },
-    #         "campaigns": {
-    #             "categories": ["winter sale", "west coast"]
-    #           }
-    #         }
-    #       }
-    #       "push_ids": ["8cf8b2a5-7655-40c2-a500-ff498e60453e"]
-    #     }
-    #   ]
-    # }
-
-
   describe Urbanairship::Devices::CreateAndSend do
 
     describe '#create_and_send' do
