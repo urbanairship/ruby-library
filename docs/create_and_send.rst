@@ -236,13 +236,13 @@ Create and Send to SMS With Inline Template
   send_it = UA::CreateAndSend.new(client: airship)
   send_it.addresses = [
     {
-      "ua_msisdn": "<your phone number",
-      "ua_sender": "18587323363",
-      "ua_opted_in": "2020-01-23T18:45:30",
+    "ua_msisdn": "15558675309",
+    "ua_sender": "12345",
+    "ua_opted_in": "2018-11-11T18:45:30",
       "customer": {
-          "first_name": "Your Name",
+          "first_name": "Customer Name",
           "last_name": "Last Name",
-          "location": "Your Location",
+          "location": "Location",
       },
       "cart": [
         {
@@ -270,6 +270,41 @@ Create and Send to SMS With Template ID
 
 .. code-block:: ruby
 
+  require 'urbanairship'
+  UA = Urbanairship
+  airship = UA::Client.new(key:'<app_key>', secret:'<secret_key>')
+  notification = UA::SmsNotification.new(client: airship)
+  notification.template_id = <sms_tempalte_id_for_app>
+  notification.expiry = 172800
+  notification.shorten_links = true
+  override = notification.sms_inline_template
+  send_it = UA::CreateAndSend.new(client: airship)
+  send_it.addresses = [
+    {
+    "ua_msisdn": "15558675309",
+    "ua_sender": "12345",
+    "ua_opted_in": "2018-11-11T18:45:30",
+      "customer": {
+          "first_name": "Customer Name",
+          "last_name": "Last Name",
+          "location": "Your Location",
+      },
+      "cart": [
+        {
+          "name": "Robot Unicorn",
+          "qty": 1
+        },
+        {
+          "name": "Holy Hand Grenade of Antioch",
+          "qty": 1
+        }
+      ]
+    }
+  ]
+  send_it.device_types = [ "sms" ]
+  send_it.notification = override
+  send_it.campaigns = [ "order-pickup" ]
+  send_it.create_and_send
 
 .. note::
 
