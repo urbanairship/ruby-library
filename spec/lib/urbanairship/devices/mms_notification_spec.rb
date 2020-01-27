@@ -9,7 +9,7 @@ describe Urbanairship::Devices do
   mms_override_payload = {
   "mms": {
     "fallback_text": "Delivery failed, but you should still check this out.",
-    "subject" : "Hey, thanks for subscribing!",
+    "subject": "Hey, thanks for subscribing!",
     "slides": [
       {
         "text": "Check this out!",
@@ -24,9 +24,9 @@ describe Urbanairship::Devices do
   }
 
   mms_template_with_id = {
-    "mms" : {
-      "template" : {
-        "template_id" : "9335bb2a-2a45-456c-8b53-42af7898236a"
+    "mms": {
+      "template": {
+        "template_id": "9335bb2a-2a45-456c-8b53-42af7898236a"
       }
     }
   }
