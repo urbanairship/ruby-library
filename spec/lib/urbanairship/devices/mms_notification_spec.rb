@@ -38,9 +38,12 @@ describe Urbanairship::Devices do
         "fields": {
           "subject": "Hi, {{customer.first_name}}, your {{#each order}}{{order.name}}{{/each}} was delivered!",
           "fallback text": "Hi, {{customer.first_name}}, your {{#each order}}{{order.name}}{{/each}} was delivered!",
+          "slide_1_text": "text",
           "slides": [
             {
-              "content_length": "1234567"
+              "content_length": "1234567",
+              "content_type": "image/jpeg",
+              "url": "https://www.metoffice.gov.uk/binaries/content/gallery/mohippo/images/learning/learn-about-the-weather/rainbows/full_featured_double_rainbow_at_savonlinna_1000px.jpg",
             }
           ]
         }
@@ -80,7 +83,10 @@ describe Urbanairship::Devices do
         inline_template = UA::MmsNotification.new(client: airship)
         inline_template.subject = "Hi, {{customer.first_name}}, your {{#each order}}{{order.name}}{{/each}} was delivered!"
         inline_template.fallback_text = "Hi, {{customer.first_name}}, your {{#each order}}{{order.name}}{{/each}} was delivered!"
+        inline_template.slide_1_text = "text"
         inline_template.content_length = "1234567"
+        inline_template.content_type = "image/jpeg"
+        inline_template.url = "https://www.metoffice.gov.uk/binaries/content/gallery/mohippo/images/learning/learn-about-the-weather/rainbows/full_featured_double_rainbow_at_savonlinna_1000px.jpg",
         result = inline_template.mms_inline_template
         expect(result).to eq(mms_inline_template)
       end

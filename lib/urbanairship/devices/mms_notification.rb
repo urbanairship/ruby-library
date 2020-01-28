@@ -14,7 +14,8 @@ module Urbanairship
                     :url,
                     :text,
                     :subject,
-                    :template_id
+                    :template_id,
+                    :slide_1_text
 
       def initialize(client: required('client'))
         @client = client
@@ -26,6 +27,7 @@ module Urbanairship
         @text = nil
         @subject = nil
         @template_id = nil
+        @slide_1_text = nil
       end
 
       def mms_override
