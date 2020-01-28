@@ -96,7 +96,7 @@ Create and Send with Email Override
 -----------------------------------
 
 The first few lines of code are creating a EmailNotification object, and assigning
-instance variables to the object. The line of code here here:
+instance variables to the object. The line of code here:
 `override = email_notification.email_override`
 is using a class method on EmailNotification specific for an email override in order
 to format the payload correctly for the notification portion of the CreateAndSend object.
@@ -136,7 +136,7 @@ Create and Send with Email Inline Template/Template ID
 ------------------------------------------------------
 
 The first few lines of code are creating a EmailNotification object, and assigning
-instance variables to the object. The line of code here here:
+instance variables to the object. The line of code here:
 `inline_template = email_notification.email_with_inline_template`
 is using a class method on EmailNotification specific for an inline template. This goes
 on to format the payload correctly for the notification portion of the CreateAndSend object
@@ -175,7 +175,7 @@ Create and Send with Email Inline Template/Fields
 -------------------------------------------------
 
 The first few lines of code are creating a EmailNotification object, and assigning
-instance variables to that object. The line of code here here:
+instance variables to that object. The line of code here:
 `inline_template = email_notification.email_with_inline_template`
 is using a class method on EmailNotification specific for an inline template. This goes
 on to format the payload correctly for the notification portion of the CreateAndSend object
@@ -218,7 +218,7 @@ Create and Send to SMS Override
 -------------------------------
 
 The first few lines of code are creating a SmsNotification object, and assigning
-instance variables to that object. The line of code here here:
+instance variables to that object. The line of code here:
 `override = notification.sms_notification_override`
 is using a class method on SmsNotification specific for a sms override. This goes
 on to format the payload correctly for the notification portion of the CreateAndSend object
@@ -257,7 +257,7 @@ Create and Send to SMS With Inline Template
 -------------------------------------------
 
 The first few lines of code are creating a SmsNotification object, and assigning
-instance variables to that object. The line of code here here:
+instance variables to that object. The line of code here:
 `template = notification.sms_inline_template`
 is using a class method on SmsNotification specific for a sms inline template. This goes
 on to format the payload correctly for the notification portion of the CreateAndSend object
@@ -310,7 +310,7 @@ Create and Send to SMS With Template ID
 ---------------------------------------
 
 The first few lines of code are creating a SmsNotification object, and assigning
-instance variables to that object. The line of code here here:
+instance variables to that object. The line of code here:
 `template = notification.sms_inline_template`
 is using a class method on SmsNotification specific for a sms template ID. This goes
 on to format the payload correctly for the notification portion of the CreateAndSend object
