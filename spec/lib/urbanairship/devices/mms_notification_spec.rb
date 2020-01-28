@@ -8,15 +8,16 @@ describe Urbanairship::Devices do
 
   mms_override_payload = {
   "mms": {
-    "fallback_text": "Delivery failed, but you should still check this out.",
-    "subject": "Hey, thanks for subscribing!",
+    "fallback_text": "See https://urbanairship.com for double rainbows!",
+    "shorten_links": true,
+    "subject": "Double Rainbows",
     "slides": [
       {
-        "text": "Check this out!",
+        "text": "A double rainbow is a wonderful sight where you get two spectacular natural displays for the price of one.",
         "media": {
-            "url": "https://i.imgur.com/1t466Om.jpg",
+            "url": "https://www.metoffice.gov.uk/binaries/content/gallery/mohippo/images/learning/learn-about-the-weather/rainbows/full_featured_double_rainbow_at_savonlinna_1000px.jpg",
             "content_type": "image/jpeg",
-            "content_length": 52918
+            "content_length": 238686
           }
         }
       ]
@@ -64,15 +65,17 @@ describe Urbanairship::Devices do
       end
     end
 
-    describe '#mms_inline_template' do
-
+    describe '#mms_template_with_id' do
       it 'can format inline template with template id correctly' do
         inline_template = UA::MmsNotification.new(client: airship)
         inline_template.template_id = "9335bb2a-2a45-456c-8b53-42af7898236a"
-        result = inline_template.mms_inline_template
+        result = inline_template.mms_template_with_id
         expect(result).to eq(mms_template_with_id)
       end
+    end
 
+
+    describe '#mms_inline_template' do
       it 'can format mms inline template correctly' do
         inline_template = UA::MmsNotification.new(client: airship)
         inline_template.subject = "Hi, {{customer.first_name}}, your {{#each order}}{{order.name}}{{/each}} was delivered!"
