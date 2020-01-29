@@ -25,7 +25,9 @@ module Urbanairship
 
       def validate_address
         @addresses.each do |address|
-          fail ArgumentError, 'each address component must have a ua_address' if !address[:ua_address]
+          unless address.include?(:ua_address) or address.include?(:ua_msisdn && :ua_opted_in && :ua_sender)
+            fail ArgumentError, 'Missing a component in address portion of the object'
+          end
         end
       end
 
@@ -45,7 +47,7 @@ module Urbanairship
         }
 
         if @campaigns
-          campaign_object = {'categories': '@campaigns'}
+          campaign_object = {'categories': @campaigns}
           full_payload[:campaigns] = campaign_object
         end
 

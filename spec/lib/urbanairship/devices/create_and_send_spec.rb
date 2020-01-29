@@ -68,6 +68,10 @@ describe Urbanairship::Devices do
       }
     }
 
+    validation_response = {
+       "ok": true
+    }
+
   describe Urbanairship::Devices::CreateAndSend do
 
     describe '#create_and_send' do
@@ -170,7 +174,105 @@ describe Urbanairship::Devices do
         expect(actual_resp).to eq(email_response)
       end
 
+      it 'creates and sends for sms notification with inline template' do
+        notification = UA::SmsNotification.new(client: airship)
+        notification.sms_alert = "Hi, {{customer.first_name}}, your {{#each cart}}{{this.name}}{{/each}} are ready to pickup at our {{customer.location}} location!"
+        inline_template = notification.sms_inline_template
+        send_it = UA::CreateAndSend.new(client: airship)
+        send_it.addresses = [
+          {
+            "ua_msisdn": "15558675309",
+            "ua_sender": "12345",
+            "ua_opted_in": "2018-11-11T18:45:30"
+          }
+        ]
+        send_it.device_types = [ "sms" ]
+        send_it.notification = inline_template
+        send_it.campaigns = ["winter sale", "west coast"]
+        allow(airship).to receive(:send_request).and_return(email_response)
+        actual_resp = send_it.create_and_send
+        expect(actual_resp).to eq(email_response)
+      end
+
+      it 'creates and sends for sms notification with inline template' do
+        notification = UA::SmsNotification.new(client: airship)
+        notification.template_id = "9335bb2a-2a45-456c-8b53-42af7898236a"
+        inline_template = notification.sms_inline_template
+        send_it = UA::CreateAndSend.new(client: airship)
+        send_it.addresses = [
+          {
+            "ua_msisdn": "15558675309",
+            "ua_sender": "12345",
+            "ua_opted_in": "2018-11-11T18:45:30"
+          }
+        ]
+        send_it.device_types = [ "sms" ]
+        send_it.notification = inline_template
+        send_it.campaigns = ["winter sale", "west coast"]
+        allow(airship).to receive(:send_request).and_return(email_response)
+        actual_resp = send_it.create_and_send
+        expect(actual_resp).to eq(email_response)
+      end
     end
+
+    describe '#validate' do
+      it 'will validate a payload for email override' do
+        notification = UA::EmailNotification.new(client: airship)
+        notification.bcc = "example@fakeemail.com"
+        notification.bypass_opt_in_level = false
+        notification.html_body = "<h2>Richtext body goes here</h2><p>Wow!</p><p><a data-ua-unsubscribe=\"1\" title=\"unsubscribe\" href=\"http://unsubscribe.urbanairship.com/email/success.html\">Unsubscribe</a></p>"
+        notification.message_type = 'commercial'
+        notification.plaintext_body = 'Plaintext version goes here [[ua-unsubscribe href=\"http://unsubscribe.urbanairship.com/email/success.html\"]]'
+        notification.reply_to = 'another_fake_email@domain.com'
+        notification.sender_address = 'team@urbanairship.com'
+        notification.sender_name = 'Airship'
+        notification.subject = 'Did you get that thing I sent you?'
+        override = notification.email_override
+
+        create_and_send = UA::CreateAndSend.new(client: airship)
+        create_and_send.addresses = [
+          {
+            "ua_address": "new@email.com",
+            "ua_commercial_opted_in": "2018-11-29T10:34:22",
+          },
+          {
+            "ua_address": "ben@icetown.com",
+            "ua_commercial_opted_in": "2018-11-29T12:45:10",
+          }
+        ]
+        create_and_send.device_types = [ "email" ]
+        create_and_send.campaigns = ["winter sale", "west coast"]
+        create_and_send.notification = override
+
+        allow(airship).to receive(:send_request).and_return(validation_response)
+        actual_resp = create_and_send.validate
+        expect(actual_resp).to eq(validation_response)
+      end
+
+      it 'will validate payload for sms override' do
+        notification = UA::SmsNotification.new(client: airship)
+        notification.sms_alert = "A shorter alert with a link for SMS users to click https://www.mysite.com/amazingly/long/url-that-takes-up-lots-of-characters"
+        notification.generic_alert = "A generic alert sent to all platforms without overrides in device_types"
+        notification.expiry = 172800
+        notification.shorten_links = true
+        override = notification.sms_notification_override
+        send_it = UA::CreateAndSend.new(client: airship)
+        send_it.addresses = [
+          {
+            "ua_msisdn": "15558675309",
+            "ua_sender": "12345",
+            "ua_opted_in": "2018-11-11T18:45:30"
+          }
+        ]
+        send_it.device_types = [ "sms" ]
+        send_it.notification = override
+        send_it.campaigns = ["winter sale", "west coast"]
+        allow(airship).to receive(:send_request).and_return(validation_response)
+        actual_resp = send_it.validate
+        expect(actual_resp).to eq(validation_response)
+      end
+    end
+
   end
 
 end

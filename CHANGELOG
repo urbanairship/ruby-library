@@ -3,6 +3,7 @@
 --------------------
 - Add Create and Send Functionality for Email
 - Add endpoints for Create and Send Validation and Scheduling
+- Add Create and Send Functionality for SMS
 
 --------------------
 5.4.0
