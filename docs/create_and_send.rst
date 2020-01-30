@@ -358,3 +358,45 @@ shown in the line of code here:
 .. note::
 
   Should return a 202 Accepted HTTP response.
+
+Create and Send to MMS Channels
+================================
+
+Create and Send to MMS Override
+-------------------------------
+
+The first few lines of code are creating a MmsNotification object, and assigning
+instance variables to that object. The line of code here:
+`template = notification.sms_inline_template`
+is using a class method on SmsNotification specific for a sms template ID. This goes
+on to format the payload correctly for the notification portion of the CreateAndSend object
+shown in the line of code here:
+`send_it.notification = template`
+
+.. code-block:: ruby
+
+  override = UA::MmsNotification.new(client: airship)
+  override.fallback_text = "See https://urbanairship.com for double rainbows!"
+  override.shorten_links = true
+  override.content_length = 238686
+  override.content_type = "image/jpeg"
+  override.url = "https://www.metoffice.gov.uk/binaries/content/gallery/mohippo/images/learning/learn-about-the-weather/rainbows/full_featured_double_rainbow_at_savonlinna_1000px.jpg"
+  override.text = "A double rainbow is a wonderful sight where you get two spectacular natural displays for the price of one."
+  override.subject = "Double Rainbows"
+  mms_notification = override.mms_override
+  send_it = UA::CreateAndSend.new(client: airship)
+  send_it.addresses = [
+    {
+    "ua_msisdn": "15558675309",
+    "ua_sender": "12345",
+    "ua_opted_in": "2018-11-11T18:45:30",
+    }
+  ]
+  send_it.device_types = [ "mms" ]
+  send_it.notification = mms_notification
+  send_it.campaigns = ["winter sale", "west coast"]
+  send_it.create_and_send
+
+.. note::
+
+  Should return a 202 Accepted HTTP response.
