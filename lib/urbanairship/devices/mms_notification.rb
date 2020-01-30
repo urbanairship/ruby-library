@@ -66,7 +66,7 @@ module Urbanairship
       end
 
       def mms_inline_template
-        {
+        template = {
           "mms": {
             "template": {
               "fields": {
@@ -75,9 +75,9 @@ module Urbanairship
                 "slide_1_text": @slide_1_text,
                 "slides": [
                   {
+                    "url": @url,
                     "content_type": @content_type,
-                    "content_length": @content_length,
-                    "url": @url
+                    "content_length": @content_length
                   }
                 ]
               }

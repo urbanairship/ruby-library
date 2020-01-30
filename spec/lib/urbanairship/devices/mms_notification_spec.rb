@@ -43,7 +43,7 @@ describe Urbanairship::Devices do
             {
               "content_length": "1234567",
               "content_type": "image/jpeg",
-              "url": "https://www.metoffice.gov.uk/binaries/content/gallery/mohippo/images/learning/learn-about-the-weather/rainbows/full_featured_double_rainbow_at_savonlinna_1000px.jpg",
+              "url": "www.google.com"
             }
           ]
         }
@@ -86,7 +86,7 @@ describe Urbanairship::Devices do
         inline_template.slide_1_text = "text"
         inline_template.content_length = "1234567"
         inline_template.content_type = "image/jpeg"
-        inline_template.url = "https://www.metoffice.gov.uk/binaries/content/gallery/mohippo/images/learning/learn-about-the-weather/rainbows/full_featured_double_rainbow_at_savonlinna_1000px.jpg",
+        inline_template.url = "www.google.com"
         result = inline_template.mms_inline_template
         expect(result).to eq(mms_inline_template)
       end
