@@ -30,11 +30,19 @@ module Urbanairship
         @slide_1_text = nil
       end
 
+      def validate_url
+        unless @url[-4..-1] == '.jpg' || '.gif' || '.png' || 'jpeg'
+          fail ArgumentError, 'url must end in .gif, .jpg, .png, pr .jpeg'
+        end
+      end
+
       def mms_override
         fail ArgumentError, 'fallback_text is needed for MMS override' if @fallback_text.nil?
         fail ArgumentError, 'content_length is needed for MMS override' if @content_length.nil?
         fail ArgumentError, 'content_type is needed for MMS override' if @content_type.nil?
         fail ArgumentError, 'url is needed for MMS override' if @url.nil?
+
+        validate_url
 
         override = {"mms": {
                 "subject": @subject,
