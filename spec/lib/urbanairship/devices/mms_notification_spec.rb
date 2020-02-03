@@ -53,6 +53,32 @@ describe Urbanairship::Devices do
 
   describe Urbanairship::Devices::MmsNotification do
 
+    describe '#validate_url' do
+      it 'validates url ending in .jpg' do
+        override = UA::MmsNotification.new(client: airship)
+        override.url = "https://good-image.jpg"
+        expect { override.validate_url }.not_to raise_error(ArgumentError)
+      end
+
+      it 'validates url ending in .gif' do
+        override = UA::MmsNotification.new(client: airship)
+        override.url = "https://good-image.gif"
+        expect { override.validate_url }.not_to raise_error(ArgumentError)
+      end
+
+      it 'validates url ending in .png' do
+        override = UA::MmsNotification.new(client: airship)
+        override.url = "https://good-image.png"
+        expect { override.validate_url }.not_to raise_error(ArgumentError)
+      end
+
+      it 'validates url ending in .jpeg' do
+        override = UA::MmsNotification.new(client: airship)
+        override.url = "https://good-image.jpeg"
+        expect { override.validate_url }.not_to raise_error(ArgumentError)
+      end
+    end
+
     describe '#mms_override' do
       it 'can format mms override correctly' do
         override = UA::MmsNotification.new(client: airship)

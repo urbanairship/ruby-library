@@ -375,6 +375,9 @@ shown in the line of code here:
 
 .. code-block:: ruby
 
+  require 'urbanairship'
+  UA = Urbanairship
+  airship = UA::Client.new(key:'<app_key>', secret:'<secret_key>')
   override = UA::MmsNotification.new(client: airship)
   override.fallback_text = "See https://urbanairship.com for double rainbows!"
   override.shorten_links = true
