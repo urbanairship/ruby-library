@@ -27,7 +27,6 @@ module Urbanairship
         @text = nil
         @subject = nil
         @template_id = nil
-        @slide_1_text = nil
       end
 
       def validate_url
@@ -88,22 +87,25 @@ module Urbanairship
       end
 
       def mms_inline_template
-        template = {
-          "mms": {
+        fail ArgumentError, 'content_length is needed for MMS override' if @text.nil?
+
+          {"mms": {
             "template": {
               "fields": {
                 "subject": @subject,
-                "fallback text": @fallback_text,
-                "slide_1_text": @slide_1_text,
-                "slides": [
-                  {
+                "fallback_text": @fallback_text,
+                "slide_1_text": @text
+              }
+            },
+            "slides": [
+              {
+                "media": {
                     "url": @url,
                     "content_type": @content_type,
                     "content_length": @content_length
-                  }
-                ]
+                }
               }
-            }
+            ]
           }
         }
       end
