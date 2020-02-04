@@ -63,9 +63,9 @@ module Urbanairship
       end
 
       def mms_template_with_id
-        fail ArgumentError, 'content_length is needed for MMS override' if @content_length.nil?
-        fail ArgumentError, 'content_type is needed for MMS override' if @content_type.nil?
-        fail ArgumentError, 'url is needed for MMS override' if @url.nil?
+        fail ArgumentError, 'content_length is needed for MMS Inline Template with ID' if @content_length.nil?
+        fail ArgumentError, 'content_type is needed for MMS Inline Template with ID' if @content_type.nil?
+        fail ArgumentError, 'url is needed for MMS Inline Template with ID' if @url.nil?
         fail ArgumentError, 'template_id is needed for MMS Inline Template with ID' if @template_id.nil?
 
         {"mms": {
@@ -87,7 +87,7 @@ module Urbanairship
       end
 
       def mms_inline_template
-        fail ArgumentError, 'content_length is needed for MMS override' if @text.nil?
+        fail ArgumentError, 'slide_1_text text is needed for MMS with inline template' if @text.nil?
 
           {"mms": {
             "template": {

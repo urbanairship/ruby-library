@@ -24,32 +24,42 @@ describe Urbanairship::Devices do
     }
   }
 
-  mms_template_with_id = {
-    "mms": {
+  mms_template_with_id = {"mms": {
       "template": {
         "template_id": "9335bb2a-2a45-456c-8b53-42af7898236a"
-      }
+      },
+      "shorten_links": true,
+      "slides": [
+          {
+              "media": {
+                  "url": "https://www.metoffice.gov.uk/binaries/content/gallery/mohippo/images/learning/learn-about-the-weather/rainbows/full_featured_double_rainbow_at_savonlinna_1000px.jpg",
+                  "content_type": "image/jpeg",
+                  "content_length": 238686
+              }
+          }
+      ]
     }
   }
 
-  mms_inline_template = {
-    "mms": {
-      "template": {
-        "fields": {
-          "subject": "Hi, {{customer.first_name}}, your {{#each order}}{{order.name}}{{/each}} was delivered!",
-          "fallback text": "Hi, {{customer.first_name}}, your {{#each order}}{{order.name}}{{/each}} was delivered!",
-          "slide_1_text": "text",
-          "slides": [
-            {
-              "content_length": "1234567",
-              "content_type": "image/jpeg",
-              "url": "www.google.com"
-            }
-          ]
+  mms_inline_template = {"mms": {
+    "template": {
+      "fields": {
+        "subject": "Hi, {{customer.first_name}}, your {{#each order}}{{order.name}}{{/each}} was delivered!",
+        "fallback_text": "Hi, {{customer.first_name}}, your {{#each order}}{{order.name}}{{/each}} was delivered!",
+        "slide_1_text": "text"
+      }
+    },
+    "slides": [
+      {
+        "media": {
+            "url": "www.google.com",
+            "content_type": "image/jpeg",
+            "content_length": 238686
         }
       }
-    }
+    ]
   }
+}
 
   describe Urbanairship::Devices::MmsNotification do
 
@@ -97,7 +107,10 @@ describe Urbanairship::Devices do
     describe '#mms_template_with_id' do
       it 'can format inline template with template id correctly' do
         inline_template = UA::MmsNotification.new(client: airship)
+        inline_template.url = "https://www.metoffice.gov.uk/binaries/content/gallery/mohippo/images/learning/learn-about-the-weather/rainbows/full_featured_double_rainbow_at_savonlinna_1000px.jpg"
         inline_template.template_id = "9335bb2a-2a45-456c-8b53-42af7898236a"
+        inline_template.content_length = 238686
+        inline_template.content_type = "image/jpeg"
         result = inline_template.mms_template_with_id
         expect(result).to eq(mms_template_with_id)
       end
@@ -109,8 +122,8 @@ describe Urbanairship::Devices do
         inline_template = UA::MmsNotification.new(client: airship)
         inline_template.subject = "Hi, {{customer.first_name}}, your {{#each order}}{{order.name}}{{/each}} was delivered!"
         inline_template.fallback_text = "Hi, {{customer.first_name}}, your {{#each order}}{{order.name}}{{/each}} was delivered!"
-        inline_template.slide_1_text = "text"
-        inline_template.content_length = "1234567"
+        inline_template.text = "text"
+        inline_template.content_length = 238686
         inline_template.content_type = "image/jpeg"
         inline_template.url = "www.google.com"
         result = inline_template.mms_inline_template
