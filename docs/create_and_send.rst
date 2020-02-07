@@ -358,3 +358,132 @@ shown in the line of code here:
 .. note::
 
   Should return a 202 Accepted HTTP response.
+
+Create and Send to MMS Channels
+================================
+
+Create and Send to MMS Override
+-------------------------------
+
+The first few lines of code are creating a MmsNotification object, and assigning
+instance variables to that object. The line of code here:
+`mms_notification = override.mms_override`
+is using a class method on MmsNotification specific for a sms template ID. This goes
+on to format the payload correctly for the notification portion of the CreateAndSend object
+shown in the line of code here:
+`send_it.notification = mms_notification`
+
+.. code-block:: ruby
+
+  require 'urbanairship'
+  UA = Urbanairship
+  airship = UA::Client.new(key:'<app_key>', secret:'<secret_key>')
+  override = UA::MmsNotification.new(client: airship)
+  override.fallback_text = "See https://urbanairship.com for double rainbows!"
+  override.shorten_links = true
+  override.content_length = 238686
+  override.content_type = "image/jpeg"
+  override.url = "https://www.metoffice.gov.uk/binaries/content/gallery/mohippo/images/learning/learn-about-the-weather/rainbows/full_featured_double_rainbow_at_savonlinna_1000px.jpg"
+  override.text = "A double rainbow is a wonderful sight where you get two spectacular natural displays for the price of one."
+  override.subject = "Double Rainbows"
+  mms_notification = override.mms_override
+  send_it = UA::CreateAndSend.new(client: airship)
+  send_it.addresses = [
+    {
+    "ua_msisdn": "15558675309",
+    "ua_sender": "12345",
+    "ua_opted_in": "2018-11-11T18:45:30",
+    }
+  ]
+  send_it.device_types = [ "mms" ]
+  send_it.notification = mms_notification
+  send_it.campaigns = ["winter sale", "west coast"]
+  send_it.create_and_send
+
+.. note::
+
+  Should return a 202 Accepted HTTP response.
+
+Create and Send to MMS Template with ID
+---------------------------------------
+
+The first few lines of code are creating a MmsNotification object, and assigning
+instance variables to that object. The line of code here:
+`mms_notification = override.mms_template_with_id`
+is using a class method on MmsNotification specific for a sms template ID. This goes
+on to format the payload correctly for the notification portion of the CreateAndSend object
+shown in the line of code here:
+`send_it.notification = mms_notification`
+
+.. code-block:: ruby
+
+  require 'urbanairship'
+  UA = Urbanairship
+  airship = UA::Client.new(key:'<app_key>', secret:'<secret_key>')
+  override = UA::MmsNotification.new(client: airship)
+  override.template_id = "<existing_template_id>"
+  override.shorten_links = true
+  override.content_length = 19309
+  override.content_type = "image/jpeg"
+  override.url = "https://images-na.ssl-images-amazon.com/images/I/71eUHxwlMKL._AC_SX425_.jpg"
+  mms_notification = override.mms_template_with_id
+  send_it = UA::CreateAndSend.new(client: airship)
+  send_it.addresses = [
+    {
+    "ua_msisdn": "123456789",
+    "ua_sender": "12345",
+    "ua_opted_in": "2020-01-30T18:45:30",
+    "customer": {
+              "first_name": "Phil",
+              "last_name": "Leash",
+          }
+    }
+  ]
+  send_it.device_types = [ "mms" ]
+  send_it.notification = mms_notification
+  send_it.create_and_send
+
+
+.. note::
+
+  Should return a 202 Accepted HTTP response.
+
+Create and Send to MMS with Inline Template
+---------------------------------------
+
+The first few lines of code are creating a MmsNotification object, and assigning
+instance variables to that object. The line of code here:
+`mms_notification = override.mms_inline_template`
+is using a class method on MmsNotification specific for a sms template ID. This goes
+on to format the payload correctly for the notification portion of the CreateAndSend object
+shown in the line of code here:
+`send_it.notification = mms_notification`
+
+.. code-block:: ruby
+
+  require 'urbanairship'
+  UA = Urbanairship
+  airship = UA::Client.new(key:'<app_key>', secret:'<master_secret>')
+  override = UA::MmsNotification.new(client: airship)
+  override.subject = "Subject"
+  override.fallback_text = "Fallback text"
+  override.text = "Some slide text"
+  override.content_length = 123100
+  override.content_type = "image/jpeg"
+  override.url = 'image ending in allowed image types'
+  mms_notification = override.mms_inline_template
+  send_it = UA::CreateAndSend.new(client: airship)
+  send_it.addresses = [
+    {
+    "ua_msisdn": "123456789",
+    "ua_sender": "12345",
+    "ua_opted_in": "2020-01-30T18:45:30"
+    }
+  ]
+  send_it.device_types = [ "mms" ]
+  send_it.notification = mms_notification
+  send_it.create_and_send
+
+.. note::
+
+  Should return a 202 Accepted HTTP response.
