@@ -4,6 +4,7 @@
 - Add Create and Send Functionality for Email
 - Add endpoints for Create and Send Validation and Scheduling
 - Add Create and Send Functionality for SMS
+- Update Rake version from 10.0 to 12.3.3
 
 --------------------
 5.4.0
