@@ -64,7 +64,7 @@ Single iOS push
     push = airship.create_push
     push.audience = UA.ios_channel('channel-id')
     push.notification = UA.notification(
-       ios: UA.ios(alert="Soledad O'Brien is following you on Twitter")
+       ios: UA.ios(alert="Your package is on its way!")
     )
     push.device_types = UA.device_types(['ios'])
     push.send_push
@@ -78,10 +78,10 @@ Single iOS Rich Push with notification
     push = airship.create_push
     push.audience = UA.ios_channel('channel-id')
     push.notification = UA.notification(
-       ios: UA.ios(alert="Soledad O'Brien is following you on Twitter")
+       ios: UA.ios(alert="Your package is on its way!")
     )
     push.device_types = UA.device_types(['ios'])
-    push.message = UA.message(title: "New follower", body: "<h1>Say hello!</h1>")
+    push.message = UA.message(title: "Your package is on the way!", body: "<h1>Please complete our survey</h1>")
     push.send_push
 
 
@@ -94,8 +94,8 @@ Rich Push with extra and without notification
     push.audience = UA.all
     push.device_types = UA.all
     push.message = UA.message(
-      title: "New follower",
-      body: "<h1>Say hello to your new follower!</h1>",
+      title: "Your package is on its way!",
+      body: "<h1>Would you please complete our customer survey?</h1>",
       extra: {"articleid" => "http://m.example.com/123456"}
     )
     push.send_push
@@ -112,7 +112,7 @@ Scheduled iOS Push
     sched.push = airship.create_push
     sched.push.audience = UA.ios_channel('channel-id')
     sched.push.notification = UA.notification(
-       ios: UA.ios(alert: "Soledad O'Brien is following you on Twitter"))
+       ios: UA.ios(alert: "Your package is on its way!"))
     sched.push.device_types = UA.device_types(['ios'])
 
     sched.send_push
