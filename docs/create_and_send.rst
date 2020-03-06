@@ -449,7 +449,7 @@ shown in the line of code here:
   Should return a 202 Accepted HTTP response.
 
 Create and Send to MMS with Inline Template
----------------------------------------
+-------------------------------------------
 
 The first few lines of code are creating a MmsNotification object, and assigning
 instance variables to that object. The line of code here:
