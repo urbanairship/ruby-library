@@ -69,7 +69,9 @@ Contents:
    location.rst
    exceptions.rst
    examples.rst
-
+   email.rst
+   open_channels.rst
+   sms.rst
 
 Indices and tables
 ==================
