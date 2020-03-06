@@ -72,6 +72,7 @@ Contents:
    email.rst
    open_channels.rst
    sms.rst
+   create_and_send.rst 
 
 Indices and tables
 ==================
