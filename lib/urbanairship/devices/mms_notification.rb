@@ -30,7 +30,7 @@ module Urbanairship
       end
 
       def validate_url
-        unless @url[-4..-1] == '.jpg' || '.gif' || '.png' || 'jpeg'
+        unless ['.jpg', '.gif', '.png', 'jpeg'].include?(@url[-4..-1])
           fail ArgumentError, 'url must end in .gif, .jpg, .png, or .jpeg'
         end
       end
