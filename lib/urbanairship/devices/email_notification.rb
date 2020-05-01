@@ -16,7 +16,9 @@ module Urbanairship
                     :sender_name,
                     :subject,
                     :template_id,
-                    :variable_details
+                    :variable_details,
+                    :click_tracking,
+                    :open_tracking
 
       def initialize(client: required('client'))
         @client = client
@@ -31,6 +33,8 @@ module Urbanairship
         @subject = nil
         @template_id = nil
         @variable_details = nil
+        @click_tracking = nil
+        @open_tracking  = nil
       end
 
       def email_override
@@ -42,8 +46,6 @@ module Urbanairship
         fail ArgumentError, 'subject is needed for email override' if @subject.nil?
 
         override = {'email': {
-          'bypass_opt_in_level': @bypass_opt_in_level,
-          'html_body': @html_body,
           'message_type': @message_type,
           'plaintext_body': @plaintext_body,
           'reply_to': @reply_to,
@@ -54,6 +56,18 @@ module Urbanairship
 
         if @bcc
           override[:email][:bcc] = @bcc
+        end
+
+        if @bypass_opt_in_level
+          override[:email][:bypass_opt_in_level] = @bypass_opt_in_level
+        end
+
+        if @html_body
+          override[:email][:html_body] = @html_body
+        end
+
+        if @open_tracking
+          override[:email][:open_tracking] = @open_tracking
         end
 
         override
