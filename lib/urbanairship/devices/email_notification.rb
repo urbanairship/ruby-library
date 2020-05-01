@@ -22,19 +22,6 @@ module Urbanairship
 
       def initialize(client: required('client'))
         @client = client
-        @bcc = nil
-        @bypass_opt_in_level = nil
-        @html_body = nil
-        @message_type = nil
-        @plaintext_body = nil
-        @reply_to = nil
-        @sender_address = nil
-        @sender_name = nil
-        @subject = nil
-        @template_id = nil
-        @variable_details = nil
-        @click_tracking = nil
-        @open_tracking  = nil
       end
 
       def email_override
@@ -45,32 +32,21 @@ module Urbanairship
         fail ArgumentError, 'sender_name is needed for email override' if @sender_name.nil?
         fail ArgumentError, 'subject is needed for email override' if @subject.nil?
 
-        override = {'email': {
-          'message_type': @message_type,
-          'plaintext_body': @plaintext_body,
-          'reply_to': @reply_to,
-          'sender_address': @sender_address,
-          'sender_name': @sender_name,
-          'subject': @subject
-        }}
+        override = {
+          bcc: bcc,
+          bypass_opt_in_level: bypass_opt_in_level,
+          click_tracking: click_tracking,
+          html_body: html_body,
+          message_type: message_type,
+          open_tracking: open_tracking, 
+          plaintext_body: plaintext_body,
+          reply_to: reply_to,
+          sender_address: sender_address,
+          sender_name: sender_name,
+          subject: subject
+        }.compact #.compact removes the nil key value pairs
 
-        if @bcc
-          override[:email][:bcc] = @bcc
-        end
-
-        if @bypass_opt_in_level
-          override[:email][:bypass_opt_in_level] = @bypass_opt_in_level
-        end
-
-        if @html_body
-          override[:email][:html_body] = @html_body
-        end
-
-        if @open_tracking
-          override[:email][:open_tracking] = @open_tracking
-        end
-
-        override
+        {'email': override}
       end
 
       def email_with_inline_template
