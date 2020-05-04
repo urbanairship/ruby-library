@@ -44,7 +44,7 @@ module Urbanairship
           sender_address: sender_address,
           sender_name: sender_name,
           subject: subject
-        }.compact #.compact removes the nil key value pairs
+        }.delete_if {|key, value| value.nil?} #this removes the nil key value pairs
 
         {'email': override}
       end
@@ -64,7 +64,7 @@ module Urbanairship
           sender_address: sender_address,
           sender_name: sender_name,
           template: define_template_object
-        }.compact #.compact removes the nil key value pairs      
+        }.delete_if {|key, value| value.nil?} #this removes the nil key value pairs      
 
         {'email': inline_template}
       end
@@ -77,7 +77,7 @@ module Urbanairship
             plaintext_body: plaintext_body
           },
           variable_details: variable_details
-        }.compact
+        }.delete_if {|key, value| value.nil?}
       end
 
     end
