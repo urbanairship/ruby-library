@@ -16,21 +16,12 @@ module Urbanairship
                     :sender_name,
                     :subject,
                     :template_id,
-                    :variable_details
+                    :variable_details,
+                    :click_tracking,
+                    :open_tracking
 
       def initialize(client: required('client'))
         @client = client
-        @bcc = nil
-        @bypass_opt_in_level = nil
-        @html_body = nil
-        @message_type = nil
-        @plaintext_body = nil
-        @reply_to = nil
-        @sender_address = nil
-        @sender_name = nil
-        @subject = nil
-        @template_id = nil
-        @variable_details = nil
       end
 
       def email_override
@@ -41,22 +32,21 @@ module Urbanairship
         fail ArgumentError, 'sender_name is needed for email override' if @sender_name.nil?
         fail ArgumentError, 'subject is needed for email override' if @subject.nil?
 
-        override = {'email': {
-          'bypass_opt_in_level': @bypass_opt_in_level,
-          'html_body': @html_body,
-          'message_type': @message_type,
-          'plaintext_body': @plaintext_body,
-          'reply_to': @reply_to,
-          'sender_address': @sender_address,
-          'sender_name': @sender_name,
-          'subject': @subject
-        }}
+        override = {
+          bcc: bcc,
+          bypass_opt_in_level: bypass_opt_in_level,
+          click_tracking: click_tracking,
+          html_body: html_body,
+          message_type: message_type,
+          open_tracking: open_tracking, 
+          plaintext_body: plaintext_body,
+          reply_to: reply_to,
+          sender_address: sender_address,
+          sender_name: sender_name,
+          subject: subject
+        }.delete_if {|key, value| value.nil?} #this removes the nil key value pairs
 
-        if @bcc
-          override[:email][:bcc] = @bcc
-        end
-
-        override
+        {'email': override}
       end
 
       def email_with_inline_template
@@ -65,33 +55,29 @@ module Urbanairship
         fail ArgumentError, 'sender_address is needed for email with inline template' if @sender_address.nil?
         fail ArgumentError, 'sender_name is needed for email with inline template' if @sender_name.nil?
 
-        inline_template = {'email': {
-          'message_type': @message_type,
-          'reply_to': @reply_to,
-          'sender_address': @sender_address,
-          'sender_name': @sender_name,
-          'template': {}
-          }
-        }
+        inline_template = {
+          bcc: bcc,
+          click_tracking: click_tracking,
+          message_type: message_type,
+          open_tracking: open_tracking,
+          reply_to: reply_to,
+          sender_address: sender_address,
+          sender_name: sender_name,
+          template: define_template_object
+        }.delete_if {|key, value| value.nil?} #this removes the nil key value pairs      
 
-        if @subject and @plaintext_body
-          fields_object = {'plaintext_body': @plaintext_body, 'subject': @subject}
-          inline_template[:email][:template][:fields] = fields_object
-        end
+        {'email': inline_template}
+      end
 
-        if @bcc
-          inline_template[:email][:bcc] = @bcc
-        end
-
-        if @variable_details
-          inline_template[:email][:template][:variable_details] = @variable_details
-        end
-
-        if @template_id
-          inline_template[:email][:template][:template_id] = @template_id
-        end
-
-        inline_template
+      def define_template_object
+        template_portion = {
+          template_id: template_id,
+          fields: {
+            subject: subject,
+            plaintext_body: plaintext_body
+          },
+          variable_details: variable_details
+        }.delete_if {|key, value| value.nil?}
       end
 
     end
