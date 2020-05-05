@@ -33,6 +33,25 @@ describe Urbanairship::Devices do
         'last_registration' => '2017-09-01T18:00:27'
       }
     }
+
+    template_id_payload = {
+        "open::smart_fridge":{
+          'template': {
+            'template_id': '12345',
+            'fields': {
+              'alert': 'Oh hello there!'
+            }
+          }
+        }
+      }
+
+    template_id_without_fields = {
+        "open::smart_fridge":{
+          'template': {
+            'template_id': '12345'
+          }
+        }
+      }
     
     expected_update_resp = expected_lookup_resp
     expected_update_resp['body']['tags'] = ['tag3', 'tag4']
@@ -111,5 +130,32 @@ describe Urbanairship::Devices do
         expect{oc_without_channel_id.lookup()}.to raise_error(ArgumentError)
       end
     end
+
+    describe '#notification_with_template_id' do
+      it 'formats the proper payload' do
+        oc = UA::OpenChannel.new(client: airship)
+        oc.open_platform = 'smart_fridge'
+        oc.template_id = '12345'
+        oc.alert = 'Oh hello there!'
+        result = oc.notification_with_template_id
+        expect(result).to eq(template_id_payload)
+      end
+
+      it 'fails when open platform is nil' do
+        oc = UA::OpenChannel.new(client: airship)
+        oc.template_id = '12345'
+        oc.alert = 'Oh hello there!'
+        expect{oc.notification_with_template_id}.to raise_error(TypeError)
+      end
+
+      it 'removes fields key if it is blank' do
+        oc = UA::OpenChannel.new(client: airship)
+        oc.open_platform = 'smart_fridge'
+        oc.template_id = '12345'
+        result = oc.notification_with_template_id
+        expect(result).to eq(template_id_without_fields)
+      end
+    end
+
   end
 end

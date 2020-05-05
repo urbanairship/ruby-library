@@ -97,16 +97,28 @@ module Urbanairship
       def notification_with_template_id
         fail TypeError, 'open_platform cannot be nil' if open_platform.nil? 
 
-        {
-          "open::#{open_platform}":{
-            'template': {
-              'template_id': template_id,
-              'fields': {
-                'alert': alert
-              }.delete_if {|key, value| value.nil?}
+        if alert
+          payload = {
+            "open::#{open_platform}":{
+              'template': {
+                'template_id': template_id,
+                'fields': {
+                  'alert': alert
+                }
+              }
             }
           }
-        }
+        else
+          payload = {
+            "open::#{open_platform}":{
+              'template': {
+                'template_id': template_id,
+              }
+            }
+          }
+        end
+
+        payload
       end
 
       def open_channel_override
