@@ -17,7 +17,8 @@ module Urbanairship
                     :media_attachment,
                     :summary,
                     :title,
-                    :template_id
+                    :template_id,
+                    :fields
       
       def initialize(client: required('client'))
         @client = client
@@ -99,16 +100,14 @@ module Urbanairship
         {
           "open::#{open_platform}":{
             'template': {
-              'template_id': template_id
+              'template_id': template_id,
+              'fields': {
+                'alert': alert
+              }.delete_if {|key, value| value.nil?}
             }
           }
         }
       end
-
-      # open::smart_fridge": {
-      #     "template": {
-      #         "fields": {
-      #             "alert" : "Hey {{name}}, you're out of ice cream!"
 
       def open_channel_override
         fail TypeError, 'open_platform cannot be nil' if open_platform.nil? 
