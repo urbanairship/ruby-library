@@ -487,3 +487,64 @@ shown in the line of code here:
 .. note::
 
   Should return a 202 Accepted HTTP response.
+
+Create and Send to Open Channels
+================================
+
+Create and Send to Open Channels with Template ID
+-------------------------------------------------
+
+The first few lines of code are creating an OpenChannel object, and assigning
+instance variables to that object. This is essentially creating the payload that
+will be passed to notification portion of the CreateAndSend class, which ultimately
+is sending a fully constructed payload to the API. 
+
+.. code-block:: ruby
+
+  require 'urbanairship'
+  UA = Urbanairship
+  airship = UA::Client.new(key:'<app_key>', secret:'<master_secret>')
+  open_channel_notification = UA::OpenChannel.new(client:airship)
+  open_channel_notification.open_platform = 'smart_fridge'
+  open_channel_notification.template_id = "<template_id>"
+  send_it = UA::CreateAndSend.new(client: airship)
+  send_it.addresses = [
+    {
+      "ua_address": "<ua_address>",
+      "name": "Jane"
+    }
+  ]
+  send_it.device_types = [ 'open::smart_fridge' ]
+  send_it.notification = open_channel_notification
+  send_it.campaigns = ["winter sale", "west coast"]
+  send_it.create_and_send
+
+Create and Send to Open Channels Override
+------------------------------------------
+
+The first few lines of code are creating an OpenChannel object, and assigning
+instance variables to that object. This is essentially creating the payload that
+will be passed to notification portion of the CreateAndSend class, which ultimately
+is sending a fully constructed payload to the API. 
+
+.. code-block:: ruby
+
+  require 'urbanairship'
+  UA = Urbanairship
+  airship = UA::Client.new(key:'<app_key>', secret:'<master_secret>')
+  open_channel_notification = UA::OpenChannel.new(client:airship)
+  open_channel_notification.open_platform = 'smart_fridge'
+  open_channel_notification.alert = 'a longer alert for users of smart fridges, who have more space.'
+  open_channel_notification.media_attachment = 'https://example.com/cat_standing_up.jpeg'
+  open_channel_notification.title = 'That\'s pretty neat!'
+  send_it = UA::CreateAndSend.new(client: airship)
+  send_it.addresses = [
+    {
+      "ua_address": "<ua_address>",
+      "name": "Jane"
+    }
+  ]
+  send_it.device_types = [ 'open::smart_fridge' ]
+  send_it.notification = open_channel_notification
+  send_it.campaigns = ["winter sale", "west coast"]
+  send_it.create_and_send

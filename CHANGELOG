@@ -2,7 +2,7 @@
 5.6.0
 --------------------
 - Refactors EmailNotification class
-- Adds OpenChannelNotification class
+- Adds Create and Send implementation to Open Channel class
 
 --------------------
 5.5.1
