@@ -10,7 +10,14 @@ module Urbanairship
                     :opt_in, 
                     :address,
                     :tags, 
-                    :identifiers
+                    :identifiers.
+                    :template_id,
+                    :alert,
+                    :extra,
+                    :media_attachment,
+                    :summary,
+                    :title,
+                    :template_id
       
       def initialize(client: required('client'))
         @client = client
@@ -84,6 +91,35 @@ module Urbanairship
         )
         logger.info("Looking up info on device token #{channel_id}")
         response
+      end
+
+      def notification_with_template_id
+        {
+          'open::' + open_platform:{
+            template: {
+              template_id: template_id
+            }
+          }
+        }
+      end
+
+      # open::smart_fridge": {
+      #     "template": {
+      #         "fields": {
+      #             "alert" : "Hey {{name}}, you're out of ice cream!"
+
+      def open_channel_override
+        {
+          'open::' + open_platform:{
+            'alert': alert,
+            'extra': {
+              extra
+            },
+            'media_attachment': media_attachment,
+            'summary': summary,
+            'title': title
+          }
+        }.delete_if {|key, value| value.nil?} #this removes the nil key value pairs
       end
 
       def set_identifiers
