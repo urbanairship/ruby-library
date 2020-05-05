@@ -1,5 +1,6 @@
 require 'spec_helper'
 require 'urbanairship'
+require 'urbanairship/push/payload'
 
 
 describe Urbanairship::Devices do
@@ -44,6 +45,42 @@ describe Urbanairship::Devices do
           }
         }
       }
+
+    override_payload = {
+        "open::smart_fridge":{
+          'alert': 'Do you like riding bikes?',
+          'extra': {
+            'first_name': 'Jane',
+            'last_name': 'Doe'
+          },
+          'media_attachment': 'https://example.com/cat_standing_up.jpeg',
+          'summary': 'Here is a summary!',
+          'title': 'Very Descriptive Title'
+      }
+    }
+
+    short_override_payload = {
+        "open::smart_fridge":{
+          'alert': 'Do you like riding bikes?',
+          'media_attachment': 'https://example.com/cat_standing_up.jpeg',
+          'summary': 'Here is a summary!'
+      }
+    }
+
+    interactive_override_payload = {
+        "open::smart_fridge":{
+          'alert': 'Do you like riding bikes?',
+          'media_attachment': 'https://example.com/cat_standing_up.jpeg',
+          'summary': 'Here is a summary!',
+          'interactive': {
+            'type': 'a_type',
+            'button_actions': {
+              'yes': { 'add_tag': 'clicked_yes' },
+              'no': { 'add_tag': 'clicked_no' }
+            }
+          }
+      }
+    }
 
     template_id_without_fields = {
         "open::smart_fridge":{
@@ -154,6 +191,60 @@ describe Urbanairship::Devices do
         oc.template_id = '12345'
         result = oc.notification_with_template_id
         expect(result).to eq(template_id_without_fields)
+      end
+    end
+
+    describe '#open_channel_override' do
+      it 'formats the proper payload' do
+        oc = UA::OpenChannel.new(client: airship)
+        oc.open_platform = 'smart_fridge'
+        oc.alert = 'Do you like riding bikes?'
+        oc.extra = {
+            'first_name': 'Jane',
+            'last_name': 'Doe'
+          }
+        oc.media_attachment = 'https://example.com/cat_standing_up.jpeg'
+        oc.summary = 'Here is a summary!'
+        oc.title = 'Very Descriptive Title'
+        result = oc.open_channel_override
+        expect(result).to eq(override_payload)
+      end
+
+      it 'fails when platform is nil' do
+        oc = UA::OpenChannel.new(client: airship)
+        oc.alert = 'Do you like riding bikes?'
+        oc.extra = {
+            'first_name': 'Jane',
+            'last_name': 'Doe'
+          }
+        oc.media_attachment = 'https://example.com/cat_standing_up.jpeg'
+        oc.summary = 'Here is a summary!'
+        oc.title = 'Very Descriptive Title'
+        expect{oc.open_channel_override}.to raise_error(TypeError)
+      end
+
+      it 'removes keys if they are not included' do
+        oc = UA::OpenChannel.new(client: airship)
+        oc.open_platform = 'smart_fridge'
+        oc.alert = 'Do you like riding bikes?'
+        oc.media_attachment = 'https://example.com/cat_standing_up.jpeg'
+        oc.summary = 'Here is a summary!'
+        result = oc.open_channel_override
+        expect(result).to eq(short_override_payload)
+      end
+
+      it 'formats a payload with an interactive key correctly' do
+        oc = UA::OpenChannel.new(client: airship)
+        oc.open_platform = 'smart_fridge'
+        oc.alert = 'Do you like riding bikes?'
+        oc.media_attachment = 'https://example.com/cat_standing_up.jpeg'
+        oc.summary = 'Here is a summary!'
+        oc.interactive = {type: 'a_type', button_actions: {
+                                    'yes': { 'add_tag': 'clicked_yes' },
+                                    'no': { 'add_tag': 'clicked_no' }
+                                  }} 
+        result = oc.open_channel_override
+        expect(result).to eq(interactive_override_payload)
       end
     end
 
