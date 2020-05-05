@@ -17,9 +17,9 @@ module Urbanairship
       end
       
       def create()
-        fail TypeError, 'address must be set to create open channel' unless @address.is_a? String
-        fail TypeError, 'open_platform must be set to create open channel' unless @open_platform.is_a? String
-        fail TypeError, 'opt_in must be boolean' unless [true, false].include? @opt_in
+        fail TypeError, 'address must be set to create open channel' unless address.is_a? String
+        fail TypeError, 'open_platform must be set to create open channel' unless open_platform.is_a? String
+        fail TypeError, 'opt_in must be boolean' unless [true, false].include? opt_in
         
         channel_data = {
           'type': 'open',
@@ -39,7 +39,7 @@ module Urbanairship
           body: JSON.dump(body),
           content_type: 'application/json'
         )
-        logger.info("Registering open channel with address: #{@address}")
+        logger.info("Registering open channel with address: #{address}")
         response
       end
       
