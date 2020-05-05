@@ -2,6 +2,7 @@ require 'spec_helper'
 require 'urbanairship'
 require 'urbanairship/devices/create_and_send'
 require 'urbanairship/devices/email_notification'
+require 'urbanairship/devices/open_channel'
 
 describe Urbanairship::Devices do
   UA = Urbanairship
@@ -212,6 +213,44 @@ describe Urbanairship::Devices do
         allow(airship).to receive(:send_request).and_return(email_response)
         actual_resp = send_it.create_and_send
         expect(actual_resp).to eq(email_response)
+      end
+
+      it 'creates and sends for open channels with template_id' do
+        open_channel_notification = UA::OpenChannel.new(client:airship)
+        open_channel_notification.open_platform = 'smart_fridge'
+        open_channel_notification.template_id = "9335bb2a-2a45-456c-8b53-42af7898236a"
+        send_it = UA::CreateAndSend.new(client: airship)
+        send_it.addresses = [
+          {
+            "ua_address": "36d5a261-0454-40f5-b952-942c4b2b0f22",
+            "name": "Perry"
+          }
+        ]
+        send_it.device_types = [ 'open::smart_fridge' ]
+        send_it.notification = open_channel_notification
+        send_it.campaigns = ["winter sale", "west coast"]
+        allow(airship).to receive(:send_request).and_return(email_response)
+        actual_resp = send_it.create_and_send
+      end
+
+      it 'creates and sends for open channels with override' do
+        open_channel_notification = UA::OpenChannel.new(client:airship)
+        open_channel_notification.open_platform = 'smart_fridge'
+        open_channel_notification.alert = 'a longer alert for users of smart fridges, who have more space.'
+        open_channel_notification.media_attachment = 'https://example.com/cat_standing_up.jpeg'
+        open_channel_notification.title = 'That\'s pretty neat!'
+        send_it = UA::CreateAndSend.new(client: airship)
+        send_it.addresses = [
+          {
+            "ua_address": "36d5a261-0454-40f5-b952-942c4b2b0f22",
+            "name": "Perry"
+          }
+        ]
+        send_it.device_types = [ 'open::smart_fridge' ]
+        send_it.notification = open_channel_notification
+        send_it.campaigns = ["winter sale", "west coast"]
+        allow(airship).to receive(:send_request).and_return(email_response)
+        actual_resp = send_it.create_and_send
       end
     end
 

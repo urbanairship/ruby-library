@@ -10,7 +10,7 @@ module Urbanairship
                     :opt_in, 
                     :address,
                     :tags, 
-                    :identifiers.
+                    :identifiers,
                     :template_id,
                     :alert,
                     :extra,
@@ -94,10 +94,12 @@ module Urbanairship
       end
 
       def notification_with_template_id
+        fail TypeError, 'open_platform cannot be nil' if open_platform.nil? 
+
         {
-          'open::' + open_platform:{
-            template: {
-              template_id: template_id
+          "open::#{open_platform}":{
+            'template': {
+              'template_id': template_id
             }
           }
         }
@@ -109,12 +111,11 @@ module Urbanairship
       #             "alert" : "Hey {{name}}, you're out of ice cream!"
 
       def open_channel_override
+        fail TypeError, 'open_platform cannot be nil' if open_platform.nil? 
         {
-          'open::' + open_platform:{
+          "open::#{open_platform}": {
             'alert': alert,
-            'extra': {
-              extra
-            },
+            'extra': extra,
             'media_attachment': media_attachment,
             'summary': summary,
             'title': title
