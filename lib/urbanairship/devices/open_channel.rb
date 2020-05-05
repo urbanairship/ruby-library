@@ -5,17 +5,15 @@ module Urbanairship
     class OpenChannel
       include Urbanairship::Common
       include Urbanairship::Loggable
-      attr_accessor :channel_id, :open_platform, :opt_in, :address,
-                    :tags, :identifiers
+      attr_accessor :channel_id, 
+                    :open_platform, 
+                    :opt_in, 
+                    :address,
+                    :tags, 
+                    :identifiers
       
       def initialize(client: required('client'))
         @client = client
-        @channel_id = nil
-        @open_platform = nil
-        @opt_in = nil
-        @address = nil
-        @tags = nil
-        @identifiers = nil
       end
       
       def create()
@@ -25,17 +23,13 @@ module Urbanairship
         
         channel_data = {
           'type': 'open',
-          'open': {:open_platform_name => @open_platform},
-          'opt_in': @opt_in,
-          'address': @address
-        }
+          'open': {:open_platform_name => open_platform},
+          'opt_in': opt_in,
+          'address': address,
+          'tags': tags
+        }.delete_if {|key, value| value.nil?} #this removes the nil key value pairs
         
-        if @tags
-          channel_data['tags'] = @tags
-        end
-        if @identifiers
-          channel_data[:open][:identifiers] = @identifiers
-        end
+        set_identifiers
         
         body = {'channel': channel_data}
         
@@ -51,31 +45,23 @@ module Urbanairship
       
       def update(set_tags: required('set_tags'))
         fail ArgumentError, 'set_tags must be boolean' unless [true, false].include? set_tags
-        fail ArgumentError, 'set_tags cannot be true when tags are not set' unless set_tags == true && @tags != nil
-        fail TypeError, 'opt_in must be boolean' unless [true, false].include? @opt_in
-        fail TypeError, 'address or channel_id must not be nil' unless @address.is_a? String || @channel_id.is_a?(String)
-        fail TypeError, 'open_platform cannot be nil' unless @open_platform.is_a? String
-        fail TypeErorr, 'address must not be nil if opt_in is true' unless @opt_in.is_a? TrueClass
+        fail ArgumentError, 'set_tags cannot be true when tags are not set' unless set_tags == true && tags != nil
+        fail TypeError, 'opt_in must be boolean' unless [true, false].include? opt_in
+        fail TypeError, 'address or channel_id must not be nil' unless address.is_a? String || channel_id.is_a?(String)
+        fail TypeError, 'open_platform cannot be nil' unless open_platform.is_a? String
+        fail TypeErorr, 'address must not be nil if opt_in is true' unless opt_in.is_a? TrueClass
         
         channel_data = {
           'type': 'open',
-          'open': {'open_platform_name': @open_platform},
-          'opt_in': @opt_in,
-          'set_tags': set_tags
-        }
+          'open': {'open_platform_name': open_platform},
+          'opt_in': opt_in,
+          'set_tags': set_tags,
+          'channel_id': channel_id,
+          'address': address,
+          'tags': tags
+        }.delete_if {|key, value| value.nil?} #this removes the nil key value pairs
         
-        if @channel_id
-          channel_data['channel_id'] = @channel_id
-        end
-        if @address
-          channel_data['address'] = @address
-        end
-        if @tags
-          channel_data['tags'] = @tags
-        end
-        if @identifiers
-          channel_data['open']['identifiers'] = @identifiers
-        end
+        set_identifiers
         
         body = {'channel': channel_data}
           
@@ -85,7 +71,7 @@ module Urbanairship
           body: JSON.dump(body),
           content_type: 'application/json'
         )
-        logger.info("Updating open channel with address #{@address}")
+        logger.info("Updating open channel with address #{address}")
         response
       end
       
@@ -99,6 +85,13 @@ module Urbanairship
         logger.info("Looking up info on device token #{channel_id}")
         response
       end
+
+      def set_identifiers
+        if identifiers
+          channel_data[:open][:identifiers] = identifiers
+        end
+      end
+
     end
   end
 end
