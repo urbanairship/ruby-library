@@ -515,7 +515,7 @@ is sending a fully constructed payload to the API.
     }
   ]
   send_it.device_types = [ 'open::smart_fridge' ]
-  send_it.notification = open_channel_notification.notification_with_template_id
+  send_it.notification = open_channel_notification.
   send_it.campaigns = ["winter sale", "west coast"]
   send_it.create_and_send
 
@@ -534,7 +534,8 @@ is sending a fully constructed payload to the API.
   airship = UA::Client.new(key:'<app_key>', secret:'<master_secret>')
   open_channel_notification = UA::OpenChannel.new(client:airship)
   open_channel_notification.open_platform = 'smart_fridge'
-  open_channel_notification.alert = 'a longer alert for users of smart fridges, who have more space.'
+  open_channel_notification.alert = 'a general alert for all open channels'
+  open_channel_notification.platform_alert = 'an alert for specific open channel platforms'
   open_channel_notification.media_attachment = 'https://example.com/cat_standing_up.jpeg'
   open_channel_notification.title = 'That\'s pretty neat!'
   send_it = UA::CreateAndSend.new(client: airship)
