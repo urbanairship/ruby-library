@@ -12,9 +12,6 @@ module Urbanairship
 
       def initialize(client: required('client'))
         @client = client
-        @display_name = nil
-        @criteria = nil
-        @id = nil
       end
 
       # Build a Segment from the display_name and criteria attributes
@@ -25,8 +22,8 @@ module Urbanairship
         fail ArgumentError,
           'Both display_name and criteria must be set to a value' if display_name.nil? or criteria.nil?
         payload = {
-          :display_name => @display_name,
-          :criteria => @criteria
+          'display_name': display_name,
+          'criteria': criteria
         }
         response = @client.send_request(
           method: 'POST',
@@ -67,8 +64,8 @@ module Urbanairship
           'Either display_name or criteria must be set to a value' if display_name.nil? and criteria.nil?
 
         data = {}
-        data['display_name'] = @display_name
-        data['criteria'] = @criteria
+        data['display_name'] = display_name
+        data['criteria'] = criteria
         response = @client.send_request(
           method: 'PUT',
           body: JSON.dump(data),
@@ -84,9 +81,9 @@ module Urbanairship
       # @ returns [Object] response HTTP response
       def delete
         fail ArgumentError,
-          'id cannot be nil' if @id.nil?
+          'id cannot be nil' if id.nil?
 
-        url = SEGMENTS_URL + @id
+        url = SEGMENTS_URL + id
         response = @client.send_request(
           method: 'DELETE',
           url: url
