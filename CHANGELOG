@@ -1,4 +1,10 @@
 --------------------
+5.6.0
+--------------------
+- Refactors EmailNotification class
+- Adds Create and Send implementation to Open Channel class
+
+--------------------
 5.5.1
 --------------------
 - Updates validate_url method 
