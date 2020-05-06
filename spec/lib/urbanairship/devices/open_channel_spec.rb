@@ -1,7 +1,5 @@
 require 'spec_helper'
 require 'urbanairship'
-require 'urbanairship/push/payload'
-
 
 describe Urbanairship::Devices do
   UA = Urbanairship
