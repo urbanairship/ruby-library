@@ -19,7 +19,8 @@ module Urbanairship
                     :title,
                     :template_id,
                     :fields,
-                    :interactive
+                    :interactive,
+                    :platform_alert
       
       def initialize(client: required('client'))
         @client = client
@@ -125,7 +126,7 @@ module Urbanairship
       def open_channel_override
         fail TypeError, 'open_platform cannot be nil' if open_platform.nil? 
         payload = {
-            'alert': alert,
+            'alert': platform_alert,
             'extra': extra,
             'media_attachment': media_attachment,
             'summary': summary,
@@ -133,7 +134,8 @@ module Urbanairship
             'interactive': interactive
           }.delete_if {|key, value| value.nil?} #this removes the nil key value pairs
 
-        {"open::#{open_platform}": payload}
+        {'alert': alert,
+         "open::#{open_platform}": payload}
       end
 
       def set_identifiers
