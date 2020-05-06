@@ -19,16 +19,6 @@ module Urbanairship
 
       def initialize(client: required('client'))
         @client = client
-        @address = nil
-        @commercial_opted_in = nil
-        @commercial_opted_out = nil
-        @locale_country = nil
-        @locale_language = nil
-        @timezone = nil
-        @transactional_opted_in = nil
-        @transactional_opted_out = nil
-        @type = nil
-        @channel_id = nil
       end
 
       def register
