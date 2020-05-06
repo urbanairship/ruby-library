@@ -515,7 +515,7 @@ is sending a fully constructed payload to the API.
     }
   ]
   send_it.device_types = [ 'open::smart_fridge' ]
-  send_it.notification = open_channel_notification
+  send_it.notification = open_channel_notification.notification_with_template_id
   send_it.campaigns = ["winter sale", "west coast"]
   send_it.create_and_send
 
@@ -545,6 +545,6 @@ is sending a fully constructed payload to the API.
     }
   ]
   send_it.device_types = [ 'open::smart_fridge' ]
-  send_it.notification = open_channel_notification
+  send_it.notification = open_channel_notification,open_channel_override
   send_it.campaigns = ["winter sale", "west coast"]
   send_it.create_and_send

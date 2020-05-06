@@ -247,7 +247,7 @@ describe Urbanairship::Devices do
           }
         ]
         send_it.device_types = [ 'open::smart_fridge' ]
-        send_it.notification = open_channel_notification
+        send_it.notification = open_channel_notification.open_channel_override
         send_it.campaigns = ["winter sale", "west coast"]
         allow(airship).to receive(:send_request).and_return(email_response)
         actual_resp = send_it.create_and_send

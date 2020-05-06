@@ -47,8 +47,8 @@ describe Urbanairship::Devices do
       }
 
     override_payload = {
+        'alert': 'Do you like riding bikes?',
         "open::smart_fridge":{
-          'alert': 'Do you like riding bikes?',
           'extra': {
             'first_name': 'Jane',
             'last_name': 'Doe'
@@ -60,16 +60,16 @@ describe Urbanairship::Devices do
     }
 
     short_override_payload = {
+       'alert': 'Do you like riding bikes?',
         "open::smart_fridge":{
-          'alert': 'Do you like riding bikes?',
           'media_attachment': 'https://example.com/cat_standing_up.jpeg',
           'summary': 'Here is a summary!'
       }
     }
 
     interactive_override_payload = {
+        'alert': 'Do you like riding bikes?',
         "open::smart_fridge":{
-          'alert': 'Do you like riding bikes?',
           'media_attachment': 'https://example.com/cat_standing_up.jpeg',
           'summary': 'Here is a summary!',
           'interactive': {
