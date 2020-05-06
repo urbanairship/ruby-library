@@ -19,16 +19,6 @@ module Urbanairship
 
       def initialize(client: required('client'))
         @client = client
-        @address = nil
-        @commercial_opted_in = nil
-        @commercial_opted_out = nil
-        @locale_country = nil
-        @locale_language = nil
-        @timezone = nil
-        @transactional_opted_in = nil
-        @transactional_opted_out = nil
-        @type = nil
-        @channel_id = nil
       end
 
       def register
@@ -36,15 +26,15 @@ module Urbanairship
 
         payload = {
           'channel': {
-            'address': @address,
-            'commercial_opted_in': @commercial_opted_in,
-            'commercial_opted_out': @commercial_opted_out,
-            'locale_country': @locale_country,
-            'locale_language': @locale_language,
-            'timezone': @timezone,
-            'transactional_opted_in': @transactional_opted_in,
-            'transactional_opted_out': @transactional_opted_out,
-            'type': @type
+            'address': address,
+            'commercial_opted_in': commercial_opted_in,
+            'commercial_opted_out': commercial_opted_out,
+            'locale_country': locale_country,
+            'locale_language': locale_language,
+            'timezone': timezone,
+            'transactional_opted_in': transactional_opted_in,
+            'transactional_opted_out': transactional_opted_out,
+            'type': type
           }
         }
 
@@ -54,7 +44,7 @@ module Urbanairship
           url: CHANNEL_URL + 'email',
           content_type: 'application/json'
         )
-        logger.info("Registering email channel with address #{@address}")
+        logger.info("Registering email channel with address #{address}")
         response
       end
 
@@ -62,7 +52,7 @@ module Urbanairship
         fail ArgumentError, 'address must be set to register email channel' if @address.nil?
 
         payload = {
-          'email_address': @address
+          'email_address': address
         }
 
         response = @client.send_request(
@@ -71,7 +61,7 @@ module Urbanairship
           url: CHANNEL_URL + 'email/uninstall',
           content_type: 'application/json'
         )
-        logger.info("Uninstalling email channel with address #{@address}")
+        logger.info("Uninstalling email channel with address #{address}")
         response
       end
 
@@ -80,32 +70,32 @@ module Urbanairship
 
         response = @client.send_request(
           method: 'GET',
-          url: CHANNEL_URL + 'email/' + @address
+          url: CHANNEL_URL + 'email/' + address
         )
-        logger.info("Looking up email channel with address #{@address}")
+        logger.info("Looking up email channel with address #{address}")
         response
       end
 
       def update
-        fail ArgumentError, 'address must be set to update email channel' if @channel_id.nil?
+        fail ArgumentError, 'address must be set to update email channel' if channel_id.nil?
 
-        channel_data =  {}
+        channel_data =  {
+          'address': address,
+          'commercial_opted_in': commercial_opted_in,
+          'commercial_opted_out': commercial_opted_out,
+          'localte_country': locale_country,
+          'locale_language': locale_language,
+          'timezone': timezone,
+          'transactional_opted_in': transactional_opted_in,
+          'transactional_opted_out': transactional_opted_out,
+          'type': type
+      }.delete_if {|key, value| value.nil?} #this removes the nil key value pairs
 
-        channel_data['address'] = @address if @address
-        channel_data['commercial_opted_in'] = @commercial_opted_in if @commercial_opted_in
-        channel_data['commercial_opted_out'] = @commercial_opted_out if @commercial_opted_out
-        channel_data['locale_country'] = @locale_country if @locale_country
-        channel_data['locale_language'] = @locale_language if @locale_language
-        channel_data['timezone'] = @timezone if @timezone
-        channel_data['transactional_opted_in'] = @transactional_opted_in if @transactional_opted_in
-        channel_data['transactional_opted_out'] = @transactional_opted_out if @transactional_opted_out
-        channel_data['type'] = @type if @type
-
-        payload = {channel: channel_data}
+        payload = {'channel': channel_data}
 
         response = @client.send_request(
           method: 'PUT',
-          url: CHANNEL_URL + 'email/' + @channel_id,
+          url: CHANNEL_URL + 'email/' + channel_id,
           body: JSON.dump(payload),
           content_type: 'application/json'
         )

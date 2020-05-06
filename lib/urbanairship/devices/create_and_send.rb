@@ -34,14 +34,14 @@ module Urbanairship
 
         full_payload = {
           'audience': {
-            'create_and_send': @addresses
+            'create_and_send': addresses
           },
-          'device_types': @device_types,
-          'notification': @notification,
+          'device_types': device_types,
+          'notification': notification,
         }
 
-        if @campaigns
-          campaign_object = {'categories': @campaigns}
+        if campaigns
+          campaign_object = {'categories': campaigns}
           full_payload[:campaigns] = campaign_object
         end
         
@@ -75,9 +75,9 @@ module Urbanairship
 
         scheduled_payload = {
           "schedule": {
-            "scheduled_time": @scheduled_time
+            "scheduled_time": scheduled_time
           },
-          "name": @name,
+          "name": name,
           "push": payload
         }
 

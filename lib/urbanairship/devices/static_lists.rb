@@ -11,12 +11,11 @@ module Urbanairship
       def initialize(client: required('client'))
         fail ArgumentError, 'Client cannot be set to nil' if client.nil?
         @client = client
-        @name = nil
       end
 
       def create(description: nil, extras: nil)
-        fail ArgumentError, 'Name must be set' if @name.nil?
-        payload = {'name' => @name}
+        fail ArgumentError, 'Name must be set' if name.nil?
+        payload = {'name': name}
         payload['description'] = description unless description.nil?
         payload['extras'] = extras unless extras.nil?
 
@@ -31,7 +30,7 @@ module Urbanairship
       end
 
       def upload(csv_file: required('csv_file'), gzip: false)
-        fail ArgumentError, 'Name must be set' if @name.nil?
+        fail ArgumentError, 'Name must be set' if name.nil?
         if gzip
           response = @client.send_request(
               method: 'PUT',
@@ -53,7 +52,7 @@ module Urbanairship
       end
 
       def update(description: nil, extras: nil)
-        fail ArgumentError, 'Name must be set' if @name.nil?
+        fail ArgumentError, 'Name must be set' if name.nil?
         fail ArgumentError,
            'Either description or extras must be set to a value' if description.nil? and extras.nil?
         payload = {}
@@ -70,7 +69,7 @@ module Urbanairship
       end
 
       def lookup
-        fail ArgumentError, 'Name must be set' if @name.nil?
+        fail ArgumentError, 'Name must be set' if name.nil?
         response = @client.send_request(
           method: 'GET',
           url: LISTS_URL + @name
@@ -80,7 +79,7 @@ module Urbanairship
       end
 
       def delete
-        fail ArgumentError, 'Name must be set' if @name.nil?
+        fail ArgumentError, 'Name must be set' if name.nil?
         response = @client.send_request(
           method: 'DELETE',
           url: LISTS_URL + @name
