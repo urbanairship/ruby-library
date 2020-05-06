@@ -9,19 +9,16 @@ module Urbanairship
 
       def initialize(client: required('client'))
         @client = client
-        @sender = nil
-        @msisdn = nil
-        @opted_in = nil
       end
 
       def register
-        fail ArgumentError, 'sender must be set to register sms channel' if @sender.nil?
-        fail ArgumentError, 'msisdn must be set to register sms channel' if @msisdn.nil?
+        fail ArgumentError, 'sender must be set to register sms channel' if sender.nil?
+        fail ArgumentError, 'msisdn must be set to register sms channel' if msisdn.nil?
 
         payload = {
-          'msisdn': @msisdn,
-          'sender': @sender,
-          'opted_in': @opted_in
+          'msisdn': msisdn,
+          'sender': sender,
+          'opted_in': opted_in
         }
 
         response = @client.send_request(
@@ -35,12 +32,12 @@ module Urbanairship
       end
 
       def opt_out
-        fail ArgumentError, 'sender must be set to register sms channel' if @sender.nil?
-        fail ArgumentError, 'msisdn must be set to register sms channel' if @msisdn.nil?
+        fail ArgumentError, 'sender must be set to register sms channel' if sender.nil?
+        fail ArgumentError, 'msisdn must be set to register sms channel' if msisdn.nil?
 
         payload = {
-          'msisdn': @msisdn,
-          'sender': @sender,
+          'msisdn': msisdn,
+          'sender': sender,
         }
 
         response = @client.send_request(
@@ -54,12 +51,12 @@ module Urbanairship
       end
 
       def uninstall
-        fail ArgumentError, 'sender must be set to register sms channel' if @sender.nil?
-        fail ArgumentError, 'msisdn must be set to register sms channel' if @msisdn.nil?
+        fail ArgumentError, 'sender must be set to register sms channel' if sender.nil?
+        fail ArgumentError, 'msisdn must be set to register sms channel' if msisdn.nil?
 
         payload = {
-          'msisdn': @msisdn,
-          'sender': @sender,
+          'msisdn': msisdn,
+          'sender': sender,
         }
 
         response = @client.send_request(
@@ -73,8 +70,8 @@ module Urbanairship
       end
 
       def lookup
-        fail ArgumentError,'msisdn is required for lookup' if @msisdn.nil?
-        fail ArgumentError,'sender is required for lookup' if @sender.nil?
+        fail ArgumentError,'msisdn is required for lookup' if msisdn.nil?
+        fail ArgumentError,'sender is required for lookup' if sender.nil?
 
         response = @client.send_request(
             method: 'GET',
