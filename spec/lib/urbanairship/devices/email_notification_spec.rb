@@ -88,5 +88,32 @@ describe Urbanairship::Devices do
       end
     end
 
+    describe '#define_fields' do
+      it 'formats fields correctly with the correct values' do
+        notification = UA::EmailNotification.new(client: airship)
+        notification.subject = 'subject'
+        notification.plaintext_body = 'Plaintext version goes here [[ua-unsubscribe href=\\\"http://unsubscribe.urbanairship.com/email/success.html\\\"]]'
+        result = notification.define_fields
+        expect(result).to eq({
+          'subject': 'subject',
+          'plaintext_body': 'Plaintext version goes here [[ua-unsubscribe href=\\\"http://unsubscribe.urbanairship.com/email/success.html\\\"]]'
+                    })
+      end
+
+      it 'returns nil when subject is not set' do
+        notification = UA::EmailNotification.new(client: airship)
+        notification.plaintext_body = 'Plaintext version goes here [[ua-unsubscribe href=\\\"http://unsubscribe.urbanairship.com/email/success.html\\\"]]'
+        result = notification.define_fields
+        expect(result).to eq(nil)
+      end
+
+      it 'returns nil when plaintext_body is not set' do 
+        notification = UA::EmailNotification.new(client: airship)
+        notification.subject = 'subject'
+        result = notification.define_fields
+        expect(result).to eq(nil)
+      end
+    end
+
   end
 end
