@@ -117,7 +117,6 @@ describe Urbanairship::Devices do
         notification.reply_to = 'another_fake_email@domain.com'
         notification.sender_address = 'team@urbanairship.com'
         notification.sender_name = 'Airship'
-        notification.template_id = "9335bb2a-2a45-456c-8b53-42af7898236a"
         notification.plaintext_body = 'Plaintext version goes here [[ua-unsubscribe href=\"http://unsubscribe.urbanairship.com/email/success.html\"]]'
         notification.subject = 'Did you get that thing I sent you?'
         notification.variable_details = [

@@ -70,14 +70,21 @@ module Urbanairship
       end
 
       def define_template_object
+        fail ArgumentError, 'Must choose between template_id or fields object' if template_id && plaintext_body && subject
         template_portion = {
           template_id: template_id,
-          fields: {
-            subject: subject,
-            plaintext_body: plaintext_body
-          },
+          fields: define_fields,
           variable_details: variable_details
         }.delete_if {|key, value| value.nil?}
+      end
+
+      def define_fields
+        if subject && plaintext_body
+          {
+            subject: subject,
+            plaintext_body: plaintext_body
+          }
+        end
       end
 
     end
