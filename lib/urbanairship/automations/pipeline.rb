@@ -25,6 +25,25 @@ module Urbanairship
         @outcome = outcome
       end
 
+      def payload
+        {
+          activation_time: activation_time,
+          cancellation_trigger: cancellation_trigger,
+          condition: condition,
+          constraint: constraint,
+          creation_time: creation_time,
+          deactivation_time: deactivation_time,
+          enabled: enabled,
+          historical_trigger: historical_trigger,
+          immediate_trigger: immediate_trigger,
+          last_modified_time: last_modified_time,
+          name: name,
+          outcome: outcome,
+          status: status,
+          timing: timing,
+          url: url
+        }
+      end
       
     end
   end
