@@ -17,11 +17,12 @@ module Urbanairship
                     :name,
                     :status,
                     :timing,
-                    :url
+                    :url,
+                    :enabled,
+                    :outcome
 
-      def initialize(enabled, outcome)
-        @enabled = enabled
-        @outcome = outcome
+      def initialize(client: required('client'))
+        @client = client
       end
 
       def payload
@@ -41,7 +42,7 @@ module Urbanairship
           status: status,
           timing: timing,
           url: url
-        }
+        }.delete_if {|key, value| value.nil?} #this removes the nil key value pairs
       end
       
     end
