@@ -1,4 +1,9 @@
 --------------------
+5.6.1
+--------------------
+- Updates EmailNotification templating 
+
+--------------------
 5.6.0
 --------------------
 - Refactors EmailNotification class
