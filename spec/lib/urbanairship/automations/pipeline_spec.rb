@@ -89,6 +89,77 @@ describe Urbanairship::Automations do
                 result = pipeline.payload
                 expect(result).to eq(pipeline_object)
             end
+
+            it 'fails if enabled is not set' do
+                pipeline = UA::Pipeline.new(client: airship)
+                pipeline.name = "You can tell its a pipeline cause of how it is"
+                pipeline.immediate_trigger = "first_open"
+                pipeline.outcome = {
+                    "push":{
+                        "audience":"triggered",
+                        "device_types":[
+                            "ios",
+                            "android"
+                        ],
+                        "notification":{
+                            "alert":"That's pretty neat"
+                        }
+                    }
+                }
+                pipeline.timing = {
+                    "delay":{
+                        "seconds":7200
+                    },
+                    "schedule":{
+                        "type":"local",
+                        "miss_behavior":"wait",
+                        "dayparts":[
+                            {
+                            "days_of_week":[
+                                "thursday"
+                            ],
+                            "allowed_times":[
+                                {
+                                    "preferred":"21:30:00"
+                                }
+                            ]
+                            }
+                        ]
+                    }
+                }
+
+                expect{pipeline.payload}.to raise_error(ArgumentError)
+            end
+
+            it 'fails if outcoome is not set' do
+                pipeline = UA::Pipeline.new(client: airship)
+                pipeline.name = "You can tell its a pipeline cause of how it is"
+                pipeline.enabled = true
+                pipeline.immediate_trigger = "first_open"
+                pipeline.timing = {
+                    "delay":{
+                        "seconds":7200
+                    },
+                    "schedule":{
+                        "type":"local",
+                        "miss_behavior":"wait",
+                        "dayparts":[
+                            {
+                            "days_of_week":[
+                                "thursday"
+                            ],
+                            "allowed_times":[
+                                {
+                                    "preferred":"21:30:00"
+                                }
+                            ]
+                            }
+                        ]
+                    }
+                }
+
+                expect{pipeline.payload}.to raise_error(ArgumentError)
+            end
         end 
 
     end

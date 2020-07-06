@@ -26,6 +26,8 @@ module Urbanairship
       end
 
       def payload
+         fail ArgumentError, 'enabled must be set to create pipeline payload' if @enabled.nil?
+         fail ArgumentError, 'outcome must be set to create pipeline payload' if @outcome.nil?
         {
           activation_time: activation_time,
           cancellation_trigger: cancellation_trigger,
