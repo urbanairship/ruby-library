@@ -27,9 +27,9 @@ module Urbanairship
             def list_automations
                 response = @client.send_request(
                 method: 'GET',
-                url: PIPELINES_URL 
+                url: format_url_with_params
                 )
-                logger.info("Looking up email channel with address #{address}")
+                logger.info("Looking up automations for prjoject")
                 response
             end
         end
