@@ -16,8 +16,12 @@ module Urbanairship
             end
 
             def format_url_with_params
-                query = URI.encode_www_form([["limit", limit], ["enabled", enabled], ["offset", offset]])
-                PIPELINES_URL + query
+                params = []
+                params << ['limit', limit] if limit
+                params << ['enabled', enabled] if enabled
+                params << ['offset', offset] if offset
+                query = URI.encode_www_form(params)
+                PIPELINES_URL + '?' + query
             end
 
             def list_automations
@@ -27,7 +31,6 @@ module Urbanairship
                 )
                 logger.info("Looking up email channel with address #{address}")
                 response
-                # https://go.urbanairship.com/api/pipelines/?enabled=False&limit=2&offset=8
             end
         end
     end
