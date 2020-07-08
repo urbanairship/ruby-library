@@ -162,6 +162,5 @@ describe Urbanairship::Automations do
             end
         end 
 
-    end
-        
+    end   
 end
