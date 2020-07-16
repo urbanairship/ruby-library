@@ -26,6 +26,26 @@ following example a limit query of 5 will be added to the URI.
 
   Should return a 200 HTTP status code, and 5 of the most recent Automations
 
+List Deleted Automations
+------------------------
+
+This is for viewing deleted pipeleines for a project. The optional param here is for "start";
+a timestamp of the starting element for paginating results in the format of YYYY-MM-DD. 
+
+.. code-block:: ruby
+
+    require 'urbanairship'
+    UA = Urbanairship
+    airship = UA::Client.new(key:'<app_key>', secret:'<secret_key>')
+    automation = UA::Automation.new(client: airship)
+    automation.start = 2020-02-20
+    automation.list_deleted_automations
+
+.. note::
+
+  Should return a 200 HTTP status code, and the deleted automations from either most current
+  or from a given start date.
+
 Create Automation 
 -----------------
 
