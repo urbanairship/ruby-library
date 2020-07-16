@@ -33,6 +33,16 @@ describe Urbanairship::Automations do
             ]
         }
 
+        list_deleted_automations_response = {
+            "ok": true,
+            "pipelines": [
+            {
+                "deletion_time": "2014-03-31T20:54:45",
+                "pipeline_id": "0sdicj23-fasc-4b2f-zxcv-0baf934f0d69"
+            }
+            ]
+        }
+
         describe '#format_url_with_params' do
             it 'formats a url with all the queries' do
                 automation = UA::Automation.new(client: airship)
@@ -40,7 +50,7 @@ describe Urbanairship::Automations do
                 automation.offset = 5
                 automation.limit = 5
                 result = automation.format_url_with_params
-                expect(result).to eq('https://go.urbanairship.com/api/pipelines/?limit=5&enabled=true&offset=5')
+                expect(result).to eq('?limit=5&enabled=true&offset=5')
             end
 
             it 'formats a url with two queries' do
@@ -48,14 +58,14 @@ describe Urbanairship::Automations do
                 automation.enabled = TRUE
                 automation.limit = 5
                 result = automation.format_url_with_params
-                expect(result).to eq('https://go.urbanairship.com/api/pipelines/?limit=5&enabled=true')
+                expect(result).to eq('?limit=5&enabled=true')
             end
 
             it 'formats a url with one query' do
                 automation = UA::Automation.new(client: airship)
                 automation.enabled = TRUE
                 result = automation.format_url_with_params
-                expect(result).to eq('https://go.urbanairship.com/api/pipelines/?enabled=true')
+                expect(result).to eq('?enabled=true')
             end
         end
 
@@ -66,6 +76,16 @@ describe Urbanairship::Automations do
                 allow(airship).to receive(:send_request).and_return(list_automations_response)
                 actual_resp = automation.list_automations
                 expect(actual_resp).to eq(list_automations_response)
+            end
+        end
+
+        describe '#list_deleted_automations' do
+            it 'returns a list of deleted pipelines' do 
+                automation = UA::Automation.new(client: airship)
+
+                allow(airship).to receive(:send_request).and_return(list_deleted_automations_response)
+                actual_resp = automation.list_deleted_automations
+                expect(actual_resp).to eq(list_deleted_automations_response)
             end
         end
 

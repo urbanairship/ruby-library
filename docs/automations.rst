@@ -29,7 +29,8 @@ following example a limit query of 5 will be added to the URI.
 Create Automation 
 -----------------
 
-This will use the Pipeline model to create an automation. You may add up to 24
-pipelines in any given automation. The example below adds two. 
+This will use the Pipeline model to create an automation. You may add several
+pipelines objects to create several automations/pipelines at once. The example 
+below adds two. 
 
 .. code-block:: ruby
