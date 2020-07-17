@@ -57,6 +57,17 @@ module Urbanairship
                 response
             end
 
+            def validate_automation
+                response = @client.send_request(
+                    method: 'POST',
+                    body: JSON.dump(payload),
+                    url: PIPELINES_URL + 'validate',
+                    content_type: 'application/json'
+                )
+                logger.info("Validating Automation")
+                response
+            end
+
             def lookup_automation 
                 fail ArgumentError, 'pipeline_id must be set to lookup individual automation' if @pipeline_id.nil?
                 response = @client.send_request(
@@ -64,6 +75,19 @@ module Urbanairship
                     url: PIPELINES_URL + pipeline_id
                 )
                 logger.info("Looking up automation with id #{pipeline_id}")
+                response
+            end
+
+            def update_auotmation
+                fail ArgumentError, 'pipeline_id must be set to update individual automation' if @pipeline_id.nil?
+                
+                response = @client.send_request(
+                    method: 'PUT',
+                    body: JSON.dump(payload),
+                    url: PIPELINES_URL + pipeline_id,
+                    content_type: 'application/json'
+                )
+                logger.info("Validating Automation")
                 response
             end
 
