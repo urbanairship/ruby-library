@@ -64,6 +64,8 @@ describe Urbanairship::Automations do
             }
         }
 
+        delete_automation_response = 'HTTP/1.1 204 No Content'
+
         describe '#format_url_with_params' do
             it 'formats a url with all the queries' do
                 automation = UA::Automation.new(client: airship)
@@ -126,8 +128,18 @@ describe Urbanairship::Automations do
                 allow(airship).to receive(:send_request).and_return(list_deleted_automations_response)
                 expect{automation.lookup_automation}.to raise_error(ArgumentError)
             end
-
         end 
+
+        describe '#delete_automation' do 
+            it 'deletes the proper automation given pipeline_id' do 
+                automation = UA::Automation.new(client: airship)
+                automation.pipeline_id = '86ad9239-373d-d0a5-d5d8-04fed18f79bc'
+
+                allow(airship).to receive(:send_request).and_return(delete_automation_response)
+                actual_resp = automation.delete_automation
+                expect(actual_resp).to eq(delete_automation_response)
+            end
+        end
 
     end
 

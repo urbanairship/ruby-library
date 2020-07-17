@@ -54,6 +54,16 @@ module Urbanairship
                 logger.info("Looking up automation with id #{pipeline_id}")
                 response
             end
+
+            def delete_automation 
+                fail ArgumentError, 'pipeline_id must be set to delete individual automation' if @pipeline_id.nil?
+                response = @client.send_request(
+                    method: 'DELETE',
+                    url: PIPELINES_URL + pipeline_id
+                )
+                logger.info("Deleting automation with id #{pipeline_id}")
+                response
+            end
         end
     end
 end
