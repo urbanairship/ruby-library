@@ -11,7 +11,8 @@ module Urbanairship
                           :enabled,
                           :offset,
                           :start,
-                          :pipeline_id
+                          :pipeline_id,
+                          :pipeline_object
 
             def initialize(client: required('client'))
                  @client = client
@@ -21,22 +22,12 @@ module Urbanairship
                 #make payload one object or arrays of objects
                 response = @client.send_request(
                     method: 'POST',
-                    body: JSON.dump(payload),
+                    body: JSON.dump(pipeline_object),
                     url: PIPELINES_URL,
                     content_type: 'application/json'
                 )
                 logger.info("Created Automation")
                 response
-            end
-
-            def format_url_with_params
-                params = []
-                params << ['limit', limit] if limit
-                params << ['enabled', enabled] if enabled
-                params << ['offset', offset] if offset
-                params << ['start', start] if start
-                query = URI.encode_www_form(params)
-                '?' + query
             end
 
             def list_automations
@@ -60,7 +51,7 @@ module Urbanairship
             def validate_automation
                 response = @client.send_request(
                     method: 'POST',
-                    body: JSON.dump(payload),
+                    body: JSON.dump(pipeline_object),
                     url: PIPELINES_URL + 'validate',
                     content_type: 'application/json'
                 )
@@ -83,7 +74,7 @@ module Urbanairship
                 
                 response = @client.send_request(
                     method: 'PUT',
-                    body: JSON.dump(payload),
+                    body: JSON.dump(pipeline_object),
                     url: PIPELINES_URL + pipeline_id,
                     content_type: 'application/json'
                 )
@@ -99,6 +90,16 @@ module Urbanairship
                 )
                 logger.info("Deleting automation with id #{pipeline_id}")
                 response
+            end
+
+            def format_url_with_params
+                params = []
+                params << ['limit', limit] if limit
+                params << ['enabled', enabled] if enabled
+                params << ['offset', offset] if offset
+                params << ['start', start] if start
+                query = URI.encode_www_form(params)
+                '?' + query
             end
         end
     end
