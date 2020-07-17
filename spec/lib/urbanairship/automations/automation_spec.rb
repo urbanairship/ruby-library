@@ -111,16 +111,16 @@ describe Urbanairship::Automations do
         end
 
         describe '#lookup_automation' do
-            it 'returns the proper response with a automation_id' do
+            it 'returns the proper response with a pipeline_id' do
                 automation = UA::Automation.new(client: airship)
-                automation.automation_id = '86ad9239-373d-d0a5-d5d8-04fed18f79bc'
+                automation.pipeline_id = '86ad9239-373d-d0a5-d5d8-04fed18f79bc'
 
                 allow(airship).to receive(:send_request).and_return(individual_pipeline_lookup_response)
                 actual_resp = automation.lookup_automation
                 expect(actual_resp).to eq(individual_pipeline_lookup_response)
             end
 
-            it 'fails when automation_id is not set' do
+            it 'fails when pipeline_id is not set' do
                 automation = UA::Automation.new(client: airship)
 
                 allow(airship).to receive(:send_request).and_return(list_deleted_automations_response)

@@ -11,7 +11,7 @@ module Urbanairship
                           :enabled,
                           :offset,
                           :start,
-                          :automation_id
+                          :pipeline_id
 
             def initialize(client: required('client'))
                  @client = client
@@ -46,12 +46,12 @@ module Urbanairship
             end
 
             def lookup_automation 
-                fail ArgumentError, 'automation_id must be set to lookup individual automation' if @automation_id.nil?
+                fail ArgumentError, 'pipeline_id must be set to lookup individual automation' if @pipeline_id.nil?
                 response = @client.send_request(
                     method: 'GET',
-                    url: PIPELINES_URL + automation_id
+                    url: PIPELINES_URL + pipeline_id
                 )
-                logger.info("Looking up automation with id #{automation_id}")
+                logger.info("Looking up automation with id #{pipeline_id}")
                 response
             end
         end
