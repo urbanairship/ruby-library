@@ -10,7 +10,8 @@ module Urbanairship
             attr_accessor :limit,
                           :enabled,
                           :offset,
-                          :start
+                          :start,
+                          :automation_id
 
             def initialize(client: required('client'))
                  @client = client
@@ -28,8 +29,8 @@ module Urbanairship
 
             def list_automations
                 response = @client.send_request(
-                method: 'GET',
-                url: PIPELINES_URL + format_url_with_params
+                    method: 'GET',
+                    url: PIPELINES_URL + format_url_with_params
                 )
                 logger.info("Looking up automations for project")
                 response
@@ -37,10 +38,20 @@ module Urbanairship
 
             def list_deleted_automations
                 response = @client.send_request(
-                method: 'GET',
-                url: PIPELINES_URL + 'deleted' + format_url_with_params
+                    method: 'GET',
+                    url: PIPELINES_URL + 'deleted' + format_url_with_params
                 )
                 logger.info("Looking up deleted automations for project")
+                response
+            end
+
+            def lookup_automation 
+                fail ArgumentError, 'automation_id must be set to lookup individual automation' if @automation_id.nil?
+                response = @client.send_request(
+                    method: 'GET',
+                    url: PIPELINES_URL + automation_id
+                )
+                logger.info("Looking up automation with id #{automation_id}")
                 response
             end
         end
