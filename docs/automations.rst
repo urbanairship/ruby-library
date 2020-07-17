@@ -26,6 +26,15 @@ following example a limit query of 5 will be added to the URI.
 
   Should return a 200 HTTP status code, and 5 of the most recent Automations
 
+Create Automation 
+-----------------
+
+This will use the Pipeline model to create an automation. You may add several
+pipelines objects to create several automations/pipelines at once. The example 
+below adds two. 
+
+.. code-block:: ruby
+
 List Deleted Automations
 ------------------------
 
@@ -46,11 +55,38 @@ a timestamp of the starting element for paginating results in the format of YYYY
   Should return a 200 HTTP status code, and the deleted automations from either most current
   or from a given start date.
 
-Create Automation 
------------------
+Individual Pipeline Lookup
+--------------------------
 
-This will use the Pipeline model to create an automation. You may add several
-pipelines objects to create several automations/pipelines at once. The example 
-below adds two. 
+This is for looking up a single automation with a given id. 
 
 .. code-block:: ruby
+
+    require 'urbanairship'
+    UA = Urbanairship
+    airship = UA::Client.new(key:'<app_key>', secret:'<secret_key>')
+    automation = UA::Automation.new(client: airship)
+    automation.pipeline_id = '86ad9239-373d-d0a5-d5d8-04fed18f79bc'
+    automation.lookup_automation
+
+.. note::
+
+  Should return a 200 HTTP status code, and the payload for the automation in question. 
+
+Delete Pipeline
+---------------
+
+This is for deleting a pipeline with a given id. 
+
+.. code-block:: ruby
+
+    require 'urbanairship'
+    UA = Urbanairship
+    airship = UA::Client.new(key:'<app_key>', secret:'<secret_key>')
+    automation = UA::Automation.new(client: airship)
+    automation.pipeline_id = '86ad9239-373d-d0a5-d5d8-04fed18f79bc'
+    automation.delete_automation
+
+.. note::
+
+    Response should be a 204 No Content
