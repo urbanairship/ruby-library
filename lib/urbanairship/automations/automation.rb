@@ -17,6 +17,18 @@ module Urbanairship
                  @client = client
             end
 
+            def create_automation
+                #make payload one object or arrays of objects
+                response = @client.send_request(
+                    method: 'POST',
+                    body: JSON.dump(payload),
+                    url: PIPELINES_URL,
+                    content_type: 'application/json'
+                )
+                logger.info("Created Automation")
+                response
+            end
+
             def format_url_with_params
                 params = []
                 params << ['limit', limit] if limit
