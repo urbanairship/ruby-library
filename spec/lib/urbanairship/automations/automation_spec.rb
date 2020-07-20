@@ -33,6 +33,14 @@ describe Urbanairship::Automations do
             ]
         }
 
+        create_automation_response = {
+            "ok": true,
+            "operation_id": "86ad9239-373d-d0a5-d5d8-04fed18f79bc",
+            "pipeline_urls": [
+            "https://go.urbanairship/api/pipelines/86ad9239-373d-d0a5-d5d8-04fed18f79bc"
+            ]
+        }
+
         list_deleted_automations_response = {
             "ok": true,
             "pipelines": [
@@ -65,6 +73,10 @@ describe Urbanairship::Automations do
         }
 
         delete_automation_response = 'HTTP/1.1 204 No Content'
+
+        validated_automation_response = {
+            "ok": true
+        }
 
         describe '#format_url_with_params' do
             it 'formats a url with all the queries' do
@@ -102,6 +114,16 @@ describe Urbanairship::Automations do
             end
         end
 
+        describe '#create_automation' do
+            it 'returns a 201 code with a properly formatted payload' do 
+                automation = UA::Automation.new(client: airship)
+
+                allow(airship).to receive(:send_request).and_return(create_automation_response)
+                actual_resp = automation.create_automation
+                expect(actual_resp).to eq(create_automation_response)
+            end 
+        end
+
         describe '#list_deleted_automations' do
             it 'returns a list of deleted pipelines' do 
                 automation = UA::Automation.new(client: airship)
@@ -109,6 +131,16 @@ describe Urbanairship::Automations do
                 allow(airship).to receive(:send_request).and_return(list_deleted_automations_response)
                 actual_resp = automation.list_deleted_automations
                 expect(actual_resp).to eq(list_deleted_automations_response)
+            end
+        end
+
+        describe '#validate_automation' do 
+            it 'validates an automation and retunrs a 200 HTTP status code' do 
+                automation = UA::Automation.new(client: airship)
+
+                allow(airship).to receive(:send_request).and_return(validated_automation_response)
+                actual_resp = automation.validate_automation
+                expect(actual_resp).to eq(validated_automation_response)
             end
         end
 
