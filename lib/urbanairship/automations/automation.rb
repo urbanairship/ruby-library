@@ -1,6 +1,7 @@
 require 'uri'
 require 'urbanairship'
 require 'urbanairship/automations/pipeline'
+require 'pry'
 
 module Urbanairship
     module Automations
@@ -19,13 +20,13 @@ module Urbanairship
             end
 
             def create_automation
-                #make payload one object or arrays of objects
                 response = @client.send_request(
                     method: 'POST',
                     body: JSON.dump(pipeline_object),
                     url: PIPELINES_URL,
                     content_type: 'application/json'
                 )
+                binding.pry
                 logger.info("Created Automation")
                 response
             end
