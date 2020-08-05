@@ -35,6 +35,30 @@ below adds two.
 
 .. code-block:: ruby
 
+    require 'urbanairship'
+    UA = Urbanairship
+    airship = UA::Client.new(key:'<app_key>', secret:'<secret_key>')
+    pipeline = UA::Pipeline.new(client: airship)
+    pipeline.enabled = true
+    pipeline.immediate_trigger = {
+      "tag_added": {
+         "tag": "new_customer",
+         "group": "crm"
+        }
+    }
+    pipeline.outcome = {
+      "push": {
+         "audience": "triggered",
+         "device_types": "all",
+         "notification": {
+             "alert": "Hello new customer!"
+            }
+        }
+    }
+    automation = UA::Automation.new(client: airship)
+    automation.pipeline_object = pipeline.payload 
+    automation.create_automation
+
 List Deleted Automations
 ------------------------
 

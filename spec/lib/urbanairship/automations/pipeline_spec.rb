@@ -45,6 +45,26 @@ describe Urbanairship::Automations do
                 }
             }
             }
+
+        simple_pipeline_object = {
+        "immediate_trigger": {
+            "tag_added": {
+                "tag": "new_customer",
+                "group": "crm"
+                }
+            },
+        "enabled": true,
+        "outcome": {
+            "push": {
+                "audience": "triggered",
+                "device_types": "all",
+                "notification": {
+                    "alert": "Hello new customer!"
+                    
+                    }
+                }
+            }
+        }
         
         describe '#paylaod' do
             it 'can correctly format a pipeline object payload' do
@@ -88,6 +108,29 @@ describe Urbanairship::Automations do
 
                 result = pipeline.payload
                 expect(result).to eq(pipeline_object)
+            end
+
+            it 'can format a simpler payload' do
+                pipeline = UA::Pipeline.new(client: airship)
+                pipeline.immediate_trigger = {
+                "tag_added": {
+                    "tag": "new_customer",
+                    "group": "crm"
+                    }
+                }
+                pipeline.enabled = true 
+                pipeline.outcome = {
+                "push": {
+                    "audience": "triggered",
+                    "device_types": "all",
+                    "notification": {
+                        "alert": "Hello new customer!"
+                        
+                        }
+                    }
+                }
+                result = pipeline.payload 
+                expect(result).to eq(simple_pipeline_object)
             end
 
             it 'fails if enabled is not set' do

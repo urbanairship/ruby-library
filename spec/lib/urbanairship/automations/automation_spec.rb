@@ -1,6 +1,7 @@
 require 'spec_helper'
 require 'urbanairship'
 require 'urbanairship/automations/automation'
+require 'urbanairship/automations/pipeline'
 
 describe Urbanairship::Automations do
     UA = Urbanairship
@@ -122,6 +123,29 @@ describe Urbanairship::Automations do
                 actual_resp = automation.create_automation
                 expect(actual_resp).to eq(create_automation_response)
             end 
+
+            it 'returns a payload as expected when using the addition of a pipeline object' do 
+                pipeline = UA::Pipeline.new(client: airship)
+                pipeline.enabled = true
+                pipeline.immediate_trigger = {
+                    "tag_added": {
+                        "tag": "new_customer",
+                        "group": "crm"
+                    }
+                }
+                pipeline.outcome = {
+                    "push": {
+                        "audience": "triggered",
+                        "device_types": "all",
+                        "notification": {
+                            "alert": "Hello new customer!"
+                        }
+                    }
+                }
+                automation = UA::Automation.new(client: airship)
+                automation.pipeline_object = pipeline.payload 
+                expect(automation.pipeline_object).to eq('dope')
+            end
         end
 
         describe '#list_deleted_automations' do
