@@ -43,7 +43,7 @@ below adds two.
     pipeline.immediate_trigger = {
       "tag_added": {
          "tag": "new_customer",
-         "group": "crm"
+         "group": "Locale"
         }
     }
     pipeline.outcome = {
@@ -58,6 +58,10 @@ below adds two.
     automation = UA::Automation.new(client: airship)
     automation.pipeline_object = pipeline.payload 
     automation.create_automation
+
+.. note::
+  
+  Should return a 200 HTTP status code. 
 
 List Deleted Automations
 ------------------------
@@ -79,8 +83,44 @@ a timestamp of the starting element for paginating results in the format of YYYY
   Should return a 200 HTTP status code, and the deleted automations from either most current
   or from a given start date.
 
-Individual Pipeline Lookup
---------------------------
+Validate Automation
+-------------------
+
+This endpoint is a lot like the create automation endpoint, the basic set up is the samme,
+only difference here is the method selected. 
+
+.. code-block:: ruby
+
+  require 'urbanairship'
+  UA = Urbanairship
+  airship = UA::Client.new(key:'ISex_TTJRuarzs9-o_Gkhg', secret:'bF-7RuUzTxy0VzbHLu5mkQ')
+  pipeline = UA::Pipeline.new(client: airship)
+  pipeline.enabled = true
+  pipeline.immediate_trigger = {
+      "tag_added": {
+          "tag": "new_customer",
+          "group": "Locale"
+      }
+  }
+  pipeline.outcome = {
+      "push": {
+          "audience": "triggered",
+          "device_types": "all",
+          "notification": {
+              "alert": "Hello new customer!"
+          }
+      }
+  }
+  automation = UA::Automation.new(client: airship)
+  automation.pipeline_object = pipeline.payload
+  automation.validate_automation 
+
+.. note::
+  
+  Should return a 200 HTTP status code. 
+
+Individual Automation Lookup
+----------------------------
 
 This is for looking up a single automation with a given id. 
 
@@ -97,8 +137,45 @@ This is for looking up a single automation with a given id.
 
   Should return a 200 HTTP status code, and the payload for the automation in question. 
 
-Delete Pipeline
----------------
+Update Automation
+-----------------
+
+This is for updating an existing automation. You must include the full payload from a POST 
+response, with the updates that are wanted to be made within the payload. 
+
+.. code-block:: ruby
+
+    require 'urbanairship'
+    UA = Urbanairship
+    airship = UA::Client.new(key:'<app_key>', secret:'<secret_key>')
+    pipeline = UA::Pipeline.new(client: airship)
+    pipeline.enabled = true
+    pipeline.immediate_trigger = {
+      "tag_added": {
+         "tag": "new_tag_update",
+         "group": "Locale"
+        }
+    }
+    pipeline.outcome = {
+      "push": {
+         "audience": "triggered",
+         "device_types": "all",
+         "notification": {
+             "alert": "Newly created alert message!"
+            }
+        }
+    }
+    automation = UA::Automation.new(client: airship)
+    automation.pipeline_id = '0f927674-918c-31ef-51ca-e96fdd234da4'
+    automation.pipeline_object = pipeline.payload 
+    automation.update_automation
+
+.. note::
+  
+  Should return a 200 HTTP status code.   
+
+Delete Automation
+-----------------
 
 This is for deleting a pipeline with a given id. 
 

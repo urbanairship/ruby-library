@@ -1,7 +1,6 @@
 require 'uri'
 require 'urbanairship'
 require 'urbanairship/automations/pipeline'
-require 'pry'
 
 module Urbanairship
     module Automations
@@ -26,7 +25,6 @@ module Urbanairship
                     url: PIPELINES_URL,
                     content_type: 'application/json'
                 )
-                binding.pry
                 logger.info("Created Automation")
                 response
             end
@@ -70,7 +68,7 @@ module Urbanairship
                 response
             end
 
-            def update_auotmation
+            def update_automation
                 fail ArgumentError, 'pipeline_id must be set to update individual automation' if @pipeline_id.nil?
                 
                 response = @client.send_request(
