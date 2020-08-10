@@ -93,7 +93,7 @@ only difference here is the method selected.
 
   require 'urbanairship'
   UA = Urbanairship
-  airship = UA::Client.new(key:'ISex_TTJRuarzs9-o_Gkhg', secret:'bF-7RuUzTxy0VzbHLu5mkQ')
+  airship = UA::Client.new(key:'<app_key>', secret:'<app_secret>')
   pipeline = UA::Pipeline.new(client: airship)
   pipeline.enabled = true
   pipeline.immediate_trigger = {
