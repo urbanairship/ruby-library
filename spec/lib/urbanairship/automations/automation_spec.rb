@@ -125,12 +125,31 @@ describe Urbanairship::Automations do
             end 
 
             it 'returns a payload as expected when using the addition of a pipeline object' do 
+                expected_pipeline_payload = {
+                    "immediate_trigger": {
+                        "tag_added": {
+                            "tag": "new_customer",
+                            "group": "Locale"
+                            }
+                        },
+                    "enabled": true,
+                    "outcome": {
+                        "push": {
+                            "audience": "triggered",
+                            "device_types": "all",
+                            "notification": {
+                                "alert": "Hello new customer!"
+                                
+                                }
+                            }
+                        }
+                    }
                 pipeline = UA::Pipeline.new(client: airship)
                 pipeline.enabled = true
                 pipeline.immediate_trigger = {
                     "tag_added": {
                         "tag": "new_customer",
-                        "group": "crm"
+                        "group": "Locale"
                     }
                 }
                 pipeline.outcome = {
@@ -144,7 +163,7 @@ describe Urbanairship::Automations do
                 }
                 automation = UA::Automation.new(client: airship)
                 automation.pipeline_object = pipeline.payload 
-                expect(automation.pipeline_object).to eq('dope')
+                expect(automation.pipeline_object).to eq(expected_pipeline_payload)
             end
         end
 
