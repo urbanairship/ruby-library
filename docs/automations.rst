@@ -44,7 +44,7 @@ and assign the pipeline payload directly to automation.pipeline_object.
     pipeline_one.immediate_trigger = {
         "tag_added": {
             "tag": "new_customer",
-            "group": "Locale"
+            "group": "crm"
         }
     }
     pipeline_one.outcome = {
@@ -61,7 +61,7 @@ and assign the pipeline payload directly to automation.pipeline_object.
     pipeline_two.immediate_trigger = {
         "tag_added": {
             "tag": "new_customer",
-            "group": "Locale"
+            "group": "crm"
         }
     }
     pipeline_two.outcome = {
@@ -69,7 +69,7 @@ and assign the pipeline payload directly to automation.pipeline_object.
             "audience": "triggered",
             "device_types": "all",
             "notification": {
-                "alert": "Hello new customer!"
+                "alert": "Here is a different second alert!"
             }
         }
     }
@@ -118,7 +118,7 @@ only difference here is the method selected.
   pipeline.immediate_trigger = {
       "tag_added": {
           "tag": "new_customer",
-          "group": "Locale"
+          "group": "crm"
       }
   }
   pipeline.outcome = {
@@ -141,7 +141,7 @@ only difference here is the method selected.
 Individual Automation Lookup
 ----------------------------
 
-This is for looking up a single automation with a given id. 
+This is for looking up a single automation with a given ID. 
 
 .. code-block:: ruby
 
@@ -160,7 +160,7 @@ Update Automation
 -----------------
 
 This is for updating an existing automation. You must include the full payload from a POST 
-response, with the updates that are wanted to be made within the payload. 
+response, with the updates that you want to make within the payload. 
 
 .. code-block:: ruby
 
@@ -196,7 +196,7 @@ response, with the updates that are wanted to be made within the payload.
 Delete Automation
 -----------------
 
-This is for deleting a pipeline with a given id. 
+This is for deleting a pipeline with a given ID. 
 
 .. code-block:: ruby
 
