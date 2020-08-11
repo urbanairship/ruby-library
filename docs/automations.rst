@@ -31,37 +31,56 @@ Create Automation
 
 This will use the Pipeline model to create an automation. You may add several
 pipelines objects to create several automations/pipelines at once. The example 
-below adds two. 
+below adds two. If you would like to just add one pipeline, forgo the array,
+and assign the pipeline payload directly to automation.pipeline_object.  
 
 .. code-block:: ruby
 
     require 'urbanairship'
     UA = Urbanairship
-    airship = UA::Client.new(key:'<app_key>', secret:'<secret_key>')
-    pipeline = UA::Pipeline.new(client: airship)
-    pipeline.enabled = true
-    pipeline.immediate_trigger = {
-      "tag_added": {
-         "tag": "new_customer",
-         "group": "Locale"
+    airship = UA::Client.new(key:'<app_key>', secret:'<app_secret>')
+    pipeline_one = UA::Pipeline.new(client: airship)
+    pipeline_one.enabled = true
+    pipeline_one.immediate_trigger = {
+        "tag_added": {
+            "tag": "new_customer",
+            "group": "Locale"
         }
     }
-    pipeline.outcome = {
-      "push": {
-         "audience": "triggered",
-         "device_types": "all",
-         "notification": {
-             "alert": "Hello new customer!"
+    pipeline_one.outcome = {
+        "push": {
+            "audience": "triggered",
+            "device_types": "all",
+            "notification": {
+                "alert": "Hello new customer!"
             }
         }
     }
+    pipeline_two = UA::Pipeline.new(client: airship)
+    pipeline_two.enabled = true
+    pipeline_two.immediate_trigger = {
+        "tag_added": {
+            "tag": "new_customer",
+            "group": "Locale"
+        }
+    }
+    pipeline_two.outcome = {
+        "push": {
+            "audience": "triggered",
+            "device_types": "all",
+            "notification": {
+                "alert": "Hello new customer!"
+            }
+        }
+    }
+    pipelines = [pipeline_one.payload, pipeline_two.payload]
     automation = UA::Automation.new(client: airship)
-    automation.pipeline_object = pipeline.payload 
+    automation.pipeline_object = pipelines 
     automation.create_automation
 
 .. note::
   
-  Should return a 200 HTTP status code. 
+  Should return a 201 HTTP status code. 
 
 List Deleted Automations
 ------------------------
@@ -86,7 +105,7 @@ a timestamp of the starting element for paginating results in the format of YYYY
 Validate Automation
 -------------------
 
-This endpoint is a lot like the create automation endpoint, the basic set up is the samme,
+This endpoint is a lot like the create automation endpoint, the basic set up is the same,
 only difference here is the method selected. 
 
 .. code-block:: ruby
