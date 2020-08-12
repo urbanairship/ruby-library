@@ -23,6 +23,8 @@ require 'urbanairship/devices/open_channel'
 require 'urbanairship/reports/response_statistics'
 require 'urbanairship/devices/static_lists'
 require 'urbanairship/push/location'
+require 'urbanairship/automations/pipeline'
+require 'urbanairship/automations/automation'
 
 module Urbanairship
   extend Urbanairship::Push::Audience
@@ -32,6 +34,7 @@ module Urbanairship
   include Urbanairship::Devices
   include Urbanairship::Reports
   include Urbanairship::Push
+  include Urbanairship::Automations
 
   class << self
     attr_accessor :configuration
