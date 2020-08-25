@@ -16,7 +16,9 @@ module Urbanairship
             @client = client
         end
 
-        def payload 
+        def payload
+            fail ArgumentError, 'a push must be added to create a variant' if @push.nil?
+
             {
              'description': description,
              'id': id,

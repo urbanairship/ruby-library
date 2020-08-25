@@ -42,6 +42,15 @@ describe Urbanairship::AbTests do
             end
 
             it 'fails when push is not included' do 
+                variant = UA::Variant.new(client: airship)
+                variant.description = 'description of this variant'
+                variant.id = '0'
+                variant.name = 'variant one'
+                variant.schedule = {
+                                    "scheduled_time": "2018-04-01T18:45:30"
+                                    }
+                variant.weight = '2'
+                expect{variant.payload}.to raise_error(ArgumentError)
             end
         end
     end
