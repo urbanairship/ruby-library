@@ -16,6 +16,17 @@ module Urbanairship
             @client = client
         end
 
+        def payload 
+            {
+             'description': description,
+             'id': id,
+             'name': name,
+             'push': push,
+             'schedule': schedule,
+             'weight': weight   
+            }
+        end
+
         end 
     end 
 end
