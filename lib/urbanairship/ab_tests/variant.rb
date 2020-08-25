@@ -26,7 +26,7 @@ module Urbanairship
              'push': push,
              'schedule': schedule,
              'weight': weight   
-            }
+            }.delete_if {|key, value| value.nil?} #this removes the nil key value pairs
         end
 
         end 
