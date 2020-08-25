@@ -1,12 +1,12 @@
 require 'spec_helper'
 require 'urbanairship'
-require 'urbanairship/experiments/variant'
+require 'urbanairship/ab_tests/variant'
 
-describe Urbanairship::Experiments do
+describe Urbanairship::AbTests do
     UA = Urbanairship
     airship = UA::Client.new(key: '123', secret: 'abc')
 
-    describe Urbanairship::Experiments::Variant do
+    describe Urbanairship::AbTests::Variant do
         
         variant_payload = {
              'description': 'description of this variant',

@@ -1,7 +1,7 @@
 require 'urbanairship'
 
 module Urbanairship
-    module  Experiments
+    module  AbTests
         class Experiment
         include Urbanairship::Common
         include Urbanairship::Loggable

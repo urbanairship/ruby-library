@@ -25,7 +25,7 @@ require 'urbanairship/devices/static_lists'
 require 'urbanairship/push/location'
 require 'urbanairship/automations/pipeline'
 require 'urbanairship/automations/automation'
-require 'urbanairship/experiments/variant'
+require 'urbanairship/ab_tests/variant'
 # require 'urbanairship/ab_tests/experiment'
 # require 'urbanairship/ab_tests/ab_test'
 
@@ -38,7 +38,7 @@ module Urbanairship
   include Urbanairship::Reports
   include Urbanairship::Push
   include Urbanairship::Automations
-  include Urbanairship::Experiments
+  include Urbanairship::AbTests
 
   class << self
     attr_accessor :configuration
