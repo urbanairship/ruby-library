@@ -1,8 +1,8 @@
 require 'urbanairship'
 
 module Urbanairship
-    module  AbTests
-        class Experiment
+    module  Experiments
+        class Variant
         include Urbanairship::Common
         include Urbanairship::Loggable
         attr_accessor :description,
