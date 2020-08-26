@@ -6,7 +6,7 @@ the difference between one kind of push and another. The Variant is a part of th
 object, with many variants in an array. Lastly. AbTest handles what Experiments along with their Variants 
 get sent to the various API endpoints. Basic pushes can be added straight to the Variant object
 on the push instance variable, or a Push object can be created, and the payload applied to the
-Variant object. 
+Variant object. For more information on this please visit: https://docs.airship.com/api/ua/#tag/a/b-tests
 
 List Existing A/B Tests
 -----------------------
