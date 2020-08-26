@@ -26,8 +26,8 @@ require 'urbanairship/push/location'
 require 'urbanairship/automations/pipeline'
 require 'urbanairship/automations/automation'
 require 'urbanairship/ab_tests/variant'
-# require 'urbanairship/ab_tests/experiment'
-# require 'urbanairship/ab_tests/ab_test'
+require 'urbanairship/ab_tests/experiment'
+require 'urbanairship/ab_tests/ab_test'
 
 module Urbanairship
   extend Urbanairship::Push::Audience
