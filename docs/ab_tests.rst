@@ -1,7 +1,7 @@
 A/B Tests
 =========
 
-In this client, we format A/B tests with three to nesting components. The first is the Variant,
+In this client, we format A/B tests with three nesting components. The first is the Variant,
 the difference between one kind of push and another. The Variant is a part of the Experiment
 object, with many variants in an array. Lastly. AbTest handles what Experiments along with their Variants 
 get sent to the various API endpoints. Basic pushes can be added straight to the Variant object
