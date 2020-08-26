@@ -37,7 +37,7 @@ module Urbanairship
                     'id': id,
                     'created_at': created_at,
                     'push_id': push_id
-                } 
+                }.delete_if {|key, value| value.nil?} #this removes the nil key value pairs
             end
 
         end

@@ -143,6 +143,55 @@ describe Urbanairship::AbTests do
             }
         }
 
+        experiment_object_example = {
+            "name": 'Neat experiment',
+            "audience": "all",
+            "device_types": "all",
+            "variants": [
+                {
+                    "push": {
+                        "notification": {
+                            "alert": "I love cereal"
+                        }
+                    }
+                },
+                {
+                    "push": {
+                        "notification": {
+                            "alert": "I prefer oatmeal"
+                        }
+                    }
+                }
+            ]
+        }
+
+        describe '#experiment_object' do 
+            it 'correctly formats experiment object with other classes' do 
+                variant_one = UA::Variant.new(client: airship)
+                variant_one.push = {
+                    "notification": {
+                        "alert": "I love cereal"
+                    }
+                }
+                variant_two = UA::Variant.new(client: airship)
+                variant_two.push = {
+                    "notification": {
+                        "alert": "I prefer oatmeal"
+                    }
+                }
+
+                experiment = UA::Experiment.new(client: airship)
+                experiment.name = 'Neat experiment'
+                experiment.audience = 'all'
+                experiment.device_types = 'all'
+                experiment.variants << variant_one.payload
+                experiment.variants << variant_two.payload 
+                ab_test = UA::AbTest.new(client: airship)
+                ab_test.experiment_object = experiment.payload
+                expect(ab_test.experiment_object).to eq(experiment_object_example)
+            end
+        end
+
         describe '#list_ab_test' do 
             it 'returns the correct response' do 
                 experiment = UA::AbTest.new(client: airship)
