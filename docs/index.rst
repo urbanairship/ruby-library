@@ -73,6 +73,8 @@ Contents:
    email.rst
    open_channels.rst
    sms.rst
+   automations.rst
+   ab_tests.rst
 
 
 Indices and tables
