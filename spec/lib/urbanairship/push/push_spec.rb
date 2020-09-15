@@ -344,6 +344,19 @@ describe Urbanairship::Push do
                                               push: default_expected_payload
                                           )
       end
+
+      it 'can build an optimal scheduled payload' do
+        scheduled_push.schedule = UA.optimal_scheduled_time('2020-02-20')
+        expect(scheduled_push.payload).to eq(
+                                              schedule: {
+                                                'best_time': {
+                                                  'send_date': '2020-02-20'
+                                                }
+                                              },
+                                              name: a_name,
+                                              push: default_expected_payload
+                                          )
+      end
     end
 
     describe '#list' do
