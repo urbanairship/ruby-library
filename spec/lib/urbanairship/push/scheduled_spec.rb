@@ -8,6 +8,12 @@ describe Urbanairship do
   let(:a_time) { Time.new(2013, 1, 1, 12, 56) }
   let(:a_time_in_text) { '2013-01-01T12:56:00' }
 
+  optimal_time = {
+          'best_time': {
+            'send_date': '2020-02-20'
+          }
+        }
+
   describe '#scheduled_time' do
     it 'creates a payload from a DateTime' do
       payload = UA.scheduled_time(a_time)
@@ -19,6 +25,13 @@ describe Urbanairship do
     it 'creates a payload from a DateTime' do
       payload = UA.local_scheduled_time(a_time)
       expect(payload).to eq(local_scheduled_time: a_time_in_text)
+    end
+  end
+
+  describe '#optimal_scheduled_time' do
+    it 'creates a payload from a Date' do
+      payload = UA.optimal_scheduled_time('2020-02-20')
+      expect(payload).to eq(optimal_time)
     end
   end
 end

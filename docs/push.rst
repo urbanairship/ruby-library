@@ -507,6 +507,30 @@ local time.
 If the schedule is unsuccessful, an :rb:class:`AirshipFailure` exception
 will be raised.
 
+Scheduled Delivery for Optimal Send Time
+----------------------------------------
+
+Scheduled notifications build upon the Push object, and have two other
+components: the scheduled time(s) and an optional name.
+
+This example schedules the above notification delivery for optimal send time.
+
+.. code-block:: ruby
+
+    schedule = airship.create_scheduled_push
+    schedule.push = push
+    schedule.name = "optional name for later reference"
+    schedule.schedule = UA.optimal_scheduled_time('2020-02-20')
+    response = schedule.send_push
+    print ("Created schedule. url: " + response.schedule_url)
+
+If the schedule is unsuccessful, an :rb:class:`AirshipFailure` exception
+will be raised.
+
+.. note::
+
+    Make sure the time for UA.optimal_scheduled_time is a date versus a timestamp. 
+
 
 Updating or Canceling a Schedule
 --------------------------------
