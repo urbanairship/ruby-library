@@ -15,7 +15,7 @@ module Urbanairship
       end
 
       # Uses predictive analysis to send push at optimal time
-      def best_scheduled_time(date)
+      def optimal_scheduled_time(date)
         {
           'best_time': {
             'send_date': date
