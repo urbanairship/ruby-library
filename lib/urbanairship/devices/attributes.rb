@@ -20,8 +20,37 @@ module Urbanairship
             end
 
             def payload
+                if value.is_a? int 
+                    number_attribute
+                elsif value.is_a? string 
+                    text_attribute
+                else
+                    date_attribute
+                end
+            end
+
+            def number_attribute
                 {
-                    
+                    'attribute': attribute,
+                    'operator': operator,
+                    'value': value
+                }
+            end
+
+            def text_attribute
+                {
+                    'attribute': attribute,
+                    'operator': operator,
+                    'value': value
+                }
+            end
+
+            def date_attribute
+                {
+                    'attribute': attribute,
+                    'operator': operator,
+                    'precision': precision,
+                    'value': value
                 }
             end
 
