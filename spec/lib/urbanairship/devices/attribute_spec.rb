@@ -27,7 +27,7 @@ describe Urbanairship::Devices do
 
     describe Urbanairship::Devices::Attribute do
         describe '#payload' do 
-            it 'formats the payload correctly for date attribute'
+            it 'formats the payload correctly for date attribute' do
                 new_attribute = UA::Attribute.new(client: airship)
                 new_attribute.attribute = 'birth_date'
                 new_attribute.operator = 'equals'
@@ -36,7 +36,7 @@ describe Urbanairship::Devices do
                 expect(new_attribute.payload).to eq(date_attribute_payload)
             end
 
-            it 'formats the payload correctly for number attribute'
+            it 'formats the payload correctly for number attribute' do
                 new_attribute = UA::Attribute.new(client: airship)
                 new_attribute.attribute = 'lifetime_value'
                 new_attribute.operator = 'greater'
@@ -44,7 +44,7 @@ describe Urbanairship::Devices do
                 expect(new_attribute.payload).to eq(number_attribute_payload)
             end
 
-            it 'formats the payload correctly for text attribute'
+            it 'formats the payload correctly for text attribute' do
                 new_attribute = UA::Attribute.new(client: airship)
                 new_attribute.attribute = 'item_purchased'
                 new_attribute.operator = 'contains'
