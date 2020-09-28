@@ -24,7 +24,7 @@ module Urbanairship
                     number_attribute
                 elsif value.is_a? string 
                     text_attribute
-                else
+                elsif precision
                     date_attribute
                 end
             end
