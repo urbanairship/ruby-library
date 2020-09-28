@@ -20,12 +20,12 @@ module Urbanairship
             end
 
             def payload
-                if value.is_a? int 
-                    number_attribute
-                elsif value.is_a? string 
-                    text_attribute
-                elsif precision
+                if precision
                     date_attribute
+                elsif value.is_a? String
+                    text_attribute
+                elsif value.is_a? Integer 
+                    number_attribute
                 end
             end
 
