@@ -51,6 +51,13 @@ describe Urbanairship::Devices do
       ]
     }
 
+    attribute_success_resp = {
+      'body' => {
+        'ok' => true,
+      },
+      'code'=> 200
+    }
+
     describe '#lookup' do
       it 'can get a response' do
         allow(airship).to receive(:send_request).and_return(lookup_hash)
@@ -71,7 +78,23 @@ describe Urbanairship::Devices do
         }
         expect(channel_info.payload).to eq(attributes_payload)
       end
-    end 
+    end
+    
+    describe '#set_attributes' do
+      it 'returns a 200 response for post request' do 
+        channel_info = UA::ChannelInfo.new(client: airship)
+        channel_info.audience = {"android_channel": ["b8f9b663-0a3b-cf45-587a-be880946e881"]}
+        channel_info.attributes =  {
+            "attribute": "birth_date",
+            "operator": "equals",
+            "precision": "month_day",
+            "value": "05-04"
+        }
+        allow(airship).to receive(:send_request).and_return(attribute_success_resp)
+        actual_resp = channel_info.set_attributes
+        expect(actual_resp).to eq(attribute_success_resp)
+      end
+    end
   end
 
   describe Urbanairship::Devices::ChannelList do
