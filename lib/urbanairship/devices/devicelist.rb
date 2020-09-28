@@ -23,23 +23,22 @@ module Urbanairship
         response['body']['channel']
       end
 
-      def set_attributes
-        payload = {
-          'audience': {
-            audience
-          },
+      def payload
+        {
+          'audience': audience,
           'attributes': [
             attributes
           ]
         }
+      end
 
+      def set_attributes
         response = @client.send_request(
           method: 'POST',
           body: JSON.dump(payload),
           url: CHANNEL_URL + 'attributes',
           content_type: 'application/json'
         )
-        logger.info("Setting attributes for channel(s) #{audience}")
         response
       end
     end
