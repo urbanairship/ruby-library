@@ -44,6 +44,14 @@ describe Urbanairship::Devices do
         expect(response[:channel_id]).to eq '123'
       end
     end
+
+    describe '#set_attributes' do
+      it 'formats the proper payload' do
+      end
+
+      it 'returns a 200 response' do
+      end
+    end 
   end
 
   describe Urbanairship::Devices::ChannelList do

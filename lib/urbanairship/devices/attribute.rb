@@ -7,11 +7,6 @@ module Urbanairship
             include Urbanairship::Loggable
             attr_accessor :attribute,
                           :operator,
-                          :is_empty,
-                          :before,
-                          :after,
-                          :range,
-                          :equals,
                           :precision,
                           :value
 
