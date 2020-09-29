@@ -28,8 +28,9 @@ Send Push to Audience with Attribute Specifications
 ---------------------------------------------------
 
 This will send a push to an audience who meet the specifications of attribute we
-set  here. This example is using a text attribute where we are looking for audience
-members whose favorite food includes pineapple.
+set here. This example is using a text attribute where we are looking for audience
+members whose favorite food includes 'apple'. Some examples of what this could return
+would be 'apple', 'pineapple',  or 'apple pie'. 
 
 .. code-block:: ruby
 
@@ -39,7 +40,7 @@ members whose favorite food includes pineapple.
     new_attribute = UA::Attribute.new(client: airship)
     new_attribute.attribute = 'favorite_food'
     new_attribute.operator = 'contains'
-    new_attribute.value = 'pineapple'
+    new_attribute.value = 'apple'
     push = airship.create_push
     push.audience = new_attribute.payload
     push.notification = UA.notification(alert: 'Hello')
