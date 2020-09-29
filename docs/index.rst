@@ -75,6 +75,7 @@ Contents:
    sms.rst
    automations.rst
    ab_tests.rst
+   attributes.rst
 
 
 Indices and tables

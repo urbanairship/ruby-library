@@ -7,6 +7,8 @@ module Urbanairship
       include Urbanairship::Common
       include Urbanairship::Loggable
       attr_writer :client
+      attr_accessor :audience,
+                    :attributes
 
       def initialize(client: required('client'))
         @client = client
@@ -19,6 +21,25 @@ module Urbanairship
         )
         logger.info("Retrieved channel information for #{uuid}")
         response['body']['channel']
+      end
+
+      def payload
+        {
+          'audience': audience,
+          'attributes': [
+            attributes
+          ]
+        }
+      end
+
+      def set_attributes
+        response = @client.send_request(
+          method: 'POST',
+          body: JSON.dump(payload),
+          url: CHANNEL_URL + 'attributes',
+          content_type: 'application/json'
+        )
+        response
       end
     end
 
