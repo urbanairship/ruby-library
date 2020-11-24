@@ -49,9 +49,9 @@ module Urbanairship
         headers['Accept'] = 'application/vnd.urbanairship+json; version=3'
         headers['Content-type'] = content_type unless content_type.nil?
         headers['Content-Encoding'] = encoding unless encoding.nil?
+        
         if auth_type == :bearer
           raise ArgumentError.new('token must be provided as argument if auth_type=bearer') if @token.nil?
-
           headers['X-UA-Appkey'] = @key
           headers['Authorization'] = "Bearer #{@token}"
         end

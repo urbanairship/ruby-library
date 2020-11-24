@@ -1,4 +1,9 @@
 --------------------
+5.9.0
+--------------------
+- Adds support for bearer token auth 
+
+--------------------
 5.8.0
 --------------------
 - Adds scheudling support for PTSO
