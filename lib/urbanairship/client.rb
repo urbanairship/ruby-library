@@ -14,9 +14,10 @@ module Urbanairship
       # @param [Object] key Application Key
       # @param [Object] secret Application Secret
       # @return [Object] Client
-      def initialize(key: required('key'), secret: required('secret'))
+      def initialize(key: required('key'), secret: required('secret'), token: nil)
         @key = key
         @secret = secret
+        @token = token
       end
 
       # Send a request to Airship's API
@@ -25,10 +26,12 @@ module Urbanairship
       # @param [Object] body Request Body
       # @param [Object] url Request URL
       # @param [Object] content_type Content-Type
+      # @param [Object] encoding Encoding
+      # @param [Symbol] auth_type (:basic|:bearer)
       # @param [Object] version API Version
       # @return [Object] Push Response
       def send_request(method: required('method'), url: required('url'), body: nil,
-                       content_type: nil, encoding: nil)
+                       content_type: nil, encoding: nil, auth_type: :basic)
         req_type = case method
           when 'GET'
             :get
@@ -46,7 +49,13 @@ module Urbanairship
         headers['Accept'] = 'application/vnd.urbanairship+json; version=3'
         headers['Content-type'] = content_type unless content_type.nil?
         headers['Content-Encoding'] = encoding unless encoding.nil?
+        if auth_type == :bearer
+          raise ArgumentError.new('token must be provided as argument if auth_type=bearer') if @token.nil?
+          headers['X-UA-Appkey'] = @key
+          headers['Authorization'] = "Bearer #{@token}"
+        end
 
+        debug = "Making #{method} request to #{url}.\n"+ "\tHeaders:\n"
         debug = "Making #{method} request to #{url}.\n"+
             "\tHeaders:\n"
         debug += "\t\tcontent-type: #{content_type}\n" unless content_type.nil?
@@ -56,7 +65,7 @@ module Urbanairship
 
         logger.debug(debug)
 
-        response = RestClient::Request.execute(
+        params = {
           method: method,
           url: url,
           headers: headers,
@@ -64,7 +73,14 @@ module Urbanairship
           password: @secret,
           payload: body,
           timeout: Urbanairship.configuration.timeout
-        )
+        }
+
+        if auth_type == :basic
+          params[:user] = @key
+          params[:password] = @secret
+        end
+
+        response = RestClient::Request.execute(params)
 
         logger.debug("Received #{response.code} response. Headers:\n\t#{response.headers}\nBody:\n\t#{response.body}")
         Response.check_code(response.code, response)
