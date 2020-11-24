@@ -1,7 +1,6 @@
 require 'spec_helper'
 require 'urbanairship/client'
 
-
 describe Urbanairship::Client do
   UA = Urbanairship
 
@@ -14,7 +13,7 @@ describe Urbanairship::Client do
     mock_response = double('response')
     allow(mock_response).to(receive_messages(code: 200, headers: '', body: '{}'))
     expect(RestClient::Request).to(receive(:execute).with(hash_including({ user: '123', password: 'abc' })))
-                                .and_return(mock_response)
+                               .and_return(mock_response)
 
     ua_client = UA::Client.new(key: '123', secret: 'abc')
     ua_client.send_request(method: 'POST', url: UA::Common::CHANNEL_URL)

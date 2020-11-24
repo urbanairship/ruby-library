@@ -13,6 +13,7 @@ module Urbanairship
       #
       # @param [Object] key Application Key
       # @param [Object] secret Application Secret
+      # @param [String] token Application Auth Token (for custom events endpoint)
       # @return [Object] Client
       def initialize(key: required('key'), secret: required('secret'), token: nil)
         @key = key
@@ -28,7 +29,6 @@ module Urbanairship
       # @param [Object] content_type Content-Type
       # @param [Object] encoding Encoding
       # @param [Symbol] auth_type (:basic|:bearer)
-      # @param [Object] version API Version
       # @return [Object] Push Response
       def send_request(method: required('method'), url: required('url'), body: nil,
                        content_type: nil, encoding: nil, auth_type: :basic)
@@ -49,6 +49,7 @@ module Urbanairship
         headers['Accept'] = 'application/vnd.urbanairship+json; version=3'
         headers['Content-type'] = content_type unless content_type.nil?
         headers['Content-Encoding'] = encoding unless encoding.nil?
+        
         if auth_type == :bearer
           raise ArgumentError.new('token must be provided as argument if auth_type=bearer') if @token.nil?
           headers['X-UA-Appkey'] = @key
@@ -56,8 +57,6 @@ module Urbanairship
         end
 
         debug = "Making #{method} request to #{url}.\n"+ "\tHeaders:\n"
-        debug = "Making #{method} request to #{url}.\n"+
-            "\tHeaders:\n"
         debug += "\t\tcontent-type: #{content_type}\n" unless content_type.nil?
         debug += "\t\tcontent-encoding: gzip\n" unless encoding.nil?
         debug += "\t\taccept: application/vnd.urbanairship+json; version=3\n"
@@ -69,8 +68,6 @@ module Urbanairship
           method: method,
           url: url,
           headers: headers,
-          user: @key,
-          password: @secret,
           payload: body,
           timeout: Urbanairship.configuration.timeout
         }
