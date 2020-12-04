@@ -51,13 +51,13 @@ module Urbanairship
         response
       end
 
-      def update(description: nil, extras: nil)
+      def update(description: nil, extra: nil)
         fail ArgumentError, 'Name must be set' if name.nil?
         fail ArgumentError,
-           'Either description or extras must be set to a value' if description.nil? and extras.nil?
+           'Either description or extras must be set to a value' if description.nil? and extra.nil?
         payload = {}
         payload['description'] = description unless description.nil?
-        payload['extras'] = extras unless extras.nil?
+        payload['extra'] = extra unless extra.nil?
         response = @client.send_request(
           method: 'PUT',
           body: JSON.dump(payload),

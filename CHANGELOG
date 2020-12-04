@@ -2,7 +2,7 @@
 5.9.0
 --------------------
 - Adds support for bearer token auth
-- Updates broken code and addresses spelling errors 
+- Updates broken code for static lists 
 
 --------------------
 5.8.0

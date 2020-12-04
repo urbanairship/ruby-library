@@ -57,7 +57,7 @@ describe Urbanairship::Devices do
 
       it 'can update the extras of a static list successfully' do
         allow(airship).to receive(:send_request).and_return(expected_response)
-        actual_response = static_list.update(extras: { 'key' => 'value'})
+        actual_response = static_list.update(extra: {'new_key': 'new_value'})
         expect(actual_response).to eq(expected_response)
       end
 
