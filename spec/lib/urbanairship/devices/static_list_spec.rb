@@ -29,7 +29,7 @@ describe Urbanairship::Devices do
 
       it 'can create a list successfully with parameters set' do
         allow(airship).to receive(:send_request).and_return(expected_response)
-        actual_response = static_list.create(description: 'this description', extras: {:key => 'value'})
+        actual_response = static_list.create(description: 'this description', extra: {'key': 'value'})
         expect(actual_response).to eq(expected_response)
       end
     end
