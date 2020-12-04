@@ -13,11 +13,11 @@ module Urbanairship
         @client = client
       end
 
-      def create(description: nil, extras: nil)
+      def create(description: nil, extra: nil)
         fail ArgumentError, 'Name must be set' if name.nil?
         payload = {'name': name}
         payload['description'] = description unless description.nil?
-        payload['extras'] = extras unless extras.nil?
+        payload['extra'] = extra unless extra.nil?
 
         response = @client.send_request(
           method: 'POST',

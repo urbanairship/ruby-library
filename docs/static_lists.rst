@@ -28,7 +28,7 @@ string keys to arbitrary JSON values.
     airship = UA::Client.new(key:'application_key', secret:'master_secret')
     static_list = UA::StaticList.new(client: airship)
     static_list.name = 'list_name'
-    static_list.create(description: 'description', extras: { 'key' => 'value' })
+    static_list.create(description: 'description', extra: {'key': 'value'})
 
 
 Upload List

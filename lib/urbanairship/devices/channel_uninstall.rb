@@ -57,7 +57,7 @@ module Urbanairship
           content_type: 'application/json'
         )
         
-        logger.info { "Successfully unintalled open channel with address: #{address}"}
+        logger.info { "Successfully uninstalled open channel with address: #{address}"}
         response
       end
     end
