@@ -2,7 +2,8 @@
 5.9.0
 --------------------
 - Adds support for bearer token auth
-- Updates broken code for static lists 
+- Updates broken code for static lists
+- Adds support for update sms channel 
 
 --------------------
 5.8.0
