@@ -5,7 +5,14 @@ module Urbanairship
     class Sms
       include Urbanairship::Common
       include Urbanairship::Loggable
-      attr_accessor :msisdn, :sender, :opted_in, :sender
+      attr_accessor :msisdn, 
+                    :sender, 
+                    :opted_in, 
+                    :sender,
+                    :locale_country,
+                    :locale_language,
+                    :timezone,
+                    :channel_id
 
       def initialize(client: required('client'))
         @client = client
@@ -29,6 +36,27 @@ module Urbanairship
         )
         logger.info("Registering SMS channel with msisdn #{@msisdn}")
         response
+      end
+
+      def update
+        fail ArgumentError, 'sender must be set to register sms channel' if sender.nil?
+        fail ArgumentError, 'msisdn must be set to register sms channel' if msisdn.nil?
+
+        payload = {
+          'msisdn': msisdn,
+          'sender': sender,
+          'opted_in': opted_in,
+          'locale_country': locale_country,
+          'locale_language': locale_language,
+          'timezone': timezone
+        }
+
+        response = @client.send_request(
+          method: 'PUT',
+          body: JSON.dump(payload),
+          url: CHANNEL_URL + 'sms/' + channel_id
+          content_type: 'application/json'
+        )
       end
 
       def opt_out
