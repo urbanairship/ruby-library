@@ -95,7 +95,7 @@ describe Urbanairship::Devices do
         sms_channel = UA::Sms.new(client: airship)
         sms_channel.sender = '12345'
 
-        expect{sms_channel.register()}.to raise_error(ArgumentError)
+        expect{sms_channel.register}.to raise_error(ArgumentError)
       end
     end
 
@@ -111,7 +111,37 @@ describe Urbanairship::Devices do
         allow(airship).to receive(:send_request).and_return(sms_update_resp)
         actual_resp = sms_channel.update
         expect(actual_resp).to eq(sms_update_resp)
-      end   
+      end
+      
+      it 'fails without a configured sender' do
+        sms_channel = UA::Sms.new(client: airship)
+        sms_channel.msisdn = '15035556789'
+        sms_channel.opted_in = '2018-02-13T11:58:59'
+        sms_channel.timezone = 'America/Los_Angeles'
+        sms_channel.channel_id = '1a2b3c4d'
+
+        expect{sms_channel.update}.to raise_error(ArgumentError)
+      end
+
+      it 'fails without a configured msisdn' do
+        sms_channel = UA::Sms.new(client: airship)
+        sms_channel.sender = '12345'
+        sms_channel.opted_in = '2018-02-13T11:58:59'
+        sms_channel.timezone = 'America/Los_Angeles'
+        sms_channel.channel_id = '1a2b3c4d'
+
+        expect{sms_channel.update}.to raise_error(ArgumentError)
+      end
+
+      it 'fails without a configured channel_id' do
+        sms_channel = UA::Sms.new(client: airship)
+        sms_channel.msisdn = '15035556789'
+        sms_channel.sender = '12345'
+        sms_channel.opted_in = '2018-02-13T11:58:59'
+        sms_channel.timezone = 'America/Los_Angeles'
+
+        expect{sms_channel.update}.to raise_error(ArgumentError)
+      end
     end
 
     describe '#opt-out' do
