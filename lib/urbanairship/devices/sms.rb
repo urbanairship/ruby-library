@@ -41,6 +41,7 @@ module Urbanairship
       def update
         fail ArgumentError, 'sender must be set to update sms channel' if sender.nil?
         fail ArgumentError, 'msisdn must be set to update sms channel' if msisdn.nil?
+        fail ArgumentError, 'channel_id must be set to update sms channel' if channel_id.nil?
 
         payload = {
           'msisdn': msisdn,
@@ -54,7 +55,7 @@ module Urbanairship
         response = @client.send_request(
           method: 'PUT',
           body: JSON.dump(payload),
-          url: CHANNEL_URL + 'sms/' + channel_id
+          url: CHANNEL_URL + 'sms/' + channel_id,
           content_type: 'application/json'
         )
         logger.info("Updating SMS channel with msisdn #{@channel_id}")

@@ -58,6 +58,10 @@ describe Urbanairship::Devices do
        }
     }
 
+    sms_update_resp = {
+      "ok": true,
+    } 
+
     describe '#register' do
       it 'can register an opted in sms channel' do
         sms_channel = UA::Sms.new(client: airship)
@@ -93,6 +97,21 @@ describe Urbanairship::Devices do
 
         expect{sms_channel.register()}.to raise_error(ArgumentError)
       end
+    end
+
+    describe '#update' do
+      it 'can update an existing smms channel' do
+        sms_channel = UA::Sms.new(client: airship)
+        sms_channel.msisdn = '15035556789'
+        sms_channel.sender = '12345'
+        sms_channel.opted_in = '2018-02-13T11:58:59'
+        sms_channel.timezone = 'America/Los_Angeles'
+        sms_channel.channel_id = '1a2b3c4d'
+
+        allow(airship).to receive(:send_request).and_return(sms_update_resp)
+        actual_resp = sms_channel.update
+        expect(actual_resp).to eq(sms_update_resp)
+      end   
     end
 
     describe '#opt-out' do
