@@ -21,6 +21,25 @@ request with an opted_in key.
     sms_channel.opted_in = '2018-02-13T11:58:59'
     sms_channel.register
 
+Update SMS Channel
+-------------------
+
+To update an SMS channel you need a sender, MSISDN, and a channel ID. 
+
+.. code-block:: ruby
+
+    require 'urbanairship'
+    UA = Urbanairship
+    airship = UA::Client.new(key:'application_key', secret:'master_secret')
+    sms_channel = UA::Sms.new(client: airship)
+    sms_channel.msisdn = '15035556789'
+    sms_channel.sender = '12345'
+    sms_channel.opted_in = '2020-12-14T11:58:59'
+    sms_channel.timezone = 'America/Denver'
+    sms_channel.channel_id = 'a1b2c3d4e5f6'
+    sms_channel.update
+
+
 Opt-Out of SMS Messages
 -----------------------
 
