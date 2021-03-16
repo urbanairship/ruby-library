@@ -15,7 +15,7 @@ module Urbanairship
         @add_group = {}
         @remove_group = {}
         @set_group = {}
-        @url = CHANNEL_URL + 'tags/'
+        @url = channel_url('tags/')
       end
 
       def set_audience(ios: nil, android: nil, amazon: nil)

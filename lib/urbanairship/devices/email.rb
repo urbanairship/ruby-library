@@ -41,7 +41,7 @@ module Urbanairship
         response = @client.send_request(
           method: 'POST',
           body: JSON.dump(payload),
-          url: CHANNEL_URL + 'email',
+          url: channel_url('email'),
           content_type: 'application/json'
         )
         logger.info("Registering email channel with address #{address}")
@@ -58,7 +58,7 @@ module Urbanairship
         response = @client.send_request(
           method: 'POST',
           body: JSON.dump(payload),
-          url: CHANNEL_URL + 'email/uninstall',
+          url: channel_url('email/uninstall'),
           content_type: 'application/json'
         )
         logger.info("Uninstalling email channel with address #{address}")
@@ -70,7 +70,7 @@ module Urbanairship
 
         response = @client.send_request(
           method: 'GET',
-          url: CHANNEL_URL + 'email/' + address
+          url: channel_url('email/' + address)
         )
         logger.info("Looking up email channel with address #{address}")
         response
@@ -95,7 +95,7 @@ module Urbanairship
 
         response = @client.send_request(
           method: 'PUT',
-          url: CHANNEL_URL + 'email/' + channel_id,
+          url: channel_url('email/' + channel_id),
           body: JSON.dump(payload),
           content_type: 'application/json'
         )
@@ -109,7 +109,7 @@ module Urbanairship
 
       def initialize(client: required('client'))
         super(client: client)
-        @url = CHANNEL_URL + 'email/tags'
+        @url = channel_url('email/tags')
       end
 
       def set_audience(email_address: required('email_address'))

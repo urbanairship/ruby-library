@@ -5,7 +5,6 @@ module Urbanairship
   # Features mixed in to all classes
   module Common
     BASE_URL = 'https://go.urbanairship.com/api'
-    CHANNEL_URL = BASE_URL + '/channels/'
     OPEN_CHANNEL_URL = BASE_URL + '/channels/open/'
     DEVICE_TOKEN_URL = BASE_URL + '/device_tokens/'
     APID_URL = BASE_URL + '/apids/'
@@ -20,6 +19,14 @@ module Urbanairship
     LOCATION_URL = BASE_URL + '/location/'
     CREATE_AND_SEND_URL = BASE_URL + '/create-and-send/'
     EXPERIMENTS_URL = BASE_URL + '/experiments/'
+
+    def url_for(path)
+      "https://#{Urbanairship.configuration.server}/api#{path}"
+    end
+
+    def channel_url(path='')
+      url_for("/channels/#{path}")
+    end
 
     # Helper method for required keyword args in Ruby 2.0 that is compatible with 2.1+
     # @example

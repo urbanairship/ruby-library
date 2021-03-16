@@ -11,7 +11,7 @@ describe Urbanairship::Common do
   end
 
   it 'has a CHANNEL_URL' do
-    expect(Urbanairship::Common::CHANNEL_URL).not_to be nil
+    expect(Urbanairship.channel_url).not_to be nil
   end
 
   describe Urbanairship::Common::PageIterator do

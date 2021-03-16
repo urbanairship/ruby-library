@@ -5,9 +5,9 @@ module Urbanairship
     class Sms
       include Urbanairship::Common
       include Urbanairship::Loggable
-      attr_accessor :msisdn, 
-                    :sender, 
-                    :opted_in, 
+      attr_accessor :msisdn,
+                    :sender,
+                    :opted_in,
                     :sender,
                     :locale_country,
                     :locale_language,
@@ -31,7 +31,7 @@ module Urbanairship
         response = @client.send_request(
           method: 'POST',
           body: JSON.dump(payload),
-          url: CHANNEL_URL + 'sms',
+          url: channel_url('sms'),
           content_type: 'application/json'
         )
         logger.info("Registering SMS channel with msisdn #{@msisdn}")
@@ -55,7 +55,7 @@ module Urbanairship
         response = @client.send_request(
           method: 'PUT',
           body: JSON.dump(payload),
-          url: CHANNEL_URL + 'sms/' + channel_id,
+          url: channel_url('sms/' + channel_id),
           content_type: 'application/json'
         )
         logger.info("Updating SMS channel with msisdn #{@channel_id}")
@@ -74,7 +74,7 @@ module Urbanairship
         response = @client.send_request(
           method: 'POST',
           body: JSON.dump(payload),
-          url: CHANNEL_URL + 'sms/opt-out',
+          url: channel_url('sms/opt-out'),
           content_type: 'application/json'
         )
         logger.info("Opting Out of SMS messages for #{@msisdn}")
@@ -93,7 +93,7 @@ module Urbanairship
         response = @client.send_request(
           method: 'POST',
           body: JSON.dump(payload),
-          url: CHANNEL_URL + 'sms/uninstall',
+          url: channel_url('sms/uninstall'),
           content_type: 'application/json'
         )
         logger.info("Uninstalling SMS channel for #{@msisdn}")
@@ -106,7 +106,7 @@ module Urbanairship
 
         response = @client.send_request(
             method: 'GET',
-            url: CHANNEL_URL + 'sms/' + @msisdn + '/' + @sender
+            url: channel_url('sms/' + @msisdn + '/' + @sender)
         )
         logger.info { "Retrieved information for msisdn #{@msisdn}" }
         response

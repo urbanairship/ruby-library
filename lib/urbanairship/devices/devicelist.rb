@@ -17,7 +17,7 @@ module Urbanairship
       def lookup(uuid: required('uuid'))
         response = @client.send_request(
           method: 'GET',
-          url: CHANNEL_URL + uuid
+          url: channel_url(uuid)
         )
         logger.info("Retrieved channel information for #{uuid}")
         response['body']['channel']
@@ -36,7 +36,7 @@ module Urbanairship
         response = @client.send_request(
           method: 'POST',
           body: JSON.dump(payload),
-          url: CHANNEL_URL + 'attributes',
+          url: channel_url('attributes'),
           content_type: 'application/json'
         )
         response
@@ -46,7 +46,7 @@ module Urbanairship
     class ChannelList < Urbanairship::Common::PageIterator
       def initialize(client: required('client'))
         super(client: client)
-        @next_page = CHANNEL_URL
+        @next_page = channel_url
         @data_attribute = 'channels'
       end
     end
