@@ -95,7 +95,7 @@ module Urbanairship
 
         resp = @client.send_request(
           method: 'GET',
-          url: APID_URL + apid
+          url: apid_url(apid)
         )
         logger.info("Retrieved info on apid #{apid}")
         resp
@@ -105,7 +105,7 @@ module Urbanairship
     class APIDList < Urbanairship::Common::PageIterator
       def initialize(client: required('client'))
         super(client: client)
-        @next_page = APID_URL
+        @next_page = apid_url
         @data_attribute = 'apids'
       end
     end

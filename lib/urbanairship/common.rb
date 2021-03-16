@@ -5,7 +5,6 @@ module Urbanairship
   # Features mixed in to all classes
   module Common
     BASE_URL = 'https://go.urbanairship.com/api'
-    APID_URL = BASE_URL + '/apids/'
     PUSH_URL = BASE_URL + '/push/'
     SCHEDULES_URL = BASE_URL + '/schedules/'
     SEGMENTS_URL = BASE_URL + '/segments/'
@@ -20,6 +19,10 @@ module Urbanairship
 
     def url_for(path)
       "https://#{Urbanairship.configuration.server}/api#{path}"
+    end
+
+    def apid_url(path='')
+      url_for("/apids/#{path}")
     end
 
     def channel_url(path='')
