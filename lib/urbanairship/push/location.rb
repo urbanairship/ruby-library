@@ -93,7 +93,7 @@ module Urbanairship
       def date_ranges
         resp = @client.send_request(
           method: 'GET',
-          url: SEGMENTS_URL + 'dates/'
+          url: segments_url('dates/')
         )
         logger.info('Retrieved location date ranges')
         resp

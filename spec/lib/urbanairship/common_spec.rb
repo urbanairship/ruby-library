@@ -7,7 +7,7 @@ describe Urbanairship::Common do
   end
 
   it 'has a SEGMENTS_URL' do
-    expect(Urbanairship::Common::SEGMENTS_URL).not_to be nil
+    expect(Urbanairship.segments_url).not_to be nil
   end
 
   it 'has a CHANNEL_URL' do
