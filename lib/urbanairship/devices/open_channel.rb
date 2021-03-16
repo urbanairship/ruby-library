@@ -45,7 +45,7 @@ module Urbanairship
 
         response = @client.send_request(
           method: 'POST',
-          url: OPEN_CHANNEL_URL,
+          url: open_channel_url,
           body: JSON.dump(body),
           content_type: 'application/json'
         )
@@ -77,7 +77,7 @@ module Urbanairship
 
         response = @client.send_request(
           method: 'POST',
-          url: OPEN_CHANNEL_URL,
+          url: open_channel_url,
           body: JSON.dump(body),
           content_type: 'application/json'
         )
