@@ -4,8 +4,6 @@ require 'urbanairship/loggable'
 module Urbanairship
   # Features mixed in to all classes
   module Common
-    BASE_URL = 'https://go.urbanairship.com/api'
-
     def url_for(path)
       "https://#{Urbanairship.configuration.server}/api#{path}"
     end
