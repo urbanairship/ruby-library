@@ -5,7 +5,6 @@ module Urbanairship
   # Features mixed in to all classes
   module Common
     BASE_URL = 'https://go.urbanairship.com/api'
-    FEEDS_URL = BASE_URL + '/feeds/'
     LOCATION_URL = BASE_URL + '/location/'
     CREATE_AND_SEND_URL = BASE_URL + '/create-and-send/'
     EXPERIMENTS_URL = BASE_URL + '/experiments/'
