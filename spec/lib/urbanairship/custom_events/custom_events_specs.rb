@@ -7,11 +7,6 @@ describe Urbanairship::CustomEvents::CustomEvent do
   UA = Urbanairship
   let(:airship) { UA::Client.new(key: '123', secret: 'abc') }
 
-  create_custom_events_response = {
-    "ok": "true",
-    "operation_id": "feeb22bc-5d4f-4865-bd64-0daf87d1babd"
-  }
-
   describe '#create' do
     subject do
       subject_instance.events = [custom_event]
@@ -64,6 +59,29 @@ describe Urbanairship::CustomEvents::CustomEvent do
     let(:user) { UA.custom_events_user(named_user_id: 'Gordon Shumway') }
     let(:value) { 12.3 }
 
+    let(:ua_http_response) do
+      {
+        "body" => {
+          "ok" => "true",
+          "operation_id" => operation_id
+        },
+        "code" => "200",
+        "headers" => {
+          "content_type" => "application/vnd.urbanairship+json;version=3",
+          "data_attribute" => "named_user",
+          "cache_control" => "max-age=0",
+          "expires" => "Fri, 21 Oct 2016 17:52:29 GMT",
+          "last_modified" => "Fri, 21 Oct 2016 17:52:29 GMT",
+          "vary" => "Accept-Encoding, User-Agent",
+          "content_encoding" => "gzip",
+          "content_length" => "802",
+          "date" => "Fri, 21 Oct 2016 17:52:29 GMT",
+          "connection" => "keep-alive"
+        }
+      }
+    end
+    let(:operation_id) { "feeb22bc-5d4f-4865-bd64-0daf87d1babd" }
+
     it 'returns the expected response' do
       expect(airship)
         .to receive(:send_request)
@@ -73,9 +91,11 @@ describe Urbanairship::CustomEvents::CustomEvent do
           url: UA.custom_events_url,
           content_type: 'application/json'
         )
-        .and_return(create_custom_events_response)
+        .and_return(ua_http_response)
 
-      expect(subject).to eq(create_custom_events_response)
+      expect(subject.status_code).to eq('200')
+      expect(subject.ok).to eq('true')
+      expect(subject.operation_id).to eq(operation_id)
     end
 
     context 'with invalid name' do
