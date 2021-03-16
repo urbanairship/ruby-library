@@ -64,7 +64,7 @@ module Urbanairship
 
         resp = @client.send_request(
           method: 'GET',
-          url: DEVICE_TOKEN_URL + token
+          url: device_token_url(token)
         )
         logger.info("Looking up info on device token #{token}")
         resp
@@ -77,7 +77,7 @@ module Urbanairship
 
       def initialize(client: required('client'))
         super(client: client)
-        @next_page = DEVICE_TOKEN_URL
+        @next_page = device_token_url
         @data_attribute = 'device_tokens'
       end
     end
