@@ -1,3 +1,4 @@
+require 'urbanairship/custom_events/payload'
 require 'urbanairship/push/audience'
 require 'urbanairship/push/payload'
 require 'urbanairship/push/schedule'
@@ -31,10 +32,13 @@ require 'urbanairship/ab_tests/experiment'
 require 'urbanairship/ab_tests/ab_test'
 
 module Urbanairship
+  extend Urbanairship::CustomEvents::Payload
+  extend Urbanairship::CustomEvents
   extend Urbanairship::Push::Audience
   extend Urbanairship::Push::Payload
   extend Urbanairship::Push::Schedule
   extend Urbanairship::Push
+  include Urbanairship::CustomEvents
   include Urbanairship::Devices
   include Urbanairship::Reports
   include Urbanairship::Push
