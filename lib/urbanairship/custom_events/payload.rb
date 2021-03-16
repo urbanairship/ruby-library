@@ -64,7 +64,7 @@ module Urbanairship
       def format_timestamp(timestamp)
         return timestamp if timestamp.is_a?(String)
 
-        timestamp.strftime('%Y-%m-%dT%H:%M:%S.%L%z')
+        timestamp.strftime('%Y-%m-%dT%H:%M:%S')
       end
 
 

@@ -39,7 +39,7 @@ module Urbanairship
       def initialize(body: nil, code: nil)
         @payload = (body.nil? || body.empty?) ? {} : body
         @ok = payload['ok']
-        @operation_id = payload['operation_id']
+        @operation_id = payload['operationId']
         @status_code = code
       end
 

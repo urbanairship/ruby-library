@@ -51,7 +51,7 @@ describe Urbanairship::CustomEvents::CustomEvent do
           transaction: 'd768f61f-73ba-495f-9e16-b3b9c3b598b7',
           value: value
         },
-        occurred: occurred.strftime('%Y-%m-%dT%H:%M:%S.%L%z'),
+        occurred: occurred.strftime('%Y-%m-%dT%H:%M:%S'),
         user: {
           named_user_id: 'Gordon Shumway'
         }
@@ -65,8 +65,8 @@ describe Urbanairship::CustomEvents::CustomEvent do
     let(:ua_http_response) do
       {
         "body" => {
-          "ok" => "true",
-          "operation_id" => operation_id
+          "ok" => true,
+          "operationId" => operation_id
         },
         "code" => "200",
         "headers" => {
@@ -89,15 +89,16 @@ describe Urbanairship::CustomEvents::CustomEvent do
       expect(client)
         .to receive(:send_request)
         .with(
-          method: 'POST',
+          auth_type: :bearer,
           body: JSON.dump(expected_payload),
-          url: UA.custom_events_url,
-          content_type: 'application/json'
+          content_type: 'application/json',
+          method: 'POST',
+          url: UA.custom_events_url
         )
         .and_return(ua_http_response)
 
       expect(subject.status_code).to eq('200')
-      expect(subject.ok).to eq('true')
+      expect(subject.ok).to eq(true)
       expect(subject.operation_id).to eq(operation_id)
     end
 
