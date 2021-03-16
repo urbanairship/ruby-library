@@ -22,7 +22,7 @@ module Urbanairship
         response = @client.send_request(
           method: 'POST',
           body: JSON.dump(payload),
-          url: LISTS_URL,
+          url: lists_url,
           content_type: 'application/json'
         )
         logger.info("Created static list for #{@name}")
@@ -35,7 +35,7 @@ module Urbanairship
           response = @client.send_request(
               method: 'PUT',
               body: csv_file,
-              url: LISTS_URL + @name + '/csv/',
+              url: lists_url(@name + '/csv/'),
               content_type: 'text/csv',
               encoding: gzip
           )
@@ -43,7 +43,7 @@ module Urbanairship
           response = @client.send_request(
               method: 'PUT',
               body: csv_file,
-              url: LISTS_URL + @name + '/csv/',
+              url: lists_url(@name + '/csv/'),
               content_type: 'text/csv'
           )
         end
@@ -61,7 +61,7 @@ module Urbanairship
         response = @client.send_request(
           method: 'PUT',
           body: JSON.dump(payload),
-          url: LISTS_URL + @name,
+          url: lists_url(@name),
           content_type: 'application/json'
         )
         logger.info("Updating the metadata for list #{@name}")
@@ -72,7 +72,7 @@ module Urbanairship
         fail ArgumentError, 'Name must be set' if name.nil?
         response = @client.send_request(
           method: 'GET',
-          url: LISTS_URL + @name
+          url: lists_url(@name)
         )
         logger.info("Retrieving info for list #{@name}")
         response
@@ -82,7 +82,7 @@ module Urbanairship
         fail ArgumentError, 'Name must be set' if name.nil?
         response = @client.send_request(
           method: 'DELETE',
-          url: LISTS_URL + @name
+          url: lists_url(@name)
         )
         logger.info("Deleted list #{@name}")
         response
@@ -92,7 +92,7 @@ module Urbanairship
     class StaticLists < Urbanairship::Common::PageIterator
       def initialize(client: required('client'))
         super(client: client)
-        @next_page = LISTS_URL
+        @next_page = lists_url
         @data_attribute = 'lists'
       end
     end
