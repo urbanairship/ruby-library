@@ -5,7 +5,10 @@ require 'urbanairship/custom_events/payload'
 
 describe Urbanairship::CustomEvents::CustomEvent do
   UA = Urbanairship
-  let(:airship) { UA::Client.new(key: '123', secret: 'abc') }
+  let(:key) { '11111' }
+  let(:secret) { '22222' }
+  let(:token) { '33333' }
+  let(:client) { UA::Client.new(key: key, secret: secret, token: token) }
 
   describe '#create' do
     subject do
@@ -13,7 +16,7 @@ describe Urbanairship::CustomEvents::CustomEvent do
       subject_instance.create
     end
 
-    let(:subject_instance) { described_class.new(client: airship) }
+    let(:subject_instance) { described_class.new(client: client) }
     let(:custom_event) do
       UA.custom_events(
         body: UA.custom_events_body(
@@ -83,7 +86,7 @@ describe Urbanairship::CustomEvents::CustomEvent do
     let(:operation_id) { "feeb22bc-5d4f-4865-bd64-0daf87d1babd" }
 
     it 'returns the expected response' do
-      expect(airship)
+      expect(client)
         .to receive(:send_request)
         .with(
           method: 'POST',

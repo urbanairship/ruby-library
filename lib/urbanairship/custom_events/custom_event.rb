@@ -19,10 +19,11 @@ module Urbanairship
         fail ArgumentError, 'events must be an array of custom events' unless events.is_a?(Array)
 
         response = @client.send_request(
-          method: 'POST',
+          auth_type: :bearer,
           body: JSON.dump(events),
-          url: custom_events_url,
-          content_type: 'application/json'
+          content_type: 'application/json',
+          method: 'POST',
+          url: custom_events_url
         )
         cer = CustomEventResponse.new(body: response['body'], code: response['code'])
         logger.info { cer.format }
