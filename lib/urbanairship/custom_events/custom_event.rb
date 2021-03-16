@@ -7,6 +7,7 @@ module Urbanairship
   module CustomEvents
     class CustomEvent
       include Urbanairship::Common
+      include Urbanairship::Loggable
 
       attr_accessor :events
 
@@ -23,7 +24,10 @@ module Urbanairship
           url: custom_events_url,
           content_type: 'application/json'
         )
-        CustomEventResponse.new(body: response['body'], code: response['code'])
+        cer = CustomEventResponse.new(body: response['body'], code: response['code'])
+        logger.info { cer.format }
+
+        cer
       end
     end
 
@@ -36,6 +40,19 @@ module Urbanairship
         @ok = payload['ok']
         @operation_id = payload['operation_id']
         @status_code = code
+      end
+
+      # String Formatting of the CustomEventResponse
+      #
+      # @return [Object] String Formatted CustomEventResponse
+      def format
+        "Received [#{status_code}] response code.\nBody:\n#{formatted_body}"
+      end
+
+      def formatted_body
+        payload
+          .map { |key, value| "#{key}:\t#{value.to_s || 'None'}" }
+          .join("\n")
       end
     end
   end
