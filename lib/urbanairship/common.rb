@@ -20,10 +20,6 @@ module Urbanairship
       url_for("/create-and-send/#{path}")
     end
 
-    def open_channel_url(path='')
-      channel_url("/open/#{path}")
-    end
-
     def device_token_url(path='')
       url_for("/device_tokens/#{path}")
     end
@@ -42,6 +38,10 @@ module Urbanairship
 
     def named_users_url(path='')
       url_for("/named_users/#{path}")
+    end
+
+    def open_channel_url(path='')
+      channel_url("/open/#{path}")
     end
 
     def pipelines_url(path='')
