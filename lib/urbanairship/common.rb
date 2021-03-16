@@ -5,7 +5,6 @@ module Urbanairship
   # Features mixed in to all classes
   module Common
     BASE_URL = 'https://go.urbanairship.com/api'
-    EXPERIMENTS_URL = BASE_URL + '/experiments/'
 
     def url_for(path)
       "https://#{Urbanairship.configuration.server}/api#{path}"
@@ -29,6 +28,10 @@ module Urbanairship
 
     def device_token_url(path='')
       url_for("/device_tokens/#{path}")
+    end
+
+    def experiments_url(path='')
+      url_for("/experiments/#{path}")
     end
 
     def lists_url(path='')
