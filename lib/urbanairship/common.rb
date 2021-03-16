@@ -5,7 +5,6 @@ module Urbanairship
   # Features mixed in to all classes
   module Common
     BASE_URL = 'https://go.urbanairship.com/api'
-    CREATE_AND_SEND_URL = BASE_URL + '/create-and-send/'
     EXPERIMENTS_URL = BASE_URL + '/experiments/'
 
     def url_for(path)
@@ -18,6 +17,10 @@ module Urbanairship
 
     def channel_url(path='')
       url_for("/channels/#{path}")
+    end
+
+    def create_and_send_url(path='')
+      url_for("/create-and-send/#{path}")
     end
 
     def open_channel_url(path='')
