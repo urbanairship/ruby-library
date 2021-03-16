@@ -22,7 +22,7 @@ module Urbanairship
                 response = @client.send_request(
                     method: 'POST',
                     body: JSON.dump(pipeline_object),
-                    url: PIPELINES_URL,
+                    url: pipelines_url,
                     content_type: 'application/json'
                 )
                 logger.info("Created Automation")
@@ -32,7 +32,7 @@ module Urbanairship
             def list_automations
                 response = @client.send_request(
                     method: 'GET',
-                    url: PIPELINES_URL + format_url_with_params
+                    url: pipelines_url(format_url_with_params)
                 )
                 logger.info("Looking up automations for project")
                 response
@@ -41,7 +41,7 @@ module Urbanairship
             def list_deleted_automations
                 response = @client.send_request(
                     method: 'GET',
-                    url: PIPELINES_URL + 'deleted' + format_url_with_params
+                    url: pipelines_url('deleted' + format_url_with_params)
                 )
                 logger.info("Looking up deleted automations for project")
                 response
@@ -51,18 +51,18 @@ module Urbanairship
                 response = @client.send_request(
                     method: 'POST',
                     body: JSON.dump(pipeline_object),
-                    url: PIPELINES_URL + 'validate',
+                    url: pipelines_url('validate'),
                     content_type: 'application/json'
                 )
                 logger.info("Validating Automation")
                 response
             end
 
-            def lookup_automation 
+            def lookup_automation
                 fail ArgumentError, 'pipeline_id must be set to lookup individual automation' if @pipeline_id.nil?
                 response = @client.send_request(
                     method: 'GET',
-                    url: PIPELINES_URL + pipeline_id
+                    url: pipelines_url(pipeline_id)
                 )
                 logger.info("Looking up automation with id #{pipeline_id}")
                 response
@@ -70,22 +70,22 @@ module Urbanairship
 
             def update_automation
                 fail ArgumentError, 'pipeline_id must be set to update individual automation' if @pipeline_id.nil?
-                
+
                 response = @client.send_request(
                     method: 'PUT',
                     body: JSON.dump(pipeline_object),
-                    url: PIPELINES_URL + pipeline_id,
+                    url: pipelines_url(pipeline_id),
                     content_type: 'application/json'
                 )
                 logger.info("Validating Automation")
                 response
             end
 
-            def delete_automation 
+            def delete_automation
                 fail ArgumentError, 'pipeline_id must be set to delete individual automation' if @pipeline_id.nil?
                 response = @client.send_request(
                     method: 'DELETE',
-                    url: PIPELINES_URL + pipeline_id
+                    url: pipelines_url(pipeline_id)
                 )
                 logger.info("Deleting automation with id #{pipeline_id}")
                 response

@@ -5,7 +5,6 @@ module Urbanairship
   # Features mixed in to all classes
   module Common
     BASE_URL = 'https://go.urbanairship.com/api'
-    PIPELINES_URL = BASE_URL + '/pipelines/'
     FEEDS_URL = BASE_URL + '/feeds/'
     LOCATION_URL = BASE_URL + '/location/'
     CREATE_AND_SEND_URL = BASE_URL + '/create-and-send/'
@@ -37,6 +36,10 @@ module Urbanairship
 
     def named_users_url(path='')
       url_for("/named_users/#{path}")
+    end
+
+    def pipelines_url(path='')
+      url_for("/pipelines/#{path}")
     end
 
     def push_url(path='')
