@@ -10,7 +10,7 @@ module Urbanairship
     class Push
       attr_writer :client
 
-      attr_accessor :device_types, 
+      attr_accessor :device_types,
                     :audience,
                     :notification,
                     :options,
@@ -52,7 +52,7 @@ module Urbanairship
         response = @client.send_request(
           method: 'POST',
           body: JSON.dump(payload),
-          url: PUSH_URL,
+          url: push_url,
           content_type: 'application/json'
         )
         pr = PushResponse.new(http_response_body: response['body'], http_response_code: response['code'].to_s)
