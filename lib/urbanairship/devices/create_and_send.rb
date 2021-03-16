@@ -44,7 +44,7 @@ module Urbanairship
           campaign_object = {'categories': campaigns}
           full_payload[:campaigns] = campaign_object
         end
-        
+
         full_payload
       end
 
@@ -84,7 +84,7 @@ module Urbanairship
         response = @client.send_request(
           method: 'POST',
           body: JSON.dump(scheduled_payload),
-          url: SCHEDULES_URL + 'create-and-send',
+          url: schedules_url('create-and-send'),
           content_type: 'application/json'
         )
         logger.info("Scheduling create and send operation with name #{@name}")

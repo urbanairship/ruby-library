@@ -5,7 +5,6 @@ module Urbanairship
   # Features mixed in to all classes
   module Common
     BASE_URL = 'https://go.urbanairship.com/api'
-    SCHEDULES_URL = BASE_URL + '/schedules/'
     SEGMENTS_URL = BASE_URL + '/segments/'
     NAMED_USER_URL = BASE_URL + '/named_users/'
     REPORTS_URL = BASE_URL + '/reports/'
@@ -38,6 +37,10 @@ module Urbanairship
 
     def push_url(path='')
       url_for("/push/#{path}")
+    end
+
+    def schedules_url(path='')
+      url_for("/schedules/#{path}")
     end
 
     # Helper method for required keyword args in Ruby 2.0 that is compatible with 2.1+
