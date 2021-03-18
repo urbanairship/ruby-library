@@ -1,4 +1,10 @@
 --------------------
+6.0.0
+--------------------
+- Creates custom base url, and refactors urls within classes
+- Adds support for sending custom events
+
+--------------------
 5.9.0
 --------------------
 - Adds support for bearer token auth
