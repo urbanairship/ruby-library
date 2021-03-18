@@ -29,9 +29,10 @@ module Urbanairship
       # @param [Object] content_type Content-Type
       # @param [Object] encoding Encoding
       # @param [Symbol] auth_type (:basic|:bearer)
+      # @param [Object] path Request path
       # @return [Object] Push Response
-      def send_request(method: required('method'), url: required('url'), body: nil,
-                       content_type: nil, encoding: nil, auth_type: :basic)
+      def send_request(method: required('method'), url: nil, body: nil,
+                       content_type: nil, encoding: nil, auth_type: :basic, path: nil)
         req_type = case method
           when 'GET'
             :get
@@ -49,12 +50,14 @@ module Urbanairship
         headers['Accept'] = 'application/vnd.urbanairship+json; version=3'
         headers['Content-type'] = content_type unless content_type.nil?
         headers['Content-Encoding'] = encoding unless encoding.nil?
-        
+
         if auth_type == :bearer
           raise ArgumentError.new('token must be provided as argument if auth_type=bearer') if @token.nil?
           headers['X-UA-Appkey'] = @key
           headers['Authorization'] = "Bearer #{@token}"
         end
+
+        url = "https://#{Urbanairship.configuration.server}/api#{path}" unless path.nil?
 
         debug = "Making #{method} request to #{url}.\n"+ "\tHeaders:\n"
         debug += "\t\tcontent-type: #{content_type}\n" unless content_type.nil?
