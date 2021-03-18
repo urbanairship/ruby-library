@@ -2,7 +2,7 @@
 6.0.0
 --------------------
 - Creates custom base url, and refactors urls within classes
-- Adds custom events
+- Adds support for sending custom events
 
 --------------------
 5.9.0
