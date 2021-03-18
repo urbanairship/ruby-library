@@ -82,7 +82,7 @@ describe Urbanairship::Automations do
         describe '#format_url_with_params' do
             it 'formats a url with all the queries' do
                 automation = UA::Automation.new(client: airship)
-                automation.enabled = TRUE
+                automation.enabled = true
                 automation.offset = 5
                 automation.limit = 5
                 result = automation.format_url_with_params
@@ -91,7 +91,7 @@ describe Urbanairship::Automations do
 
             it 'formats a url with two queries' do
                 automation = UA::Automation.new(client: airship)
-                automation.enabled = TRUE
+                automation.enabled = true
                 automation.limit = 5
                 result = automation.format_url_with_params
                 expect(result).to eq('?limit=5&enabled=true')
@@ -99,13 +99,13 @@ describe Urbanairship::Automations do
 
             it 'formats a url with one query' do
                 automation = UA::Automation.new(client: airship)
-                automation.enabled = TRUE
+                automation.enabled = true
                 result = automation.format_url_with_params
                 expect(result).to eq('?enabled=true')
             end
         end
 
-        describe '#list_automations' do 
+        describe '#list_automations' do
             it 'returns an 200 code with a properly formatted GET request' do
                 automation = UA::Automation.new(client: airship)
 
@@ -116,15 +116,15 @@ describe Urbanairship::Automations do
         end
 
         describe '#create_automation' do
-            it 'returns a 201 code with a properly formatted payload' do 
+            it 'returns a 201 code with a properly formatted payload' do
                 automation = UA::Automation.new(client: airship)
 
                 allow(airship).to receive(:send_request).and_return(create_automation_response)
                 actual_resp = automation.create_automation
                 expect(actual_resp).to eq(create_automation_response)
-            end 
+            end
 
-            it 'returns a payload as expected when using the addition of a pipeline object' do 
+            it 'returns a payload as expected when using the addition of a pipeline object' do
                 expected_pipeline_payload = {
                     "immediate_trigger": {
                         "tag_added": {
@@ -139,7 +139,7 @@ describe Urbanairship::Automations do
                             "device_types": "all",
                             "notification": {
                                 "alert": "Hello new customer!"
-                                
+
                                 }
                             }
                         }
@@ -162,13 +162,13 @@ describe Urbanairship::Automations do
                     }
                 }
                 automation = UA::Automation.new(client: airship)
-                automation.pipeline_object = pipeline.payload 
+                automation.pipeline_object = pipeline.payload
                 expect(automation.pipeline_object).to eq(expected_pipeline_payload)
             end
         end
 
         describe '#list_deleted_automations' do
-            it 'returns a list of deleted pipelines' do 
+            it 'returns a list of deleted pipelines' do
                 automation = UA::Automation.new(client: airship)
 
                 allow(airship).to receive(:send_request).and_return(list_deleted_automations_response)
@@ -177,8 +177,8 @@ describe Urbanairship::Automations do
             end
         end
 
-        describe '#validate_automation' do 
-            it 'validates an automation and retunrs a 200 HTTP status code' do 
+        describe '#validate_automation' do
+            it 'validates an automation and retunrs a 200 HTTP status code' do
                 automation = UA::Automation.new(client: airship)
 
                 allow(airship).to receive(:send_request).and_return(validated_automation_response)
@@ -203,10 +203,10 @@ describe Urbanairship::Automations do
                 allow(airship).to receive(:send_request).and_return(list_deleted_automations_response)
                 expect{automation.lookup_automation}.to raise_error(ArgumentError)
             end
-        end 
+        end
 
-        describe '#delete_automation' do 
-            it 'deletes the proper automation given pipeline_id' do 
+        describe '#delete_automation' do
+            it 'deletes the proper automation given pipeline_id' do
                 automation = UA::Automation.new(client: airship)
                 automation.pipeline_id = '86ad9239-373d-d0a5-d5d8-04fed18f79bc'
 

@@ -3,15 +3,15 @@ require 'urbanairship'
 
 describe Urbanairship::Common do
   it 'has a PUSH_URL' do
-    expect(Urbanairship::Common::PUSH_URL).not_to be nil
+    expect(Urbanairship.push_url).not_to be nil
   end
 
   it 'has a SEGMENTS_URL' do
-    expect(Urbanairship::Common::SEGMENTS_URL).not_to be nil
+    expect(Urbanairship.segments_url).not_to be nil
   end
 
   it 'has a CHANNEL_URL' do
-    expect(Urbanairship::Common::CHANNEL_URL).not_to be nil
+    expect(Urbanairship.channel_url).not_to be nil
   end
 
   describe Urbanairship::Common::PageIterator do

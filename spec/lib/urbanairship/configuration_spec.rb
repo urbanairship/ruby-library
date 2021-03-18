@@ -5,6 +5,18 @@ require 'urbanairship/configuration'
 describe Urbanairship::Configuration do
   subject(:config) { described_class.new }
 
+  describe '#base_url' do
+    let(:default_server) { 'go.urbanairship.com' }
+
+    it 'initializes with the original value "go.urbanairship.com"' do
+      expect(config.server).to eq(default_server)
+    end
+
+    it 'sets the lib logger as the custom logger' do
+      expect { config.server = 'foo' }.to change(config, :server).from(default_server).to('foo')
+    end
+  end
+
   describe '#custom_logger' do
     it 'initializes with the original value "nil"' do
       expect(config.custom_logger).to be_nil

@@ -35,7 +35,7 @@ module Urbanairship
         fail ArgumentError,
            'push_id cannot be nil' if push_id.nil?
 
-        url = REPORTS_URL + 'responses/' + push_id
+        url = reports_url('responses/' + push_id)
         response = @client.send_request(method: 'GET', url: url)
         logger.info("Retrieved info on push_id: #{push_id}")
         response
@@ -60,7 +60,7 @@ module Urbanairship
           fail ArgumentError,
                'start_date and end_date must be valid date strings'
         end
-        url = REPORTS_URL + 'responses/list?start=' + start_parsed.iso8601 + '&end=' + end_parsed.iso8601
+        url = reports_url('responses/list?start=' + start_parsed.iso8601 + '&end=' + end_parsed.iso8601)
         url += '&limit' + limit.to_s unless limit.nil?
         url += '&push_id_start&' + push_id_start unless push_id_start.nil?
         @next_page = url
@@ -87,7 +87,7 @@ module Urbanairship
         end
         response = @client.send_request(
           method: 'GET',
-          url: REPORTS_URL + 'devices/?date=' + date_parsed.iso8601
+          url: reports_url('devices/?date=' + date_parsed.iso8601)
         )
         logger.info("Retrieved device report for date #{date}")
         response
@@ -99,7 +99,7 @@ module Urbanairship
                      end_date: required('end_date'), precision: required('precision'))
         super(client: client)
         url = Helper.new.get_url(start_date, end_date, precision)
-        @next_page = REPORTS_URL + 'optins/' + url
+        @next_page = reports_url('optins/' + url)
         @data_attribute = 'optins'
       end
     end
@@ -109,7 +109,7 @@ module Urbanairship
                      end_date: required('end_date'), precision: required('precision'))
         super(client: client)
         url = Helper.new.get_url(start_date, end_date, precision)
-        @next_page = REPORTS_URL + 'optouts/' + url
+        @next_page = reports_url('optouts/' + url)
         @data_attribute = 'optouts'
       end
     end
@@ -119,7 +119,7 @@ module Urbanairship
                      end_date: required('end_date'), precision: required('precision'))
         super(client: client)
         url = Helper.new.get_url(start_date, end_date, precision)
-        @next_page = REPORTS_URL + 'sends/' + url
+        @next_page = reports_url('sends/' + url)
         @data_attribute = 'sends'
       end
     end
@@ -129,7 +129,7 @@ module Urbanairship
                      end_date: required('end_date'), precision: required('precision'))
         super(client: client)
         url = Helper.new.get_url(start_date, end_date, precision)
-        @next_page = REPORTS_URL + 'responses/' + url
+        @next_page = reports_url('responses/' + url)
         @data_attribute = 'responses'
       end
     end
@@ -139,7 +139,7 @@ module Urbanairship
                      end_date: required('end_date'), precision: required('precision'))
         super(client: client)
         url = Helper.new.get_url(start_date, end_date, precision)
-        @next_page = REPORTS_URL + 'opens/' + url
+        @next_page = reports_url('opens/' + url)
         @data_attribute = 'opens'
       end
     end
@@ -149,7 +149,7 @@ module Urbanairship
                      end_date: required('end_date'), precision: required('precision'))
         super(client: client)
         url = Helper.new.get_url(start_date, end_date, precision)
-        @next_page = REPORTS_URL + 'timeinapp/' + url
+        @next_page = reports_url('timeinapp/' + url)
         @data_attribute = 'timeinapp'
       end
     end

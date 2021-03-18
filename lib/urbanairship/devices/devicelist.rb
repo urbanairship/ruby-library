@@ -17,7 +17,7 @@ module Urbanairship
       def lookup(uuid: required('uuid'))
         response = @client.send_request(
           method: 'GET',
-          url: CHANNEL_URL + uuid
+          url: channel_url(uuid)
         )
         logger.info("Retrieved channel information for #{uuid}")
         response['body']['channel']
@@ -36,7 +36,7 @@ module Urbanairship
         response = @client.send_request(
           method: 'POST',
           body: JSON.dump(payload),
-          url: CHANNEL_URL + 'attributes',
+          url: channel_url('attributes'),
           content_type: 'application/json'
         )
         response
@@ -46,7 +46,7 @@ module Urbanairship
     class ChannelList < Urbanairship::Common::PageIterator
       def initialize(client: required('client'))
         super(client: client)
-        @next_page = CHANNEL_URL
+        @next_page = channel_url
         @data_attribute = 'channels'
       end
     end
@@ -64,7 +64,7 @@ module Urbanairship
 
         resp = @client.send_request(
           method: 'GET',
-          url: DEVICE_TOKEN_URL + token
+          url: device_token_url(token)
         )
         logger.info("Looking up info on device token #{token}")
         resp
@@ -77,7 +77,7 @@ module Urbanairship
 
       def initialize(client: required('client'))
         super(client: client)
-        @next_page = DEVICE_TOKEN_URL
+        @next_page = device_token_url
         @data_attribute = 'device_tokens'
       end
     end
@@ -95,7 +95,7 @@ module Urbanairship
 
         resp = @client.send_request(
           method: 'GET',
-          url: APID_URL + apid
+          url: apid_url(apid)
         )
         logger.info("Retrieved info on apid #{apid}")
         resp
@@ -105,7 +105,7 @@ module Urbanairship
     class APIDList < Urbanairship::Common::PageIterator
       def initialize(client: required('client'))
         super(client: client)
-        @next_page = APID_URL
+        @next_page = apid_url
         @data_attribute = 'apids'
       end
     end

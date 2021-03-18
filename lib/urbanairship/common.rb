@@ -4,23 +4,65 @@ require 'urbanairship/loggable'
 module Urbanairship
   # Features mixed in to all classes
   module Common
-    SERVER = 'go.urbanairship.com'
-    BASE_URL = 'https://go.urbanairship.com/api'
-    CHANNEL_URL = BASE_URL + '/channels/'
-    OPEN_CHANNEL_URL = BASE_URL + '/channels/open/'
-    DEVICE_TOKEN_URL = BASE_URL + '/device_tokens/'
-    APID_URL = BASE_URL + '/apids/'
-    PUSH_URL = BASE_URL + '/push/'
-    SCHEDULES_URL = BASE_URL + '/schedules/'
-    SEGMENTS_URL = BASE_URL + '/segments/'
-    NAMED_USER_URL = BASE_URL + '/named_users/'
-    REPORTS_URL = BASE_URL + '/reports/'
-    LISTS_URL = BASE_URL + '/lists/'
-    PIPELINES_URL = BASE_URL + '/pipelines/'
-    FEEDS_URL = BASE_URL + '/feeds/'
-    LOCATION_URL = BASE_URL + '/location/'
-    CREATE_AND_SEND_URL = BASE_URL + '/create-and-send/'
-    EXPERIMENTS_URL = BASE_URL + '/experiments/'
+    def url_for(path)
+      "https://#{Urbanairship.configuration.server}/api#{path}"
+    end
+
+    def apid_url(path='')
+      url_for("/apids/#{path}")
+    end
+
+    def channel_url(path='')
+      url_for("/channels/#{path}")
+    end
+
+    def create_and_send_url(path='')
+      url_for("/create-and-send/#{path}")
+    end
+
+    def device_token_url(path='')
+      url_for("/device_tokens/#{path}")
+    end
+
+    def experiments_url(path='')
+      url_for("/experiments/#{path}")
+    end
+
+    def lists_url(path='')
+      url_for("/lists/#{path}")
+    end
+
+    def location_url(path='')
+      url_for("/location/#{path}")
+    end
+
+    def named_users_url(path='')
+      url_for("/named_users/#{path}")
+    end
+
+    def open_channel_url(path='')
+      channel_url("/open/#{path}")
+    end
+
+    def pipelines_url(path='')
+      url_for("/pipelines/#{path}")
+    end
+
+    def push_url(path='')
+      url_for("/push/#{path}")
+    end
+
+    def reports_url(path='')
+      url_for("/reports/#{path}")
+    end
+
+    def schedules_url(path='')
+      url_for("/schedules/#{path}")
+    end
+
+    def segments_url(path='')
+      url_for("/segments/#{path}")
+    end
 
     # Helper method for required keyword args in Ruby 2.0 that is compatible with 2.1+
     # @example

@@ -10,7 +10,7 @@ module Urbanairship
     class Push
       attr_writer :client
 
-      attr_accessor :device_types, 
+      attr_accessor :device_types,
                     :audience,
                     :notification,
                     :options,
@@ -52,7 +52,7 @@ module Urbanairship
         response = @client.send_request(
           method: 'POST',
           body: JSON.dump(payload),
-          url: PUSH_URL,
+          url: push_url,
           content_type: 'application/json'
         )
         pr = PushResponse.new(http_response_body: response['body'], http_response_code: response['code'].to_s)
@@ -93,7 +93,7 @@ module Urbanairship
         response = @client.send_request(
           method: 'POST',
           body: JSON.dump(payload),
-          url: SCHEDULES_URL,
+          url: schedules_url,
           content_type: 'application/json'
         )
         pr = PushResponse.new(http_response_body: response['body'], http_response_code: response['code'].to_s)
@@ -170,7 +170,7 @@ module Urbanairship
            'schedule_id must be a string' unless schedule_id.is_a? String
         resp = @client.send_request(
           method: 'GET',
-          url: SCHEDULES_URL + schedule_id
+          url: schedules_url(schedule_id)
         )
         logger.info("Retrieved info for schedule_id #{schedule_id}")
         resp
@@ -181,7 +181,7 @@ module Urbanairship
     class ScheduledPushList < Urbanairship::Common::PageIterator
       def initialize(client: required('client'))
         super(client: client)
-        @next_page = SCHEDULES_URL
+        @next_page = schedules_url
         @data_attribute = 'schedules'
       end
     end

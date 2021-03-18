@@ -58,6 +58,7 @@ In your app initialization, you can do something like the following:
 
     >>> require 'urbanairship'
     >>> Urbanairship.configure do |config|
+    >>>   config.server = 'go.airship.eu'
     >>>   config.log_path = '/path/to/your/logfile'
     >>>   config.log_level = Logger::WARN
     >>>   config.timeout = 60

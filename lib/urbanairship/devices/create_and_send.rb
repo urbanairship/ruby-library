@@ -44,7 +44,7 @@ module Urbanairship
           campaign_object = {'categories': campaigns}
           full_payload[:campaigns] = campaign_object
         end
-        
+
         full_payload
       end
 
@@ -52,7 +52,7 @@ module Urbanairship
         response = @client.send_request(
           method: 'POST',
           body: JSON.dump(payload),
-          url: CREATE_AND_SEND_URL,
+          url: create_and_send_url,
           content_type: 'application/json'
         )
         logger.info("Running create and send for addresses #{@addresses}")
@@ -63,7 +63,7 @@ module Urbanairship
         response = @client.send_request(
           method: 'POST',
           body: JSON.dump(payload),
-          url: CREATE_AND_SEND_URL + 'validate',
+          url: create_and_send_url('validate'),
           content_type: 'application/json'
         )
         logger.info("Validating payload for create and send")
@@ -84,7 +84,7 @@ module Urbanairship
         response = @client.send_request(
           method: 'POST',
           body: JSON.dump(scheduled_payload),
-          url: SCHEDULES_URL + 'create-and-send',
+          url: schedules_url('create-and-send'),
           content_type: 'application/json'
         )
         logger.info("Scheduling create and send operation with name #{@name}")
