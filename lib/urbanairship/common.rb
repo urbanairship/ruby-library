@@ -162,6 +162,7 @@ module Urbanairship
       def initialize(client: required('client'))
         @client = client
         @next_page = nil
+        @next_page_path = nil
         @data_list = nil
         @data_attribute = nil
         @count = 0
@@ -169,13 +170,16 @@ module Urbanairship
 
       def load_page
         logger.info("Retrieving data from: #{@next_page}")
-        response = @client.send_request({
+        params = {
             method: 'GET',
             url: @next_page,
-          })
+            path: @next_page_path
+          }.select { |k, v| !v.nil? }
+        response = @client.send_request(params)
 
         @data_list = get_new_data(response)
         @next_page = get_next_page(response)
+        @next_page_path = nil
       end
 
       def extract_next_page(response)
@@ -196,12 +200,15 @@ module Urbanairship
         potential_next_page = extract_next_page(response)
         return nil if potential_next_page.nil?
 
+        # if potential_next_page is the same as the current page, we have
+        # repeats in the response and we don't want to check the next pages
         return potential_next_page if @next_page && potential_next_page != @next_page
+        return potential_next_page if @next_page_path && !potential_next_page.end_with?(@next_page_path)
         nil
       end
 
       def each
-        while @next_page
+        while @next_page || @next_page_path
           load_page
 
           @data_list.each do |value|

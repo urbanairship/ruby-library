@@ -91,5 +91,29 @@ describe Urbanairship::Common do
         expect(my_iterator.count).to eq(3)
       end
     end
+
+    context 'with @next_page_path defined' do
+      let(:my_iterator) do
+        my_iterator_class.new(client: client, data_attr: data_attr, next_page_path: first_path)
+      end
+      let(:first_path) { "/page-0" }
+
+      it 'iterates through pages' do
+        allow(client)
+          .to receive(:send_request)
+            .with({ method: 'GET', path: first_path })
+              .and_return(first_response)
+        allow(client)
+          .to receive(:send_request)
+            .with({ method: 'GET', url: second_url })
+              .and_return(second_response)
+
+        finished_list = []
+        my_iterator.each { |value| finished_list.push(value) }
+
+        expect(finished_list).to eq([data_attr_1, data_attr_2, data_attr_3])
+        expect(my_iterator.count).to eq(3)
+      end
+    end
   end
 end
