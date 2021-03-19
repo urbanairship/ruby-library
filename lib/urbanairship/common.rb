@@ -16,8 +16,8 @@ module Urbanairship
       "/channels/#{path}"
     end
 
-    def create_and_send_url(path='')
-      url_for("/create-and-send/#{path}")
+    def create_and_send_path(path='')
+      "/create-and-send/#{path}"
     end
 
     def custom_events_url(path='')
