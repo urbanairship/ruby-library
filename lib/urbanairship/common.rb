@@ -48,8 +48,8 @@ module Urbanairship
       "/open/#{path}"
     end
 
-    def pipelines_url(path='')
-      url_for("/pipelines/#{path}")
+    def pipelines_path(path='')
+      "/pipelines/#{path}"
     end
 
     def push_url(path='')
