@@ -41,7 +41,8 @@ describe Urbanairship::Common do
     let(:second_response) do
       {
         'body' => {
-          'data_attr' => [data_attr_3]
+          'data_attr' => [data_attr_3],
+          'next_page' => third_url
         },
         'code' => 200
       }
@@ -73,6 +74,16 @@ describe Urbanairship::Common do
         my_iterator_class.new(client: client, data_attr: data_attr, next_page: first_url)
       end
       let(:first_url) { "https://#{Urbanairship.configuration.server}/api/page-0" }
+      let(:third_url) { "https://#{Urbanairship.configuration.server}/api/page-2" }
+      let(:third_response) do
+        {
+          'body' => {
+            'data_attr' => [data_attr_3],
+            'next_page' => third_url
+          },
+          'code' => 200
+        }
+      end
 
       it 'iterates through pages' do
         allow(client)
@@ -83,6 +94,10 @@ describe Urbanairship::Common do
           .to receive(:send_request)
             .with({ method: 'GET', url: second_url })
               .and_return(second_response)
+        allow(client)
+          .to receive(:send_request)
+            .with({ method: 'GET', url: third_url })
+              .and_return(third_response)
 
         finished_list = []
         my_iterator.each { |value| finished_list.push(value) }
@@ -97,6 +112,7 @@ describe Urbanairship::Common do
         my_iterator_class.new(client: client, data_attr: data_attr, next_page_path: first_path)
       end
       let(:first_path) { "/page-0" }
+      let(:third_url) { nil }
 
       it 'iterates through pages' do
         allow(client)
