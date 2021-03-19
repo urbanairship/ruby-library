@@ -36,8 +36,8 @@ module Urbanairship
       "/lists/#{path}"
     end
 
-    def location_url(path='')
-      url_for("/location/#{path}")
+    def location_path(path='')
+      "/location/#{path}"
     end
 
     def named_users_path(path='')

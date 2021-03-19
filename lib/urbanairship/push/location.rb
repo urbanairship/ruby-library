@@ -14,11 +14,11 @@ module Urbanairship
       def name_lookup(name: required('name'), type: nil)
         fail ArgumentError, 'name needs to be a string' unless name.is_a? String
         fail ArgumentError, 'type needs to be a string' unless type.nil? or type.is_a? String
-        url = location_url('?q=' + name)
-        url += '&type=' + type unless type.nil?
+        path = location_path('?q=' + name)
+        path += '&type=' + type unless type.nil?
         resp = @client.send_request(
           method: 'GET',
-          url: url
+          path: path
         )
         logger.info("Retrieved location information for #{name}")
         resp
@@ -28,11 +28,11 @@ module Urbanairship
         fail ArgumentError,
           'latitude and longitude need to be numbers' unless latitude.is_a? Numeric and longitude.is_a? Numeric
         fail ArgumentError, 'type needs to be a string' unless type.nil? or type.is_a? String
-        url = location_url(latitude.to_s + ',' + longitude.to_s)
-        url += '?type=' + type unless type.nil?
+        path = location_path(latitude.to_s + ',' + longitude.to_s)
+        path += '?type=' + type unless type.nil?
         resp = @client.send_request(
           method: 'GET',
-          url: url
+          path: path
         )
         logger.info("Retrieved location information for latitude #{latitude} and longitude #{longitude}")
         resp
@@ -45,11 +45,11 @@ module Urbanairship
            'lat1, long1, lat2, and long2 need to be numbers' unless lat1.is_a? Numeric and long2.is_a? Numeric\
            and lat2.is_a? Numeric and long2.is_a? Numeric
         fail ArgumentError, 'type needs to be a string' unless type.nil? or type.is_a? String
-        url = location_url(lat1.to_s + ',' + long1.to_s + ',' + lat2.to_s + ',' + long2.to_s)
-        url += '?type=' + type unless type.nil?
+        path = location_path(lat1.to_s + ',' + long1.to_s + ',' + lat2.to_s + ',' + long2.to_s)
+        path += '?type=' + type unless type.nil?
         resp = @client.send_request(
           method: 'GET',
-          url: url
+          path: path
         )
         logger.info("Retrieved location information for bounding box with lat1 #{lat1}, long1 #{long1}," +
           " lat2 #{lat2}, and long2 #{long2}")
@@ -58,20 +58,20 @@ module Urbanairship
 
       def alias_lookup(from_alias: required('from_alias'))
         fail ArgumentError, 'from_alias needs to be a string or an array of strings' unless from_alias.is_a? String or from_alias.is_a? Array
-        url = location_url('from-alias?')
+        path = location_path('from-alias?')
         if from_alias.is_a? Array
           from_alias.each do |a|
             fail ArgumentError, 'from_alias needs to be a string or an array of strings' unless a.is_a? String
-            url += a + '&'
+            path += a + '&'
           end
-          url = url.chop
+          path = path.chop
         else
-          url += from_alias
+          path += from_alias
         end
 
         resp = @client.send_request(
           method: 'GET',
-          url: url
+          path: path
         )
         logger.info("Retrieved location info from alias #{from_alias}")
         resp
@@ -81,10 +81,10 @@ module Urbanairship
         fail ArgumentError, 'polygon_id needs to be a string' unless polygon_id.is_a? String
         fail ArgumentError, 'zoom needs to be an integer' unless zoom.is_a? Integer
 
-        url = location_url(polygon_id + '?zoom=' + zoom.to_s)
+        path = location_path(polygon_id + '?zoom=' + zoom.to_s)
         resp = @client.send_request(
           method: 'GET',
-          url: url
+          path: path
         )
         logger.info("Retrieved location info for polygon #{polygon_id} and zoom level #{zoom}")
         resp
