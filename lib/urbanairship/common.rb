@@ -157,7 +157,7 @@ module Urbanairship
 
       def initialize(client: required('client'))
         @client = client
-        @next_page = nil
+        @next_page_url = nil
         @next_page_path = nil
         @data_list = nil
         @data_attribute = nil
@@ -165,7 +165,7 @@ module Urbanairship
       end
 
       def each
-        while @next_page || @next_page_path
+        while @next_page_url || @next_page_path
           load_page
 
           @data_list.each do |value|
@@ -182,41 +182,41 @@ module Urbanairship
       private
 
       def load_page
-        logger.info("Retrieving data from: #{@next_page}")
+        logger.info("Retrieving data from: #{@next_page_url || @next_page_path}")
         params = {
             method: 'GET',
-            url: @next_page,
+            url: @next_page_url,
             path: @next_page_path
           }.select { |k, v| !v.nil? }
         response = @client.send_request(params)
 
         @data_list = get_new_data(response)
-        @next_page = get_next_page(response)
+        @next_page_url = get_next_page_url(response)
         @next_page_path = nil
       end
 
-      def extract_next_page(response)
+      def extract_next_page_url(response)
         response['body']['next_page']
       end
 
       def get_new_data(response)
-        potential_next_page = extract_next_page(response)
+        potential_next_page_url = extract_next_page_url(response)
 
-        # if potential_next_page is the same as the current page, we have
+        # if potential_next_page_url is the same as the current page, we have
         # repeats in the response and we don't want to load them
-        return [] if potential_next_page && get_next_page(response).nil?
+        return [] if potential_next_page_url && get_next_page_url(response).nil?
 
         response['body'][@data_attribute]
       end
 
-      def get_next_page(response)
-        potential_next_page = extract_next_page(response)
-        return nil if potential_next_page.nil?
+      def get_next_page_url(response)
+        potential_next_page_url = extract_next_page_url(response)
+        return nil if potential_next_page_url.nil?
 
-        # if potential_next_page is the same as the current page, we have
+        # if potential_next_page_url is the same as the current page, we have
         # repeats in the response and we don't want to check the next pages
-        return potential_next_page if @next_page && potential_next_page != @next_page
-        return potential_next_page if @next_page_path && !potential_next_page.end_with?(@next_page_path)
+        return potential_next_page_url if @next_page_url && potential_next_page_url != @next_page_url
+        return potential_next_page_url if @next_page_path && !potential_next_page_url.end_with?(@next_page_path)
         nil
       end
     end

@@ -17,11 +17,11 @@ describe Urbanairship::Common do
   describe Urbanairship::Common::PageIterator do
     let(:my_iterator_class) do
       Class.new(Urbanairship::Common::PageIterator) do
-        def initialize(client: required('client'), data_attr:, next_page: nil, next_page_path: nil)
+        def initialize(client: required('client'), data_attr:, next_page_url: nil, next_page_path: nil)
           super(client: client)
 
           @data_attribute = data_attr
-          @next_page = next_page
+          @next_page_url = next_page_url
           @next_page_path = next_page_path
         end
       end
@@ -69,9 +69,9 @@ describe Urbanairship::Common do
       }
     end
 
-    context 'with @next_page defined' do
+    context 'with @next_page_url defined' do
       let(:my_iterator) do
-        my_iterator_class.new(client: client, data_attr: data_attr, next_page: first_url)
+        my_iterator_class.new(client: client, data_attr: data_attr, next_page_url: first_url)
       end
       let(:first_url) { "https://#{Urbanairship.configuration.server}/api/page-0" }
       let(:third_url) { "https://#{Urbanairship.configuration.server}/api/page-2" }
