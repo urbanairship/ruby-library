@@ -17,11 +17,12 @@ describe Urbanairship::Common do
   describe Urbanairship::Common::PageIterator do
     let(:my_iterator_class) do
       Class.new(Urbanairship::Common::PageIterator) do
-        def initialize(client: required('client'), data_attr:, next_page:)
+        def initialize(client: required('client'), data_attr:, next_page: nil, next_page_path: nil)
           super(client: client)
 
           @data_attribute = data_attr
           @next_page = next_page
+          @next_page_path = next_page_path
         end
       end
     end

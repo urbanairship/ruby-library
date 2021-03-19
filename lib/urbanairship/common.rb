@@ -168,29 +168,43 @@ module Urbanairship
       end
 
       def load_page
-        return false unless @next_page
-        response = @client.send_request(
-            method: 'GET',
-            url: @next_page
-        )
         logger.info("Retrieving data from: #{@next_page}")
-        check_next_page = response['body']['next_page']
-        if check_next_page != @next_page
-          @next_page = check_next_page
-        elsif check_next_page
-          # if check_page = next_page, we have repeats in the response.
-          # and we don't want to load them
-          return false
-        else
-          @next_page = nil
-        end
-        @data_list = response['body'][@data_attribute]
-        true
+        response = @client.send_request({
+            method: 'GET',
+            url: @next_page,
+          })
+
+        @data_list = get_new_data(response)
+        @next_page = get_next_page(response)
+      end
+
+      def extract_next_page(response)
+        response['body']['next_page']
+      end
+
+      def get_new_data(response)
+        potential_next_page = extract_next_page(response)
+
+        # if potential_next_page is the same as the current page, we have
+        # repeats in the response and we don't want to load them
+        return [] if potential_next_page && get_next_page(response).nil?
+
+        response['body'][@data_attribute]
+      end
+
+      def get_next_page(response)
+        potential_next_page = extract_next_page(response)
+        return nil if potential_next_page.nil?
+
+        return potential_next_page if @next_page && potential_next_page != @next_page
+        nil
       end
 
       def each
-        while load_page
-          @data_list.each do | value |
+        while @next_page
+          load_page
+
+          @data_list.each do |value|
             @count += 1
             yield value
           end
