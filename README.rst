@@ -38,17 +38,23 @@ Installation
 
 If you have the ``bundler`` gem (if not you can get it with
 ``$ gem install bundler``) add this line to your application's
-Gemfile::
+Gemfile:
 
-    >>> gem 'urbanairship'
+.. code-block::
 
-And then execute::
+   >>> $ gem 'urbanairship'
 
-    >>> $ bundle
+And then execute:
 
-OR install it yourself as::
+.. code-block::
 
-    >>> gem install urbanairship
+   >>> $ bundle
+
+OR install it yourself as:
+
+.. code-block::
+
+   >>> $ gem install urbanairship
 
 
 Configuration
@@ -56,22 +62,28 @@ Configuration
 
 In your app initialization, you can do something like the following:
 
-    >>> require 'urbanairship'
-    >>> Urbanairship.configure do |config|
-    >>>   config.server = 'go.airship.eu'
-    >>>   config.log_path = '/path/to/your/logfile'
-    >>>   config.log_level = Logger::WARN
-    >>>   config.timeout = 60
-    >>> end
+.. code-block:: ruby
+
+   require 'urbanairship'
+
+   Urbanairship.configure do |config|
+     config.server = 'go.airship.eu'
+     config.log_path = '/path/to/your/logfile'
+     config.log_level = Logger::WARN
+     config.timeout = 60
+   end
+
 
 If you want to use a custom logger (e.g Rails.logger), you can do:
 
-    >>> require 'urbanairship'
-    >>> Urbanairship.configure do |config|
-    >>>   config.custom_logger = Rails.logger
-    >>>   config.log_level = Logger::WARN
-    >>>   config.timeout = 60
-    >>> end
+.. code-block:: ruby
+
+   require 'urbanairship'
+
+   Urbanairship.configure do |config|
+     config.custom_logger = Rails.logger
+     config.log_level = Logger::WARN
+   end
 
 Available Configurations
 ------------------------
@@ -98,54 +110,71 @@ information.
 Broadcast to All Devices
 ------------------------
 
-    >>> require 'urbanairship'
-    >>> UA = Urbanairship
-    >>> airship = UA::Client.new(key:'application_key', secret:'master_secret')
-    >>> p = airship.create_push
-    >>> p.audience = UA.all
-    >>> p.notification = UA.notification(alert: 'Hello')
-    >>> p.device_types = UA.all
-    >>> p.send_push
+.. code-block:: ruby
 
+   require 'urbanairship'
+
+   UA = Urbanairship
+
+   airship = UA::Client.new(key:'application_key', secret:'master_secret')
+   p = airship.create_push
+   p.audience = UA.all
+   p.notification = UA.notification(alert: 'Hello')
+   p.device_types = UA.all
+   p.send_push
 
 Simple Tag Push
 ---------------
 
-    >>> require 'urbanairship'
-    >>> UA = Urbanairship
-    >>> airship = UA::Client.new(key:'application_key', secret:'master_secret')
-    >>> p = airship.create_push
-    >>> p.audience = UA.tag('some_tag')
-    >>> p.notification = UA.notification(alert: 'Hello')
-    >>> p.device_types = UA.all
-    >>> p.send_push
+.. code-block:: ruby
 
+   require 'urbanairship'
+
+   UA = Urbanairship
+
+   airship = UA::Client.new(key:'application_key', secret:'master_secret')
+   p = airship.create_push
+   p.audience = UA.tag('some_tag')
+   p.notification = UA.notification(alert: 'Hello')
+   p.device_types = UA.all
+   p.send_push
 
 Specify the Airship server used to make your requests
 -----------------------------------------------------
 By default, the request will be sent to the 'go.airship.us' server:
 
-    >>> require 'urbanairship'
-    >>> Urbanairship::Client.new(key:'application_key', secret:'master_secret')
+.. code-block:: ruby
+
+   require 'urbanairship'
+
+   Urbanairship::Client.new(key:'application_key', secret:'master_secret')
 
 You can change the server globally in the Urbanairship configuration:
 
-    >>> require 'urbanairship'
-    >>> Urbanairship.configure do |config|
-    >>>   config.server = 'go.airship.eu'
-    >>> end
-    >>> Urbanairship::Client.new(key:'application_key', secret:'master_secret')
-    >>> # request will be sent to the 'go.airship.eu' server
+.. code-block:: ruby
+
+   require 'urbanairship'
+
+   Urbanairship.configure do |config|
+     config.server = 'go.airship.eu'
+   end
+
+   Urbanairship::Client.new(key:'application_key', secret:'master_secret')
+   # request will be sent to the 'go.airship.eu' server
 
 Finally, you can change the targeted server on a request basis:
 
-    >>> require 'urbanairship'
-    >>> Urbanairship.configure do |config|
-    >>>   config.server = 'go.airship.eu'
-    >>> end
-    >>> Urbanairship::Client.new(key:'application_key', secret:'master_secret', server: 'go.airship.us')
-    >>> # The Urbanairship configuration is overridden by the client and the
-    >>> # request will be sent to the 'go.airship.us' server
+.. code-block:: ruby
+
+   require 'urbanairship'
+
+   Urbanairship.configure do |config|
+     config.server = 'go.airship.eu'
+   end
+
+   Urbanairship::Client.new(key:'application_key', secret:'master_secret', server: 'go.airship.us')
+   # The Urbanairship configuration is overridden by the client and the
+   # request will be sent to the 'go.airship.us' server
 
 Contributing
 ============
