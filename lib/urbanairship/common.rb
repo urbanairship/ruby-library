@@ -4,10 +4,6 @@ require 'urbanairship/loggable'
 module Urbanairship
   # Features mixed in to all classes
   module Common
-    def url_for(path)
-      "https://#{Urbanairship.configuration.server}/api#{path}"
-    end
-
     def apid_path(path='')
       "/apids/#{path}"
     end
