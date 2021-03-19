@@ -4,7 +4,7 @@ require 'time'
 module Urbanairship
   module Reports
     class Helper
-      def get_url(start_date, end_date, precision)
+      def get_period_params(start_date, end_date, precision)
         fail ArgumentError,
            'the parameters cannot be set to nil' if start_date.nil? or end_date.nil? or precision.nil?
         precision_array = %w(HOURLY DAILY MONTHLY)
@@ -98,8 +98,8 @@ module Urbanairship
       def initialize(client: required('client'), start_date: required('start_date'),
                      end_date: required('end_date'), precision: required('precision'))
         super(client: client)
-        url = Helper.new.get_url(start_date, end_date, precision)
-        @next_page_path = reports_path('optins/' + url)
+        period_params = Helper.new.get_period_params(start_date, end_date, precision)
+        @next_page_path = reports_path('optins/' + period_params)
         @data_attribute = 'optins'
       end
     end
@@ -108,8 +108,8 @@ module Urbanairship
       def initialize(client: required('client'), start_date: required('start_date'),
                      end_date: required('end_date'), precision: required('precision'))
         super(client: client)
-        url = Helper.new.get_url(start_date, end_date, precision)
-        @next_page_path = reports_path('optouts/' + url)
+        period_params = Helper.new.get_period_params(start_date, end_date, precision)
+        @next_page_path = reports_path('optouts/' + period_params)
         @data_attribute = 'optouts'
       end
     end
@@ -118,8 +118,8 @@ module Urbanairship
       def initialize(client: required('client'), start_date: required('start_date'),
                      end_date: required('end_date'), precision: required('precision'))
         super(client: client)
-        url = Helper.new.get_url(start_date, end_date, precision)
-        @next_page_path = reports_path('sends/' + url)
+        period_params = Helper.new.get_period_params(start_date, end_date, precision)
+        @next_page_path = reports_path('sends/' + period_params)
         @data_attribute = 'sends'
       end
     end
@@ -128,8 +128,8 @@ module Urbanairship
       def initialize(client: required('client'), start_date: required('start_date'),
                      end_date: required('end_date'), precision: required('precision'))
         super(client: client)
-        url = Helper.new.get_url(start_date, end_date, precision)
-        @next_page_path = reports_path('responses/' + url)
+        period_params = Helper.new.get_period_params(start_date, end_date, precision)
+        @next_page_path = reports_path('responses/' + period_params)
         @data_attribute = 'responses'
       end
     end
@@ -138,8 +138,8 @@ module Urbanairship
       def initialize(client: required('client'), start_date: required('start_date'),
                      end_date: required('end_date'), precision: required('precision'))
         super(client: client)
-        url = Helper.new.get_url(start_date, end_date, precision)
-        @next_page_path = reports_path('opens/' + url)
+        period_params = Helper.new.get_period_params(start_date, end_date, precision)
+        @next_page_path = reports_path('opens/' + period_params)
         @data_attribute = 'opens'
       end
     end
@@ -148,8 +148,8 @@ module Urbanairship
       def initialize(client: required('client'), start_date: required('start_date'),
                      end_date: required('end_date'), precision: required('precision'))
         super(client: client)
-        url = Helper.new.get_url(start_date, end_date, precision)
-        @next_page_path = reports_path('timeinapp/' + url)
+        period_params = Helper.new.get_period_params(start_date, end_date, precision)
+        @next_page_path = reports_path('timeinapp/' + period_params)
         @data_attribute = 'timeinapp'
       end
     end
