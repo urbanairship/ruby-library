@@ -53,6 +53,13 @@ describe Urbanairship::Client do
     ua_client.send_request(method: 'POST', path: path)
   end
 
+  it 'raises an error if both path and url are nil' do
+    ua_client = UA::Client.new(key: '123', secret: 'abc')
+
+    expect { ua_client.send_request(method: 'POST') }
+      .to raise_error(ArgumentError, "path and url can't be both nil")
+  end
+
   it 'uses basic auth' do
     mock_response = double('response')
     allow(mock_response).to(receive_messages(code: 200, headers: '', body: '{}'))

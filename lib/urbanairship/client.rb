@@ -29,14 +29,14 @@ module Urbanairship
       #
       # @param [Object] method HTTP Method
       # @param [Object] body Request Body
+      # @param [Object] path Request path
       # @param [Object] url Request URL
       # @param [Object] content_type Content-Type
       # @param [Object] encoding Encoding
       # @param [Symbol] auth_type (:basic|:bearer)
-      # @param [Object] path Request path
       # @return [Object] Push Response
-      def send_request(method: required('method'), url: nil, body: nil,
-                       content_type: nil, encoding: nil, auth_type: :basic, path: nil)
+      def send_request(method: required('method'), path: nil, url: nil, body: nil,
+                       content_type: nil, encoding: nil, auth_type: :basic)
         req_type = case method
           when 'GET'
             :get
@@ -49,6 +49,8 @@ module Urbanairship
           else
             fail 'Method was not "GET" "POST" "PUT" or "DELETE"'
         end
+
+        raise ArgumentError.new("path and url can't be both nil") if path.nil? && url.nil?
 
         headers = {'User-agent' => 'UARubyLib/' + Urbanairship::VERSION}
         headers['Accept'] = 'application/vnd.urbanairship+json; version=3'
