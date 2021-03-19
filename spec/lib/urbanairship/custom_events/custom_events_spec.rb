@@ -93,7 +93,7 @@ describe Urbanairship::CustomEvents::CustomEvent do
           body: JSON.dump(expected_payload),
           content_type: 'application/json',
           method: 'POST',
-          url: UA.custom_events_url
+          path: UA.custom_events_path
         )
         .and_return(ua_http_response)
 

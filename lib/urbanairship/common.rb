@@ -20,8 +20,8 @@ module Urbanairship
       "/create-and-send/#{path}"
     end
 
-    def custom_events_url(path='')
-      url_for("/custom-events/#{path}")
+    def custom_events_path(path='')
+      "/custom-events/#{path}"
     end
 
     def device_token_url(path='')

@@ -23,7 +23,7 @@ module Urbanairship
           body: JSON.dump(events),
           content_type: 'application/json',
           method: 'POST',
-          url: custom_events_url
+          path: custom_events_path
         )
         cer = CustomEventResponse.new(body: response['body'], code: response['code'])
         logger.info { cer.format }
