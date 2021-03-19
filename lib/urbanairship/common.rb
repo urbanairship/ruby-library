@@ -64,8 +64,8 @@ module Urbanairship
       "/schedules/#{path}"
     end
 
-    def segments_url(path='')
-      url_for("/segments/#{path}")
+    def segments_path(path='')
+      "/segments/#{path}"
     end
 
     # Helper method for required keyword args in Ruby 2.0 that is compatible with 2.1+
