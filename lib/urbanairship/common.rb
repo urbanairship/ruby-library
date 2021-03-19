@@ -8,8 +8,8 @@ module Urbanairship
       "https://#{Urbanairship.configuration.server}/api#{path}"
     end
 
-    def apid_url(path='')
-      url_for("/apids/#{path}")
+    def apid_path(path='')
+      "/apids/#{path}"
     end
 
     def channel_url(path='')
