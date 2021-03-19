@@ -157,15 +157,15 @@ module Urbanairship
 
       def initialize(client: required('client'))
         @client = client
-        @next_page_url = nil
-        @next_page_path = nil
-        @data_list = nil
-        @data_attribute = nil
         @count = 0
+        @data_attribute = nil
+        @data_list = nil
+        @next_page_path = nil
+        @next_page_url = nil
       end
 
       def each
-        while @next_page_url || @next_page_path
+        while @next_page_path || @next_page_url
           load_page
 
           @data_list.each do |value|
@@ -185,8 +185,8 @@ module Urbanairship
         logger.info("Retrieving data from: #{@next_page_url || @next_page_path}")
         params = {
             method: 'GET',
-            url: @next_page_url,
-            path: @next_page_path
+            path: @next_page_path,
+            url: @next_page_url
           }.select { |k, v| !v.nil? }
         response = @client.send_request(params)
 

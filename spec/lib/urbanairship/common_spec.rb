@@ -21,8 +21,8 @@ describe Urbanairship::Common do
           super(client: client)
 
           @data_attribute = data_attr
-          @next_page_url = next_page_url
           @next_page_path = next_page_path
+          @next_page_url = next_page_url
         end
       end
     end
