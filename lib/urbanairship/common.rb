@@ -28,8 +28,8 @@ module Urbanairship
       "/device_tokens/#{path}"
     end
 
-    def experiments_url(path='')
-      url_for("/experiments/#{path}")
+    def experiments_path(path='')
+      "/experiments/#{path}"
     end
 
     def lists_url(path='')

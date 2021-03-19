@@ -19,7 +19,7 @@ module Urbanairship
             def list_ab_test
                 response = @client.send_request(
                     method: 'GET',
-                    url: experiments_url(format_url_with_params)
+                    path: experiments_path(format_url_with_params)
                 )
                 logger.info("Looking up A/B Tests for project")
                 response
@@ -29,7 +29,7 @@ module Urbanairship
                 response = @client.send_request(
                     method: 'POST',
                     body: JSON.dump(experiment_object),
-                    url: experiments_url,
+                    path: experiments_path,
                     content_type: 'application/json'
                 )
                 logger.info("Created A/B Test")
@@ -39,7 +39,7 @@ module Urbanairship
             def list_scheduled_ab_test
                 response = @client.send_request(
                     method: 'GET',
-                    url: experiments_url('scheduled' + format_url_with_params)
+                    path: experiments_path('scheduled' + format_url_with_params)
                 )
                 logger.info("Looking up scheduled A/B Tests for project")
                 response
@@ -49,7 +49,7 @@ module Urbanairship
                 fail ArgumentError, 'experiment_id must be set to delete individual A/B test' if @experiment_id.nil?
                 response = @client.send_request(
                     method: 'DELETE',
-                    url: experiments_url('scheduled/' + experiment_id)
+                    path: experiments_path('scheduled/' + experiment_id)
                 )
                 logger.info("Deleting A/B test with ID #{experiment_id}")
                 response
@@ -59,7 +59,7 @@ module Urbanairship
                 response = @client.send_request(
                     method: 'POST',
                     body: JSON.dump(experiment_object),
-                    url: experiments_url('validate'),
+                    path: experiments_path('validate'),
                     content_type: 'application/json'
                 )
                 logger.info("Validating A/B Test")
@@ -70,7 +70,7 @@ module Urbanairship
                 fail ArgumentError, 'experiment_id must be set to lookup individual A/B Test' if @experiment_id.nil?
                 response = @client.send_request(
                     method: 'GET',
-                    url: experiments_url(experiment_id)
+                    path: experiments_path(experiment_id)
                 )
                 logger.info("Looking up A/B test with ID #{experiment_id}")
                 response
