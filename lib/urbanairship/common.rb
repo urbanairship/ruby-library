@@ -32,8 +32,8 @@ module Urbanairship
       "/experiments/#{path}"
     end
 
-    def lists_url(path='')
-      url_for("/lists/#{path}")
+    def lists_path(path='')
+      "/lists/#{path}"
     end
 
     def location_url(path='')
