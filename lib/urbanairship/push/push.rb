@@ -52,7 +52,7 @@ module Urbanairship
         response = @client.send_request(
           method: 'POST',
           body: JSON.dump(payload),
-          url: push_url,
+          path: push_path,
           content_type: 'application/json'
         )
         pr = PushResponse.new(http_response_body: response['body'], http_response_code: response['code'].to_s)

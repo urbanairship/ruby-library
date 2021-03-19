@@ -52,8 +52,8 @@ module Urbanairship
       "/pipelines/#{path}"
     end
 
-    def push_url(path='')
-      url_for("/push/#{path}")
+    def push_path(path='')
+      "/push/#{path}"
     end
 
     def reports_url(path='')

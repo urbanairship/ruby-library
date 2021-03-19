@@ -3,7 +3,7 @@ require 'urbanairship'
 
 describe Urbanairship::Common do
   it 'has a PUSH_URL' do
-    expect(Urbanairship.push_url).not_to be nil
+    expect(Urbanairship.push_path).not_to be nil
   end
 
   it 'has a SEGMENTS_URL' do
