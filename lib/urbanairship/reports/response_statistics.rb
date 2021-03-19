@@ -5,21 +5,32 @@ module Urbanairship
   module Reports
     class Helper
       def get_period_params(start_date, end_date, precision)
-        fail ArgumentError,
-           'the parameters cannot be set to nil' if start_date.nil? or end_date.nil? or precision.nil?
-        precision_array = %w(HOURLY DAILY MONTHLY)
-        fail ArgumentError,
-             "Precision must be 'HOURLY', 'DAILY', or 'MONTHLY'" unless precision_array.include?(precision)
+        validates_parameters_presence!(start_date, end_date, precision)
+        validates_precision_format!(precision)
 
         begin
-          start_parsed = Time.parse(start_date)
-          end_parsed = Time.parse(end_date)
+          start_parsed = Time.parse(start_date).iso8601
+          end_parsed = Time.parse(end_date).iso8601
+
+          "?start=#{start_parsed}&end=#{end_parsed}&precision=#{precision}"
         rescue ArgumentError
-          fail ArgumentError,
-             'start_date and end_date must be valid date strings'
+          fail ArgumentError, 'start_date and end_date must be valid date strings'
         end
-        url = '?start=' + start_parsed.iso8601 + '&end=' + end_parsed.iso8601
-        url += '&precision=' + precision
+      end
+
+      private
+
+      def validates_parameters_presence!(start_date, end_date, precision)
+        return unless [start_date, end_date, precision].any?(&:nil?)
+
+        fail ArgumentError, 'the parameters cannot be set to nil'
+      end
+
+      AUTHORIZED_PRECISIONS = %w(HOURLY DAILY MONTHLY)
+      def validates_precision_format!(precision)
+        return if AUTHORIZED_PRECISIONS.include?(precision)
+
+        fail ArgumentError, 'Precision must be "HOURLY", "DAILY", or "MONTHLY"'
       end
     end
 
