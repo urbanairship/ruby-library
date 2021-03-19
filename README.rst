@@ -78,6 +78,7 @@ Available Configurations
 
 - **log_path**: Allows to define the folder where the log file will be created (the default is nil).
 - **log_level**: Allows to define the log level and only messages at that level or higher will be printed (the default is INFO).
+- **server**: Allow to define the Airship server you want to use ("go.airship.eu" or "go.urbanairship.com")
 - **timeout**: Allows to define the request timeout in seconds (the default is 5).
 
 
