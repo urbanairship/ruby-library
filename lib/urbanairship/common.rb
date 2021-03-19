@@ -44,10 +44,6 @@ module Urbanairship
       "/named_users/#{path}"
     end
 
-    def named_users_url(path='')
-      url_for("/named_users/#{path}")
-    end
-
     def open_channel_path(path='')
       "/open/#{path}"
     end
