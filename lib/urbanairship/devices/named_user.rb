@@ -65,7 +65,7 @@ module Urbanairship
 
       def initialize(client: required('client'))
         super(client: client)
-        @url = named_users_url('tags/')
+        @path = named_users_path('tags/')
       end
 
       def set_audience(user_ids: required('user_ids'))

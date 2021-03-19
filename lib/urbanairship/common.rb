@@ -12,6 +12,10 @@ module Urbanairship
       "/apids/#{path}"
     end
 
+    def channel_path(path='')
+      "/channels/#{path}"
+    end
+
     def channel_url(path='')
       url_for("/channels/#{path}")
     end
@@ -38,6 +42,10 @@ module Urbanairship
 
     def location_url(path='')
       url_for("/location/#{path}")
+    end
+
+    def named_users_path(path='')
+      "/named_users/#{path}"
     end
 
     def named_users_url(path='')

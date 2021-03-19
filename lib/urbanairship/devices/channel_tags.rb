@@ -15,7 +15,7 @@ module Urbanairship
         @add_group = {}
         @remove_group = {}
         @set_group = {}
-        @url = channel_url('tags/')
+        @path = channel_path('tags/')
       end
 
       def set_audience(ios: nil, android: nil, amazon: nil)
@@ -62,7 +62,7 @@ module Urbanairship
         response = @client.send_request(
           method: 'POST',
           body: JSON.dump(payload),
-          url: @url,
+          path: @path,
           content_type: 'application/json'
         )
         logger.info("Set tags for audience: #{@audience}")

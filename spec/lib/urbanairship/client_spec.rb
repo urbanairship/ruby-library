@@ -44,7 +44,7 @@ describe Urbanairship::Client do
                                .and_return(mock_response)
 
     ua_client = UA::Client.new(key: '123', secret: 'abc')
-    ua_client.send_request(method: 'POST', url: UA.channel_url)
+    ua_client.send_request(method: 'POST', path: UA.channel_path)
   end
 
   it 'uses bearer auth' do
@@ -59,6 +59,6 @@ describe Urbanairship::Client do
                                .and_return(mock_response)
 
     ua_client = UA::Client.new(key: '123', secret: 'abc', token: 'test-token')
-    ua_client.send_request(method: 'POST', url: UA.channel_url, auth_type: :bearer)
+    ua_client.send_request(method: 'POST', path: UA.channel_path, auth_type: :bearer)
   end
 end

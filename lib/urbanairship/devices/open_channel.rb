@@ -90,7 +90,7 @@ module Urbanairship
 
         response = @client.send_request(
           method: 'GET',
-          url: channel_url(channel_id)
+          path: channel_path(channel_id)
         )
         logger.info("Looking up info on device token #{channel_id}")
         response

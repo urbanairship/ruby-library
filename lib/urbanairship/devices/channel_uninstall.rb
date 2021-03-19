@@ -23,7 +23,7 @@ module Urbanairship
         response = @client.send_request(
           method: 'POST',
           body: JSON.dump(channels),
-          url: channel_url('uninstall/'),
+          path: channel_path('uninstall/'),
           content_type: 'application/json'
         )
 
