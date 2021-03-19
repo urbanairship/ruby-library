@@ -9,6 +9,22 @@ describe Urbanairship::Client do
     expect(ua_client).not_to be_nil
   end
 
+  it 'lets you override the default server' do
+    overriden_server = 'my.custom.server'
+    path = '/path-to_paradise'
+
+    mock_response = double('response')
+    allow(mock_response).to receive_messages(code: 200, headers: '', body: '{}')
+
+    expect(RestClient::Request)
+      .to(receive(:execute)
+        .with(hash_including({ url: "https://#{overriden_server}/api#{path}" })))
+          .and_return(mock_response)
+
+    ua_client = UA::Client.new(key: '123', secret: 'abc', server: overriden_server)
+    ua_client.send_request(method: 'POST', path: path)
+  end
+
   it 'lets you specify the url directly' do
     url = 'https://www.airship.com/'
     mock_response = double('response')

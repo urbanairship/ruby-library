@@ -13,11 +13,15 @@ module Urbanairship
       #
       # @param [Object] key Application Key
       # @param [Object] secret Application Secret
+      # @param [String] server Airship server to use ("go.airship.eu" or "go.urbanairship.com").
+      #                        Used only when the request is sent with a "path", not an "url".
       # @param [String] token Application Auth Token (for custom events endpoint)
       # @return [Object] Client
-      def initialize(key: required('key'), secret: required('secret'), token: nil)
+      def initialize(key: required('key'), secret: required('secret'),
+                     server: Urbanairship.configuration.server, token: nil)
         @key = key
         @secret = secret
+        @server = server
         @token = token
       end
 
@@ -57,7 +61,7 @@ module Urbanairship
           headers['Authorization'] = "Bearer #{@token}"
         end
 
-        url = "https://#{Urbanairship.configuration.server}/api#{path}" unless path.nil?
+        url = "https://#{@server}/api#{path}" unless path.nil?
 
         debug = "Making #{method} request to #{url}.\n"+ "\tHeaders:\n"
         debug += "\t\tcontent-type: #{content_type}\n" unless content_type.nil?
