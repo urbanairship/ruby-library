@@ -60,8 +60,8 @@ module Urbanairship
       "/reports/#{path}"
     end
 
-    def schedules_url(path='')
-      url_for("/schedules/#{path}")
+    def schedules_path(path='')
+      "/schedules/#{path}"
     end
 
     def segments_url(path='')

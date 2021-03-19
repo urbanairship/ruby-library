@@ -93,7 +93,7 @@ module Urbanairship
         response = @client.send_request(
           method: 'POST',
           body: JSON.dump(payload),
-          url: schedules_url,
+          path: schedules_path,
           content_type: 'application/json'
         )
         pr = PushResponse.new(http_response_body: response['body'], http_response_code: response['code'].to_s)
@@ -170,7 +170,7 @@ module Urbanairship
            'schedule_id must be a string' unless schedule_id.is_a? String
         resp = @client.send_request(
           method: 'GET',
-          url: schedules_url(schedule_id)
+          path: schedules_path(schedule_id)
         )
         logger.info("Retrieved info for schedule_id #{schedule_id}")
         resp
@@ -181,7 +181,7 @@ module Urbanairship
     class ScheduledPushList < Urbanairship::Common::PageIterator
       def initialize(client: required('client'))
         super(client: client)
-        @next_page = schedules_url
+        @next_page_path = schedules_path
         @data_attribute = 'schedules'
       end
     end

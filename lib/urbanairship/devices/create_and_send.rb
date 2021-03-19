@@ -84,7 +84,7 @@ module Urbanairship
         response = @client.send_request(
           method: 'POST',
           body: JSON.dump(scheduled_payload),
-          url: schedules_url('create-and-send'),
+          path: schedules_path('create-and-send'),
           content_type: 'application/json'
         )
         logger.info("Scheduling create and send operation with name #{@name}")
