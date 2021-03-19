@@ -24,8 +24,8 @@ module Urbanairship
       "/custom-events/#{path}"
     end
 
-    def device_token_url(path='')
-      url_for("/device_tokens/#{path}")
+    def device_token_path(path='')
+      "/device_tokens/#{path}"
     end
 
     def experiments_url(path='')
