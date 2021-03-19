@@ -123,23 +123,28 @@ Simple Tag Push
 
 Specify the Airship server used to make your requests
 -----------------------------------------------------
+By default, the request will be sent to the 'go.airship.us' server:
+
     >>> require 'urbanairship'
     >>> Urbanairship::Client.new(key:'application_key', secret:'master_secret')
-    >>> # By default, the request will be sent to the 'go.airship.us' server
+
+You can change the server globally in the Urbanairship configuration:
 
     >>> require 'urbanairship'
     >>> Urbanairship.configure do |config|
     >>>   config.server = 'go.airship.eu'
     >>> end
     >>> Urbanairship::Client.new(key:'application_key', secret:'master_secret')
-    >>> # The request will be sent to the 'go.airship.eu' server
+    >>> # request will be sent to the 'go.airship.eu' server
+
+Finally, you can change the targeted server on a request basis:
 
     >>> require 'urbanairship'
     >>> Urbanairship.configure do |config|
     >>>   config.server = 'go.airship.eu'
     >>> end
     >>> Urbanairship::Client.new(key:'application_key', secret:'master_secret', server: 'go.airship.us')
-    >>> # The Urbanairship configuration is overidden by the client and the
+    >>> # The Urbanairship configuration is overridden by the client and the
     >>> # request will be sent to the 'go.airship.us' server
 
 Contributing
