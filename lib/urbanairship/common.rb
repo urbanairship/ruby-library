@@ -16,10 +16,6 @@ module Urbanairship
       "/channels/#{path}"
     end
 
-    def channel_url(path='')
-      url_for("/channels/#{path}")
-    end
-
     def create_and_send_url(path='')
       url_for("/create-and-send/#{path}")
     end
@@ -52,8 +48,8 @@ module Urbanairship
       url_for("/named_users/#{path}")
     end
 
-    def open_channel_url(path='')
-      channel_url("/open/#{path}")
+    def open_channel_path(path='')
+      "/open/#{path}"
     end
 
     def pipelines_url(path='')
