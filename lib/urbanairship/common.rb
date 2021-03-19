@@ -168,6 +168,23 @@ module Urbanairship
         @count = 0
       end
 
+      def each
+        while @next_page || @next_page_path
+          load_page
+
+          @data_list.each do |value|
+            @count += 1
+            yield value
+          end
+        end
+      end
+
+      def count
+        @count
+      end
+
+      private
+
       def load_page
         logger.info("Retrieving data from: #{@next_page}")
         params = {
@@ -205,21 +222,6 @@ module Urbanairship
         return potential_next_page if @next_page && potential_next_page != @next_page
         return potential_next_page if @next_page_path && !potential_next_page.end_with?(@next_page_path)
         nil
-      end
-
-      def each
-        while @next_page || @next_page_path
-          load_page
-
-          @data_list.each do |value|
-            @count += 1
-            yield value
-          end
-        end
-      end
-
-      def count
-        @count
       end
     end
   end
