@@ -1,4 +1,9 @@
 --------------------
+7.0.0
+--------------------
+- Refactors base url naming
+
+--------------------
 6.0.0
 --------------------
 - Creates custom base url, and refactors urls within classes
