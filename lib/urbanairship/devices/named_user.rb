@@ -25,7 +25,7 @@ module Urbanairship
         response = @client.send_request(
           method: 'POST',
           body: JSON.dump(payload),
-          url: named_users_url('/associate'),
+          path: named_users_path('/associate'),
           content_type: 'application/json'
         )
         logger.info { "Associated channel_id #{channel_id} with named_user #{@named_user_id}" }
@@ -40,7 +40,7 @@ module Urbanairship
         response = @client.send_request(
           method: 'POST',
           body: JSON.dump(payload),
-          url: named_users_url('/disassociate'),
+          path: named_users_path('/disassociate'),
           content_type: 'application/json'
         )
         logger.info { "Dissociated channel_id #{channel_id}" }
@@ -52,7 +52,7 @@ module Urbanairship
            'named_user_id is required for lookup' if @named_user_id.nil?
         response = @client.send_request(
             method: 'GET',
-            url: named_users_url('?id=' + @named_user_id),
+            path: named_users_path('?id=' + @named_user_id),
         )
         logger.info { "Retrieved information on named_user_id #{@named_user_id}" }
         response
@@ -65,7 +65,7 @@ module Urbanairship
 
       def initialize(client: required('client'))
         super(client: client)
-        @url = named_users_url('tags/')
+        @path = named_users_path('tags/')
       end
 
       def set_audience(user_ids: required('user_ids'))
@@ -79,7 +79,7 @@ module Urbanairship
 
       def initialize(client: required('client'))
         super(client: client)
-        @next_page = named_users_url
+        @next_page_path = named_users_path
         @data_attribute = 'named_users'
       end
     end
@@ -101,7 +101,7 @@ module Urbanairship
         response = @client.send_request(
           method: 'POST',
           body: JSON.dump(payload),
-          url: named_users_url('/uninstall'),
+          path: named_users_path('/uninstall'),
           content_type: 'application/json'
         )
         logger.info { "Uninstalled named_user_ids #{@named_user_ids} " }

@@ -13,11 +13,15 @@ module Urbanairship
       #
       # @param [Object] key Application Key
       # @param [Object] secret Application Secret
+      # @param [String] server Airship server to use ("go.airship.eu" or "go.urbanairship.com").
+      #                        Used only when the request is sent with a "path", not an "url".
       # @param [String] token Application Auth Token (for custom events endpoint)
       # @return [Object] Client
-      def initialize(key: required('key'), secret: required('secret'), token: nil)
+      def initialize(key: required('key'), secret: required('secret'),
+                     server: Urbanairship.configuration.server, token: nil)
         @key = key
         @secret = secret
+        @server = server
         @token = token
       end
 
@@ -25,12 +29,13 @@ module Urbanairship
       #
       # @param [Object] method HTTP Method
       # @param [Object] body Request Body
+      # @param [Object] path Request path
       # @param [Object] url Request URL
       # @param [Object] content_type Content-Type
       # @param [Object] encoding Encoding
       # @param [Symbol] auth_type (:basic|:bearer)
       # @return [Object] Push Response
-      def send_request(method: required('method'), url: required('url'), body: nil,
+      def send_request(method: required('method'), path: nil, url: nil, body: nil,
                        content_type: nil, encoding: nil, auth_type: :basic)
         req_type = case method
           when 'GET'
@@ -45,16 +50,20 @@ module Urbanairship
             fail 'Method was not "GET" "POST" "PUT" or "DELETE"'
         end
 
+        raise ArgumentError.new("path and url can't be both nil") if path.nil? && url.nil?
+
         headers = {'User-agent' => 'UARubyLib/' + Urbanairship::VERSION}
         headers['Accept'] = 'application/vnd.urbanairship+json; version=3'
         headers['Content-type'] = content_type unless content_type.nil?
         headers['Content-Encoding'] = encoding unless encoding.nil?
-        
+
         if auth_type == :bearer
           raise ArgumentError.new('token must be provided as argument if auth_type=bearer') if @token.nil?
           headers['X-UA-Appkey'] = @key
           headers['Authorization'] = "Bearer #{@token}"
         end
+
+        url = "https://#{@server}/api#{path}" unless path.nil?
 
         debug = "Making #{method} request to #{url}.\n"+ "\tHeaders:\n"
         debug += "\t\tcontent-type: #{content_type}\n" unless content_type.nil?

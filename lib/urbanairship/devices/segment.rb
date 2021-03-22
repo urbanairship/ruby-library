@@ -28,7 +28,7 @@ module Urbanairship
         response = @client.send_request(
           method: 'POST',
           body: JSON.dump(payload),
-          url: segments_url,
+          path: segments_path,
           content_type: 'application/json'
         )
         logger.info { "Successful segment creation: #{@display_name}" }
@@ -45,7 +45,7 @@ module Urbanairship
           'id must be set to a valid string' if id.nil?
         response = @client.send_request(
           method: 'GET',
-          url: segments_url(id)
+          path: segments_path(id)
         )
         logger.info("Retrieved segment information for #{id}")
         @id = id
@@ -69,7 +69,7 @@ module Urbanairship
         response = @client.send_request(
           method: 'PUT',
           body: JSON.dump(data),
-          url: segments_url(@id),
+          path: segments_path(@id),
           content_type: 'application/json'
         )
         logger.info { "Successful segment update: #{@display_name}" }
@@ -80,13 +80,11 @@ module Urbanairship
       #
       # @ returns [Object] response HTTP response
       def delete
-        fail ArgumentError,
-          'id cannot be nil' if id.nil?
+        fail ArgumentError, 'id cannot be nil' if id.nil?
 
-        url = segments_url(id)
         response = @client.send_request(
           method: 'DELETE',
-          url: url
+          path: segments_path(id)
         )
         logger.info { "Successful segment deletion: #{@display_name}" }
         response
@@ -98,7 +96,7 @@ module Urbanairship
 
       def initialize(client: required('client'))
         super(client: client)
-        @next_page = segments_url
+        @next_page_path = segments_path
         @data_attribute = 'segments'
       end
     end

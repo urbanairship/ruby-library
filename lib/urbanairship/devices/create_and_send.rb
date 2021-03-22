@@ -52,7 +52,7 @@ module Urbanairship
         response = @client.send_request(
           method: 'POST',
           body: JSON.dump(payload),
-          url: create_and_send_url,
+          path: create_and_send_path,
           content_type: 'application/json'
         )
         logger.info("Running create and send for addresses #{@addresses}")
@@ -63,7 +63,7 @@ module Urbanairship
         response = @client.send_request(
           method: 'POST',
           body: JSON.dump(payload),
-          url: create_and_send_url('validate'),
+          path: create_and_send_path('validate'),
           content_type: 'application/json'
         )
         logger.info("Validating payload for create and send")
@@ -84,7 +84,7 @@ module Urbanairship
         response = @client.send_request(
           method: 'POST',
           body: JSON.dump(scheduled_payload),
-          url: schedules_url('create-and-send'),
+          path: schedules_path('create-and-send'),
           content_type: 'application/json'
         )
         logger.info("Scheduling create and send operation with name #{@name}")

@@ -4,68 +4,64 @@ require 'urbanairship/loggable'
 module Urbanairship
   # Features mixed in to all classes
   module Common
-    def url_for(path)
-      "https://#{Urbanairship.configuration.server}/api#{path}"
+    def apid_path(path='')
+      "/apids/#{path}"
     end
 
-    def apid_url(path='')
-      url_for("/apids/#{path}")
+    def channel_path(path='')
+      "/channels/#{path}"
     end
 
-    def channel_url(path='')
-      url_for("/channels/#{path}")
+    def create_and_send_path(path='')
+      "/create-and-send/#{path}"
     end
 
-    def create_and_send_url(path='')
-      url_for("/create-and-send/#{path}")
+    def custom_events_path(path='')
+      "/custom-events/#{path}"
     end
 
-    def custom_events_url(path='')
-      url_for("/custom-events/#{path}")
+    def device_token_path(path='')
+      "/device_tokens/#{path}"
     end
 
-    def device_token_url(path='')
-      url_for("/device_tokens/#{path}")
+    def experiments_path(path='')
+      "/experiments/#{path}"
     end
 
-    def experiments_url(path='')
-      url_for("/experiments/#{path}")
+    def lists_path(path='')
+      "/lists/#{path}"
     end
 
-    def lists_url(path='')
-      url_for("/lists/#{path}")
+    def location_path(path='')
+      "/location/#{path}"
     end
 
-    def location_url(path='')
-      url_for("/location/#{path}")
+    def named_users_path(path='')
+      "/named_users/#{path}"
     end
 
-    def named_users_url(path='')
-      url_for("/named_users/#{path}")
+    def open_channel_path(path='')
+      "/open/#{path}"
     end
 
-    def open_channel_url(path='')
-      channel_url("/open/#{path}")
+    def pipelines_path(path='')
+      "/pipelines/#{path}"
     end
 
-    def pipelines_url(path='')
-      url_for("/pipelines/#{path}")
+    def push_path(path='')
+      "/push/#{path}"
     end
 
-    def push_url(path='')
-      url_for("/push/#{path}")
+    def reports_path(path='')
+      "/reports/#{path}"
     end
 
-    def reports_url(path='')
-      url_for("/reports/#{path}")
+    def schedules_path(path='')
+      "/schedules/#{path}"
     end
 
-    def schedules_url(path='')
-      url_for("/schedules/#{path}")
-    end
-
-    def segments_url(path='')
-      url_for("/segments/#{path}")
+    def segments_path(path='')
+      "/segments/#{path}"
     end
 
     # Helper method for required keyword args in Ruby 2.0 that is compatible with 2.1+
@@ -161,36 +157,18 @@ module Urbanairship
 
       def initialize(client: required('client'))
         @client = client
-        @next_page = nil
-        @data_list = nil
-        @data_attribute = nil
         @count = 0
-      end
-
-      def load_page
-        return false unless @next_page
-        response = @client.send_request(
-            method: 'GET',
-            url: @next_page
-        )
-        logger.info("Retrieving data from: #{@next_page}")
-        check_next_page = response['body']['next_page']
-        if check_next_page != @next_page
-          @next_page = check_next_page
-        elsif check_next_page
-          # if check_page = next_page, we have repeats in the response.
-          # and we don't want to load them
-          return false
-        else
-          @next_page = nil
-        end
-        @data_list = response['body'][@data_attribute]
-        true
+        @data_attribute = nil
+        @data_list = nil
+        @next_page_path = nil
+        @next_page_url = nil
       end
 
       def each
-        while load_page
-          @data_list.each do | value |
+        while @next_page_path || @next_page_url
+          load_page
+
+          @data_list.each do |value|
             @count += 1
             yield value
           end
@@ -199,6 +177,47 @@ module Urbanairship
 
       def count
         @count
+      end
+
+      private
+
+      def load_page
+        logger.info("Retrieving data from: #{@next_page_url || @next_page_path}")
+        params = {
+            method: 'GET',
+            path: @next_page_path,
+            url: @next_page_url
+          }.select { |k, v| !v.nil? }
+        response = @client.send_request(params)
+
+        @data_list = get_new_data(response)
+        @next_page_url = get_next_page_url(response)
+        @next_page_path = nil
+      end
+
+      def extract_next_page_url(response)
+        response['body']['next_page']
+      end
+
+      def get_new_data(response)
+        potential_next_page_url = extract_next_page_url(response)
+
+        # if potential_next_page_url is the same as the current page, we have
+        # repeats in the response and we don't want to load them
+        return [] if potential_next_page_url && get_next_page_url(response).nil?
+
+        response['body'][@data_attribute]
+      end
+
+      def get_next_page_url(response)
+        potential_next_page_url = extract_next_page_url(response)
+        return nil if potential_next_page_url.nil?
+
+        # if potential_next_page_url is the same as the current page, we have
+        # repeats in the response and we don't want to check the next pages
+        return potential_next_page_url if @next_page_url && potential_next_page_url != @next_page_url
+        return potential_next_page_url if @next_page_path && !potential_next_page_url.end_with?(@next_page_path)
+        nil
       end
     end
   end
