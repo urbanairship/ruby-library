@@ -1,3 +1,4 @@
+require 'urbanairship/custom_events/custom_event'
 require 'urbanairship/custom_events/payload'
 require 'urbanairship/push/audience'
 require 'urbanairship/push/payload'
