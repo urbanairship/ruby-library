@@ -1,10 +1,12 @@
 require 'spec_helper'
 require 'urbanairship'
 
-
 describe Urbanairship::Devices do
   UA = Urbanairship
   airship = UA::Client.new(key: '123', secret: 'abc')
+  let(:channel_id) { '123' }
+  let(:device_type) { 'android' }
+  let(:named_user_id) { 'user' }
 
   describe Urbanairship::Devices::NamedUser do
     expected_resp = {
@@ -17,6 +19,19 @@ describe Urbanairship::Devices do
     named_user.named_user_id = 'user'
 
     describe '#associate' do
+      it 'makes the expected request' do
+        allow(airship).to receive(:send_request) do |arguments|
+          expect(arguments).to eq(
+            method: 'POST',
+            body: { channel_id: channel_id, device_type: device_type, named_user_id: named_user_id }.to_json,
+            path: "/named_users/associate",
+            content_type: "application/json",
+          )
+          expected_resp
+        end
+        named_user.associate(channel_id: channel_id, device_type: device_type)
+      end
+
       it 'associates a channel with a named_user' do
         allow(airship).to receive(:send_request).and_return(expected_resp)
         actual_resp = named_user.associate(channel_id:'123', device_type:'android')

@@ -25,7 +25,7 @@ module Urbanairship
         response = @client.send_request(
           method: 'POST',
           body: JSON.dump(payload),
-          path: named_users_path('/associate'),
+          path: named_users_path('associate'),
           content_type: 'application/json'
         )
         logger.info { "Associated channel_id #{channel_id} with named_user #{@named_user_id}" }
