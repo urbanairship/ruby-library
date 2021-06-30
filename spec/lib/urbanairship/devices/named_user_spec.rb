@@ -8,40 +8,61 @@ describe Urbanairship::Devices do
   let(:device_type) { 'android' }
   let(:named_user_id) { 'user' }
 
+  named_user = nil
+
   describe Urbanairship::Devices::NamedUser do
-    expected_resp = {
-      'body' => {
-        'ok' => true
-      },
-      'code' => 200
-    }
-    named_user = UA::NamedUser.new(client: airship)
-    named_user.named_user_id = 'user'
+    let(:expected_response) do
+      {
+        body: {
+          ok: true
+        },
+        code: 200,
+      }
+    end
+
+    before(:each) do
+      named_user = UA::NamedUser.new(client: airship)
+      named_user.named_user_id = named_user_id
+    end
 
     describe '#associate' do
-      it 'makes the expected request' do
-        allow(airship).to receive(:send_request) do |arguments|
-          expect(arguments).to eq(
-            method: 'POST',
-            body: { channel_id: channel_id, device_type: device_type, named_user_id: named_user_id }.to_json,
-            path: "/named_users/associate",
-            content_type: "application/json",
-          )
-          expected_resp
+      describe 'Request' do
+        after(:each) { named_user.associate(channel_id: channel_id, device_type: device_type) }
+
+        it 'makes the expected request' do
+          allow(airship).to receive(:send_request) do |arguments|
+            expect(arguments).to eq(
+              method: 'POST',
+              body: { channel_id: channel_id, device_type: device_type, named_user_id: named_user_id }.to_json,
+              path: "/named_users/associate",
+              content_type: "application/json",
+            )
+            expected_response
+          end
         end
-        named_user.associate(channel_id: channel_id, device_type: device_type)
+
+        context 'Named user ID is an integer' do
+          let(:named_user_id) { 1985 }
+
+          it 'converts named user ID to a string' do
+            allow(airship).to receive(:send_request) do |arguments|
+              expect(JSON.parse(arguments[:body], symbolize_names: true)[:named_user_id]).to eq named_user_id.to_s
+              expected_response
+            end
+          end
+        end
       end
 
       it 'associates a channel with a named_user' do
-        allow(airship).to receive(:send_request).and_return(expected_resp)
+        allow(airship).to receive(:send_request).and_return(expected_response)
         actual_resp = named_user.associate(channel_id:'123', device_type:'android')
-        expect(actual_resp).to eq(expected_resp)
+        expect(actual_resp).to eq(expected_response)
       end
 
       it 'associates a web channel with a named_user without a device_type' do
-        allow(airship).to receive(:send_request).and_return(expected_resp)
+        allow(airship).to receive(:send_request).and_return(expected_response)
         actual_resp = named_user.associate(channel_id:'123')
-        expect(actual_resp).to eq(expected_resp)
+        expect(actual_resp).to eq(expected_response)
       end
 
       it 'fails when the user_id is not set' do
@@ -54,15 +75,15 @@ describe Urbanairship::Devices do
 
     describe '#disassociate' do
       it 'disassociates a channel from a named_user' do
-        allow(airship).to receive(:send_request).and_return(expected_resp)
+        allow(airship).to receive(:send_request).and_return(expected_response)
         actual_resp = named_user.disassociate(channel_id:'123', device_type:'android')
-        expect(actual_resp).to eq(expected_resp)
+        expect(actual_resp).to eq(expected_response)
       end
 
       it 'disassociates a web channel from a named_user without a device_type' do
-        allow(airship).to receive(:send_request).and_return(expected_resp)
+        allow(airship).to receive(:send_request).and_return(expected_response)
         actual_resp = named_user.disassociate(channel_id:'123')
-        expect(actual_resp).to eq(expected_resp)
+        expect(actual_resp).to eq(expected_response)
       end
     end
 
@@ -224,7 +245,7 @@ describe Urbanairship::Devices do
         }
       ]
     }
-    expected_resp = {
+    expected_response = {
       'body' => {
         'named_users' => [named_user_item, named_user_item, named_user_item ],
         'next_page' => 'url'
@@ -239,7 +260,7 @@ describe Urbanairship::Devices do
     }
 
     it 'iterates correctly through a response' do
-      allow(airship).to receive(:send_request).and_return(expected_resp, expected_next_resp)
+      allow(airship).to receive(:send_request).and_return(expected_response, expected_next_resp)
       named_user_list = UA::NamedUserList.new(client:airship)
       instantiated_list = Array.new
       named_user_list.each do |named_user|
@@ -251,7 +272,7 @@ describe Urbanairship::Devices do
   end
 
   describe Urbanairship::Devices::NamedUserUninstaller do
-    let(:expected_resp) do
+    let(:expected_response) do
       {
         'body' => {
           'ok' => true
@@ -265,11 +286,11 @@ describe Urbanairship::Devices do
     describe '#uninstall' do
       before do
         named_user_uninstaller.named_user_ids = ['user']
-        allow(airship).to receive(:send_request).and_return(expected_resp)
+        allow(airship).to receive(:send_request).and_return(expected_response)
       end
 
       it 'uninstall named_users' do
-        expect(subject).to eq(expected_resp)
+        expect(subject).to eq(expected_response)
       end
     end
   end

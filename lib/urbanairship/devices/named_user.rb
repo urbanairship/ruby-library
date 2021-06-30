@@ -20,7 +20,7 @@ module Urbanairship
         payload = {}
         payload['channel_id'] = channel_id
         payload['device_type'] = device_type unless device_type.nil?
-        payload['named_user_id'] = @named_user_id
+        payload['named_user_id'] = @named_user_id&.to_s
 
         response = @client.send_request(
           method: 'POST',
