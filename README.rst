@@ -14,8 +14,7 @@ Requirements
 
 We officially support the following Ruby versions::
 
-   2.2.5
-   2.3.1
+   2.7.2
 
 Newer versions should work as well.
 

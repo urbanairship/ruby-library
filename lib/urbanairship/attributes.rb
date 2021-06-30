@@ -21,7 +21,7 @@ module Urbanairship
     def attribute_payload(attribute)
       {
         action: attribute[:action] || SET,
-        key: attribute[:key]
+        key: attribute[:key],
         value: attribute[:value],
         timestamp: timestamp,
       }
