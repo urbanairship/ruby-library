@@ -3,6 +3,7 @@ module Urbanairship
   class Attributes
 
     SET = 'set'
+    REMOVE = 'remove'
 
     def initialize(attributes)
       @attributes = attributes
@@ -15,15 +16,31 @@ module Urbanairship
     private
 
     def attributes_list
-      @attributes.map(&:attribute_payload)
+      @attributes.map{ |attribute| attribute_payload(attribute) }
     end
 
     def attribute_payload(attribute)
+      if REMOVE == attribute[:action]
+        remove_payload(attribute)
+      else
+        set_payload(attribute)
+      end
+    end
+
+    def set_payload(attribute)
       {
-        action: attribute[:action] || SET,
+        action: SET,
         key: attribute[:key],
         value: attribute[:value],
-        timestamp: timestamp,
+        timestamp: (attribute[:timestamp] || timestamp).iso8601,
+      }
+    end
+
+    def remove_payload(attribute)
+      {
+        action: REMOVE,
+        key: attribute[:key],
+        timestamp: (attribute[:timestamp] || timestamp).iso8601,
       }
     end
 

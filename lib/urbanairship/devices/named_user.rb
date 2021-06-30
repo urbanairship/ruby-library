@@ -7,21 +7,20 @@ module Urbanairship
       include Urbanairship::Loggable
       attr_accessor :named_user_id
 
-      CONTENT_TYPE = 'application/json'
-
       def initialize(client: required('client'))
         @client = client
         @named_user_id =  nil
       end
 
       def update_attributes(attributes: required('attributes'))
-        resonse = @client.send_request(
+        response = @client.send_request(
           method: 'POST',
-          body: Urbanairship::Attributes.new(attributes).payload.as_json,
-          path: named_users_path('attributes'),
-          content_type: CONTENT_TYPE
+          body: Urbanairship::Attributes.new(attributes: attributes).payload.to_json,
+          path: named_users_path("#{@named_user_id}/attributes"),
+          content_type: CONTENT_TYPE,
         )
-
+        logger.info { "Updated attributes for named_user #{@named_user_id}" }
+        response
       end
 
       def associate(channel_id: required('channel_id'), device_type: nil)
@@ -62,8 +61,8 @@ module Urbanairship
         fail ArgumentError,
            'named_user_id is required for lookup' if @named_user_id.nil?
         response = @client.send_request(
-            method: 'GET',
-            path: named_users_path('?id=' + @named_user_id),
+          method: 'GET',
+          path: named_users_path('?id=' + @named_user_id),
         )
         logger.info { "Retrieved information on named_user_id #{@named_user_id}" }
         response

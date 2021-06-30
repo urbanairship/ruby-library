@@ -2,6 +2,10 @@ require 'spec_helper'
 require 'urbanairship'
 
 describe Urbanairship::Common do
+  it 'defines CONTENT_TYPE' do
+    expect(described_class::CONTENT_TYPE).to eq 'application/json'
+  end
+
   it 'has a PUSH_URL' do
     expect(Urbanairship.push_path).not_to be nil
   end
