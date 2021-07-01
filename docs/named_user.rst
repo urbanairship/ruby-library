@@ -113,7 +113,7 @@ https://docs.airship.com/api/ua/#operation-api-named_users-named_user_id-attribu
   airship = Urbanairship::Client.new(key: 'application_key', secret: 'master_secret')
   named_user = Urbanairship::NamedUser.new(client: airship)
   named_user.named_user_id = 'named_user'
-  named_user.update_attributes([
+  named_user.update_attributes(attributes: [
       { action: 'set', key: 'first_name', value: 'Urban' },
       { action: 'remove', key: 'nickname' },
       { action: 'set', key: 'last_name', value: 'Airshipper', timestamp: Time.now.utc }
