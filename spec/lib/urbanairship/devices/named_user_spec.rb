@@ -36,7 +36,7 @@ describe Urbanairship::Devices do
       let(:mock_payload) { double(Urbanairship::Attributes) }
 
       before(:each) do
-        allow(Urbanairship::Attributes).to receive(:new).with(attributes: attributes).and_return mock_payload
+        allow(Urbanairship::Attributes).to receive(:new).with(attributes).and_return mock_payload
         allow(mock_payload).to receive(:payload).and_return payload
       end
 
