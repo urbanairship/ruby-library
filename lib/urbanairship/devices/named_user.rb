@@ -15,7 +15,7 @@ module Urbanairship
       def update_attributes(attributes: required('attributes'))
         response = @client.send_request(
           method: 'POST',
-          body: Urbanairship::Attributes.new(attributes: attributes).payload.to_json,
+          body: Urbanairship::Attributes.new(attributes).payload.to_json,
           path: named_users_path("#{@named_user_id}/attributes"),
           content_type: CONTENT_TYPE,
         )
