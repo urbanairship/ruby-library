@@ -100,3 +100,25 @@ see `the API documentation
 
     A single request may contain an add or remove field, both, or a single set
     field.
+
+Attributes
+----------
+
+Add/remove/update attributes on a named user. For more information, see `the APi documentation
+https://docs.airship.com/api/ua/#operation-api-named_users-named_user_id-attributes-post>`__
+
+.. code-block:: ruby
+
+  require 'urbanairship
+  airship = Urbanairship::Client.new(key: 'application_key', secret: 'master_secret')
+  named_user = Urbanairship::NamedUser.new(client: airship)
+  named_user.named_user_id = 'named_user'
+  named_user.update_attributes([
+      { action: 'set', key: 'first_name', value: 'Urban' },
+      { action: 'remove', key: 'nickname' },
+      { action: 'set', key: 'last_name', value: 'Airshipper', timestamp: Time.now.utc }
+  ])
+
+.. note::
+
+    Timestamp is optional, if missing it will default to 'now'.
