@@ -31,7 +31,7 @@ The following example shows you how to set and remove attributes on a given name
     
 .. code-block:: ruby
     
-    require 'urbanairship
+    require 'urbanairship'
     airship = Urbanairship::Client.new(key: 'application_key', secret: 'master_secret')
     named_user = Urbanairship::NamedUser.new(client: airship)
     named_user.named_user_id = 'named_user'

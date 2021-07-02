@@ -109,7 +109,7 @@ https://docs.airship.com/api/ua/#operation-api-named_users-named_user_id-attribu
 
 .. code-block:: ruby
 
-  require 'urbanairship
+  require 'urbanairship'
   airship = Urbanairship::Client.new(key: 'application_key', secret: 'master_secret')
   named_user = Urbanairship::NamedUser.new(client: airship)
   named_user.named_user_id = 'named_user'
