@@ -50,7 +50,7 @@ module Urbanairship
         response = @client.send_request(
           method: 'POST',
           body: JSON.dump(payload),
-          path: named_users_path('/disassociate'),
+          path: named_users_path('disassociate'),
           content_type: CONTENT_TYPE
         )
         logger.info { "Dissociated channel_id #{channel_id}" }
@@ -111,7 +111,7 @@ module Urbanairship
         response = @client.send_request(
           method: 'POST',
           body: JSON.dump(payload),
-          path: named_users_path('/uninstall'),
+          path: named_users_path('uninstall'),
           content_type: CONTENT_TYPE
         )
         logger.info { "Uninstalled named_user_ids #{@named_user_ids} " }

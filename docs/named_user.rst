@@ -104,7 +104,7 @@ see `the API documentation
 Attributes
 ----------
 
-Add/remove/update attributes on a named user. For more information, see `the APi documentation
+Add/remove/update attributes on a named user. For more information, see `the API documentation
 https://docs.airship.com/api/ua/#operation-api-named_users-named_user_id-attributes-post>`__
 
 .. code-block:: ruby
@@ -114,9 +114,9 @@ https://docs.airship.com/api/ua/#operation-api-named_users-named_user_id-attribu
   named_user = Urbanairship::NamedUser.new(client: airship)
   named_user.named_user_id = 'named_user'
   named_user.update_attributes(attributes: [
-      { action: 'set', key: 'first_name', value: 'Urban' },
+      { action: 'set', key: 'first_name', value: 'Firstname' },
       { action: 'remove', key: 'nickname' },
-      { action: 'set', key: 'last_name', value: 'Airshipper', timestamp: Time.now.utc }
+      { action: 'set', key: 'last_name', value: 'Lastname', timestamp: Time.now.utc }
   ])
 
 .. note::
