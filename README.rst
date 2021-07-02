@@ -14,16 +14,16 @@ Requirements
 
 We officially support the following Ruby versions::
 
-   2.2.5
-   2.3.1
+   2.6.7
+   2.7.2
 
-Newer versions should work as well.
+Newer 2.x versions should work as well.
 
 
 Functionality
 =============
 
-Version 5.0 is a major upgrade, as some features have been removed that were present in earlier versions. A more detailed list of changes can be found in the CHANGELOG.
+Version 8.0 is a major upgrade, as we have changed the tested/supported versions of Ruby. A more detailed list of changes can be found in the CHANGELOG.
 
 
 Questions

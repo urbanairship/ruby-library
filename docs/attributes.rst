@@ -24,6 +24,27 @@ The following will set an attribute for a given channel ID.
 
     This should return a 200 response
 
+Set or Remove Attributes for a Named User
+-----------------------------------------
+
+The following example shows you how to set and remove attributes on a given named user.
+    
+.. code-block:: ruby
+    
+    require 'urbanairship'
+    airship = Urbanairship::Client.new(key: 'application_key', secret: 'master_secret')
+    named_user = Urbanairship::NamedUser.new(client: airship)
+    named_user.named_user_id = 'named_user'
+    named_user.update_attributes(attributes: [
+        { action: 'set', key: 'first_name', value: 'Firstname' },
+        { action: 'remove', key: 'nickname' },
+        { action: 'set', key: 'last_name', value: 'Lastname', timestamp: Time.now.utc }
+    ])
+    
+.. note::
+
+    Timestamp is optional, if missing it will default to 'now'
+
 Send Push to Audience with Attribute Specifications
 ---------------------------------------------------
 

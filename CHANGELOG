@@ -1,4 +1,13 @@
 --------------------
+8.0.0
+--------------------
+- Updates officially supported versions to 2.6.7 and 2.7.2
+- Fixes headers to reduce warning messages
+- Fixes for multiple mis-set named user urls
+- Fix to automatically convert an integer named user to a string so it can be successfully submitted
+- Adds attribute support for named users
+
+--------------------
 7.0.0
 --------------------
 - Refactors base url naming

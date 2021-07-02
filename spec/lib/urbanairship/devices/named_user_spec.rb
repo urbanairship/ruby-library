@@ -25,6 +25,45 @@ describe Urbanairship::Devices do
       named_user.named_user_id = named_user_id
     end
 
+    describe '#update_attributes' do
+      let(:attributes) do
+        [ some: 'test', attribute: 'values' ]
+      end
+
+      let(:payload) do
+        { attributes: { some: 'values' } }
+      end
+      let(:mock_payload) { double(Urbanairship::Attributes) }
+
+      before(:each) do
+        allow(Urbanairship::Attributes).to receive(:new).with(attributes).and_return mock_payload
+        allow(mock_payload).to receive(:payload).and_return payload
+      end
+
+      describe 'Request' do
+        after(:each) { named_user.update_attributes(attributes: attributes) }
+
+        it 'makes the expected request' do
+          allow(airship).to receive(:send_request) do |arguments|
+            expect(arguments).to eq(
+              method: 'POST',
+              body: payload.to_json,
+              path: "/named_users/#{named_user_id}/attributes",
+              content_type: described_class::CONTENT_TYPE,
+            )
+            expected_response
+          end
+          named_user.update_attributes(attributes: attributes)
+        end
+      end
+
+      it 'updates attributes for a named_user' do
+        allow(airship).to receive(:send_request).and_return(expected_response)
+        actual_resp = named_user.update_attributes(attributes: attributes)
+        expect(actual_resp).to eq(expected_response)
+      end
+    end
+
     describe '#associate' do
       describe 'Request' do
         after(:each) { named_user.associate(channel_id: channel_id, device_type: device_type) }
@@ -35,7 +74,7 @@ describe Urbanairship::Devices do
               method: 'POST',
               body: { channel_id: channel_id, device_type: device_type, named_user_id: named_user_id }.to_json,
               path: "/named_users/associate",
-              content_type: "application/json",
+              content_type: described_class::CONTENT_TYPE,
             )
             expected_response
           end
