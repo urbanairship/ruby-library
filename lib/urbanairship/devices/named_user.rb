@@ -1,6 +1,5 @@
 require 'urbanairship'
 
-
 module Urbanairship
   module Devices
     class NamedUser
@@ -11,6 +10,17 @@ module Urbanairship
       def initialize(client: required('client'))
         @client = client
         @named_user_id =  nil
+      end
+
+      def update_attributes(attributes: required('attributes'))
+        response = @client.send_request(
+          method: 'POST',
+          body: Urbanairship::Attributes.new(attributes).payload.to_json,
+          path: named_users_path("#{@named_user_id}/attributes"),
+          content_type: CONTENT_TYPE,
+        )
+        logger.info { "Updated attributes for named_user #{@named_user_id}" }
+        response
       end
 
       def associate(channel_id: required('channel_id'), device_type: nil)
@@ -26,7 +36,7 @@ module Urbanairship
           method: 'POST',
           body: JSON.dump(payload),
           path: named_users_path('associate'),
-          content_type: 'application/json'
+          content_type: CONTENT_TYPE
         )
         logger.info { "Associated channel_id #{channel_id} with named_user #{@named_user_id}" }
         response
@@ -41,7 +51,7 @@ module Urbanairship
           method: 'POST',
           body: JSON.dump(payload),
           path: named_users_path('/disassociate'),
-          content_type: 'application/json'
+          content_type: CONTENT_TYPE
         )
         logger.info { "Dissociated channel_id #{channel_id}" }
         response
@@ -51,8 +61,8 @@ module Urbanairship
         fail ArgumentError,
            'named_user_id is required for lookup' if @named_user_id.nil?
         response = @client.send_request(
-            method: 'GET',
-            path: named_users_path('?id=' + @named_user_id),
+          method: 'GET',
+          path: named_users_path('?id=' + @named_user_id),
         )
         logger.info { "Retrieved information on named_user_id #{@named_user_id}" }
         response
@@ -102,7 +112,7 @@ module Urbanairship
           method: 'POST',
           body: JSON.dump(payload),
           path: named_users_path('/uninstall'),
-          content_type: 'application/json'
+          content_type: CONTENT_TYPE
         )
         logger.info { "Uninstalled named_user_ids #{@named_user_ids} " }
         response

@@ -4,6 +4,8 @@ require 'urbanairship/loggable'
 module Urbanairship
   # Features mixed in to all classes
   module Common
+    CONTENT_TYPE = 'application/json'
+
     def apid_path(path='')
       "/apids/#{path}"
     end
