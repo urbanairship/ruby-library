@@ -104,7 +104,7 @@ see `the API documentation
 Attributes
 ----------
 
-Add/remove/update attributes on a named user. For more information, see `the API documentation
+Set or remove attributes on a named user. For more information, see `the API documentation
 https://docs.airship.com/api/ua/#operation-api-named_users-named_user_id-attributes-post>`__
 
 .. code-block:: ruby
