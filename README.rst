@@ -1,6 +1,5 @@
-.. image:: https://travis-ci.org/urbanairship/ruby-library.svg?branch=master
-    :target: https://travis-ci.org/urbanairship/ruby-library
-
+.. image:: https://github.com/urbanairship/ruby-library/actions/workflows/ci.yaml/badge.svg
+    :target: https://github.com/urbanairship/ruby-library/
 About
 =====
 
