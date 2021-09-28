@@ -52,7 +52,7 @@ module Urbanairship
 
         raise ArgumentError.new("path and url can't be both nil") if path.nil? && url.nil?
 
-        headers = {'User-Agent' => 'UARubyLib/' + Urbanairship::VERSION}
+        headers = {'User-Agent' => 'UARubyLib/' + Urbanairship::VERSION + ' ' + @key}
         headers['Accept'] = 'application/vnd.urbanairship+json; version=3'
         headers['Content-Type'] = content_type unless content_type.nil?
         headers['Content-Encoding'] = encoding unless encoding.nil?

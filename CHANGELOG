@@ -1,4 +1,8 @@
 --------------------
+8.0.1
+--------------------
+- Adds `X-AIRSHIP-APPKEY` header tor equests
+--------------------
 8.0.0
 --------------------
 - Updates officially supported versions to 2.6.7 and 2.7.2
