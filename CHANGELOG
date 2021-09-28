@@ -1,7 +1,8 @@
 --------------------
 8.0.1
 --------------------
-- Adds `X-AIRSHIP-APPKEY` header tor equests
+- Adds app key to user agent string on request
+
 --------------------
 8.0.0
 --------------------
