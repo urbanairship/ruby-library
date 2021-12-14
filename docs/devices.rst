@@ -103,3 +103,19 @@ that have been iterated over by using the ``count`` method.
         puts(apid)
     end
     puts(apid_list.count)
+
+
+Subscription Lists
+---------
+
+Subscribe or Unsubscribe Channels to/from Subscription Lists.
+
+.. code-block:: ruby
+
+    require 'urbanairship'
+
+    UA = Urbanairship
+    airship = UA::Client.new(key:'application_key', secret:'master_secret')
+    subscription_lists = UA::SubscriptionLists.new(client: airship)
+    response = subscription_lists.subscribe(list_id: "some-list", email_addresses: ["test1@example.com", "test2@example.com"])
+    puts(response)
