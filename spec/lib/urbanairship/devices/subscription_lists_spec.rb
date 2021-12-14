@@ -45,6 +45,30 @@ describe Urbanairship::Devices do
           end
           expect(described_class.new(client: airship).subscribe(list_id, email_addresses)).to eq(expected_response)
         end
+
+        it 'fails and raises TypeError list_id is not a String' do
+          list_id = nil
+
+          expect{
+            described_class.new(client: airship).subscribe(list_id, email_addresses)
+          }.to raise_error(TypeError)
+        end
+
+        it 'fails and raises TypeError email_addresses is not an Array' do
+          email_addresses = nil
+
+          expect{
+            described_class.new(client: airship).subscribe(list_id, email_addresses)
+          }.to raise_error(TypeError)
+        end
+
+        it 'fails and raises TypeError an email address is not a String' do
+          email_addresses.push(123)
+
+          expect{
+            described_class.new(client: airship).subscribe(list_id, email_addresses)
+          }.to raise_error(TypeError)
+        end
       end
     end
   end

@@ -13,6 +13,10 @@ module Urbanairship
       end
 
       def subscribe(list_id, email_addresses)
+        fail TypeError, 'list_id string must be privided' unless list_id.is_a? String
+        fail TypeError, 'email_addresses array must be privided' unless email_addresses.is_a? Array
+        fail TypeError, 'each email address must be a string' unless email_addresses&.all? { |email| email.is_a? String }
+
         subscribe_payload = payload(SUBSCRIBE, list_id, email_addresses)
 
         response = @client.send_request(
