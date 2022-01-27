@@ -18,7 +18,7 @@ Simple broadcast to all devices
     push = airship.create_push
     push.audience = UA.all
     push.notification = UA.notification(alert: "Hello, world!")
-    push.device_types = UA.all
+    push.device_types = UA.device_types(['ios','android'])
     push.send_push
 
 
@@ -92,7 +92,7 @@ Rich Push with extra and without notification
 
     push = airship.create_push
     push.audience = UA.all
-    push.device_types = UA.all
+    push.device_types = UA.device_types(['ios','android'])
     push.message = UA.message(
       title: "Your package is on its way!",
       body: "<h1>Would you please complete our customer survey?</h1>",

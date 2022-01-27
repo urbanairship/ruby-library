@@ -119,7 +119,7 @@ Broadcast to All Devices
    p = airship.create_push
    p.audience = UA.all
    p.notification = UA.notification(alert: 'Hello')
-   p.device_types = UA.all
+   p.device_types = UA.device_types(['ios','android'])
    p.send_push
 
 Simple Tag Push
@@ -135,7 +135,7 @@ Simple Tag Push
    p = airship.create_push
    p.audience = UA.tag('some_tag')
    p.notification = UA.notification(alert: 'Hello')
-   p.device_types = UA.all
+   p.device_types = UA.device_types(['ios','android'])
    p.send_push
 
 Specify the Airship server used to make your requests

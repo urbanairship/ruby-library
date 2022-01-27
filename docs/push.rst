@@ -22,7 +22,7 @@ and device types:
     push = airship.create_push
     push.audience = UA.all
     push.notification = UA.notification(alert: 'Hello')
-    push.device_types = UA.all
+    push.device_types = UA.device_types(['ios','android'])
     push.send_push
 
 
@@ -442,12 +442,6 @@ types you wish to target with a list of strings:
 .. code-block:: ruby
 
     push.device_types = UA.device_types(['ios', 'android', 'web', 'open::example'])
-
-or with the ``all`` shortcut.
-
-.. code-block:: ruby
-
-    push.device_types = UA.all
 
 
 Delivery

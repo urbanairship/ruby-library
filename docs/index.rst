@@ -27,7 +27,7 @@ Using the library
 
 The library is intended to be used with the small footprint of a single
 import. To get started, import the package, and create an
-:rb:class:`Airship` object representing a single UA application.
+:rb:class:`Airship` object representing a single Airship project.
 
 Note that channels are preferred over ``device_token`` and ``apid``. See:
 `documentation on channels <channels>`_.
@@ -40,7 +40,7 @@ Note that channels are preferred over ``device_token`` and ``apid``. See:
     p = airship.create_push
     p.audience = UA.all
     p.notification = UA.notification(alert: 'Hello')
-    p.device_types = UA.all
+    p.device_types = UA.device_types(['ios','android'])
     p.send_push
 
 The library uses `unirest`_ for communication with the UA API.
