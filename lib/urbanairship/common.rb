@@ -66,6 +66,10 @@ module Urbanairship
       "/segments/#{path}"
     end
 
+    def tag_lists_path(path='')
+      "/tag-lists/#{path}"
+    end
+
     # Helper method for required keyword args in Ruby 2.0 that is compatible with 2.1+
     # @example
     #   def say(greeting: required('greeting'))
