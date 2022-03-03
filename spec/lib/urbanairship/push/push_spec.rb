@@ -34,7 +34,7 @@ describe Urbanairship::Push do
     p = UA::Push::Push.new(nil)
     p.audience = UA.all
     p.options = UA.options(expiry: some_expiry)
-    p.device_types = UA.all
+    p.device_types = UA.device_types(['ios','android'])
     p.message = UA.message(
         title: 'Title',
         body: 'Body',
@@ -65,7 +65,7 @@ describe Urbanairship::Push do
   let(:default_expected_payload) {
     {
         audience: 'all',
-        device_types: 'all',
+        device_types: ['ios','android'],
         options: { expiry: some_expiry },
         message: {
             title: 'Title',
