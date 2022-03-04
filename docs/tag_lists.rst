@@ -2,7 +2,7 @@ Tag Lists
 =========
 
 Bulk add and/or remove tags by uploading a CSV file of Airship users. For more
-information about the use of this endpoint, incluiding CSV file formatting  requirements
+information about the use of this endpoint, incluiding CSV file formatting requirements
 please see `the Airship Tag Lists API documentation 
 <https://docs.airship.com/api/ua/#tag-tag-lists>`__
 
