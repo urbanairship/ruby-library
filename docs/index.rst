@@ -66,6 +66,7 @@ Contents:
    named_user.rst
    reports.rst
    static_lists.rst
+   tag_lists.rst
    exceptions.rst
    examples.rst
    create_and_send.rst
