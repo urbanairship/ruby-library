@@ -1,3 +1,9 @@
+9.0.0
+--------------------
+- Adds Tag List API Support
+- Removes location lookup endpoints
+- Removes location-based audience selectors
+- Removes `all` audience selector
 --------------------
 8.0.1
 --------------------
