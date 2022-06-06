@@ -175,6 +175,16 @@ Finally, you can change the targeted server on a request basis:
    # The Urbanairship configuration is overridden by the client and the
    # request will be sent to the 'go.urbanairship.com' server
 
+Use Bearer Token Auth (where available)
+---------------------------------------
+
+.. code-block:: ruby
+
+    require 'urbanairship'
+
+    UA = Urbanairship
+    airship = UA::Client.new(key:'application_key', token:'token')
+
 Contributing
 ============
 
