@@ -81,7 +81,7 @@ describe Urbanairship::Client do
     expect(RestClient::Request).to(receive(:execute).with(include(headers: include(expected_headers))))
                                .and_return(mock_response)
 
-    ua_client = UA::Client.new(key: '123', secret: 'abc', token: 'test-token')
-    ua_client.send_request(method: 'POST', path: UA.channel_path, auth_type: :bearer)
+    ua_client = UA::Client.new(key: '123', token: 'test-token')
+    ua_client.send_request(method: 'POST', url: UA::Common::CHANNEL_URL, auth_type: :bearer)
   end
 end
