@@ -8,7 +8,7 @@ describe Urbanairship::CustomEvents::CustomEvent do
   let(:key) { '11111' }
   let(:secret) { '22222' }
   let(:token) { '33333' }
-  let(:client) { UA::Client.new(key: key, secret: secret, token: token) }
+  let(:client) { UA::Client.new(key: key, token: token) }
 
   describe '#create' do
     subject do
