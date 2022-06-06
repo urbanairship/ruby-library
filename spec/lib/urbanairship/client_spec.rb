@@ -82,6 +82,6 @@ describe Urbanairship::Client do
                                .and_return(mock_response)
 
     ua_client = UA::Client.new(key: '123', token: 'test-token')
-    ua_client.send_request(method: 'POST', url: UA::Common::CHANNEL_URL, auth_type: :bearer)
+    ua_client.send_request(method: 'POST', url: UA.channel_path, auth_type: :bearer)
   end
 end
