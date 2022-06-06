@@ -6,7 +6,6 @@ require 'urbanairship/custom_events/payload'
 describe Urbanairship::CustomEvents::CustomEvent do
   UA = Urbanairship
   let(:key) { '11111' }
-  let(:secret) { '22222' }
   let(:token) { '33333' }
   let(:client) { UA::Client.new(key: key, token: token) }
 
