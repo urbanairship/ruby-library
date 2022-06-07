@@ -175,17 +175,21 @@ Finally, you can change the targeted server on a request basis:
    # The Urbanairship configuration is overridden by the client and the
    # request will be sent to the 'go.urbanairship.com' server
 
-Use Bearer Token Auth (where available)
----------------------------------------
+Using Bearer Token Auth
+-----------------------
 
 .. code-block:: ruby
 
-    require 'urbanairship'
+   require 'urbanairship'
 
-    UA = Urbanairship
-    airship = UA::Client.new(key:'application_key', token:'token')
-    # If you include a token in your instantiation, the request will use token auth.
-    # Token auth is required for certain endpoints, but not supported on others.
+   UA = Urbanairship
+   airship = UA::Client.new(key:'application_key', token:'token')
+   # Then continue as you would otherwise
+
+**Note**: If you include a token in your instantiation, the request
+will use bearer token auth. Bearer token auth is required for some
+endpoints, but not supported by others. Please check `the Airship
+docs site <https://docs.airship.com/>`_ to see where it is supported.
 
 Contributing
 ============
