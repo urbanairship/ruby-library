@@ -184,6 +184,8 @@ Use Bearer Token Auth (where available)
 
     UA = Urbanairship
     airship = UA::Client.new(key:'application_key', token:'token')
+    # If you include a token in your instantiation, the request will use token auth.
+    # Token auth is required for certain endpoints, but not supported on others.
 
 Contributing
 ============
