@@ -15,10 +15,9 @@ module Urbanairship
       # @param [Object] secret Application Secret
       # @param [String] server Airship server to use ("go.airship.eu" or "go.urbanairship.com").
       #                        Used only when the request is sent with a "path", not an "url".
-      # @param [String] token Application Auth Token (for custom events endpoint)
+      # @param [String] token Application Auth Token
       # @return [Object] Client
-      def initialize(key: required('key'), secret: required('secret'),
-                     server: Urbanairship.configuration.server, token: nil)
+      def initialize(key: required('key'), secret: nil, server: Urbanairship.configuration.server, token: nil)
         @key = key
         @secret = secret
         @server = server
@@ -82,6 +81,7 @@ module Urbanairship
         }
 
         if auth_type == :basic
+          raise ArgumentError.new('secret must be provided as argument if auth_type=basic') if @secret.nil?
           params[:user] = @key
           params[:password] = @secret
         end
