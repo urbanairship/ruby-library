@@ -102,6 +102,6 @@ describe Urbanairship::Client do
                                .and_return(mock_response)
 
     ua_client = UA::Client.new(key: '123', token: 'test-token')
-    ua_client.send_request(method: 'POST', path: UA.custom_events_path)
+    ua_client.send_request(method: 'POST', path: UA.push_path)
   end
 end
