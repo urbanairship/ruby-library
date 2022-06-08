@@ -1,8 +1,16 @@
+--------------------
+9.1.0
+--------------------
+- All requests will now automatically attempt to authenticate with bearer token auth if a token is included in the instantiation of the client. Previously, only custom events requests could use bearer token auth in this library. You can find more information about how to use bearer token auth in the README.
+- Also fixes an issue where a secret was required even when bearer token auth was being used (it is no longer required).
+
+--------------------
 9.0.0
 --------------------
 - Adds Tag List API Support
 - Removes location lookup endpoints
 - Removes location-based audience selectors
+
 --------------------
 8.0.1
 --------------------
