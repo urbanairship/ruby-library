@@ -28,7 +28,7 @@ The library is intended to be used with the small footprint of a single
 import. To get started, import the package, and create an
 :rb:class:`Airship` object representing a single Airship project.
 
-The library uses `unirest`_ for communication with the Airship API.
+The library uses `rest-client <https://github.com/rest-client/rest-client>`_ for communication with the Airship API.
 
 .. code-block:: ruby
 
@@ -42,19 +42,19 @@ The library uses `unirest`_ for communication with the Airship API.
     p.send_push
 
 We in the process of migrating code examples away from these docs and into the
-regular `Airship API reference <reference>`_ (select "Ruby Library"), so please
-check there for more examples.
+regular `Airship API reference <https://docs.airship.com/api/ua/>`_ 
+(select "Ruby Library"), so please check there for more examples.
 
-Please also see the README in the source code for detailed instructions on how
-to use bearer token auth and alternative servers.
+Please also see `the README <https://github.com/urbanairship/ruby-library/blob/main/README.rst>`_
+for detailed instructions on how to use bearer token auth and alternative servers.
 
 
 Development
 -----------
 
-The library source code is `available on GitHub <github>`_.
+The library source code is `available on GitHub <https://github.com/urbanairship/ruby-library>`_.
 
-Tests can be run with rspec_:
+Tests can be run with `rspec <https://rspec.info/>`_.
 
 Contents:
 
@@ -87,9 +87,3 @@ Indices and tables
 * :ref:`genindex`
 * :ref:`modindex`
 * :ref:`search`
-
-
-.. _reference: https://docs.airship.com/api/ua/
-.. _unirest: http://unirest.io/ruby.html
-.. _github: https://github.com/urbanairship/ruby-library
-.. _rspec: https://nose.readthedocs.org/en/latest/
