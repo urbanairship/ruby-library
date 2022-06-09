@@ -1,9 +1,8 @@
 Airship Ruby Library
-==========================
+====================
 
 ``urbanairship`` is a Ruby library for using the `Airship
-<http://airship.com/>`_ web service API for push notifications and
-rich app pages.
+<http://airship.com/>`_ web service API for messaging.
 
 
 Installation
@@ -29,8 +28,7 @@ The library is intended to be used with the small footprint of a single
 import. To get started, import the package, and create an
 :rb:class:`Airship` object representing a single Airship project.
 
-Note that channels are preferred over ``device_token`` and ``apid``. See:
-`documentation on channels <channels>`_.
+The library uses `rest-client <https://github.com/rest-client/rest-client>`_ for communication with the Airship API.
 
 .. code-block:: ruby
 
@@ -43,15 +41,20 @@ Note that channels are preferred over ``device_token`` and ``apid``. See:
     p.device_types = UA.device_types(['ios','android'])
     p.send_push
 
-The library uses `unirest`_ for communication with the UA API.
+We in the process of migrating code examples away from these docs and into the
+regular `Airship API reference <https://docs.airship.com/api/ua/>`_ 
+(select "Ruby Library"), so please check there for more examples.
+
+Please also see `the README <https://github.com/urbanairship/ruby-library/blob/main/README.rst>`_
+for detailed instructions on how to use bearer token auth and alternative servers.
 
 
 Development
 -----------
 
-The library source code is `available on GitHub <github>`_.
+The library source code is `available on GitHub <https://github.com/urbanairship/ruby-library>`_.
 
-Tests can be run with rspec_:
+Tests can be run with `rspec <https://rspec.info/>`_.
 
 Contents:
 
@@ -84,9 +87,3 @@ Indices and tables
 * :ref:`genindex`
 * :ref:`modindex`
 * :ref:`search`
-
-
-.. _channels: http://docs.airship.com/topic-guides/channels.html
-.. _unirest: http://unirest.io/ruby.html
-.. _github: https://github.com/urbanairship/ruby-library
-.. _rspec: https://nose.readthedocs.org/en/latest/
