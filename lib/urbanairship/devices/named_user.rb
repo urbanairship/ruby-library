@@ -42,6 +42,24 @@ module Urbanairship
         response
       end
 
+      def associate_by_email_address(email_address: required('email_address'))
+        fail ArgumentError,
+             'named_user_id is required for association' if @named_user_id.nil?
+
+        payload = {}
+        payload['email_address'] = email_address
+        payload['named_user_id'] = @named_user_id.to_s
+
+        response = @client.send_request(
+          method: 'POST',
+          body: JSON.dump(payload),
+          path: named_users_path('associate'),
+          content_type: CONTENT_TYPE
+        )
+        logger.info { "Associated email_address #{email_address} with named_user #{@named_user_id}" }
+        response
+      end
+
       def disassociate(channel_id: required('channel_id'), device_type: nil)
         payload = {}
         payload['channel_id'] = channel_id

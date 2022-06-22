@@ -7,6 +7,7 @@ describe Urbanairship::Devices do
   let(:channel_id) { '123' }
   let(:device_type) { 'android' }
   let(:named_user_id) { 'user' }
+  let(:email_address) { 'whales@example.com' }
 
   named_user = nil
 
@@ -108,6 +109,48 @@ describe Urbanairship::Devices do
         named_user_without_id = UA::NamedUser.new(client: airship)
         expect {
           named_user_without_id.associate(channel_id:'123', device_type:'android')
+        }.to raise_error(ArgumentError)
+      end
+    end
+
+    describe '#associate_by_email_address' do
+      describe 'Request' do
+        after(:each) { named_user.associate_by_email_address(email_address: email_address) }
+
+        it 'makes the expected request' do
+          allow(airship).to receive(:send_request) do |arguments|
+            expect(arguments).to eq(
+              method: 'POST',
+              body: { email_address: email_address, named_user_id: named_user_id }.to_json,
+              path: "/named_users/associate",
+              content_type: described_class::CONTENT_TYPE,
+            )
+            expected_response
+          end
+        end
+
+        context 'Named user ID is an integer' do
+          let(:named_user_id) { 1985 }
+
+          it 'converts named user ID to a string' do
+            allow(airship).to receive(:send_request) do |arguments|
+              expect(JSON.parse(arguments[:body], symbolize_names: true)[:named_user_id]).to eq named_user_id.to_s
+              expected_response
+            end
+          end
+        end
+      end
+
+      it 'associates a email_address with a named_user' do
+        allow(airship).to receive(:send_request).and_return(expected_response)
+        actual_resp = named_user.associate_by_email_address(email_address: email_address)
+        expect(actual_resp).to eq(expected_response)
+      end
+
+      it 'fails when the user_id is not set' do
+        named_user_without_id = UA::NamedUser.new(client: airship)
+        expect {
+          named_user_without_id.associate_by_email_address(email_address: email_address)
         }.to raise_error(ArgumentError)
       end
     end
