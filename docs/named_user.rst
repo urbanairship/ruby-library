@@ -40,6 +40,23 @@ Associate a channel with a named user ID. For more information, see
 
     Do not include a ``device_type`` for Web and Open platform associations.
 
+Association by email
+-----------
+
+Associate an email with a named user ID. For more information, see
+`the API documentation
+<http://docs.airship.com/api/ua.html#association>`__
+
+.. code-block:: ruby
+
+    require 'urbanairship'
+    UA = Urbanairship
+    airship = UA::Client.new(key:'application_key', secret:'app_or_master_secret')
+    named_user = UA::NamedUser.new(client: airship)
+    named_user.named_user_id = 'named_user'
+    named_user.associate_by_email_address(email_address: 'email_address')
+
+
 Disassociation
 --------------
 
