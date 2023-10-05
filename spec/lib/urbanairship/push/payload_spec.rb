@@ -177,6 +177,7 @@ describe Urbanairship do
           expiry: 'time',
           category: 'test',
           priority: 5,
+          thread_id: "test",
           interactive: {
             type: 'a_type',
             button_actions: {
@@ -192,6 +193,7 @@ describe Urbanairship do
                                 expiry: 'time',
                                 category: 'test',
                                 priority: 5,
+                                thread_id: "test",
                                 interactive: {
                                   type: 'a_type',
                                   button_actions: {

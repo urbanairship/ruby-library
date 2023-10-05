@@ -34,7 +34,7 @@ module Urbanairship
       def ios(alert: nil, badge: nil, sound: nil, content_available: nil,
               extra: nil, expiry: nil, priority: nil, category: nil,
               interactive: nil, mutable_content: nil, media_attachment: nil,
-              title: nil, subtitle: nil, collapse_id: nil)
+              title: nil, subtitle: nil, collapse_id: nil, thread_id: nil)
         compact_helper({
           alert: alert,
           badge: badge,
@@ -49,7 +49,8 @@ module Urbanairship
           media_attachment: media_attachment,
           title: title,
           subtitle: subtitle,
-          collapse_id: collapse_id
+          collapse_id: collapse_id,
+          thread_id: thread_id
         })
       end
 
