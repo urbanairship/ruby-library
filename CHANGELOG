@@ -1,4 +1,9 @@
 --------------------
+9.1.1
+--------------------
+- Adds thread_id Support
+
+--------------------
 9.1.0
 --------------------
 - All requests will now automatically attempt to authenticate with bearer token auth if a

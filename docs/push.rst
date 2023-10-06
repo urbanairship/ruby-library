@@ -218,6 +218,7 @@ platform-specific alerts, and we set a number of other platform-specific options
             extra: { 'key' => 'value', 'key2' => 'value2' },
             expiry: '2019-01-01 12:45:00',
             category: 'category_name',
+            thread_id: 'thread_test',
             interactive: UA.interactive(
                 type: 'ua_share',
                 button_actions: {
