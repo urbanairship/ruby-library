@@ -6,7 +6,6 @@ on:
 
 jobs:
   test:
-
     runs-on: ubuntu-latest
 
     strategy:
@@ -23,6 +22,10 @@ jobs:
         run: bundle install
       - name: Run tests
         run: bundle exec rake
+      - name: Set up Git user
+        run: |
+          git config --global user.email "customer-engineering@urbanairship.com"
+          git config --global user.name "customer-engineering"
       - name: Publish to RubyGems
         uses: cadwallion/publish-rubygems-action@master
         env:
