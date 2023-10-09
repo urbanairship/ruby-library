@@ -28,6 +28,6 @@ jobs:
           RUBYGEMS_API_KEY: ${{secrets.RUBYGEMS_API_KEY}}
           GUTHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
           RELEASE_COMMAND: |
-            git config user.email "customer-engineering@urbanairship.com" &&
-            git config user.name "customer-engineering" &&
+            git config --global user.email "customer-engineering@urbanairship.com" &&
+            git config --global user.name "customer-engineering" &&
             rake release
