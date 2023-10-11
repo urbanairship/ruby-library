@@ -26,5 +26,5 @@ jobs:
         uses: cadwallion/publish-rubygems-action@master
         env:
           RUBYGEMS_API_KEY: ${{secrets.RUBYGEMS_API_KEY}}
-          GUTHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
-          RELEASE_COMMAND: ./release.sh
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+          RELEASE_COMMAND: rake release
