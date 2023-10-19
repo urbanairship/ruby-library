@@ -34,7 +34,7 @@ module Urbanairship
       def ios(alert: nil, badge: nil, sound: nil, content_available: nil,
               extra: nil, expiry: nil, priority: nil, category: nil,
               interactive: nil, mutable_content: nil, media_attachment: nil,
-              title: nil, subtitle: nil, collapse_id: nil, thread_id: nil)
+              title: nil, subtitle: nil, collapse_id: nil, thread_id: nil, live_activity: nil)
         compact_helper({
           alert: alert,
           badge: badge,
@@ -50,7 +50,8 @@ module Urbanairship
           title: title,
           subtitle: subtitle,
           collapse_id: collapse_id,
-          thread_id: thread_id
+          thread_id: thread_id,
+          live_activity: live_activity
         })
       end
 
@@ -77,7 +78,7 @@ module Urbanairship
                   public_notification: nil, sound: nil, priority: nil, collapse_key: nil,
                   time_to_live: nil, delivery_priority: nil, delay_while_idle: nil,
                   local_only: nil, wearable: nil, background_image: nil, extra_pages: nil,
-                  interactive: nil)
+                  interactive: nil, live_update: nil)
         compact_helper({
           title: title,
           alert: alert,
@@ -99,7 +100,8 @@ module Urbanairship
           delay_while_idle: delay_while_idle,
           local_only: local_only,
           wearable: wearable,
-          interactive: interactive
+          interactive: interactive,
+          live_update: live_update
         })
       end
 
@@ -215,10 +217,26 @@ module Urbanairship
         types
       end
 
-      # Expiry for a Rich Message
-      def options(expiry: required('expiry'))
-        { expiry: expiry }
-      end
+      # Options for a message
+      def options(
+        expiry: nil,
+        bypass_frequency_limits: nil,
+        bypass_holdout_groups: nil,
+        no_throttle: nil,
+        omit_from_activity_log: nil,
+        personalization: nil,
+        redact_payload: nil
+    )
+      compact_helper(
+        expiry: expiry,
+        bypass_frequency_limits: bypass_frequency_limits,
+        bypass_holdout_groups: bypass_holdout_groups,
+        no_throttle: no_throttle,
+        omit_from_activity_log: omit_from_activity_log,
+        personalization: personalization,
+        redact_payload: redact_payload
+      )
+    end
 
       # Actions for a Push Notification Object
       def actions(add_tag: nil, remove_tag: nil, open_: nil, share: nil,
@@ -294,6 +312,57 @@ module Urbanairship
           background_image: background_image,
           extra_pages: extra_pages,
           interactive: interactive,
+        })
+      end
+      
+      # iOS Live Activity
+      def live_activity(
+        event: required('event'), 
+        alert: nil, 
+        name: required('name'), 
+        priority: nil, 
+        content_state: nil, 
+        relevance_score: nil, 
+        stale_date: nil, 
+        dismissal_date: nil, 
+        timestamp: nil
+      )
+        valid_events = ['update', 'end']
+        fail ArgumentError, 'Invalid event type' unless valid_events.include?(event)
+        fail ArgumentError, 'priority must be 5 or 10' if priority && ![5, 10].include?(priority)
+      
+        compact_helper({
+          event: event,
+          alert: alert,
+          name: name,
+          priority: priority,
+          content_state: content_state,
+          relevance_score: relevance_score,
+          stale_date: stale_date,
+          dismissal_date: dismissal_date,
+          timestamp: timestamp
+        })
+      end
+      
+      # Android Live Update
+      def live_update(
+        event: required('event'), 
+        name: required('name'), 
+        content_state: nil, 
+        type: nil, 
+        dismissal_date: nil, 
+        timestamp: nil
+      )
+        valid_events = ['start', 'update', 'end']
+        fail ArgumentError, 'Invalid event type' unless valid_events.include?(event)
+      
+        compact_helper({
+          event: event,
+          name: name,
+          content_state: content_state,
+          type: type,
+          dismissal_date: dismissal_date,
+          timestamp: timestamp
         })
       end
     end
