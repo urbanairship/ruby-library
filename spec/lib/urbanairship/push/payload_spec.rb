@@ -26,6 +26,25 @@ describe Urbanairship do
       date = '2015-04-01T12:00:00'
       expect(UA.options(expiry: date)).to eq(expiry: date)
     end
+
+    it 'tests options parameters' do
+      expect(UA.options(bypass_frequency_limits: true)).to eq(bypass_frequency_limits: true)
+      expect(UA.options(bypass_holdout_groups: true)).to eq(bypass_holdout_groups: true)
+      expect(UA.options(no_throttle: true)).to eq(no_throttle: true)
+      expect(UA.options(omit_from_activity_log: true)).to eq(omit_from_activity_log: true)
+      expect(UA.options(personalization: true)).to eq(personalization: true)
+      expect(UA.options(redact_payload: true)).to eq(redact_payload: true)
+      multiple_options = {
+          expiry: '2023-04-01T12:00:00',
+          bypass_frequency_limits: true,
+          bypass_holdout_groups: false,
+          no_throttle: true,
+          omit_from_activity_log: false,
+          personalization: true,
+          redact_payload: false
+      }
+      expect(UA.options(**multiple_options)).to eq(multiple_options)
+    end
   end
 
 
@@ -184,7 +203,10 @@ describe Urbanairship do
               yes: { add_tag: 'clicked_yes' },
               no: { add_tag: 'clicked_no' }
             }
-          }))
+          },
+          live_activity: UA.live_activity(
+            name: "Test", 
+            event: "update")))
         expect(payload).to eq(ios: {
                                 alert: 'Hello',
                                 badge: '+1',
@@ -200,6 +222,10 @@ describe Urbanairship do
                                     yes: { add_tag: 'clicked_yes' },
                                     no: { add_tag: 'clicked_no' }
                                   }
+                                },
+                                live_activity: {
+                                  name: "Test",
+                                  event: "update"
                                 }
                               })
       end
