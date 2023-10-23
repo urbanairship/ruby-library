@@ -1,108 +1,130 @@
---------------------
-9.1.1
---------------------
+## 9.2.0
+
+- Adds support for iOS Live Activity and Android Live Update
+- Adds bypass_frequency_limits, bypass_holdout_groups, no_throttle, omit_from_activity_log, personalization, redact_payload parameters for push options
+
+---
+
+## 9.1.1
+
 - Adds thread_id Support
 
---------------------
-9.1.0
---------------------
-- All requests will now automatically attempt to authenticate with bearer token auth if a
-token is included in the instantiation of the client. Previously, only custom events requests 
-could use bearer token auth in this library. You can find more information about how to use 
-bearer token auth in the README.
-- Also fixes an issue where a secret was required even when bearer token auth was being used 
-(it is no longer required).
+---
 
---------------------
-9.0.0
---------------------
+## 9.1.0
+
+- All requests will now automatically attempt to authenticate with bearer token auth if a
+  token is included in the instantiation of the client. Previously, only custom events requests
+  could use bearer token auth in this library. You can find more information about how to use
+  bearer token auth in the README.
+- Also fixes an issue where a secret was required even when bearer token auth was being used
+  (it is no longer required).
+
+---
+
+## 9.0.0
+
 - Adds Tag List API Support
 - Removes location lookup endpoints
 - Removes location-based audience selectors
 
---------------------
-8.0.1
---------------------
+---
+
+## 8.0.1
+
 - Adds app key to user agent string on request
 
---------------------
-8.0.0
---------------------
+---
+
+## 8.0.0
+
 - Updates officially supported versions to 2.6.7 and 2.7.2
 - Fixes headers to reduce warning messages
 - Fixes for multiple mis-set named user urls
 - Fix to automatically convert an integer named user to a string so it can be successfully submitted
 - Adds attribute support for named users
 
---------------------
-7.0.0
---------------------
+---
+
+## 7.0.0
+
 - Refactors base url naming
 
---------------------
-6.0.0
---------------------
+---
+
+## 6.0.0
+
 - Creates custom base url, and refactors urls within classes
 - Adds support for sending custom events
 
---------------------
-5.9.0
---------------------
+---
+
+## 5.9.0
+
 - Adds support for bearer token auth
 - Updates broken code for static lists
-- Adds support for update sms channel 
+- Adds support for update sms channel
 
---------------------
-5.8.0
---------------------
+---
+
+## 5.8.0
+
 - Adds scheudling support for PTSO
-- Adds attribute support 
+- Adds attribute support
 
---------------------
-5.7.0
---------------------
+---
+
+## 5.7.0
+
 - Adds Automation support
 - Adds A/B test support
 
---------------------
-5.6.1
---------------------
-- Updates EmailNotification templating 
+---
 
---------------------
-5.6.0
---------------------
+## 5.6.1
+
+- Updates EmailNotification templating
+
+---
+
+## 5.6.0
+
 - Refactors EmailNotification class
 - Adds Create and Send implementation to Open Channel class
 
---------------------
-5.5.1
---------------------
-- Updates validate_url method 
+---
 
---------------------
-5.5.0
---------------------
+## 5.5.1
+
+- Updates validate_url method
+
+---
+
+## 5.5.0
+
 - Add Create and Send Functionality for Email
 - Add endpoints for Create and Send Validation and Scheduling
 - Add Create and Send Functionality for SMS
 - Update Rake version from 10.0 to 12.3.3
 
---------------------
-5.4.0
---------------------
+---
+
+## 5.4.0
+
 - Change BASE_URL to go.airship.com
 
---------------------
-5.3.0
---------------------
+---
+
+## 5.3.0
+
 - Updates Sphinx version on Ruby Lib docs
 - Fixes date in footer
 - Updates instances of 'Urbain Airship' to 'Airship' excluding method names
 
---------------------
-5.2.0
---------------------
+---
+
+## 5.2.0
+
 - Updates automatic timeout for API request from 5 seconds to 60
 - Adds SMS Register implementation. Register, Opt-out, Uninstall, Lookup
 - Adds SMS Send functionality for Notification object
@@ -110,36 +132,42 @@ bearer token auth in the README.
 - Adds Email Send support
 - Adds Email Registration support
 
---------------------
-5.1.0
---------------------
+---
+
+## 5.1.0
+
 - Adds functionality for custom logger
 
---------------------
-5.0.1
---------------------
+---
+
+## 5.0.1
+
 - Fix bug with named user association/disassociation
 
---------------------
-5.0.0
---------------------
+---
+
+## 5.0.0
+
 - Add support for Web Notify, expand Open Platform support
 - Removing support for Feedback API (EOL July 2018)
 - Removing support for Device Token Count (also EOL in 2018)
 
---------------------
-4.1.1
---------------------
+---
+
+## 4.1.1
+
 - Added configuration value for timeout.
 
---------------------
-4.1.0
---------------------
+---
+
+## 4.1.0
+
 - Added support for Open Channels
 
---------------------
-4.0.0
---------------------
+---
+
+## 4.0.0
+
 - Added support for in-app messages
 - Added support for iOS priority
 - Added config class, allowing you to define log level and log location
@@ -149,41 +177,48 @@ bearer token auth in the README.
 - Removed support for Blackberry and MPNS platforms
 - Removed support for per-push reports
 
---------------------
-3.2.4
---------------------
+---
+
+## 3.2.4
+
 - Replace unirest dependency with rest-client
 
---------------------
-3.2.3
---------------------
+---
+
+## 3.2.3
+
 - Added support for named user audience selector
 
---------------------
-3.2.2
---------------------
+---
+
+## 3.2.2
+
 - Bug fix: only open a single copy of the log file
 
---------------------
-3.2.1
---------------------
+---
+
+## 3.2.1
+
 - Bug fix: allow audience tag selector to specify tag group if desired
 
---------------------
-3.2.0
---------------------
+---
+
+## 3.2.0
+
 - Added support for static lists
 - Added support for device tokens, APIDs, and Blackberry PINs
 - Added support for locations
 
---------------------
-3.1.1
---------------------
+---
+
+## 3.1.1
+
 - Changed UA to Urbanairship in client.rb to fix aliasing issue
 
---------------------
-3.1.0
---------------------
+---
+
+## 3.1.0
+
 - Added documentation files
 - Added support for ChannelInfo and ChannelList
 - Added support for segments
@@ -193,19 +228,22 @@ bearer token auth in the README.
 - Added support for named user
 - Added support for reports
 
---------------------
-3.0.2
---------------------
+---
+
+## 3.0.2
+
 - Resolve compatibility issues with Rails ActiveSupport
 
---------------------
-3.0.1
---------------------
+---
+
+## 3.0.1
+
 - Updating Gemspec to show required Ruby Version correctly
 
---------------------
-3.0.0
---------------------
+---
+
+## 3.0.0
+
 - added CHANGELOG
 - rewrite with v3 support for push and scheduled push
 - backwards incompatible with previous versions of library
