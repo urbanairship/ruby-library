@@ -6,9 +6,9 @@ describe Urbanairship::Configuration do
   subject(:config) { described_class.new }
 
   describe '#base_url' do
-    let(:default_server) { 'go.urbanairship.com' }
+    let(:default_server) { 'api.asnapius.com' }
 
-    it 'initializes with the original value "go.urbanairship.com"' do
+    it 'initializes with the original value "api.asnapius.com"' do
       expect(config.server).to eq(default_server)
     end
 

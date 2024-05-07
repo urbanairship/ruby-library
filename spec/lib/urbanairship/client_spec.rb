@@ -1,5 +1,6 @@
 require 'spec_helper'
 require 'urbanairship/client'
+require 'jwt'
 
 describe Urbanairship::Client do
   UA = Urbanairship
@@ -103,5 +104,28 @@ describe Urbanairship::Client do
 
     ua_client = UA::Client.new(key: '123', token: 'test-token')
     ua_client.send_request(method: 'POST', path: UA.push_path)
+  end
+
+  it 'is instantiated with oauth' do
+    oauth = UA::Oauth.new(client_id: 'client123', key: '123', assertion_private_key: 'test')
+    ua_client = UA::Client.new(key: '123', oauth: oauth)
+    expect(ua_client).not_to be_nil
+  end
+
+  it 'creates token with oauth' do
+    token = 'test token'
+
+    mock_response = double('response')
+    allow(mock_response).to(receive_messages(code: 200, headers: '', body: '{}'))
+
+    oauth = UA::Oauth.new(client_id: 'client123', key: '123', assertion_private_key: 'secret123')
+    ua_client = UA::Client.new(key: '123', oauth: oauth)
+    allow(oauth).to receive(:get_token).and_return(token)
+    allow(JWT).to receive(:decode).and_return([{'exp'=> Time.now.to_i + 3600}])
+
+    allow(RestClient::Request).to(receive(:execute)).and_return(mock_response)
+    ua_client.send_request(method: 'POST', path: UA.push_path)
+
+    expect(ua_client.token == token)
   end
 end
