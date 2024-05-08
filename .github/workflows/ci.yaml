@@ -17,6 +17,9 @@ jobs:
         uses: ruby/setup-ruby@477b21f02be01bcb8030d50f37cfec92bfa615b6
         with:
           ruby-version: ${{ matrix.ruby-version }}
+          bundler: none
+      - name: Install bundler 2.4
+        run: gem install bundler -v 2.4.22
       - name: Install dependencies
         run: bundle install
       - name: Run tests

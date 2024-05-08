@@ -66,7 +66,8 @@ In your app initialization, you can do something like the following:
    require 'urbanairship'
 
    Urbanairship.configure do |config|
-     config.server = 'go.airship.eu'
+     config.server = 'api.asnapieu.com'
+     config.oauth_server = 'oauth2.asnapieu.com'
      config.log_path = '/path/to/your/logfile'
      config.log_level = Logger::WARN
      config.timeout = 60
@@ -87,10 +88,11 @@ If you want to use a custom logger (e.g Rails.logger), you can do:
 Available Configurations
 ------------------------
 
-- **log_path**: Allows to define the folder where the log file will be created (the default is nil).
-- **log_level**: Allows to define the log level and only messages at that level or higher will be printed (the default is INFO).
-- **server**: Allow to define the Airship server you want to use ("go.airship.eu" or "go.urbanairship.com")
-- **timeout**: Allows to define the request timeout in seconds (the default is 5).
+- **log_path**: Allows you to define the folder where the log file will be created (the default is nil).
+- **log_level**: Allows you to define the log level and only messages at that level or higher will be printed (the default is INFO).
+- **server**: Allows you to define the Airship server you want to use ("api.asnapieu.com" for EU or "api.asnapius.com" for US)
+- **oauth_server** Allows you to define the Airship Oauth server you want to use ("oauth2.asnapieu.com" for EU or "oauth2.asnapius.com" for US)
+- **timeout**: Allows you to define the request timeout in seconds (the default is 5).
 
 
 Usage
@@ -140,7 +142,7 @@ Simple Tag Push
 
 Specify the Airship server used to make your requests
 -----------------------------------------------------
-By default, the request will be sent to the 'go.urbanairship.com' server:
+By default, the request will be sent to the 'api.asnapius.com' server:
 
 .. code-block:: ruby
 
@@ -155,11 +157,11 @@ You can change the server globally in the Urbanairship configuration:
    require 'urbanairship'
 
    Urbanairship.configure do |config|
-     config.server = 'go.airship.eu'
+     config.server = 'api.asnapieu.com'
    end
 
    Urbanairship::Client.new(key:'application_key', secret:'master_secret')
-   # request will be sent to the 'go.airship.eu' server
+   # request will be sent to the 'api.asnapieu.com' server
 
 Finally, you can change the targeted server on a request basis:
 
@@ -168,12 +170,12 @@ Finally, you can change the targeted server on a request basis:
    require 'urbanairship'
 
    Urbanairship.configure do |config|
-     config.server = 'go.airship.eu'
+     config.server = 'api.asnapieu.com'
    end
 
-   Urbanairship::Client.new(key:'application_key', secret:'master_secret', server: 'go.urbanairship.com')
+   Urbanairship::Client.new(key:'application_key', secret:'master_secret', server: 'api.asnapius.com')
    # The Urbanairship configuration is overridden by the client and the
-   # request will be sent to the 'go.urbanairship.com' server
+   # request will be sent to the 'api.asnapius.com' server
 
 Using Bearer Token Auth
 -----------------------
@@ -190,6 +192,32 @@ Using Bearer Token Auth
 will use bearer token auth. Bearer token auth is required for some
 endpoints, but not supported by others. Please check `the Airship
 docs site <https://docs.airship.com/>`_ to see where it is supported.
+
+Using Oauth
+-----------
+.. code-block:: ruby
+
+    require 'urbanairship'
+
+    UA = Urbanairship
+    app_key = 'application_key'
+
+    oauth = UA::Oauth.new(
+      client_id: 'client_id',
+      key: app_key,
+      assertion_private_key: 'your_private_key',
+      scopes: ['psh', 'chn'], # Optional
+      ip_addresses: ['23.74.131.15/22'], # Optional
+      oauth_server: 'api.asnapieu.com' # Optional
+    )
+    airship = UA::Client.new(key: app_key, oauth: oauth)
+    # Then continue as you would otherwise
+
+**Note**: You can not use both Oauth and bearer token auth
+at the same time. Oauth also cannot be used with the older
+'api.urbanairship.com' and 'api.airship.eu' base URLs. Lastly
+there are some endpoints in which Oauth is not supported.
+Please check `the Airship docs site <https://docs.airship.com/>`_ to see where it is supported.
 
 Contributing
 ============

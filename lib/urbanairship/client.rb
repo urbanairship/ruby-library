@@ -1,11 +1,12 @@
 require 'json'
 require 'rest-client'
 require 'urbanairship'
+require 'jwt'
 
 
 module Urbanairship
     class Client
-      attr_accessor :key, :secret
+      attr_accessor :key, :secret, :token
       include Urbanairship::Common
       include Urbanairship::Loggable
 
@@ -13,15 +14,21 @@ module Urbanairship
       #
       # @param [Object] key Application Key
       # @param [Object] secret Application Secret
-      # @param [String] server Airship server to use ("go.airship.eu" or "go.urbanairship.com").
+      # @param [String] server Airship server to use ("api.asnapieu.com" for EU or "api.asnapius.com" for US).
       #                        Used only when the request is sent with a "path", not an "url".
       # @param [String] token Application Auth Token
+      # @param [Object] oauth Oauth object
       # @return [Object] Client
-      def initialize(key: required('key'), secret: nil, server: Urbanairship.configuration.server, token: nil)
+      def initialize(key: required('key'), secret: nil, server: Urbanairship.configuration.server, token: nil, oauth: nil)
         @key = key
         @secret = secret
         @server = server
         @token = token
+        @oauth = oauth
+
+        if @oauth != nil && @token != nil
+          raise ArgumentError.new("oauth and token can't both be used at the same time.")
+        end
       end
 
       # Send a request to Airship's API
@@ -55,6 +62,16 @@ module Urbanairship
         headers['Accept'] = 'application/vnd.urbanairship+json; version=3'
         headers['Content-Type'] = content_type unless content_type.nil?
         headers['Content-Encoding'] = encoding unless encoding.nil?
+
+        unless @oauth.nil?
+          begin
+            @token = @oauth.get_token
+          rescue RestClient::Exception => e
+            new_error = RestClient::Exception.new(e.response, e.response.code)
+            new_error.message = "error while getting oauth token: #{e.message}"
+            raise new_error
+          end
+        end
 
         if @token != nil
           auth_type = :bearer

@@ -1,3 +1,10 @@
+## 9.3.0
+
+- Adds Oauth support
+- Changes default base URL from "go.airship.com" to "api.asnapius.com"
+
+---
+
 ## 9.2.0
 
 - Adds support for iOS Live Activity and Android Live Update
