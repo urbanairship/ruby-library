@@ -207,7 +207,7 @@ Using Oauth
       key: app_key,
       assertion_private_key: 'your_private_key',
       scopes: ['psh', 'chn'], # Optional
-      ip_addresses: ['23.74.131.15/22'] # Optional
+      ip_addresses: ['23.74.131.15/22'], # Optional
       oauth_server: 'api.asnapieu.com' # Optional
     )
     airship = UA::Client.new(key: app_key, oauth: oauth)
