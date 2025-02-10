@@ -54,6 +54,8 @@ describe Urbanairship::Devices do
       it 'can register email channel' do
         email_channel = UA::Email.new(client: airship)
         email_channel.type = 'email'
+        email_channel.click_tracking_opted_in = '2018-10-28T10:34:22'
+        email_channel.open_tracking_opted_in = '2018-10-28T10:34:22'
         email_channel.commercial_opted_in = '2018-10-28T10:34:22'
         email_channel.address = 'new.name@new.domain.com'
         email_channel.timezone = 'America/Los_Angeles'
@@ -122,6 +124,26 @@ describe Urbanairship::Devices do
 
         allow(airship).to receive(:send_request).and_return(register_response)
         actual_resp = email_channel.update
+        expect(actual_resp).to eq(register_response)
+      end
+    end
+
+    describe '#replace' do
+      it 'can replace an existing email address' do
+        email_channel = UA::Email.new(client: airship)
+        email_channel.channel_id = '01234567-890a-bcde-f012-3456789abc0'
+        email_channel.click_tracking_opted_in = '2018-10-28T10:34:22'
+        email_channel.open_tracking_opted_in = '2018-10-28T10:34:22'
+        email_channel.suppression_state = 'imported'
+        email_channel.type = 'email'
+        email_channel.commercial_opted_in = '2018-10-28T10:34:22'
+        email_channel.address = 'new.name@new.domain.com'
+        email_channel.timezone = 'America/Los_Angeles'
+        email_channel.locale_country = 'US'
+        email_channel.locale_language = 'en'
+
+        allow(airship).to receive(:send_request).and_return(register_response)
+        actual_resp = email_channel.replace
         expect(actual_resp).to eq(register_response)
       end
     end

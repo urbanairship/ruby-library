@@ -7,10 +7,15 @@ module Urbanairship
       include Urbanairship::Common
       include Urbanairship::Loggable
       attr_accessor :address,
+                    :click_tracking_opted_in,
+                    :click_tracking_opted_out,
                     :commercial_opted_in,
                     :commercial_opted_out,
                     :locale_country,
                     :locale_language,
+                    :open_tracking_opted_in,
+                    :open_tracking_opted_out,
+                    :suppression_state,
                     :timezone,
                     :transactional_opted_in,
                     :transactional_opted_out,
@@ -27,10 +32,15 @@ module Urbanairship
         payload = {
           'channel': {
             'address': address,
+            'click_tracking_opted_in': click_tracking_opted_in,
+            'click_tracking_opted_out': click_tracking_opted_out,
             'commercial_opted_in': commercial_opted_in,
             'commercial_opted_out': commercial_opted_out,
             'locale_country': locale_country,
             'locale_language': locale_language,
+            'open_tracking_opted_in': open_tracking_opted_in,
+            'open_tracking_opted_out': open_tracking_opted_out,
+            'suppression_state': suppression_state,
             'timezone': timezone,
             'transactional_opted_in': transactional_opted_in,
             'transactional_opted_out': transactional_opted_out,
@@ -77,18 +87,19 @@ module Urbanairship
       end
 
       def update
-        fail ArgumentError, 'address must be set to update email channel' if channel_id.nil?
+        fail ArgumentError, 'channel_id must be set to update email channel' if channel_id.nil?
 
         channel_data =  {
           'address': address,
           'commercial_opted_in': commercial_opted_in,
           'commercial_opted_out': commercial_opted_out,
-          'localte_country': locale_country,
+          'locale_country': locale_country,
           'locale_language': locale_language,
           'timezone': timezone,
           'transactional_opted_in': transactional_opted_in,
           'transactional_opted_out': transactional_opted_out,
-          'type': type
+          'device_type': type,
+          'suppression_state': suppression_state
       }.delete_if {|key, value| value.nil?} #this removes the nil key value pairs
 
         payload = {'channel': channel_data}
@@ -100,6 +111,40 @@ module Urbanairship
           content_type: 'application/json'
         )
         logger.info("Updating email channel with address #{@address}")
+        response
+      end
+
+      def replace
+        fail ArgumentError, 'channel_id must be set to update email channel' if channel_id.nil?
+        fail ArgumentError, 'address must be set to update email channel' if address.nil?
+        fail ArgumentError, 'type must be set to update email channel' if type.nil?
+
+        channel_data = {
+          'address': address,
+          'click_tracking_opted_in': click_tracking_opted_in,
+          'click_tracking_opted_out': click_tracking_opted_out,
+          'commercial_opted_in': commercial_opted_in,
+          'commercial_opted_out': commercial_opted_out,
+          'locale_country': locale_country,
+          'locale_language': locale_language,
+          'open_tracking_opted_in': open_tracking_opted_in,
+          'open_tracking_opted_out': open_tracking_opted_out,
+          'suppression_state': suppression_state,
+          'timezone': timezone,
+          'transactional_opted_in': transactional_opted_in,
+          'transactional_opted_out': transactional_opted_out,
+          'type': type
+        }.delete_if {|key, value| value.nil?} #this removes the nil key value pairs
+
+        payload = {'channel': channel_data}
+
+        response = @client.send_request(
+          method: 'POST',
+          path: channel_path('email/replace/' + channel_id),
+          body: JSON.dump(payload),
+          content_type: 'application/json'
+        )
+        logger.info("Replacing email channel with address #{@address}")
         response
       end
     end
