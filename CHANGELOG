@@ -1,3 +1,10 @@
+## 9.4.0
+
+- Adds email replace method
+- Updates Email class along with register and update methods to accept more parameters
+
+---
+
 ## 9.3.0
 
 - Adds Oauth support
