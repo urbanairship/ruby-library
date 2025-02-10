@@ -66,7 +66,6 @@ Update Email Channel
     email_channel.channel_id = '01234567-890a-bcde-f012-3456789abc0'
     email_channel.type = 'email'
     email_channel.commercial_opted_in = '2018-10-28T10:34:22'
-    email_channel.address = 'new.name@new.domain.com'
     email_channel.timezone = 'America/Los_Angeles'
     email_channel.locale_country = 'US'
     email_channel.locale_language = 'en'
@@ -75,7 +74,36 @@ Update Email Channel
 .. note::
 
   The only thing required to make a request is the channel_id. However, anything
-  that needs to be updated must also be included.
+  that needs to be updated must also be included. Please note that you cannot
+  update an email address with this method. Please use the replace method instead.
+
+Replace Email Channel
+--------------------
+
+.. code-block:: ruby
+
+    require 'urbanairship'
+    UA = Urbanairship
+    airship = UA::Client.new(key:'application_key', secret:'master_secret')
+    email_channel = UA::Email.new(client: airship)
+    email_channel.channel_id = '01234567-890a-bcde-f012-3456789abc0'
+    email_channel.address = 'new.name@new.domain.com'
+    email_channel.type = 'email'
+    email_channel.commercial_opted_in = '2018-10-28T10:34:22'
+    email_channel.timezone = 'America/Los_Angeles'
+    email_channel.locale_country = 'US'
+    email_channel.locale_language = 'en'
+    email_channel.update
+
+.. note::
+
+  This will replace an existing email channel and will do the following actions:
+
+  - Register a new channel
+  - Associate the new email channel with the same user as the source channel
+  - Uninstall the source channel
+
+   Address, Channel ID and type are all required parameters for this method.
 
 Email Tags
 ----------
