@@ -299,8 +299,24 @@ describe Urbanairship::Devices do
     }
 
     it 'iterates correctly through a response' do
-      allow(airship).to receive(:send_request).and_return(expected_response, expected_next_resp)
-      named_user_list = UA::NamedUserList.new(client:airship)
+      # Create response objects that match what RestClient would return
+      first_response = double('RestClient::Response',
+        code: 200,
+        body: expected_response['body'].to_json,
+        headers: {'Content-Type' => 'application/json'}
+      )
+      second_response = double('RestClient::Response',
+        code: 200,
+        body: expected_next_resp['body'].to_json,
+        headers: {'Content-Type' => 'application/json'}
+      )
+
+      # Stub RestClient to return our responses
+      allow(RestClient::Request).to receive(:execute)
+        .with(hash_including(method: 'GET'))
+        .and_return(first_response, second_response)
+
+      named_user_list = UA::NamedUserList.new(client: airship)
       instantiated_list = Array.new
       named_user_list.each do |named_user|
         expect(named_user).to eq(named_user_item)
