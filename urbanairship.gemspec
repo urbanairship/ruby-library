@@ -29,8 +29,9 @@ Gem::Specification.new do |spec|
 
   spec.add_runtime_dependency 'rest-client', '>= 1.4', '< 4.0'
   spec.add_runtime_dependency 'jwt', '>= 2.0', '< 3.0'
+  spec.add_runtime_dependency 'csv', '~> 3.0'
 
-  spec.add_development_dependency 'bundler', '>= 1', '< 2.5'
+  spec.add_development_dependency 'bundler', '>= 1', '< 3.0'
   spec.add_development_dependency 'guard-rspec'
   spec.add_development_dependency 'pry', '~> 0'
   spec.add_development_dependency 'rake', '~> 12.3.3'

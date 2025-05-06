@@ -10,12 +10,12 @@ jobs:
 
     strategy:
       matrix:
-        ruby-version: [2.7.3, 2.6.7]
+        ruby-version: [3.3.7, 3.4.2]
 
     steps:
       - uses: actions/checkout@v2
       - name: Set up Ruby ${{ matrix.ruby-version }}
-        uses: ruby/setup-ruby@477b21f02be01bcb8030d50f37cfec92bfa615b6
+        uses: ruby/setup-ruby@v1
         with:
           ruby-version: ${{ matrix.ruby-version }}
       - name: Install dependencies
