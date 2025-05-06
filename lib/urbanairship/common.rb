@@ -190,7 +190,7 @@ module Urbanairship
             path: @next_page_path,
             url: @next_page_url
           }.select { |k, v| !v.nil? }
-        response = @client.send_request(params)
+        response = @client.send_request(**params)
 
         @data_list = get_new_data(response)
         @next_page_url = get_next_page_url(response)

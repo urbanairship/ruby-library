@@ -1,3 +1,8 @@
+## 10.0.0
+
+- Fixes Ruby 3 incompatibilities
+- Drops support for Ruby 2
+
 ## 9.4.0
 
 - Adds email replace method
