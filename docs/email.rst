@@ -78,7 +78,7 @@ Update Email Channel
   update an email address with this method. Please use the replace method instead.
 
 Replace Email Channel
---------------------
+---------------------
 
 .. code-block:: ruby
 

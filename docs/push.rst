@@ -455,7 +455,7 @@ attributes, the notification is ready for delivery.
 
     push.send_push
 
-If the delivery is unsuccessful, an :rb:class:`AirshipFailure` exception
+If the delivery is unsuccessful, an ``AirshipFailure`` exception
 will be raised.
 
 
@@ -477,7 +477,7 @@ minute.
     response = schedule.send_push
     print ("Created schedule. url: " + response.schedule_url)
 
-If the schedule is unsuccessful, an :rb:class:`AirshipFailure`
+If the schedule is unsuccessful, an ``AirshipFailure``
 exception will be raised.
 
 
@@ -499,7 +499,7 @@ local time.
     response = schedule.send_push
     print ("Created schedule. url: " + response.schedule_url)
 
-If the schedule is unsuccessful, an :rb:class:`AirshipFailure` exception
+If the schedule is unsuccessful, an ``AirshipFailure`` exception
 will be raised.
 
 Scheduled Delivery for Optimal Send Time
@@ -519,7 +519,7 @@ This example schedules the above notification delivery for optimal send time.
     response = schedule.send_push
     print ("Created schedule. url: " + response.schedule_url)
 
-If the schedule is unsuccessful, an :rb:class:`AirshipFailure` exception
+If the schedule is unsuccessful, an ``AirshipFailure`` exception
 will be raised.
 
 .. note::

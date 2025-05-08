@@ -5,7 +5,7 @@ Named User Listing
 ------------------
 
 Named User lists are fetched by instantiating an iterator object
-using :rb:class:`NamedUserList`.
+using ``NamedUserList``.
 For more information, see `the API documentation
 <http://docs.airship.com/api/ua.html#listing>`__
 

@@ -5,7 +5,7 @@ Channel Listing
 ---------------
 
 Device lists are fetched by instantiating an iterator object
-using :rb:class:`ChannelList`. For more information, see `the API
+using ``ChannelList``. For more information, see `the API
 documentation for channels <http://docs.airship.com/api/ua.html#channels>`_.
 The ``count`` method will give you the number of channels over which you have iterated.
 
@@ -26,7 +26,7 @@ Channel Lookup
 --------------
 
 Device metadata is fetched for a specific channel by using
-:rb:class:`ChannelInfo` with the method ``lookup(uuid: 'uuid')``.
+``ChannelInfo`` with the method ``lookup(uuid: 'uuid')``.
 
 .. code-block:: ruby
 
