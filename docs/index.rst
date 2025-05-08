@@ -26,7 +26,7 @@ Using the library
 
 The library is intended to be used with the small footprint of a single
 import. To get started, import the package, and create an
-:rb:class:`Airship` object representing a single Airship project.
+``Airship`` object representing a single Airship project.
 
 The library uses `rest-client <https://github.com/rest-client/rest-client>`_ for communication with the Airship API.
 
