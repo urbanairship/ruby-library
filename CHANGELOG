@@ -1,3 +1,7 @@
+## 10.0.2
+
+- Updates JWT dependency to < 4.0
+
 ## 10.0.1
 
 - Changes gemspec to have correct minimum Ruby version
